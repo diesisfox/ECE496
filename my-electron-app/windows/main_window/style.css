@@ -52,7 +52,7 @@
     max-width: 600px;
     
 
-    /* disable selection of image */
+    /* disable selection/dragging of image */
     -khtml-user-drag: none;
     -o-user-drag: none;
     -moz-user-drag: none;
