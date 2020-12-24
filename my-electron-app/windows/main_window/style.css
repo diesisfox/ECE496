@@ -1,13 +1,38 @@
-.page-wrap {
-    min-height: 100%;
-    margin-bottom: -75px;
+*
+{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
 }
 
-.bottom {
-    margin-top: 60px;
-    height: 100px;
+.page-wrap {
+    background: white;
+    height: 100%;
+    width: 90%;
+    padding: 0px;
+    margin: 0px;
+    float: left;
+}
+
+.page-center {
+    height: 75%;
+    margin-bottom: 0;
+}
+
+.page-left-menu {
+    height: 100%;
+    width: 10%;
+    background: rgb(134, 134, 134);
+    border: 40px;
+    border-color: azure;
+    float: left;
+}
+
+.page-bottom {
+    margin-top: 0px;
+    height: 25%;
     background: darkgray;
-    border-radius: 5px;
 }
 
 .model-img {

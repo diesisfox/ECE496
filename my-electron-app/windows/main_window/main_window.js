@@ -17,6 +17,8 @@ function createWindow () {
     // Root is CAPSTONE/my-electron-app for some reason
     win_temp.loadFile('./windows/main_window/main_window.html')
 
+    win_temp.setResizable(false);
+
     win_temp.once('ready-to-show', () => {
         win_temp.show()
     })
