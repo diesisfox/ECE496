@@ -6,21 +6,6 @@
     height: 100%;
 }
 
-.page-wrap {
-    background: white;
-    height: 100%;
-    width: 90%;
-    padding: 0px;
-    margin: 0px;
-    float: left;
-}
-
-.page-center {
-    height: 75%;
-    margin-bottom: 0;
-    background: var(--light-menu-background);
-}
-
 .page-left-menu {
     box-sizing: border-box;
     height: 100%;
@@ -30,7 +15,22 @@
     float: left;
 }
 
-.page-bottom {
+.page-wrap-content {
+    background: white;
+    height: 100%;
+    width: 90%;
+    padding: 0px;
+    margin: 0px;
+    float: left;
+}
+
+.page-center-content {
+    height: 75%;
+    margin-bottom: 0;
+    background: var(--light-menu-background);
+}
+
+.page-bottom-content {
     box-sizing: border-box;
     margin-top: 0px;
     height: 25%;
