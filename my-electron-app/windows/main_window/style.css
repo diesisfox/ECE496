@@ -18,21 +18,24 @@
 .page-center {
     height: 75%;
     margin-bottom: 0;
+    background: darkgray;
 }
 
 .page-left-menu {
+    box-sizing: border-box;
     height: 100%;
     width: 10%;
     background: rgb(134, 134, 134);
-    border: 40px;
-    border-color: azure;
+    border-right: 4px solid azure;
     float: left;
 }
 
 .page-bottom {
+    box-sizing: border-box;
     margin-top: 0px;
     height: 25%;
     background: darkgray;
+    border-top: 4px solid azure;
 }
 
 .model-img {
