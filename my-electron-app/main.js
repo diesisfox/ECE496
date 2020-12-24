@@ -1,9 +1,9 @@
 const { app } = require('electron')
 
-const windows = require('./windows/main_window')
+const main_windows = require('./windows/main_window/main_window.js')
 
 function init(){
-  windows.createMainWindow()
+  main_windows.createMainWindow()
 }
 
 app.whenReady().then(init)
