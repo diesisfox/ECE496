@@ -57,8 +57,8 @@
 .model-img {
     display: block;
     margin: 0 auto;
-    max-height: 420px;
-    max-width: 600px;
+    height: auto;
+    width: auto;
     
 
     /* disable selection/dragging of image */
