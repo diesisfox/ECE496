@@ -35,7 +35,8 @@
     margin-top: 0px;
     height: 25%;
     background: var(--light-menu-background);
-    border-top: 4px solid var(--light-border);;
+    border-top: 4px solid var(--light-border);
+
 }
 
 .model-diagram-display {
@@ -67,11 +68,34 @@
     -webkit-user-drag: none;
 }
 
-.console-text {
+.console-text-wrapper {
+    box-sizing:border-box;
     display:inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+
+    overflow: auto;
+}
+
+.console-text-wrapper::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+.console-text-wrapper::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0.3); 
+    box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
+    background-color: var(--dark-menu-background);
+}
+ 
+.console-text-wrapper::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5); 
+    box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+}
+
+.console-text {
     font-family: "Lucida Console", Courier, monospace;
     font-size: 12px;
-    margin: 5px;
 }
 
 .console-input {
