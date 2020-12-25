@@ -28,14 +28,7 @@
     height: 75%;
     margin-bottom: 0;
     background: var(--light-menu-background);
-    overflow: auto;
-    cursor: grab;
 }
-
-/* Hide scrollbar */
-.page-center-content::-webkit-scrollbar {
-    display: none;
-  }
 
 .page-bottom-content {
     box-sizing: border-box;
@@ -43,6 +36,21 @@
     height: 25%;
     background: var(--light-menu-background);
     border-top: 4px solid var(--light-border);;
+}
+
+.model-diagram-display {
+    height: 100%;
+    width: 100%;
+
+    overflow: auto;
+    cursor: grab;
+
+    -webkit-user-select: none;
+}
+
+/* Hide scrollbar */
+.model-diagram-display::-webkit-scrollbar {
+    display: none;
 }
 
 .model-img {
