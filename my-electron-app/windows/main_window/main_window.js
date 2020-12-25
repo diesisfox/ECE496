@@ -65,6 +65,10 @@ function createMainWindow () {
   createMenu();
 }
 
+ipcMain.on('console-message', (event,arg) => {
+  console.log(arg);
+})
+
   
 module.exports = {
     createMainWindow,

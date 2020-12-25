@@ -94,6 +94,7 @@
 .console-text {
     font-family: var(--code-font);
     font-size: 12px;
+    white-space: pre-wrap;
 }
 
 .console-input-wrapper {

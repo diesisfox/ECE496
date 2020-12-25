@@ -1,5 +1,3 @@
-var ipc = require('electron').ipcRenderer;
-
 var div = document.getElementById("model-diagram-display")
 
 let pos = { top: 0, left: 0, x: 0, y: 0 };
