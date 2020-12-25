@@ -1,39 +1,49 @@
 *
 {
-    margin: 0;
-    padding: 0;
     width: 100%;
     height: 100%;
+
+    margin: 0;
+    padding: 0;
 }
 
 .page-left-menu {
     box-sizing: border-box;
+    float: left;
+
     height: 100%;
     width: 10%;
+    
     background: var(--dark-menu-background);
     border-right: 4px solid var(--light-border);
-    float: left;
 }
 
 .page-wrap-content {
-    background: white;
+    float: left;
+
     height: 100%;
     width: 90%;
+    
     padding: 0px;
     margin: 0px;
-    float: left;
+
+    background: white;
 }
 
 .page-center-content {
     height: 75%;
+
     margin-bottom: 0;
+    
     background: var(--light-menu-background);
 }
 
 .page-bottom-content {
     box-sizing: border-box;
+
     margin-top: 0px;
     height: 25%;
+
     background: var(--light-menu-background);
     border-top: 4px solid var(--light-border);
 
@@ -45,7 +55,6 @@
 
     overflow: auto;
     cursor: grab;
-
     -webkit-user-select: none;
 }
 
@@ -60,7 +69,6 @@
     height: auto;
     width: auto;
     
-
     /* disable selection/dragging of image */
     -khtml-user-drag: none;
     -o-user-drag: none;
@@ -70,6 +78,7 @@
 
 .console-text-wrapper {
     box-sizing:border-box;
+
     height: 80%;
     padding: 5px;
 
@@ -95,27 +104,36 @@
     font-family: var(--code-font);
     font-size: 12px;
     white-space: pre-wrap;
+    line-height: 1.5;
 }
 
 .console-input-wrapper {
     box-sizing: border-box;
     display: flex;
+
     height: 20%;
+
     padding-left: 5px;
+
     background-color: var(--dark-menu-background);
     font-family: var(--code-font);
+
     overflow: hidden;
 }
 
 .console-input-prefix {
-    width: fit-content;
-    padding-top: 4px;
     float: left;
+
+    width: fit-content;
+
+    padding-top: 4px;
 }
 
 .console-input {
-    border: 0;
     flex-grow: 1;
+    
+    border: 0;
+
     font-family: inherit;
     background-color: inherit;
     outline: none;

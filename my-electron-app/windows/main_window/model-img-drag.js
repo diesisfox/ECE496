@@ -35,8 +35,9 @@ const mouseDownHandler = function(e) {
 
     mousedown = true;
 
-    div.addEventListener('mousemove', mouseMoveHandler)
-    document.addEventListener('mouseup', mouseUpHandler)
+    
 };
 
+div.addEventListener('mousemove', mouseMoveHandler)
 div.addEventListener('mousedown', mouseDownHandler)
+document.addEventListener('mouseup', mouseUpHandler)
