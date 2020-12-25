@@ -92,16 +92,30 @@
 }
 
 .console-text {
-    font-family: "Lucida Console", Courier, monospace;
+    font-family: var(--code-font);
     font-size: 12px;
 }
 
-.console-input {
+.console-input-wrapper {
     box-sizing: border-box;
+    display: flex;
     height: 20%;
     padding-left: 5px;
-    font-family: "Lucida Console", Courier, monospace;
     background-color: var(--dark-menu-background);
+    font-family: var(--code-font);
+    overflow: hidden;
+}
+
+.console-input-prefix {
+    width: fit-content;
+    padding-top: 4px;
+    float: left;
+}
+
+.console-input {
     border: 0;
+    flex-grow: 1;
+    font-family: inherit;
+    background-color: inherit;
     outline: none;
 }
