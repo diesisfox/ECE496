@@ -9,9 +9,14 @@ text_box.textContent = ipcRenderer.sendSync('get-python-version', '')
 // Deal with console inputs and outputs. 
 const addToTextBox = function(e){
     if (e.key === 'Enter'){
-        ipcRenderer.send('console-input-reading', input_box.value);
-        text_box.textContent = text_box.textContent + "\r\n>>> " + input_box.value;
-        input_box.value = ""
+        if (input_box.value === 'clear'){
+            text_box.textContent = ""
+            input_box.value = ""
+        } else {
+            ipcRenderer.send('console-input-reading', input_box.value);
+            text_box.textContent = text_box.textContent + "\r\n>>> " + input_box.value;
+            input_box.value = ""
+        }
     }
 }
 
