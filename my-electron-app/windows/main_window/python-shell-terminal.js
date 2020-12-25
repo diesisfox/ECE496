@@ -3,8 +3,10 @@ const {ipcRenderer} = require('electron')
 var input_box = document.getElementById("console-input")
 var text_box = document.getElementById("console-text")
 
+// Start console with python version displayed.
 text_box.textContent = ipcRenderer.sendSync('get-python-version', '')
 
+// Deal with console inputs and outputs. 
 const addToTextBox = function(e){
     if (e.key === 'Enter'){
         ipcRenderer.send('console-input-reading', input_box.value);

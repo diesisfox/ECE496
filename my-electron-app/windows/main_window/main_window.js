@@ -4,6 +4,8 @@ const {PythonShell} = require('python-shell')
 
 const file_manager = require('../file_management/file_manager')
 
+// -------------- WINDOW --------------
+
 let win = null;
 
 function createWindow () {
@@ -93,7 +95,10 @@ ipcMain.on('console-input-reading', (event,arg) => {
   })
 })
 
-  
+
+
+
+
 module.exports = {
   createMainWindow,
 }
