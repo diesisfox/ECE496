@@ -1,18 +1,21 @@
 const {PythonShell} = require('python-shell')
 const child_process = require('child_process')
+const file_manager = require('../file_management/file_manager.js')
 
 var python_instance = null;
 
 function initializePythonProcess (ipcMain) {
+    var initial_output = ""
+
     python_instance = child_process.spawn('python', ['-i'])
-    python_instance.stdin.write("print(\"test\")\n")
+    var init_file_content = file_manager.readFile("./src/components/python-terminal/python_init.py")
+    python_instance.stdin.write(init_file_content+"\n")
     python_instance.stdout.once('data', (data)=>{
-        console.log(data.toString())
+        initial_output = data.toString()
     })
 
     ipcMain.on('get-python-version', (event,arg)=>{
-        const version = PythonShell.getVersionSync()
-        event.returnValue = version
+        event.returnValue = initial_output
     })
     ipcMain.on('console-input-reading', (event,arg) => {
         python_instance.stdin.write(arg+"\n")

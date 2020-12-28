@@ -1,4 +1,4 @@
-
+var fs = require('fs');
 
 function openFileDialog (win){
     return function(e){
@@ -28,6 +28,17 @@ function openFileDialog (win){
     }
 }
 
+function readFile (filepath){
+    try {
+        var data = fs.readFileSync(filepath, 'utf8');
+        console.log(data);    
+    } catch(e) {
+        console.log('Error:', e.stack);
+    }
+    return data
+}
+
 module.exports = {
     openFileDialog,
+    readFile,
 }
