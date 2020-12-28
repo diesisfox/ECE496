@@ -1,1 +1,3 @@
-print("hello world")
+import sys
+
+print("Python " + sys.version.split()[0])

@@ -30,8 +30,7 @@ function openFileDialog (win){
 
 function readFile (filepath){
     try {
-        var data = fs.readFileSync(filepath, 'utf8');
-        console.log(data);    
+        var data = fs.readFileSync(filepath, 'utf8');  
     } catch(e) {
         console.log('Error:', e.stack);
     }
