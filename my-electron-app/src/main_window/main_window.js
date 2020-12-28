@@ -1,8 +1,7 @@
 const { app, BrowserWindow, Menu, ipcMain} = require('electron')
 
-const {PythonShell} = require('python-shell')
-
 const file_manager = require('../components/file_management/file_manager.js')
+const python_terminal = require('../components/python-terminal/python-terminal.js')
 
 // -------------- WINDOW --------------
 
@@ -66,38 +65,10 @@ function createMenu () {
 function createMainWindow () {
   win = createWindow()
 
-  createMenu();
+  createMenu()
+
+  python_terminal.initializePythonProcess(ipcMain)
 }
-
-// -------------- PYTHON SHELL --------------
-
-ipcMain.on('get-python-version', (event,arg)=>{
-  const version = PythonShell.getVersionSync()
-  event.returnValue = version
-})
-
-/*
-Idea: write python script with code that imports all required libraries and etc. 
-Write controller script.
-Create a temp copy of it and append user code. 
-Reload the temp copy in the controller script and create pipe between two scripts, run the user function. 
-Pass new state of systems to controller to do whatever with. 
- */
-ipcMain.on('console-input-reading', (event,arg) => {
-  let python_instance = PythonShell.runString(arg, null, function (err) {
-    if (err) {
-      console.log(err)
-      event.reply('console-message', err)
-    }
-  })
-  python_instance.on('message', function (message) {
-    event.reply('console-message', message)
-  })
-})
-
-
-
-
 
 module.exports = {
   createMainWindow,
