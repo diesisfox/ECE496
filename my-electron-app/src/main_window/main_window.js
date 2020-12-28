@@ -2,7 +2,7 @@ const { app, BrowserWindow, Menu, ipcMain} = require('electron')
 
 const {PythonShell} = require('python-shell')
 
-const file_manager = require('../file_management/file_manager')
+const file_manager = require('../components/file_management/file_manager.js')
 
 // -------------- WINDOW --------------
 
@@ -19,7 +19,7 @@ function createWindow () {
   })
   
   // Root is CAPSTONE/my-electron-app for some reason
-  win_temp.loadFile('./windows/main_window/main_window.html')
+  win_temp.loadFile('./src/main_window/main_window.html')
 
   win_temp.setResizable(false);
 
