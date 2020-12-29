@@ -16,7 +16,7 @@ const addToTextBox = function(e){
             input_box.value = ""
         } else {
             ipcRenderer.send('console-input-reading', input_box.value);
-            text_box.textContent = text_box.textContent + "\r\n>>> " + input_box.value;
+            text_box.textContent = text_box.textContent + "\r\n>>> " + input_box.value + "\r\n";
             input_box.value = ""
             text_wrapper.scrollTop = text_wrapper.scrollHeight
         }
@@ -24,7 +24,7 @@ const addToTextBox = function(e){
 }
 
 ipcRenderer.on('console-message', (event,arg) => {
-    text_box.textContent = text_box.textContent + "\r\n" + arg
+    text_box.textContent = text_box.textContent + arg
     text_wrapper.scrollTop = text_wrapper.scrollHeight
 })
 
