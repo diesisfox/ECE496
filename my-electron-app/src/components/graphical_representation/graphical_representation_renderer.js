@@ -3,14 +3,14 @@ const mxgraph = require("mxgraph")({
     mxBasePath: "../../../../node_modules/mxgraph/javascript/src"
 })
 
-// --------- Globals ---------
+// --------- Files Variables & Constants ---------
+
 const div = document.getElementById("model-diagram-display")
-var model = new mxgraph.mxGraphModel();
-var graph = new mxgraph.mxGraph(div, model);
+let model = new mxgraph.mxGraphModel()
+let graph = new mxgraph.mxGraph(div, model)
+let zoom = 1;
 
-graph.setPanning(true)
-graph.setEnabled(false)
-
+// --------- Methods ---------
 
 function displayTests(){
 
@@ -29,6 +29,7 @@ function displayTests(){
     var v3 = graph.insertVertex(parentCell, null, 'Default,', 300, 250, 80, 30)
     var v4 = graph.insertVertex(parentCell, null, 'Graph!', 700, 400, 80, 30)
     var e2 = graph.insertEdge(parentCell, null, '', v3, v4)
+    //graph.center()
   }
   finally
   {
@@ -49,12 +50,25 @@ function displayJSON(json){
 
 // ------------ Handlers ------------
 
-const scrollUpHandler = function(){
-  //graph.zoomin
-}
+const scrollHandler = function(event){
+  if (event.deltaY >=0){
+    graph.zoomOut()
+  } else {
+    graph.zoomIn()
+  }
+};
+
+// ------------ Initialization Code ------------
+div.addEventListener('wheel', scrollHandler)
 
 displayTests()
-wipeGraphicalDisplay()
+//wipeGraphicalDisplay()
+
+graph.setPanning(true)
+graph.setEnabled(false)
+
+
+
 
 module.exports = {
   wipeGraphicalDisplay,
