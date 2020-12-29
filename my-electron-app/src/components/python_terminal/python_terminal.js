@@ -7,7 +7,7 @@ function initializePythonProcess (ipcMain) {
     var initial_output = ""
 
     python_instance = child_process.spawn('python', ['-i'])
-    var init_file_content = file_manager.readFile("./src/components/python-terminal/python_init.py")
+    var init_file_content = file_manager.readFile("./src/components/python_terminal/python_init.py")
     python_instance.stdin.write(init_file_content + "\n")
     python_instance.stdout.once('data', (data)=>{
         initial_output = data.toString()

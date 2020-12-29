@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Menu, ipcMain} = require('electron')
 
 const file_manager = require('../components/file_management/file_manager.js')
-const python_terminal = require('../components/python-terminal/python-terminal.js')
+const python_terminal = require('../components/python_terminal/python_terminal.js')
 
 // -------------- WINDOW --------------
 
