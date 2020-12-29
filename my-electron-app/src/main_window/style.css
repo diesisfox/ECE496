@@ -57,29 +57,17 @@ body
 
 }
 
-.model-diagram-display {
-    height: 100%;
-    width: 100%;
-
-    border-radius: 10px;
-
-    overflow: auto;
-    cursor: grab;
-    -webkit-user-select: none;
-}
-
-/* Hide scrollbar */
-.model-diagram-display::-webkit-scrollbar {
-    display: none;
-}
-
-.model-diagram-display2{
+.model-diagram-display{
     position: relative; 
-    overflow: hidden; 
-    width: 321px; 
-    height: 241px; 
+    overflow: auto; 
+    width: 100%; 
+    height: 100%; 
     cursor: default; 
     touch-action: none;
+}
+
+.model-diagram-display::-webkit-scrollbar {
+    display: none;
 }
 
 .model-img {
