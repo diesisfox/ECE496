@@ -6,4 +6,6 @@
     --light-menu-background: rgb(197, 197, 197);
     --light-border: azure;
     --code-font: "Lucida Console", Courier, monospace;
+
+    --button-hover-border: rgb(83, 180, 209);
 }
