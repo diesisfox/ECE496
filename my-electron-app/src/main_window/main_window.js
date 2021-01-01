@@ -65,7 +65,8 @@ function createMenu () {
 function createMainWindow () {
   win = createWindow()
 
-  createMenu()
+  //createMenu()
+  win.setMenu(null)
 
   python_terminal.initializePythonProcess(ipcMain)
 }
