@@ -17,13 +17,13 @@ function initializePythonProcess (ipcMain) {
     python_instance.stderr.once('data', function (data) {/*do nothing*/})
 
     ipcMain.on('get-python-version', (event,arg)=>{
+        console.log("test: " + initial_output)
         event.returnValue = initial_output
     })
     ipcMain.on('console-input-reading', (event,arg) => {
         python_instance.stdin.write(arg+"\n")
 
         python_instance.stdout.removeAllListeners('data')
-      
 
         python_instance.stdout.once('data', function (data) {
             event.reply('console-message', data.toString())
