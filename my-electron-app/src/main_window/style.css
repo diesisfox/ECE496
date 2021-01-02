@@ -125,14 +125,14 @@ body
 }
  
 .console-text-wrapper::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0.3); 
-    box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
-    background-color: var(--dark-menu-background);
+    -webkit-box-shadow: inset 0 0 1px rgb(255, 255, 255); 
+    box-shadow: inset 0 0 1px rgb(255, 255, 255);
+    background-color: var(--console-black);
 }
  
 .console-text-wrapper::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5); 
-    box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+    -webkit-box-shadow: inset 0 0 2px rgb(255, 255, 255); 
+    box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.904);
 }
 
 .console-text {
