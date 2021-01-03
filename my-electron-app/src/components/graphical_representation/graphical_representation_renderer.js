@@ -1,4 +1,4 @@
-const { crashReporter } = require("electron");
+const { crashReporter} = require("electron");
 
 const mxgraph = require("mxgraph")({
     mxImageBasePath: "../../../../node_modules/mxgraph/javascript/src/images",
@@ -6,6 +6,10 @@ const mxgraph = require("mxgraph")({
 })
 
 // --------- Files Variables & Constants ---------
+
+const theme_style = getComputedStyle(document.body)
+const variable = theme_style.getPropertyValue("--button-hover-border")
+//ipcRenderer.send("debug", variable)
 
 const div = document.getElementById("model-diagram-display")
 const rect_width = 80
@@ -122,14 +126,20 @@ const scrollHandler = function(event){
 };
 
 // ------------ Initialization Code ------------
-div.addEventListener('wheel', scrollHandler)
+function init (ipcRenderer) {
+  ipcRenderer.send("debug", variable)
+  div.addEventListener('wheel', scrollHandler)
 
-displayTests()
-//wipeGraphicalDisplay()
-displayJSON("blab")
+  displayTests()
+  //wipeGraphicalDisplay()
+  displayJSON("blab")
 
-graph.setPanning(true)
-graph.setEnabled(false)
+  graph.setPanning(true)
+  graph.setEnabled(false)
+}
+
+
+
 
 
 
@@ -137,4 +147,5 @@ graph.setEnabled(false)
 module.exports = {
   wipeGraphicalDisplay,
   displayJSON,
+  init,
 }

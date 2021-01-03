@@ -3,6 +3,14 @@ const { app, BrowserWindow, Menu, ipcMain} = require('electron')
 const file_manager = require('../components/file_management/file_manager.js')
 const python_terminal = require('../components/python_terminal/python_terminal.js')
 
+// -------------- DEBUG --------------
+
+function setupDebug () {
+  ipcMain.on("debug", function(event, arg){
+    console.log("debug: " + arg)
+  })
+}
+
 // -------------- WINDOW --------------
 
 let win = null;
@@ -63,6 +71,8 @@ function createMenu () {
 }
   
 function createMainWindow () {
+  setupDebug()
+
   win = createWindow()
 
   //createMenu()
