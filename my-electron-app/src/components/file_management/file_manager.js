@@ -22,9 +22,8 @@ function openFileDialog (win){
 
         //Synchronous
         let filePaths = dialog.showOpenDialogSync(win, options)
-        console.log(filePaths)
 
-        
+        return filePaths
     }
 }
 

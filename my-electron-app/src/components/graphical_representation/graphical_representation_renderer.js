@@ -153,8 +153,6 @@ const scrollHandler = function(event){
 
 // ------------ Initialization Code ------------
 function init (ipcRenderer) {
-  ipcRenderer.send("debug", mxgraph.mxConstants.STYLE_ENDARROW)
-
   diagram_div.addEventListener('wheel', scrollHandler)
 
   displayTests()

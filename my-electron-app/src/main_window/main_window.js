@@ -42,6 +42,7 @@ function createWindow () {
   return win_temp
 }
 
+// toolbar menu
 function createMenu () {
   //Create Menu
   const menuTemplate = [
@@ -69,12 +70,24 @@ function createMenu () {
   const menu = Menu.buildFromTemplate(menuTemplate)
   Menu.setApplicationMenu(menu)
 }
+
+// icon menu
+function addMenuListeners(){
+  ipcMain.on('open file', function (event, arg) {
+    console.log("filePath: " + file_manager.openFileDialog(win)())
+    console.log("open file clicked")
+  })
+  ipcMain.on('save file', function(event, arg) {
+    console.log("saving file is still unimplemented")
+  })
+}
   
 function createMainWindow () {
   setupDebug()
 
   win = createWindow()
 
+  addMenuListeners()
   //createMenu()
   win.setMenu(null)
 

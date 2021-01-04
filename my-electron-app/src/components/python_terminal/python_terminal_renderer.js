@@ -20,8 +20,6 @@ const addToTextBox = function(e){
 
 function init(ipcRenderer){
 
-    ipcRenderer.send('debug', "Test\n")
-
     input_box = document.getElementById("console-input")
     text_box = document.getElementById("console-text")
     text_wrapper = document.getElementById("console-text-wrapper")
