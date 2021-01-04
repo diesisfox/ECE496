@@ -8,15 +8,28 @@ const mxgraph = require("mxgraph")({
 // --------- Files Variables & Constants ---------
 
 const theme_style = getComputedStyle(document.body)
-const variable = theme_style.getPropertyValue("--button-hover-border")
+const light_blue_color = getHexFromRGB(theme_style.getPropertyValue("--button-hover-border"))
 //ipcRenderer.send("debug", variable)
 
-const div = document.getElementById("model-diagram-display")
+const diagram_div = document.getElementById("model-diagram-display")
 const rect_width = 80
 const rect_height = 30
 let model = new mxgraph.mxGraphModel()
-let graph = new mxgraph.mxGraph(div, model)
-let zoom = 1;
+let graph = new mxgraph.mxGraph(diagram_div, model)
+
+// set graph style
+var edge_style = graph.getStylesheet().getDefaultEdgeStyle()
+edge_style[mxgraph.mxConstants.STYLE_ENDARROW] = ""
+edge_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = light_blue_color
+graph.getStylesheet().putDefaultEdgeStyle(edge_style)
+
+var vertex_style = graph.getStylesheet().getDefaultVertexStyle()
+vertex_style[mxgraph.mxConstants.STYLE_ROUNDED] = 1
+vertex_style[mxgraph.mxConstants.STYLE_ARCSIZE] = 30
+vertex_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = light_blue_color
+vertex_style[mxgraph.mxConstants.STYLE_FILLCOLOR] = light_blue_color
+vertex_style[mxgraph.mxConstants.STYLE_FONTCOLOR] = "black"
+graph.getStylesheet().putDefaultVertexStyle(vertex_style)
 
 // --------- Methods ---------
 
@@ -52,6 +65,19 @@ function wipeGraphicalDisplay(){
   //model.beginUpdate()
   graph.removeCells(graph.getChildCells(graph.getDefaultParent()))
   //model.endUpdate()
+}
+
+function getHexFromRGB(rgb_string){
+  // get R,G,B
+  var three_integers = rgb_string.split("(")[1].split(")")[0]
+  
+  // convert base 10 to base 16
+  var hex_string = three_integers.split(",").map(function(x){
+    x = parseInt(x).toString(16);
+    return (x.length==1) ? "0"+x : x; // add a 0 if there is only one number
+  })
+
+  return "#"+hex_string.join("")
 }
 
 // unfinished, needs JSON schema for completion
@@ -95,7 +121,7 @@ function displayJSON(json){
     try
     {
       let v1 = graph.insertVertex(parentCell, null, 'Hello', corner_x, corner_y, rect_width, rect_height)
-      var e1 = graph.insertEdge(parentCell, null, '', v1, center)
+      var e1 = graph.insertEdge(parentCell, null, '', v1, center)//, 'defaultEdge;endArrow='
     } 
     catch (err) {
       return
@@ -127,8 +153,9 @@ const scrollHandler = function(event){
 
 // ------------ Initialization Code ------------
 function init (ipcRenderer) {
-  ipcRenderer.send("debug", variable)
-  div.addEventListener('wheel', scrollHandler)
+  ipcRenderer.send("debug", mxgraph.mxConstants.STYLE_ENDARROW)
+
+  diagram_div.addEventListener('wheel', scrollHandler)
 
   displayTests()
   //wipeGraphicalDisplay()
