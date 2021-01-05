@@ -35,11 +35,11 @@ function openFileDialog (win){
 
 function openSaveDialog(win){
     let options = {
-        title : "Choose File", 
+        title : "Save As", 
 
         defaultPath : "C:\\",
 
-        buttonLabel : "Open",
+        buttonLabel : "Save",
 
         filters : filter_list,
         properties: ['createDirectory', 'showOverwriteConfirmation']

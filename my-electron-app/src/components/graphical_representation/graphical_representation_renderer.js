@@ -76,7 +76,7 @@ function initGraph() {
   graph.setConnectableEdges(false)
   graph.setCellsResizable(false)
   //graph.setCellsBendable(false) //unsure if needed
-  graph.setCellsEditable(false)
+  graph.setCellsEditable(false) // TODO: add feature so that this rename is connected to what's happening with the internal representation
   graph.setCellsDisconnectable(false)
   graph.setConnectable(false)
 }
@@ -131,7 +131,8 @@ function displayJSON(json){
   model.beginUpdate()
   try
   {
-    center = graph.insertVertex(parentCell, null, 'Center', 0, 0, rect_width, rect_height)
+    center = graph.insertVertex(parentCell, null, '', 0, 0, 5, 5,
+      'defaultVertex;arcSize=50')
   } catch (err){
     return
   }
