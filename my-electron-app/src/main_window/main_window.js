@@ -45,7 +45,7 @@ function createMenu () {
   Menu.setApplicationMenu(menu)
 }
 
-function showAboutDialog () {
+function showAboutDialog (win) {
   const options = {
     message: 'Hello. This tool is made through the hard work of Andrew Uderian, Zhonglin Huang, and James Liu.\n'
       + 'Please do not message us if you have any questions.\n'
@@ -54,7 +54,7 @@ function showAboutDialog () {
     type: 'none'
   }
 
-  const response = dialog.showMessageBox(null, options)
+  const response = dialog.showMessageBox(win, options)
 }
 
 // icon menu
@@ -80,7 +80,7 @@ function addMenuListeners(ipcMain){
     console.log("generate is not fully implemented")
   })
   ipcMain.on('about', function(event, arg) {
-    showAboutDialog()
+    showAboutDialog(main_win)
   })
 }
 
