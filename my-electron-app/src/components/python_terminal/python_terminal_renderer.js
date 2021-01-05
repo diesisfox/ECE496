@@ -33,6 +33,11 @@ function init(ipcRenderer){
         text_wrapper.scrollTop = text_wrapper.scrollHeight
     })
     
+    ipcRenderer.on('system-message', (event,arg) => {
+        text_box.textContent = text_box.textContent + "\n[System]: " + arg
+        text_wrapper.scrollTop = text_wrapper.scrollHeight
+    })
+    
     input_box.addEventListener('keydown', addToTextBox)
 }
 

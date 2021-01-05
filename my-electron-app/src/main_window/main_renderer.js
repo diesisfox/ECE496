@@ -37,7 +37,6 @@ function addButtonListeners(){
     })
     //add_module_bar.style.visibility = 'hidden'
     add_button.addEventListener('click', function() {
-        ipcRenderer.send('debug', add_module_bar.style.visibility)
         if (add_module_bar.style.bottom === '5px'){
             let animation = add_module_bar.animate({bottom: '-50px'}, 400)
             animation.onfinish = function() {

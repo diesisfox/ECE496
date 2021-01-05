@@ -36,9 +36,6 @@ function initializePythonProcess (ipcMain) {
         })
 
     })
-    ipcMain.on('system-message', (event,arg) => {
-        event.reply('console-message', "\n[System]: " + arg)
-    })
 }
 
 module.exports = {

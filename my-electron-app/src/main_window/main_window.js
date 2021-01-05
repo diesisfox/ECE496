@@ -50,7 +50,7 @@ function createMenu () {
 function showAboutDialog (win) {
   const options = {
     message: 'Hello. This tool is made through the hard work of Andrew Uderian, Zhonglin Huang, and James Liu.\n'
-      + 'Please do not message us if you have any questions.\n'
+      + 'Feel free to NOT message us if you have any questions.\n'
       + '\nThis application uses images from Icons8. Link: https://icons8.com',
     title: "About",
     type: 'none'
@@ -67,7 +67,7 @@ function addMenuListeners(ipcMain){
     console.log("open file clicked")
   })
   ipcMain.on('save file', function(event, arg) {
-    console.log("saving file is still unimplemented")
+    event.reply('system-message', "saving file is still unimplemented")
   })
   ipcMain.on('save as file', function(event, arg) {
     console.log("filePath: " + file_manager.openSaveDialog(main_win))
@@ -114,17 +114,17 @@ function addMenuListeners(ipcMain){
   // })
   ipcMain.on('remove module', function(event, arg) {
     console.log("attempting to remove cell: " + arg + ", name: " + arg.value)
-    console.log("removing a module is not fully implemented")
+    event.reply('system-message', "removing a module is not fully implemented")
   })
   ipcMain.on('generate', function(event, arg) {
-    console.log("generate is not fully implemented")
+    event.reply('system-message', "generate is not fully implemented")
   })
   ipcMain.on('about', function(event, arg) {
     showAboutDialog(main_win)
   })
   ipcMain.on('add module', function(event, arg) {
-    console.log("Received: " + arg.name + ", " + arg.type + ", " + arg.address)
-    console.log("adding module not fully implemented")
+    event.reply('system-message', "Received: " + arg.name + ", " + arg.type + ", " + arg.address)
+    event.reply('system-message', "adding module not fully implemented")
   })
 }
 
@@ -140,6 +140,10 @@ function createMainWindow (ipcMain) {
   main_win.setMenu(null)
 
   python_terminal.initializePythonProcess(ipcMain)
+
+  ipcMain.on('system-message', (event,arg) => {
+    event.reply('system-message', arg)
+  })
 }
 
 
