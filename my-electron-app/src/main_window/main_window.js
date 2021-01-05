@@ -113,7 +113,7 @@ function addMenuListeners(ipcMain){
   //   // .catch(console.error);
   // })
   ipcMain.on('remove module', function(event, arg) {
-    console.log("attempting to remove cell: " + arg)
+    console.log("attempting to remove cell: " + arg + ", name: " + arg.value)
     console.log("removing a module is not fully implemented")
   })
   ipcMain.on('generate', function(event, arg) {

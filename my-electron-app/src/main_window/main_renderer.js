@@ -58,6 +58,7 @@ function addButtonListeners(){
             ipcRenderer.send('remove module', cell)
         } else {
             ipcRenderer.send('debug', "invalid module")
+            ipcRenderer.send('system-message', "Invalid selection, please click on a valid module before clicking this button.")
         }
     })
     generate_button.addEventListener('click', function() {
