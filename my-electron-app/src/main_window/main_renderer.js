@@ -7,6 +7,7 @@ const graphical_representation_renderer = require('../components/graphical_repre
 
 const open_button = document.getElementById("open-button")
 const save_button = document.getElementById("save-button")
+const about_button = document.getElementById("about-button")
 
 
 // button listeners
@@ -17,6 +18,9 @@ function addButtonListeners(){
     })
     save_button.addEventListener('click', function() {
         ipcRenderer.send('save file', "")
+    })
+    about_button.addEventListener('click', function() {
+        ipcRenderer.send('about', "")
     })
 }
 
