@@ -15,6 +15,8 @@
     "python-shell": "^2.0.3"
   },
   "dependencies": {
+    "@sweetalert2/theme-default": "^4.0.1",
+    "electron-multi-prompt": "^1.0.5",
     "mxgraph": "^4.2.2"
   }
 }

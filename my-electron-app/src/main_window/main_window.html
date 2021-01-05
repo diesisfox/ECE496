@@ -5,6 +5,8 @@
     <title id="title">ECE342 System Generator</title>
     <link rel="stylesheet" type="text/css" href="../theme.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="sweetalert2/dist/sweetalert2.min.js"></script>
+    <!-- <link rel="stylesheet" href="../../node_modules/sweetalert2/dist/sweetalert2.min.css"> -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
 </head>
 <body>
@@ -21,9 +23,16 @@
         
         <div class="page-center-content">
             <div class="model-diagram-display" id="model-diagram-display"></div>
+            <!-- <div class="module-toolbox" id="module-toolbox"></div> -->
+            <div class="add-module-bar" id="add-module-bar">
+                <button id="add-module-button" class="menu-button" style="height:30px">Add</button>
+                <input type="text" placeholder="Module Name" class="add-module-input" id="add-module-name">
+                <input type="text" placeholder="Type" class="add-module-input" id="add-module-type">
+                <input type="text" placeholder="Address" class="add-module-input" id="add-module-address">
+            </div>
         </div>
         
-        <div class="page-bottom-content">
+        <div class="page-bottom-content" id="page-bottom-content">
             <div class="console-text-wrapper" id="console-text-wrapper">
                 <p class="console-text" id="console-text">Default Text</p>
             </div>

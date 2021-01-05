@@ -17,8 +17,6 @@ const rect_height = 30
 let model = null
 let graph = null
 
-// set graph style
-
 // --------- Helper Functions ---------
 
 // returns 1 if positive, -1 if negative, and 0 if 0
@@ -54,7 +52,8 @@ function initGraph() {
   vertex_style[mxgraph.mxConstants.STYLE_ROUNDED] = 1
   vertex_style[mxgraph.mxConstants.STYLE_ARCSIZE] = 30
   vertex_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = light_blue_color
-  vertex_style[mxgraph.mxConstants.STYLE_FILLCOLOR] = light_blue_color
+  vertex_style[mxgraph.mxConstants.STYLE_STROKEWIDTH] = 3
+  vertex_style[mxgraph.mxConstants.STYLE_FILLCOLOR] = 'white'
   vertex_style[mxgraph.mxConstants.STYLE_FONTCOLOR] = 'black'
   graph.getStylesheet().putDefaultVertexStyle(vertex_style)
   mxgraph.mxConstants.EDGE_SELECTION_COLOR = light_blue_color
@@ -117,7 +116,7 @@ function wipeGraphicalDisplay(){
 
 // unfinished, needs JSON schema for completion
 function displayJSON(json){
-  const totalNum = 20 //change to number of modules in total
+  const totalNum = 20 //change to number of user defined modules in total
   const angle = 2*Math.PI/totalNum
   const radius = Math.max(rect_width * 3, 140*totalNum / (2 * Math.PI))
   let curr_angle = 0

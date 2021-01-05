@@ -1,4 +1,6 @@
 const { Menu, dialog} = require('electron')
+//const Swal = require('sweetalert2')
+const prompt = require('electron-multi-prompt')
 
 const file_manager = require('../components/file_management/file_manager.js')
 const python_terminal = require('../components/python_terminal/python_terminal.js')
@@ -70,9 +72,46 @@ function addMenuListeners(ipcMain){
   ipcMain.on('save as file', function(event, arg) {
     console.log("filePath: " + file_manager.openSaveDialog(main_win))
   })
-  ipcMain.on('add module', function(event, arg) {
-    console.log("adding module is not fully implemented")
-  })
+  // ipcMain.on('toggle module bar', function(event, arg) {
+  //   console.log("adding module is not fully implemented")
+  //   // Swal.fire({
+  //   //   title: "Add Module",
+  //   //   html:
+  //   //     '<input id="mod-name" class="swal2-input">' + 
+  //   //     '<input id="mod-type" class="swal2-input">' + 
+  //   //     '<input id="mod-address" class="swal2-input">',
+  //   //   focusConfirm: false,
+  //   //   preConfirm: () => {
+  //   //     console.log(document.getElementById('mod-name').value)
+  //   //   }
+  //   // })
+  //   // prompt({
+  //   //   title: 'Prompt example',
+  //   //   type: 'multi-input',
+  //   //   height: 300,
+  //   //   alwaysOnTop: true,
+  //   //   inputArray: [
+  //   //     {
+  //   //       key: 'name',
+  //   //       label: 'label',
+  //   //       value: 'init value',
+  //   //       attributes: {
+  //   //         placeholder: 'placeholder',
+  //   //         required: true,
+  //   //         type: "text"
+  //   //       }
+  //   //     }
+  //   //   ]
+  //   // }, main_win)
+  //   // .then((r) => {
+  //   //     if(r === null) {
+  //   //         console.log('user cancelled');
+  //   //     } else {
+  //   //         console.log('result', r);
+  //   //     }
+  //   // })
+  //   // .catch(console.error);
+  // })
   ipcMain.on('remove module', function(event, arg) {
     console.log("removing a module is not fully implemented")
   })
@@ -81,6 +120,10 @@ function addMenuListeners(ipcMain){
   })
   ipcMain.on('about', function(event, arg) {
     showAboutDialog(main_win)
+  })
+  ipcMain.on('add module', function(event, arg) {
+    console.log("Received: " + arg.name + ", " + arg.type + ", " + arg.address)
+    console.log("adding module not fully implemented")
   })
 }
 

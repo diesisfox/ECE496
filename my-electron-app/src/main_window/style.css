@@ -40,11 +40,11 @@ body
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
 
-    transition-duration: 0.3s;
+    
 }
 
 .menu-button:hover {
-    /* background-color: blue; */
+    transition-duration: 0.5s;
 
     border-left: 5px solid var(--button-hover-border);
 }
@@ -58,6 +58,7 @@ body
 }
 
 .page-wrap-content {
+    position: relative;
     flex-grow: 1;
 
     float: left;
@@ -72,6 +73,8 @@ body
 }
 
 .page-center-content {
+    position: relative;
+
     height: 75%;
 
     margin-bottom: 0;
@@ -102,6 +105,45 @@ body
     display: none;
 }
 
+.module-toolbox {
+    position:absolute;
+    right: 5px;
+    top: 5px;
+
+    width: 200px;
+    height: 350px;
+    
+    background-color: var(--light-menu-background);
+    border-radius: 10px;
+
+    overflow: auto;
+}
+
+.add-module-bar {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    right: 5px;
+    bottom: 5px;
+
+    width: 400px;
+    height: 30px;
+
+    background-color: var(--light-menu-background);
+    padding-right: 5px;
+
+    visibility: hidden; /* Note this is set a second time in main_renderer */
+}
+
+.add-module-input {
+    /* margin-left: 20px; */
+    margin-top: 5px;
+
+    width: 100px;
+    height: 15px;
+}
+
+/* DEPRECATED */
 .model-img {
     display: block;
     margin: 0 auto;
