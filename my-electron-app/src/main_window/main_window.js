@@ -1,4 +1,4 @@
-const { Menu} = require('electron')
+const { Menu, dialog} = require('electron')
 
 const file_manager = require('../components/file_management/file_manager.js')
 const python_terminal = require('../components/python_terminal/python_terminal.js')
@@ -46,6 +46,15 @@ function createMenu () {
   Menu.setApplicationMenu(menu)
 }
 
+function showAboutDialog () {
+  const options = {
+    message: 'Hello.\nThis application uses images from Icons8. Link: https://icons8.com',
+    type: 'none'
+  }
+
+  const response = dialog.showMessageBox(null, options)
+}
+
 // icon menu
 function addMenuListeners(ipcMain){
   ipcMain.on('open file', function (event, arg) {
@@ -56,7 +65,7 @@ function addMenuListeners(ipcMain){
     console.log("saving file is still unimplemented")
   })
   ipcMain.on('about', function(event, arg) {
-    help_window.createHelpWindow(ipcMain)
+    showAboutDialog()
   })
 }
   
