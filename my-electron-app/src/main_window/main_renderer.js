@@ -24,7 +24,6 @@ const add_module_type = document.getElementById("add-module-type")
 const add_module_address = document.getElementById("add-module-address")
 
 // button listeners
-
 function addButtonListeners(){
     // left menu
     open_button.addEventListener('click', function() {
@@ -54,7 +53,12 @@ function addButtonListeners(){
         // })
     })
     remove_button.addEventListener('click', function() {
-        ipcRenderer.send('remove module', "")
+        let cell = graphical_representation_renderer.getSelected()
+        if (cell != null && cell.isVertex()){
+            ipcRenderer.send('remove module', cell)
+        } else {
+            ipcRenderer.send('debug', "invalid module")
+        }
     })
     generate_button.addEventListener('click', function() {
         ipcRenderer.send('generate', "")

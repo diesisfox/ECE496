@@ -171,6 +171,10 @@ function displayJSON(json){
   }
 }
 
+function getSelected() {
+  return graph.getSelectionCell()
+}
+
 // ------------ Handlers ------------
 
 const scrollHandler = function(event){
@@ -202,5 +206,6 @@ function init (ipcRenderer) {
 module.exports = {
   wipeGraphicalDisplay,
   displayJSON,
+  getSelected,
   init,
 }
