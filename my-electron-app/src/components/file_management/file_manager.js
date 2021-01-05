@@ -1,9 +1,19 @@
-var fs = require('fs');
+var fs = require('fs')
+const {dialog} = require('electron')
+
+
+const filter_list = [
+    {name: 'Custom File Type', extensions: ['as']},
+    {name: 'Images', extensions: ['jpg', 'png', 'gif']},
+    {name: 'All Files', extensions: ['*']}
+]
+
+
+
+// TODO: simplify this so that it doesn't use a nested function
 
 function openFileDialog (win){
     return function(e){
-
-        const {dialog} = require('electron')
 
         let options = {
         title : "Choose File", 
@@ -12,12 +22,8 @@ function openFileDialog (win){
 
         buttonLabel : "Open",
 
-        filters :[
-            {name: 'Custom File Type', extensions: ['as']},
-            {name: 'Images', extensions: ['jpg', 'png', 'gif']},
-            {name: 'All Files', extensions: ['*']}
-        ],
-        properties: ['openFile','multiSelections']
+        filters : filter_list,
+        properties: ['openFile']
         }
 
         //Synchronous
@@ -25,6 +31,24 @@ function openFileDialog (win){
 
         return filePaths
     }
+}
+
+function openSaveDialog(win){
+    let options = {
+        title : "Choose File", 
+
+        defaultPath : "C:\\",
+
+        buttonLabel : "Open",
+
+        filters : filter_list,
+        properties: ['createDirectory', 'showOverwriteConfirmation']
+    }
+
+    //Synchronous
+    let filePaths = dialog.showSaveDialogSync(win, options)
+
+    return filePaths
 }
 
 function readFile (filepath){
@@ -38,5 +62,6 @@ function readFile (filepath){
 
 module.exports = {
     openFileDialog,
+    openSaveDialog,
     readFile,
 }

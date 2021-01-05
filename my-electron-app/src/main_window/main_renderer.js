@@ -7,6 +7,7 @@ const graphical_representation_renderer = require('../components/graphical_repre
 
 const open_button = document.getElementById("open-button")
 const save_button = document.getElementById("save-button")
+const save_as_button = document.getElementById("save-as-button")
 const about_button = document.getElementById("about-button")
 
 
@@ -18,6 +19,9 @@ function addButtonListeners(){
     })
     save_button.addEventListener('click', function() {
         ipcRenderer.send('save file', "")
+    })
+    save_as_button.addEventListener('click', function() {
+        ipcRenderer.send('save as file', "")
     })
     about_button.addEventListener('click', function() {
         ipcRenderer.send('about', "")

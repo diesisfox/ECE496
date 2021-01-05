@@ -3,7 +3,6 @@ const { Menu, dialog} = require('electron')
 const file_manager = require('../components/file_management/file_manager.js')
 const python_terminal = require('../components/python_terminal/python_terminal.js')
 const window_manager = require('../components/windom_management/window_manager.js')
-const help_window = require('../help_window/help_window.js')
 
 // -------------- DEBUG --------------
 
@@ -56,6 +55,7 @@ function showAboutDialog () {
 }
 
 // icon menu
+// TODO: incomplete
 function addMenuListeners(ipcMain){
   ipcMain.on('open file', function (event, arg) {
     console.log("filePath: " + file_manager.openFileDialog(main_win)())
@@ -64,11 +64,16 @@ function addMenuListeners(ipcMain){
   ipcMain.on('save file', function(event, arg) {
     console.log("saving file is still unimplemented")
   })
+  ipcMain.on('save as file', function(event, arg) {
+    console.log("filePath: " + file_manager.openSaveDialog(main_win))
+  })
   ipcMain.on('about', function(event, arg) {
     showAboutDialog()
   })
 }
-  
+
+// main window creation function
+
 function createMainWindow (ipcMain) {
   setupDebug(ipcMain)
 
