@@ -47,7 +47,10 @@ function createMenu () {
 
 function showAboutDialog () {
   const options = {
-    message: 'Hello.\nThis application uses images from Icons8. Link: https://icons8.com',
+    message: 'Hello. This tool is made through the hard work of Andrew Uderian, Zhonglin Huang, and James Liu.\n'
+      + 'Please do not message us if you have any questions.\n'
+      + '\nThis application uses images from Icons8. Link: https://icons8.com',
+    title: "About",
     type: 'none'
   }
 
@@ -66,6 +69,15 @@ function addMenuListeners(ipcMain){
   })
   ipcMain.on('save as file', function(event, arg) {
     console.log("filePath: " + file_manager.openSaveDialog(main_win))
+  })
+  ipcMain.on('add module', function(event, arg) {
+    console.log("adding module is not fully implemented")
+  })
+  ipcMain.on('remove module', function(event, arg) {
+    console.log("removing a module is not fully implemented")
+  })
+  ipcMain.on('generate', function(event, arg) {
+    console.log("generate is not fully implemented")
   })
   ipcMain.on('about', function(event, arg) {
     showAboutDialog()

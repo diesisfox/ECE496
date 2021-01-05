@@ -14,24 +14,70 @@ const light_blue_color = getHexFromRGB(theme_style.getPropertyValue("--button-ho
 const diagram_div = document.getElementById("model-diagram-display")
 const rect_width = 80
 const rect_height = 30
-let model = new mxgraph.mxGraphModel()
-let graph = new mxgraph.mxGraph(diagram_div, model)
+let model = null
+let graph = null
 
 // set graph style
-var edge_style = graph.getStylesheet().getDefaultEdgeStyle()
-edge_style[mxgraph.mxConstants.STYLE_ENDARROW] = ""
-edge_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = light_blue_color
-graph.getStylesheet().putDefaultEdgeStyle(edge_style)
 
-var vertex_style = graph.getStylesheet().getDefaultVertexStyle()
-vertex_style[mxgraph.mxConstants.STYLE_ROUNDED] = 1
-vertex_style[mxgraph.mxConstants.STYLE_ARCSIZE] = 30
-vertex_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = light_blue_color
-vertex_style[mxgraph.mxConstants.STYLE_FILLCOLOR] = light_blue_color
-vertex_style[mxgraph.mxConstants.STYLE_FONTCOLOR] = "black"
-graph.getStylesheet().putDefaultVertexStyle(vertex_style)
+// --------- Helper Functions ---------
+
+// returns 1 if positive, -1 if negative, and 0 if 0
+function getSign(x){
+  return (x / Math.max(1,Math.abs(x)))
+}
+
+function getHexFromRGB(rgb_string){
+  // get R,G,B
+  var three_integers = rgb_string.split("(")[1].split(")")[0]
+  
+  // convert base 10 to base 16
+  var hex_string = three_integers.split(",").map(function(x){
+    x = parseInt(x).toString(16);
+    return (x.length==1) ? "0"+x : x; // add a 0 if there is only one number
+  })
+
+  return "#"+hex_string.join("")
+}
 
 // --------- Methods ---------
+
+function initGraph() {
+  model = new mxgraph.mxGraphModel()
+  graph = new mxgraph.mxGraph(diagram_div, model)
+
+  // styles
+  let edge_style = graph.getStylesheet().getDefaultEdgeStyle()
+  edge_style[mxgraph.mxConstants.STYLE_ENDARROW] = ""
+  edge_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = light_blue_color
+  graph.getStylesheet().putDefaultEdgeStyle(edge_style)
+  let vertex_style = graph.getStylesheet().getDefaultVertexStyle()
+  vertex_style[mxgraph.mxConstants.STYLE_ROUNDED] = 1
+  vertex_style[mxgraph.mxConstants.STYLE_ARCSIZE] = 30
+  vertex_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = light_blue_color
+  vertex_style[mxgraph.mxConstants.STYLE_FILLCOLOR] = light_blue_color
+  vertex_style[mxgraph.mxConstants.STYLE_FONTCOLOR] = 'black'
+  graph.getStylesheet().putDefaultVertexStyle(vertex_style)
+  mxgraph.mxConstants.EDGE_SELECTION_COLOR = light_blue_color
+  mxgraph.mxConstants.LOCKED_HANDLE_FILLCOLOR = 'white'
+  mxgraph.mxConstants.VERTEX_SELECTION_COLOR = 'black'
+  mxgraph.mxConstants.VERTEX_SELECTION_STROKEWIDTH = 2
+  //let cell_style = graph.getStylesheet().getCellStyle()
+  //cell_style[mxgraph.mxConstants.EDGE_SELECTION_COLOR] = light_blue_color
+  //graph.getStylesheet().putCellStyle(cell_style)
+
+  graph.setPanning(true)
+  //graph.setEnabled(false)
+  graph.setCellsCloneable(false)
+  graph.setCellsDeletable(false)
+  graph.setCellsMovable(false)
+  graph.setVertexLabelsMovable(false)
+  graph.setConnectableEdges(false)
+  graph.setCellsResizable(false)
+  //graph.setCellsBendable(false) //unsure if needed
+  graph.setCellsEditable(false)
+  graph.setCellsDisconnectable(false)
+  graph.setConnectable(false)
+}
 
 function displayTests(){
 
@@ -65,19 +111,6 @@ function wipeGraphicalDisplay(){
   //model.beginUpdate()
   graph.removeCells(graph.getChildCells(graph.getDefaultParent()))
   //model.endUpdate()
-}
-
-function getHexFromRGB(rgb_string){
-  // get R,G,B
-  var three_integers = rgb_string.split("(")[1].split(")")[0]
-  
-  // convert base 10 to base 16
-  var hex_string = three_integers.split(",").map(function(x){
-    x = parseInt(x).toString(16);
-    return (x.length==1) ? "0"+x : x; // add a 0 if there is only one number
-  })
-
-  return "#"+hex_string.join("")
 }
 
 // unfinished, needs JSON schema for completion
@@ -136,11 +169,6 @@ function displayJSON(json){
   }
 }
 
-// returns 1 if positive, -1 if negative, and 0 if 0
-function getSign(x){
-  return (x / Math.max(1,Math.abs(x)))
-}
-
 // ------------ Handlers ------------
 
 const scrollHandler = function(event){
@@ -153,14 +181,14 @@ const scrollHandler = function(event){
 
 // ------------ Initialization Code ------------
 function init (ipcRenderer) {
+  initGraph()
+
+  // enable ability to zoom in and out using the scrollwheel
   diagram_div.addEventListener('wheel', scrollHandler)
 
-  displayTests()
+  //displayTests()
   //wipeGraphicalDisplay()
   displayJSON("blab")
-
-  graph.setPanning(true)
-  graph.setEnabled(false)
 }
 
 
