@@ -65,6 +65,8 @@ function initGraph() {
   //cell_style[mxgraph.mxConstants.EDGE_SELECTION_COLOR] = light_blue_color
   //graph.getStylesheet().putCellStyle(cell_style)
 
+  graph.selectionModel.setSingleSelection(true)
+
   graph.setPanning(true)
   //graph.setEnabled(false)
   graph.setCellsCloneable(false)
