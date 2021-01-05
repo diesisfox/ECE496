@@ -35,10 +35,22 @@ function addButtonListeners(){
     save_as_button.addEventListener('click', function() {
         ipcRenderer.send('save as file', "")
     })
-    add_module_bar.style.visibility = 'hidden'
+    //add_module_bar.style.visibility = 'hidden'
     add_button.addEventListener('click', function() {
         ipcRenderer.send('debug', add_module_bar.style.visibility)
-        add_module_bar.style.visibility = add_module_bar.style.visibility === 'visible' ? 'hidden' : 'visible'
+        if (add_module_bar.style.bottom === '5px'){
+            let animation = add_module_bar.animate({bottom: '-50px'}, 400)
+            animation.onfinish = function() {
+                add_module_bar.style.bottom = '-50px'
+            }
+        } else {
+            let animation = add_module_bar.animate({bottom: '5px'}, 400)
+            animation.onfinish = function() {
+                add_module_bar.style.bottom = '5px'
+            }
+        }
+        //add_module_bar.style.visibility = add_module_bar.style.visibility === 'visible' ? 'hidden' : 'visible'
+        
         //ipcRenderer.send('toggle module bar', "")
         // Swal.fire({
         //     title: "Add Module",

@@ -78,6 +78,8 @@ body
     height: 75%;
 
     margin-bottom: 0;
+
+    overflow: hidden;
 }
 
 .page-bottom-content {
@@ -124,7 +126,7 @@ body
     display: flex;
     justify-content: space-between;
     right: 5px;
-    bottom: 5px;
+    bottom: -50px;
 
     width: 400px;
     height: 30px;
@@ -132,7 +134,7 @@ body
     background-color: var(--light-menu-background);
     padding-right: 5px;
 
-    visibility: hidden; /* Note this is set a second time in main_renderer */
+    /*visibility: hidden; /* Note this is set a second time in main_renderer */
 }
 
 .add-module-input {

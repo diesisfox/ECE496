@@ -17,6 +17,9 @@ const rect_height = 30
 let model = null
 let graph = null
 
+
+//// *IMPORTANT* Currently this file is unused
+
 // --------- Helper Functions ---------
 
 // returns 1 if positive, -1 if negative, and 0 if 0
