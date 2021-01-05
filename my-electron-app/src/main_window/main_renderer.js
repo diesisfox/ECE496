@@ -1,5 +1,4 @@
 const {ipcRenderer} = require('electron')
-//const Swal = require('electron-alert')
 
 const python_terminal_renderer = require('../components/python_terminal/python_terminal_renderer.js')
 const graphical_representation_renderer = require('../components/graphical_representation/graphical_representation_renderer.js')
@@ -35,7 +34,6 @@ function addButtonListeners(){
     save_as_button.addEventListener('click', function() {
         ipcRenderer.send('save as file', "")
     })
-    //add_module_bar.style.visibility = 'hidden'
     add_button.addEventListener('click', function() {
         if (add_module_bar.style.bottom === '5px'){
             let animation = add_module_bar.animate({bottom: '-50px'}, 400)
@@ -48,20 +46,6 @@ function addButtonListeners(){
                 add_module_bar.style.bottom = '5px'
             }
         }
-        //add_module_bar.style.visibility = add_module_bar.style.visibility === 'visible' ? 'hidden' : 'visible'
-        
-        //ipcRenderer.send('toggle module bar', "")
-        // Swal.fire({
-        //     title: "Add Module",
-        //     html:
-        //         '<input id="mod-name" class="swal2-input">' + 
-        //         '<input id="mod-type" class="swal2-input">' + 
-        //         '<input id="mod-address" class="swal2-input">',
-        //     focusConfirm: false,
-        //     preConfirm: () => {
-        //         console.log(document.getElementById('mod-name').value)
-        //     }
-        // })
     })
     remove_button.addEventListener('click', function() {
         let cell = graphical_representation_renderer.getSelected()
