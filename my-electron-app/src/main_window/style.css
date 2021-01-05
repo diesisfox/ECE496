@@ -9,6 +9,8 @@ html
 
 body
 {
+    display: flex;
+
     width: 100%;
     height: 100%;
 
@@ -21,7 +23,7 @@ body
     float: left;
 
     height: 100%;
-    width: 10%;
+    width: 76px;
     
     background: var(--light-menu-background);
     border-right: 4px solid var(--light-border);
@@ -56,6 +58,8 @@ body
 }
 
 .page-wrap-content {
+    flex-grow: 1;
+
     float: left;
 
     height: 100%;
