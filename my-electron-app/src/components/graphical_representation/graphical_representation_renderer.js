@@ -173,7 +173,9 @@ function displayTests(){
 // unused
 function wipeGraphicalDisplay(){
   //model.beginUpdate()
+  graph.setCellsDeletable(true)
   graph.removeCells(graph.getChildCells(graph.getDefaultParent()))
+  graph.setCellsDeletable(false)
   //model.endUpdate()
 }
 
@@ -191,10 +193,8 @@ function displayJSON(json){
   model.beginUpdate()
   try
   {
-    graph.setCellsDeletable(true)
-    graph.removeCells(graph.getChildCells(parentCell))
-    graph.setCellsDeletable(false)
-    center = graph.insertVertex(parentCell, null, '', 0, 0, 5, 5,
+    wipeGraphicalDisplay()
+    center = graph.insertVertex(parentCell, null, '', 0, 0, 0, 0,
       'defaultVertex;arcSize=50')
   } catch (err){
     return
@@ -212,8 +212,8 @@ function displayJSON(json){
     let center_y = Math.sin(curr_angle) * radius
 
     // get posiition of top left corner of rectangle
-    let corner_x = Math.round(Math.abs(center_x) - rect_width / 2) * getSign(center_x)
-    let corner_y = Math.round(Math.abs(center_y) - rect_height / 2) * getSign(center_y)
+    let corner_x = Math.round(center_x - rect_width / 2)
+    let corner_y = Math.round(center_y - rect_height / 2)
 
     // display rectangle
     model.beginUpdate()
