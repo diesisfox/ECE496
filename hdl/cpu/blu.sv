@@ -3,7 +3,7 @@ import blu_pkg::*;
 module BLU (
     input [31:0] x,
     input [31:0] y,
-    BLU_opcode opcode,
+    input BLU_opcode opcode,
     output logic [31:0] out
 );
 

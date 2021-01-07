@@ -3,7 +3,7 @@ import alu_pkg::*;
 module ALU (
 	input [31:0] x,
 	input [31:0] y,
-	ALU_opcode opcode,
+	input ALU_opcode opcode,
 	output logic [31:0] out
 );
 
