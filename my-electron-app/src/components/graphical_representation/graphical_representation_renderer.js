@@ -5,17 +5,21 @@ const mxgraph = require("mxgraph")({
     mxBasePath: "../../../../node_modules/mxgraph/javascript/src"
 })
 
-// --------- Files Variables & Constants ---------
+const theme = require("../theme.js")
+//const toolbox_renderer = require("./graphical_toolbox_renderer.js")
 
-const theme_style = getComputedStyle(document.body)
-const light_blue_color = getHexFromRGB(theme_style.getPropertyValue("--button-hover-border"))
+// --------- Files Variables & Constants ---------
 //ipcRenderer.send("debug", variable)
 
 const diagram_div = document.getElementById("model-diagram-display")
+const toolbox_div = document.getElementById("module-toolbox")
 const rect_width = 80
 const rect_height = 30
 let model = null
 let graph = null
+let toolbox = null
+
+let totalNum = 1
 
 // --------- Helper Functions ---------
 
@@ -24,20 +28,79 @@ function getSign(x){
   return (x / Math.max(1,Math.abs(x)))
 }
 
-function getHexFromRGB(rgb_string){
-  // get R,G,B
-  var three_integers = rgb_string.split("(")[1].split(")")[0]
-  
-  // convert base 10 to base 16
-  var hex_string = three_integers.split(",").map(function(x){
-    x = parseInt(x).toString(16);
-    return (x.length==1) ? "0"+x : x; // add a 0 if there is only one number
-  })
 
-  return "#"+hex_string.join("")
+// --------- Toolbox ---------
+
+function addVertex (ipcRenderer, icon, w, h, style){
+
+  var vertex = new mxgraph.mxCell(null, new mxgraph.mxGeometry(0, 0, w, h), style)
+  vertex.setVertex(true)
+
+  addToolbarItem(ipcRenderer, graph, vertex, icon)
 }
 
-// --------- Methods ---------
+function addToolbarItem(ipcRenderer, graph, prototype, image)
+{
+  // Function that is executed when the image is dropped on
+  // the graph. The cell argument points to the cell under
+  // the mousepointer if there is one.
+
+  var funct = function(graph, evt, cell)
+  {
+      graph.stopEditing(false)
+
+      // var pt = graph.getPointForEvent(evt)
+      // var vertex = graph.getModel().cloneCell(prototype)
+      // vertex.geometry.x = pt.x
+      // vertex.geometry.y = pt.y
+
+      // ipcRenderer.send('debug', pt.x + ", "+ pt.y)
+      
+      // graph.setSelectionCells(graph.importCells([vertex], 0, 0, cell));
+      
+      totalNum += 1
+      displayJSON("")
+
+      ipcRenderer.send('debug', "totalNum: " + totalNum)
+  }
+
+  // Creates the image which is used as the drag icon (preview)
+  var img = toolbox.addMode(null, image, funct)
+  mxgraph.mxUtils.makeDraggable(img, graph, funct)
+}
+
+function initToolbox(ipcRenderer, graph, model) {
+
+  toolbox = new mxgraph.mxToolbar(toolbox_div)
+  toolbox.enabled = false
+
+  graph.setDropEnabled(true)
+
+  // called whenever mouse drags a toolbar object
+  mxgraph.mxDragSource.prototype.getDropTarget = function(graph, x, y){
+      var cell = graph.getCellAt(x, y)
+        
+      if (!graph.isValidDropTarget(cell))
+      {
+          cell = null;
+      }
+      
+      return cell;
+  }
+  
+  // Enables new connections in the graph
+  //graph.setConnectable(true)
+  //graph.setMultigraph(false)
+
+  // Stops editing on enter or escape keypress
+  // var keyHandler = new mxgraph.mxKeyHandler(graph)
+  // var rubberband = new mxgraph.mxRubberband(graph)
+
+  // add a new toolbar object
+  addVertex(ipcRenderer, "../../resources/images/mxGraph/rhombus.gif", 40, 40, 'shape=rhombus')
+}
+
+// --------- Graph Methods ---------
 
 function initGraph() {
   model = new mxgraph.mxGraphModel()
@@ -46,19 +109,19 @@ function initGraph() {
   // styles
   let edge_style = graph.getStylesheet().getDefaultEdgeStyle()
   edge_style[mxgraph.mxConstants.STYLE_ENDARROW] = ""
-  edge_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = light_blue_color
+  edge_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = theme.light_blue_color
   graph.getStylesheet().putDefaultEdgeStyle(edge_style)
   let vertex_style = graph.getStylesheet().getDefaultVertexStyle()
   vertex_style[mxgraph.mxConstants.STYLE_ROUNDED] = 1
   vertex_style[mxgraph.mxConstants.STYLE_ARCSIZE] = 30
-  vertex_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = light_blue_color
+  vertex_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = theme.light_blue_color
   vertex_style[mxgraph.mxConstants.STYLE_STROKEWIDTH] = 3
   vertex_style[mxgraph.mxConstants.STYLE_FILLCOLOR] = 'white'
   vertex_style[mxgraph.mxConstants.STYLE_FONTCOLOR] = 'black'
   graph.getStylesheet().putDefaultVertexStyle(vertex_style)
-  mxgraph.mxConstants.EDGE_SELECTION_COLOR = light_blue_color
+  mxgraph.mxConstants.EDGE_SELECTION_COLOR = theme.light_blue_color
   mxgraph.mxConstants.LOCKED_HANDLE_FILLCOLOR = 'white'
-  mxgraph.mxConstants.VERTEX_SELECTION_COLOR = 'black'
+  mxgraph.mxConstants.VERTEX_SELECTION_COLOR = 'white'
   mxgraph.mxConstants.VERTEX_SELECTION_STROKEWIDTH = 2
   //let cell_style = graph.getStylesheet().getCellStyle()
   //cell_style[mxgraph.mxConstants.EDGE_SELECTION_COLOR] = light_blue_color
@@ -67,7 +130,6 @@ function initGraph() {
   graph.selectionModel.setSingleSelection(true)
 
   graph.setPanning(true)
-  //graph.setEnabled(false)
   graph.setCellsCloneable(false)
   graph.setCellsDeletable(false)
   graph.setCellsMovable(false)
@@ -108,6 +170,7 @@ function displayTests(){
   }
 }
 
+// unused
 function wipeGraphicalDisplay(){
   //model.beginUpdate()
   graph.removeCells(graph.getChildCells(graph.getDefaultParent()))
@@ -116,7 +179,6 @@ function wipeGraphicalDisplay(){
 
 // unfinished, needs JSON schema for completion
 function displayJSON(json){
-  const totalNum = 20 //change to number of user defined modules in total
   const angle = 2*Math.PI/totalNum
   const radius = Math.max(rect_width * 3, 140*totalNum / (2 * Math.PI))
   let curr_angle = 0
@@ -125,11 +187,13 @@ function displayJSON(json){
   var parentCell = graph.getDefaultParent()
 
   // wipe old vertices and edges
-  graph.removeCells(graph.getChildCells(parentCell))
 
   model.beginUpdate()
   try
   {
+    graph.setCellsDeletable(true)
+    graph.removeCells(graph.getChildCells(parentCell))
+    graph.setCellsDeletable(false)
     center = graph.insertVertex(parentCell, null, '', 0, 0, 5, 5,
       'defaultVertex;arcSize=50')
   } catch (err){
@@ -155,8 +219,8 @@ function displayJSON(json){
     model.beginUpdate()
     try
     {
-      let v1 = graph.insertVertex(parentCell, null, 'Hello', corner_x, corner_y, rect_width, rect_height)
-      var e1 = graph.insertEdge(parentCell, null, '', v1, center)//, 'defaultEdge;endArrow='
+      let v1 = graph.insertVertex(parentCell, null, 'Hello'+i, corner_x, corner_y, rect_width, rect_height)
+      let e1 = graph.insertEdge(parentCell, null, '', v1, center)//, 'defaultEdge;endArrow='
     } 
     catch (err) {
       return
@@ -191,6 +255,9 @@ function init (ipcRenderer) {
 
   // enable ability to zoom in and out using the scrollwheel
   diagram_div.addEventListener('wheel', scrollHandler)
+  
+  
+  initToolbox(ipcRenderer, graph, model)
 
   //displayTests()
   //wipeGraphicalDisplay()
