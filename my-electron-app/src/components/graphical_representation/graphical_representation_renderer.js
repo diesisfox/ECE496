@@ -6,18 +6,21 @@ const mxgraph = require("mxgraph")({
 })
 
 const theme = require("../theme.js")
-//const toolbox_renderer = require("./graphical_toolbox_renderer.js")
 
 // --------- Files Variables & Constants ---------
 //ipcRenderer.send("debug", variable)
 
 const diagram_div = document.getElementById("model-diagram-display")
 const toolbox_div = document.getElementById("module-toolbox")
+const tb_div_width = toolbox_div.clientWidth
+const tb_div_height = toolbox_div.clientHeight
+const tb_icon_num_per_row = 2 //number of modules per row
+const tb_rect_width = 80
+const tb_rect_height = 50
 const rect_width = 80
 const rect_height = 30
 let model = null
 let graph = null
-let toolbox = null
 
 let totalNum = 1
 
@@ -31,6 +34,49 @@ function getSign(x){
 
 // --------- Toolbox ---------
 
+function createModuleIcon (ipcRenderer, index, margin, rect_width, rect_height){
+  var moduleIcon = document.createElement("div")
+  moduleIcon.className = 'module-toolbox-icon'
+
+  moduleIcon.style.width = rect_width
+  moduleIcon.style.height = rect_height
+  //moduleIcon.style.left = x + "px"
+  //moduleIcon.style.top = y + "px"
+  moduleIcon.style.margin = margin + "px"
+
+  moduleIcon.draggable = true
+  moduleIcon.ondragstart = function(ev) {
+    ev.dataTransfer.setData('type_id', index)
+  }
+
+  return moduleIcon
+}
+
+function initToolbox (ipcRenderer){
+  const totalNum = 13 // later, change so that we use an array of modules types instead
+  const margin = (tb_div_width - tb_rect_width * tb_icon_num_per_row) / (tb_icon_num_per_row) / 2
+
+  // add a toolbar objects
+  let i = 0
+  
+  for (i = 0; i < totalNum; i++){
+    toolbox_div.appendChild(createModuleIcon(ipcRenderer, i, margin, rect_width, rect_height))
+  }
+
+  // set drag handlers
+  toolbox_div.ondragover = function (ev) {
+    ev.preventDefault()
+  }
+
+  diagram_div.ondragover = function (ev) {
+    ev.preventDefault()
+  }
+  diagram_div.ondrop = function (ev) {
+    ev.preventDefault()
+    ipcRenderer.send('debug', ev.dataTransfer.getData('type_id'))
+  }
+}
+/*
 function addVertex (ipcRenderer, icon, w, h, style){
 
   var vertex = new mxgraph.mxCell(null, new mxgraph.mxGeometry(0, 0, w, h), style)
@@ -65,11 +111,18 @@ function addToolbarItem(ipcRenderer, graph, prototype, image)
   }
 
   // Creates the image which is used as the drag icon (preview)
-  var img = toolbox.addMode(null, image, funct)
+  var img = toolbox.addMode("hello", image, funct, null)
   mxgraph.mxUtils.makeDraggable(img, graph, funct)
 }
 
 function initToolbox(ipcRenderer, graph, model) {
+  const totalNum = 13 // later, change so that we use an array of modules types instead
+  const horizontal_spacing = (tb_div_width - tb_rect_width * tb_icon_num_per_row) / (tb_icon_num_per_row+1)
+  const vertical_spacing = tb_rect_height / 3
+
+  tb_graph = new mxgraph.mxGraph(toolbox_div, new mxgraph.mxGraphModel())
+
+  let parentCell = graph.getDefaultParent()
 
   toolbox = new mxgraph.mxToolbar(toolbox_div)
   toolbox.enabled = false
@@ -87,18 +140,37 @@ function initToolbox(ipcRenderer, graph, model) {
       
       return cell;
   }
+
+  // add a toolbar objects
+  let i = 0
+  let curr_x = horizontal_spacing
+  let curr_y = vertical_spacing
   
-  // Enables new connections in the graph
-  //graph.setConnectable(true)
-  //graph.setMultigraph(false)
+  for (i = 0; i < totalNum; i++){
+      // display rectangle
+      model.beginUpdate()
+      try
+      {
+          //let v1 = graph.insertVertex(parentCell, null, 'Hello', curr_x, curr_y, rect_width, rect_height)
+          addVertex(ipcRenderer, "../../resources/images/mxGraph/empty.png", 40, 40, 'shape=rhombus')
+      } 
+      catch (err) {
+          return
+      }
+      finally{
+          // Updates the display
+          model.endUpdate()
+      }
 
-  // Stops editing on enter or escape keypress
-  // var keyHandler = new mxgraph.mxKeyHandler(graph)
-  // var rubberband = new mxgraph.mxRubberband(graph)
+      curr_x += tb_rect_width + horizontal_spacing
+      if (curr_x + tb_rect_width >= tb_div_width) {
+          curr_x = horizontal_spacing
+          curr_y += vertical_spacing + tb_rect_height
+      }
+  }
 
-  // add a new toolbar object
-  addVertex(ipcRenderer, "../../resources/images/mxGraph/rhombus.gif", 40, 40, 'shape=rhombus')
-}
+  ipcRenderer.send('debug', toolbox.container.nodeName)
+}*/
 
 // --------- Graph Methods ---------
 
@@ -140,6 +212,8 @@ function initGraph() {
   graph.setCellsEditable(false) // TODO: add feature so that this rename is connected to what's happening with the internal representation
   graph.setCellsDisconnectable(false)
   graph.setConnectable(false)
+
+  graph.center()
 }
 
 function displayTests(){
@@ -257,7 +331,7 @@ function init (ipcRenderer) {
   diagram_div.addEventListener('wheel', scrollHandler)
   
   
-  initToolbox(ipcRenderer, graph, model)
+  initToolbox(ipcRenderer)
 
   //displayTests()
   //wipeGraphicalDisplay()

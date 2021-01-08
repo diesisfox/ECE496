@@ -109,16 +109,36 @@ body
 
 .module-toolbox {
     position:absolute;
+    
     right: 5px;
     top: 5px;
 
-    width: 200px;
+    width: 230px;
     height: 350px;
-    
+
     background-color: var(--light-menu-background);
     border-radius: 10px;
 
-    overflow: auto;
+    overflow-y: scroll;
+}
+
+.module-toolbox-icon {
+    /* position: absolute; */
+    float: left;
+    width:80px;
+    height:30px;
+
+    border-radius: 10px;
+    line-height: 30px;
+    text-align: center;
+    font-family: var(--normal-font);
+    background-color: white;
+
+    cursor: grab;
+}
+
+.module-toolbox-icon:active {
+    cursor: grabbing;
 }
 
 .add-module-bar {
