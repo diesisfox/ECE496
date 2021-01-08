@@ -72,7 +72,7 @@ function addMenuListeners(ipcMain){
     console.log("filePath: " + file_manager.openSaveDialog(main_win))
   })
   ipcMain.on('remove module', function(event, arg) {
-    console.log("attempting to remove cell: " + arg + ", name: " + arg.value)
+    console.log("attempting to remove cell: " + arg + ", name: " + arg.value + ", uid: " + arg.uid)
     event.reply('system-message', "removing a module is not fully implemented")
   })
   ipcMain.on('generate', function(event, arg) {

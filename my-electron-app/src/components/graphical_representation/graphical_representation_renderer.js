@@ -234,6 +234,7 @@ function displayJSON(json){
     try
     {
       let v1 = graph.insertVertex(parentCell, null, 'Hello'+i, corner_x, corner_y, rect_width, rect_height)
+      v1.uid = i
       let e1 = graph.insertEdge(parentCell, null, '', v1, center)//, 'defaultEdge;endArrow='
     } 
     catch (err) {
