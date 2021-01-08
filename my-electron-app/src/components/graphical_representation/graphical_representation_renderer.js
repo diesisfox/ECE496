@@ -115,7 +115,7 @@ function initToolbox (ipcRenderer){
 
 // --------- Graph Methods ---------
 
-function initGraph() {
+function initGraph(ipcRenderer) {
   model = new mxgraph.mxGraphModel()
   graph = new mxgraph.mxGraph(diagram_div, model)
 
@@ -150,9 +150,18 @@ function initGraph() {
   graph.setConnectableEdges(false)
   graph.setCellsResizable(false)
   //graph.setCellsBendable(false) //unsure if needed
-  graph.setCellsEditable(false) // TODO: add feature so that this rename is connected to what's happening with the internal representation
+  //graph.setCellsEditable(false) // TODO: add feature so that this rename is connected to what's happening with the internal representation
   graph.setCellsDisconnectable(false)
   graph.setConnectable(false)
+
+  // add edit event listener
+  model.valueForCellChanged = function(cell, value){
+    ipcRenderer.send('debug', "woah, edited? That's rude, because we haven't done JSON yet!")
+    var previous = cell.value;
+    cell.value = value;
+
+    return previous;
+  };
 
   graph.center()
 }
@@ -266,7 +275,7 @@ const scrollHandler = function(event){
 
 // ------------ Initialization Code ------------
 function init (ipcRenderer) {
-  initGraph()
+  initGraph(ipcRenderer)
 
   // enable ability to zoom in and out using the scrollwheel
   diagram_div.addEventListener('wheel', scrollHandler)
