@@ -59,7 +59,6 @@ function createModuleIcon (ipcRenderer, index, margin, rect_width, rect_height){
 
   moduleIcon.style.width = rect_width + "px"
   moduleIcon.style.height = rect_height + "px"
-  //moduleIcon.style.lineHeight = rect_height + "px"
   moduleIcon.style.margin = margin + "px"
 
   moduleIcon.draggable = true
@@ -101,14 +100,14 @@ function initToolbox (ipcRenderer){
     ev.dataTransfer.dropEffect = 'copy'
 
   }
-
   diagram_div.ondragover = function (ev) {
     ev.preventDefault()
     ev.dataTransfer.dropEffect = 'copy'
   }
   diagram_div.ondrop = function (ev) {
     ev.preventDefault()
-    ipcRenderer.send('debug', ev.dataTransfer.getData('type_id'))
+    ipcRenderer.send('system-message', "module type " + ev.dataTransfer.getData('type_id') + " received, however module adding is " + 
+      "not implemented in the back")
     totalNum += 1
     displayJSON("")
   }

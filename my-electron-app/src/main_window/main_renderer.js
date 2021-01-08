@@ -22,6 +22,9 @@ const add_module_name = document.getElementById("add-module-name")
 const add_module_type = document.getElementById("add-module-type")
 const add_module_address = document.getElementById("add-module-address")
 
+// module toolbox
+const module_toolbox = document.getElementById("module-toolbox")
+
 // button listeners
 function addButtonListeners(){
     // left menu
@@ -34,16 +37,35 @@ function addButtonListeners(){
     save_as_button.addEventListener('click', function() {
         ipcRenderer.send('save as file', "")
     })
+    add_module_bar.displayed = false
+    module_toolbox.displayed = false
     add_button.addEventListener('click', function() {
-        if (add_module_bar.style.bottom === '5px'){
+        // add module bar
+        if (add_module_bar.displayed == true){
+            add_module_bar.displayed = false
             let animation = add_module_bar.animate({bottom: '-50px'}, 400)
             animation.onfinish = function() {
                 add_module_bar.style.bottom = '-50px'
             }
         } else {
+            add_module_bar.displayed = true
             let animation = add_module_bar.animate({bottom: '5px'}, 400)
             animation.onfinish = function() {
                 add_module_bar.style.bottom = '5px'
+            }
+        }
+        // toolbox
+        if (module_toolbox.displayed == true){
+            module_toolbox.displayed = false
+            let animation = module_toolbox.animate({top: '-350px'}, 400)
+            animation.onfinish = function() {
+                module_toolbox.style.top = '-350px'
+            }
+        } else {
+            module_toolbox.displayed = true
+            let animation = module_toolbox.animate({top: '5px'}, 400)
+            animation.onfinish = function() {
+                module_toolbox.style.top = '5px'
             }
         }
     })
