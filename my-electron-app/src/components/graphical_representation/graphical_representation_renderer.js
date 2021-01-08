@@ -44,6 +44,7 @@ const rect_width = 80
 const rect_height = 30
 let model = null
 let graph = null
+let panningHandler = null
 
 let totalNum = 1
 
@@ -118,6 +119,7 @@ function initToolbox (ipcRenderer){
 function initGraph(ipcRenderer) {
   model = new mxgraph.mxGraphModel()
   graph = new mxgraph.mxGraph(diagram_div, model)
+  panningHandler = new mxgraph.mxPanningHandler(graph)
 
   // styles
   let edge_style = graph.getStylesheet().getDefaultEdgeStyle()
@@ -153,6 +155,9 @@ function initGraph(ipcRenderer) {
   //graph.setCellsEditable(false) // TODO: add feature so that this rename is connected to what's happening with the internal representation
   graph.setCellsDisconnectable(false)
   graph.setConnectable(false)
+
+  panningHandler.useLeftButtonForPanning = true
+  panningHandler.ignoreCell = true
 
   // add edit event listener
   model.valueForCellChanged = function(cell, value){
