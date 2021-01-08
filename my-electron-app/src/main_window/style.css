@@ -123,13 +123,14 @@ body
 }
 
 .module-toolbox-icon {
+    display: flex;
     float: left;
-    width:80px;
-    height:30px;
+    width: 80px;
+    height: 30px;
 
     border-radius: 10px;
-    line-height: 30px;
-    text-align: center;
+    align-items: center;
+    justify-content: center;
     font-family: var(--normal-font);
     background-color: white;
 

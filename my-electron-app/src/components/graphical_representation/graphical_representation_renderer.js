@@ -53,8 +53,13 @@ function createModuleIcon (ipcRenderer, index, margin, rect_width, rect_height){
   var moduleIcon = document.createElement("div")
   moduleIcon.className = 'module-toolbox-icon'
 
+  var text = document.createElement('p')
+  text.style.textAlign = 'center'
+  moduleIcon.appendChild(text)
+
   moduleIcon.style.width = rect_width + "px"
   moduleIcon.style.height = rect_height + "px"
+  //moduleIcon.style.lineHeight = rect_height + "px"
   moduleIcon.style.margin = margin + "px"
 
   moduleIcon.draggable = true
@@ -68,7 +73,8 @@ function createModuleIcon (ipcRenderer, index, margin, rect_width, rect_height){
     //ev.dataTransfer.setDragImage(img, 0, 0)
   }
 
-  moduleIcon.textContent = module_types[index]['type']
+  // add in module type details
+  text.textContent = module_types[index]['type']
   if (NON_PERIPHERAL_COLOR in module_types[index]){
     moduleIcon.style.backgroundColor = module_types[index][NON_PERIPHERAL_COLOR]
   } else {
