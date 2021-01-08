@@ -79,13 +79,13 @@ function createModuleIcon (ipcRenderer, index, margin, rect_width, rect_height){
 }
 
 function initToolbox (ipcRenderer){
-  const totalNum = 13 // later, change so that we use an array of modules types instead
+  const total_module_types = module_types.length
   const margin = (tb_div_width - tb_rect_width * tb_icon_num_per_row) / (tb_icon_num_per_row) / 2
 
   // add a toolbar objects
   let i = 0
   
-  for (i = 0; i < totalNum; i++){
+  for (i = 0; i < total_module_types; i++){
     toolbox_div.appendChild(createModuleIcon(ipcRenderer, i, margin, tb_rect_width, tb_rect_height))
   }
 
@@ -103,6 +103,8 @@ function initToolbox (ipcRenderer){
   diagram_div.ondrop = function (ev) {
     ev.preventDefault()
     ipcRenderer.send('debug', ev.dataTransfer.getData('type_id'))
+    totalNum += 1
+    displayJSON("")
   }
 }
 
