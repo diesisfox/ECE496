@@ -8,14 +8,38 @@ const mxgraph = require("mxgraph")({
 const theme = require("../theme.js")
 
 // --------- Files Variables & Constants ---------
-//ipcRenderer.send("debug", variable)
+const NON_PERIPHERAL_COLOR = "non_peripheral_color"
+const module_types = [
+  {
+    type: 'user-defined',
+    non_peripheral_color: '#f2f2f2', //if not a peripheral, include a color
+  },
+  {
+    type: 'CPU',
+    non_peripheral_color: '#ffffcc', //if not a peripheral, include a color
+  },
+  {
+    type: 'Memory',
+    non_peripheral_color: '#e5ffcc', //if not a peripheral, include a color
+  }, 
+  {type: 'SPI'},
+  {type: 'GPIO'},
+  {type: 'VGA'},
+  {type: 'UART'},
+  {type: 'ADC'},
+  {type: 'I2C'},
+  {type: 'Duplex SAI and CODEC'},
+  {type: 'PS/2'},
+  {type: 'Composite Video'},
+  {type: 'On-Chip Memory'}
+]
 
 const diagram_div = document.getElementById("model-diagram-display")
 const toolbox_div = document.getElementById("module-toolbox")
 const tb_div_width = toolbox_div.clientWidth
 const tb_icon_num_per_row = 2 //number of modules per row
 const tb_rect_width = 80
-const tb_rect_height = 50
+const tb_rect_height = 100
 const rect_width = 80
 const rect_height = 30
 let model = null
@@ -29,15 +53,20 @@ function createModuleIcon (ipcRenderer, index, margin, rect_width, rect_height){
   var moduleIcon = document.createElement("div")
   moduleIcon.className = 'module-toolbox-icon'
 
-  moduleIcon.style.width = rect_width
-  moduleIcon.style.height = rect_height
-  //moduleIcon.style.left = x + "px"
-  //moduleIcon.style.top = y + "px"
+  moduleIcon.style.width = rect_width + "px"
+  moduleIcon.style.height = rect_height + "px"
   moduleIcon.style.margin = margin + "px"
 
   moduleIcon.draggable = true
   moduleIcon.ondragstart = function(ev) {
     ev.dataTransfer.setData('type_id', index)
+  }
+
+  moduleIcon.textContent = module_types[index]['type']
+  if (NON_PERIPHERAL_COLOR in module_types[index]){
+    moduleIcon.style.backgroundColor = module_types[index][NON_PERIPHERAL_COLOR]
+  } else {
+    moduleIcon.style.backgroundColor = theme.light_blue_color
   }
 
   return moduleIcon
@@ -57,14 +86,22 @@ function initToolbox (ipcRenderer){
   // set drag handlers
   toolbox_div.ondragover = function (ev) {
     ev.preventDefault()
+    toolbox_div.style.cursor = 'grabbing' //doesn't work
+  }
+  toolbox_div.ondragend = function (ev) {
+    toolbox_div.style.cursor = 'auto'
   }
 
   diagram_div.ondragover = function (ev) {
     ev.preventDefault()
+    toolbox_div.style.cursor = 'grabbing' //doesn't work
   }
   diagram_div.ondrop = function (ev) {
     ev.preventDefault()
     ipcRenderer.send('debug', ev.dataTransfer.getData('type_id'))
+  }
+  toolbox_div.ondragend = function (ev) {
+    toolbox_div.style.cursor = 'auto'
   }
 }
 
