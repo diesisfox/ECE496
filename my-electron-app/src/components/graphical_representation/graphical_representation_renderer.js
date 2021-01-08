@@ -61,11 +61,11 @@ function createModuleIcon (ipcRenderer, index, margin, rect_width, rect_height){
   moduleIcon.ondragstart = function(ev) {
     //ev.preventDefault()
     ev.dataTransfer.setData('type_id', index)
-    ev.dataTransfer.effectAllowed = 'move'
+    ev.dataTransfer.effectAllowed = 'copy'
     //remove 'ghost image' by replacing it with a transparent image
-    var img = new Image();
-    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
-    ev.dataTransfer.setDragImage(img, 0, 0)
+    //var img = new Image();
+    //img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+    //ev.dataTransfer.setDragImage(img, 0, 0)
   }
 
   moduleIcon.textContent = module_types[index]['type']
@@ -92,12 +92,13 @@ function initToolbox (ipcRenderer){
   // set drag handlers
   toolbox_div.ondragover = function (ev) {
     ev.preventDefault()
-    ev.dataTransfer.dropEffect = 'move'
+    ev.dataTransfer.dropEffect = 'copy'
 
   }
 
   diagram_div.ondragover = function (ev) {
     ev.preventDefault()
+    ev.dataTransfer.dropEffect = 'copy'
   }
   diagram_div.ondrop = function (ev) {
     ev.preventDefault()
