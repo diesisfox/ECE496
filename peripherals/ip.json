@@ -1,0 +1,28 @@
+[
+    {
+        "name": "GPIO",
+        "source": "peripherals/gpio/gpio_main.sv",
+        "moduleName": "ip_gpio_main",
+        "options": [
+            {
+                "name": "pins",
+                "type": "number"
+            }
+        ],
+        "interfaces": [
+            {
+                "type": "AXI5-Lite",
+                "port": "<port_name>"
+            },
+            {
+                "type": "IO",
+                "port": "exports",
+                "width": 8,
+                "pinmap": [
+                    [0, "A13", "3V3", "slow"],
+                    [1, "K12", "3V3", "slow"]
+                ]
+            }
+        ]
+    }
+]
