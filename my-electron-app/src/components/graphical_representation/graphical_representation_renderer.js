@@ -59,7 +59,13 @@ function createModuleIcon (ipcRenderer, index, margin, rect_width, rect_height){
 
   moduleIcon.draggable = true
   moduleIcon.ondragstart = function(ev) {
+    //ev.preventDefault()
     ev.dataTransfer.setData('type_id', index)
+    ev.dataTransfer.effectAllowed = 'move'
+    //remove 'ghost image' by replacing it with a transparent image
+    var img = new Image();
+    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+    ev.dataTransfer.setDragImage(img, 0, 0)
   }
 
   moduleIcon.textContent = module_types[index]['type']
@@ -86,22 +92,16 @@ function initToolbox (ipcRenderer){
   // set drag handlers
   toolbox_div.ondragover = function (ev) {
     ev.preventDefault()
-    toolbox_div.style.cursor = 'grabbing' //doesn't work
-  }
-  toolbox_div.ondragend = function (ev) {
-    toolbox_div.style.cursor = 'auto'
+    ev.dataTransfer.dropEffect = 'move'
+
   }
 
   diagram_div.ondragover = function (ev) {
     ev.preventDefault()
-    toolbox_div.style.cursor = 'grabbing' //doesn't work
   }
   diagram_div.ondrop = function (ev) {
     ev.preventDefault()
     ipcRenderer.send('debug', ev.dataTransfer.getData('type_id'))
-  }
-  toolbox_div.ondragend = function (ev) {
-    toolbox_div.style.cursor = 'auto'
   }
 }
 
