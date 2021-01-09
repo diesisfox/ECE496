@@ -1,12 +1,21 @@
 [
     {
-        "name": "GPIO",
+        "moduleType": "GPIO",
         "source": "peripherals/gpio/gpio_main.sv",
-        "moduleName": "ip_gpio_main",
-        "options": [
+        "verilogName": "ip_gpio_main",
+        "parameters": [
             {
-                "name": "pins",
-                "type": "number"
+                "paramName": "pins",
+                "paramType": "Number",
+                "default": 8
+            },
+            {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol"
+            },
+            {
+                "paramName": "Base Address",
+                "paramType": "Number"
             }
         ],
         "interfaces": [
