@@ -106,6 +106,7 @@ dist
 
 # Electron
 my-electron-app/node_modules/
+my-electron-app/releases/
 
 # Don't know if we need it
 package-lock_hidden.json
