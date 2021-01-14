@@ -1,7 +1,7 @@
 const {ipcRenderer} = require('electron')
 
 const python_terminal_renderer = require('../components/python_terminal/python_terminal_renderer.js')
-const graphical_representation_renderer = require('../components/graphical_representation_spiderweb/graphical_representation_renderer.js')
+const graphical_representation_renderer = require('../components/graphical_representation_backbone/graphical_representation_renderer.js')
 //const graphical_toolbox_renderer = require('../components/graphical_representation/graphical_toolbox_renderer.js')
 
 // -------- HTML ELEMENTS --------
@@ -70,13 +70,13 @@ function addButtonListeners(){
         }
     })
     remove_button.addEventListener('click', function() {
-        let cell = graphical_representation_renderer.getSelected()
-        if (cell != null && cell.isVertex()){
-            ipcRenderer.send('remove module', cell)
-        } else {
-            ipcRenderer.send('debug', "invalid module")
-            ipcRenderer.send('system-message', "Invalid selection, please click on a valid module before clicking this button.")
-        }
+        // let cell = graphical_representation_renderer.getSelected()
+        // if (cell != null && cell.isVertex()){
+        //     ipcRenderer.send('remove module', cell)
+        // } else {
+        //     ipcRenderer.send('debug', "invalid module")
+        //     ipcRenderer.send('system-message', "Invalid selection, please click on a valid module before clicking this button.")
+        // }
     })
     generate_button.addEventListener('click', function() {
         ipcRenderer.send('generate', "")

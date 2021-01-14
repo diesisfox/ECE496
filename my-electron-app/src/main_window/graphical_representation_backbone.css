@@ -70,6 +70,11 @@
     height: 15px;
 }
 
+.module-box-main {
+    width: 100px;
+    height: 100px;
+}
+
 /* DEPRECATED */
 .model-img {
     display: block;
