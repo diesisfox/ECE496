@@ -26,8 +26,13 @@ const module_types = [
 ]
 
 
+// --------- JSON ---------
+//import * as data from './components/verilog_generation/IP_database.json'
+const data = require('./components/verilog_generation/IP_database.json')
+const IP_database = data
 
 module.exports = {
     NON_PERIPHERAL_COLOR,
     module_types,
+    IP_database,
 }

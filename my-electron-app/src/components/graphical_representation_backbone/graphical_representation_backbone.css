@@ -19,7 +19,7 @@
     width: 100px;
     height: 100px;
 
-    -webkit-transform:rotate(180deg);
+    /* -webkit-transform:rotate(180deg); */
 
     float: right;
 }

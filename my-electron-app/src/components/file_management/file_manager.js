@@ -8,7 +8,7 @@ const filter_list = [
     {name: 'All Files', extensions: ['*']}
 ]
 
-
+fs.mkdirSync("saves", { recursive: true })
 
 // TODO: simplify this so that it doesn't use a nested function
 

@@ -1,0 +1,38 @@
+[
+    {
+        "moduleType": "GPIO",
+        "source": "peripherals/gpio/gpio_main.sv",
+        "verilogName": "ip_gpio_main",
+        "parameters": [
+            {
+                "paramName": "pins",
+                "paramType": "Number",
+                "default": 8
+            },
+            {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol"
+            },
+            {
+                "paramName": "Base Address",
+                "paramType": "Number"
+            }
+        ],
+        "interfaces": [
+            {
+                "type": "AXI5-Lite",
+                "port": "<port_name>"
+            },
+            {
+                "type": "IO",
+                "port": "exports",
+                "width": 8,
+                "pinmap": [
+                    [0, "A13", "3V3", "slow"],
+                    [1, "K12", "3V3", "slow"]
+                ]
+            }
+        ]
+    }
+]
+ 

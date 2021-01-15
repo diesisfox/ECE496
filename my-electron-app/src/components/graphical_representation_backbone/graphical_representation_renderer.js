@@ -47,10 +47,11 @@ function createSVGModuleRep (ipcRenderer) {
   let i = 0
   for (i = 0; i < totalNum; i++){
     ipcRenderer.send('debug', '1')
-    let element = document.createElementNS(ns, 'circle')
-    element.setAttribute("cx",100);
-    element.setAttribute("cy",100);
-    element.setAttribute("r",100);
+    let element = document.createElementNS(ns, 'rect')
+    element.setAttribute("x",100);
+    element.setAttribute("y",100);
+    element.setAttribute("width",100);
+    element.setAttribute("height",100);
     element.setAttribute("fill",'yellow');
     element.style.backgroundColor = 'white'
     svg_diagram.appendChild(element)
