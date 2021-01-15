@@ -1,5 +1,6 @@
 const theme_style = getComputedStyle(document.body)
 const light_blue_color = getHexFromRGB(theme_style.getPropertyValue("--button-hover-border"))
+const normal_font = theme_style.getPropertyValue("--normal-font")
 
 function getHexFromRGB(rgb_string){
     // get R,G,B
@@ -18,5 +19,6 @@ function getHexFromRGB(rgb_string){
 module.exports = {
     theme_style,
     light_blue_color,
+    normal_font,
     getHexFromRGB,
 }

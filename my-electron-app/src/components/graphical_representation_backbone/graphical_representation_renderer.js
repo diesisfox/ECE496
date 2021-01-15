@@ -1,16 +1,16 @@
 const toolbox = require("../toolbox/toolbox.js")
 const theme = require("../theme.js")
 const CONSTANTS = require("../../constants.js")
+const dummy_save = require("./dummy.json")
 
 const ns = "http://www.w3.org/2000/svg"
 const diagram_div = document.getElementById("model-diagram-display")
-const rect_width = 80
-const rect_height = 30
-let model = null
-let graph = null
-let panningHandler = null
-
-let totalNum = 1
+const rect_width = 200
+const rect_height = 200
+const rect_left_margin = 20
+const rect_corner_radius = 10
+const rect_y = 200
+const padding = 10
 
 
 
@@ -36,32 +36,89 @@ function createHtmlModuleRep (){
   module.style.backgroundColor = theme.light_blue_color
 }
 
-function createSVGModuleRep (ipcRenderer) {
+function createSingleSVGModule(ipcRenderer, pos_x, module_json){
+  ipcRenderer.send('debug', 'start')
   
+  let element = document.createElementNS(ns, 'g')
+
+  let background = document.createElementNS(ns, 'rect')
+  background.setAttribute("x",pos_x)
+  background.setAttribute("y",rect_y)
+  background.setAttribute("rx",rect_corner_radius)
+  background.setAttribute("ry",rect_corner_radius)
+  background.setAttribute("width",rect_width)
+  background.setAttribute("height",rect_height)
+  background.setAttribute('stroke', 'gray')
+  background.setAttribute('stroke-width', '4')
+  background.setAttribute('stroke-opacity', 0.5)
+  if (CONSTANTS.NON_PERIPHERAL_COLOR in module_json){
+    background.setAttribute("fill",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
+  } else {
+    background.setAttribute("fill",theme.light_blue_color)
+  }
+  element.appendChild(background)
+
+  let line = document.createElementNS(ns, 'line')
+  line.setAttribute("x1", Math.round(pos_x + rect_width / 2))
+  line.setAttribute("y1",rect_y + rect_height)
+  line.setAttribute("x2",Math.round(pos_x + rect_width / 2))
+  line.setAttribute("y2", 600)
+  line.setAttribute('stroke', 'gray')
+  line.setAttribute('stroke-width', '4')
+  element.appendChild(line)
+
+  let nick = document.createElementNS(ns, 'text')
+  nick.setAttribute('x', pos_x + padding)
+  nick.setAttribute('y', rect_y + padding * 2)
+  nick.textContent = module_json[CONSTANTS.PARAMETERS][CONSTANTS.INSTANCE_NAME]
+  element.appendChild(nick)
+
+  // write other parameters
+  let param_y = rect_y + rect_width - padding * 2
+  for (var key in module_json[CONSTANTS.PARAMETERS]){
+    if (key == CONSTANTS.INSTANCE_NAME){ continue }
+
+    let param = document.createElementNS(ns, 'text')
+    param.setAttribute('x', pos_x + padding)
+    param.setAttribute('y', param_y)
+    param.textContent = key + ": " + module_json[CONSTANTS.PARAMETERS][key]
+    param.setAttribute('fill', 'gray')
+    //param.style.color = 'red'
+    element.appendChild(param)
+    param_y -= padding * 2
+  }
+
+  ipcRenderer.send('debug', 'end')
+
+  return element
+}
+
+function createSVGModuleRep (ipcRenderer, json_object) {
+  let total = json_object.length
+  ipcRenderer.send('debug', "total: " + total)
+
   let svg_diagram = document.createElementNS(ns, "svg")
-  svg_diagram.setAttributeNS(null, "width", '100%')
+  svg_diagram.setAttributeNS(null, "width", (rect_width + rect_left_margin) * total + rect_left_margin)
   svg_diagram.setAttributeNS(null, "height", '100%')
-  svg_diagram.style.backgroundColor = theme.light_blue_color
+  svg_diagram.style.fontFamily = theme.normal_font
+  svg_diagram.style.overflow = 'visible'
   diagram_div.appendChild(svg_diagram)
 
   let i = 0
-  for (i = 0; i < totalNum; i++){
-    ipcRenderer.send('debug', '1')
-    let element = document.createElementNS(ns, 'rect')
-    element.setAttribute("x",100);
-    element.setAttribute("y",100);
-    element.setAttribute("width",100);
-    element.setAttribute("height",100);
-    element.setAttribute("fill",'yellow');
-    element.style.backgroundColor = 'white'
-    svg_diagram.appendChild(element)
-    ipcRenderer.send('debug', '2')
+  let pos_x = rect_left_margin
+  for (i = 0; i < total; i++){
+    svg_diagram.appendChild(createSingleSVGModule(ipcRenderer, pos_x, json_object[i]))
+    pos_x += rect_width + rect_left_margin
   }
 }
 
+function displayTESTJSON (ipcRenderer){
+  displayJSON(dummy_save)
+}
+
 // unfinished, needs JSON schema for completion
-function displayJSON(ipcRenderer,json){
-  createSVGModuleRep(ipcRenderer)
+function displayJSON(ipcRenderer,json_object){
+  createSVGModuleRep(ipcRenderer, dummy_save)
 
 
 }
