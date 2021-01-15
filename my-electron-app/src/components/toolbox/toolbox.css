@@ -1,17 +1,3 @@
-.model-diagram-display{
-    position: relative; 
-    overflow: hidden; 
-    width: 100%; 
-    height: 100%; 
-    cursor: default; 
-    touch-action: none;
-    user-select: none;
-}
-
-.model-diagram-display::-webkit-scrollbar {
-    display: none;
-}
-
 .module-toolbox {
     position:absolute;
     
@@ -68,23 +54,4 @@
 
     width: 100px;
     height: 15px;
-}
-
-.module-box-main {
-    width: 100px;
-    height: 100px;
-}
-
-/* DEPRECATED */
-.model-img {
-    display: block;
-    margin: 0 auto;
-    height: auto;
-    width: auto;
-    
-    /* disable selection/dragging of image */
-    -khtml-user-drag: none;
-    -o-user-drag: none;
-    -moz-user-drag: none;
-    -webkit-user-drag: none;
 }

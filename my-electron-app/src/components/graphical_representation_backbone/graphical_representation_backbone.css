@@ -1,0 +1,39 @@
+.model-diagram-display{
+    position: relative; 
+    overflow: hidden; 
+
+    width: 100%; 
+    height: 100%; 
+
+    /* cursor: default; 
+    touch-action: none;
+    user-select: none; */
+    /* -webkit-transform:rotate(180deg); */
+}
+
+.model-diagram-display::-webkit-scrollbar {
+    display: none;
+}
+
+.module-box-main {
+    width: 100px;
+    height: 100px;
+
+    -webkit-transform:rotate(180deg);
+
+    float: right;
+}
+
+/* DEPRECATED */
+.model-img {
+    display: block;
+    margin: 0 auto;
+    height: auto;
+    width: auto;
+    
+    /* disable selection/dragging of image */
+    -khtml-user-drag: none;
+    -o-user-drag: none;
+    -moz-user-drag: none;
+    -webkit-user-drag: none;
+}

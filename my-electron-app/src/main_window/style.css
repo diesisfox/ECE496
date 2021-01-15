@@ -1,5 +1,6 @@
-@import "console.css";
-@import "graphical_representation_backbone.css";
+@import "../components/python_terminal/console.css";
+@import "../components/graphical_representation_backbone/graphical_representation_backbone.css";
+@import "../components/toolbox/toolbox.css";
 
 html
 {
