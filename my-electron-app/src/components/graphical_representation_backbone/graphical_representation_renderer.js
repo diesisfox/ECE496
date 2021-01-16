@@ -10,7 +10,7 @@ const rect_height = 200
 const rect_left_margin = 20
 const rect_corner_radius = 10
 const rect_y = 200
-const padding = 10
+const padding = 20
 
 
 
@@ -48,12 +48,16 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   background.setAttribute("ry",rect_corner_radius)
   background.setAttribute("width",rect_width)
   background.setAttribute("height",rect_height)
-  background.setAttribute('stroke', 'gray')
+  //background.setAttribute('stroke', 'gray')
+  //background.setAttribute('fill', 'white')
+  background.setAttribute('fill-opacity', 0.15)
   background.setAttribute('stroke-width', '4')
   background.setAttribute('stroke-opacity', 0.5)
   if (CONSTANTS.NON_PERIPHERAL_COLOR in module_json){
+    background.setAttribute("stroke",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
     background.setAttribute("fill",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
   } else {
+    background.setAttribute("stroke",theme.light_blue_color)
     background.setAttribute("fill",theme.light_blue_color)
   }
   element.appendChild(background)
@@ -70,6 +74,7 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   let nick = document.createElementNS(ns, 'text')
   nick.setAttribute('x', pos_x + padding)
   nick.setAttribute('y', rect_y + padding * 2)
+  nick.setAttribute('font-weight', 'bold')
   nick.textContent = module_json[CONSTANTS.PARAMETERS][CONSTANTS.INSTANCE_NAME]
   element.appendChild(nick)
 
@@ -85,7 +90,7 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
     param.setAttribute('fill', 'gray')
     //param.style.color = 'red'
     element.appendChild(param)
-    param_y -= padding * 2
+    param_y -= padding
   }
 
   ipcRenderer.send('debug', 'end')
@@ -119,7 +124,7 @@ function displayTESTJSON (ipcRenderer){
 // unfinished, needs JSON schema for completion
 function displayJSON(ipcRenderer,json_object){
   createSVGModuleRep(ipcRenderer, dummy_save)
-
+  
 
 }
 
