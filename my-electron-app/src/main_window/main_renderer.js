@@ -43,23 +43,23 @@ function addButtonListeners(){
         // add module bar
         if (add_module_bar.displayed == true){
             add_module_bar.displayed = false
-            let animation = add_module_bar.animate({bottom: '-50px'}, 400)
+            let animation = add_module_bar.animate({top: '-150px'}, 400)
             animation.onfinish = function() {
-                add_module_bar.style.bottom = '-50px'
+                add_module_bar.style.top = '-150px'
             }
         } else {
             add_module_bar.displayed = true
-            let animation = add_module_bar.animate({bottom: '5px'}, 400)
+            let animation = add_module_bar.animate({top: '5px'}, 400)
             animation.onfinish = function() {
-                add_module_bar.style.bottom = '5px'
+                add_module_bar.style.top = '5px'
             }
         }
         // toolbox
         if (module_toolbox.displayed == true){
             module_toolbox.displayed = false
-            let animation = module_toolbox.animate({top: '-350px'}, 400)
+            let animation = module_toolbox.animate({top: '-225px'}, 400)
             animation.onfinish = function() {
-                module_toolbox.style.top = '-350px'
+                module_toolbox.style.top = '-225px'
             }
         } else {
             module_toolbox.displayed = true

@@ -4,7 +4,7 @@ const theme = require("../theme.js")
 const diagram_div = document.getElementById("model-diagram-display")
 const toolbox_div = document.getElementById("module-toolbox")
 const tb_div_width = toolbox_div.clientWidth
-const tb_icon_num_per_row = 2 //number of modules per row
+const tb_icon_num_per_row = 3 //number of modules per row
 const tb_rect_width = 80
 const tb_rect_height = 100
 

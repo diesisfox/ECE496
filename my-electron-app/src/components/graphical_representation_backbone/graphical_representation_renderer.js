@@ -79,7 +79,7 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   element.appendChild(nick)
 
   // write other parameters
-  let param_y = rect_y + rect_width - padding * 2
+  let param_y = rect_y + rect_width - padding
   for (var key in module_json[CONSTANTS.PARAMETERS]){
     if (key == CONSTANTS.INSTANCE_NAME){ continue }
 
