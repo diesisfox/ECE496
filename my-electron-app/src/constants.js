@@ -1,5 +1,6 @@
 // --------- Files Variables & Constants ---------
 const NON_PERIPHERAL_COLOR = "non_peripheral_color"
+const MOD_ID_PREFIX = "mod_"
 const PARAMETERS = "parameters"
 const UUID = "UUID"
 const INSTANCE_NAME = "Verilog Instance Name"
@@ -36,6 +37,7 @@ const IP_database = data
 
 module.exports = {
     NON_PERIPHERAL_COLOR,
+    MOD_ID_PREFIX,
     PARAMETERS,
     UUID,
     INSTANCE_NAME,

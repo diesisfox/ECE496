@@ -16,6 +16,9 @@ const padding = 20
 let pos = { top: 0, left: 0, x: 0, y: 0 };
 let mousedown = false; //mouse dragging on img
 
+// for selection
+let selected_module_element = null
+
 
 
 // --------- Display Methods ---------
@@ -57,21 +60,13 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   element.appendChild(line)
 
   let main_body = document.createElementNS(ns, 'rect')
-  main_body.id = "mod-" + module_json[CONSTANTS.UUID]
+  main_body.id = CONSTANTS.MOD_ID_PREFIX + module_json[CONSTANTS.UUID]
   main_body.setAttribute("x",pos_x)
   main_body.setAttribute("y",rect_y)
   main_body.setAttribute("rx",rect_corner_radius)
   main_body.setAttribute("ry",rect_corner_radius)
   main_body.setAttribute("width",rect_width)
   main_body.setAttribute("height",rect_height)
-  main_body.addEventListener('focus', (ev) => {
-    main_body.style.outlineColor = theme.light_blue_color
-    main_body.style.outlineStyle = 'dashed'
-    ipcRenderer.send('debug', 'focused on: '+ ev.target.id)
-  })
-  main_body.addEventListener('focusout', (ev) => {
-    main_body.style.outlineStyle = 'none'
-  })
   //background.setAttribute('stroke', 'gray')
   //background.setAttribute('fill', 'white')
   main_body.setAttribute('fill-opacity', 0.15)
@@ -85,6 +80,17 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
     main_body.setAttribute("stroke",theme.light_blue_color)
     main_body.setAttribute("fill",theme.light_blue_color)
   }
+
+  main_body.addEventListener('focus', (ev) => {
+    if (selected_module_element != null) {resetHighlighted(selected_module_element)}
+    setHighlighted(main_body)
+    selected_module_element = main_body
+    //ipcRenderer.send('debug', 'focused on: '+ ev.target.id)
+  })
+  main_body.addEventListener('focusout', (ev) => {
+    //main_body.style.outlineStyle = 'none'
+  })
+
   element.appendChild(main_body)
 
   let nick = document.createElementNS(ns, 'text')
@@ -129,6 +135,13 @@ function createSVGModuleRep (ipcRenderer, json_object) {
   svg_diagram.setAttributeNS(null, "height", '100%')
   svg_diagram.style.fontFamily = theme.normal_font
   svg_diagram.style.overflow = 'visible'
+  svg_diagram.style.outline = 'none'
+
+  svg_diagram.addEventListener('focus', (ev) => {
+    if (selected_module_element != null) {resetHighlighted(selected_module_element)}
+    selected_module_element = null
+  })
+
   diagram_div.appendChild(svg_diagram)
 
   let i = 0
@@ -140,15 +153,48 @@ function createSVGModuleRep (ipcRenderer, json_object) {
 }
 
 function displayTESTJSON (ipcRenderer){
-  displayJSON(dummy_save)
+  displayJSON(ipcRenderer, dummy_save)
 }
 
 // unfinished, needs JSON schema for completion
 function displayJSON(ipcRenderer,json_object){
-  createSVGModuleRep(ipcRenderer, dummy_save)
-  
-
+  createSVGModuleRep(ipcRenderer, json_object)
 }
+
+// ------------ Selection ------------
+
+function getSelected(){
+  return selected_module_element
+}
+
+// ------------ SVG ------------
+function createSVGRect(id, x, y, corner_r, width, height, fill_opacity, stroke_width, stroke_opacity){
+  let rect = document.createElementNS(ns, 'rect')
+  rect.id = id
+  rect.setAttribute("x",x)
+  rect.setAttribute("y",y)
+  rect.setAttribute("rx",corner_r)
+  rect.setAttribute("ry",corner_r)
+  rect.setAttribute("width",width)
+  rect.setAttribute("height",height)
+  //background.setAttribute('stroke', 'gray')
+  //background.setAttribute('fill', 'white')
+  rect.setAttribute('fill-opacity', fill_opacity)
+  rect.setAttribute('stroke-width', stroke_width)
+  rect.setAttribute('stroke-opacity', stroke_opacity)
+
+  return rect
+}
+
+function setHighlighted(rect_element){
+  rect_element.style.outlineColor = theme.light_blue_color
+  rect_element.style.outlineStyle = 'dashed'
+}
+
+function resetHighlighted(rect_element){
+  rect_element.style.outline = 'none'
+}
+
 
 // ------------ Handlers ------------
 function addPanningHandlers (ipcRenderer) {
@@ -199,7 +245,7 @@ function init (ipcRenderer) {
 
 //displayTests()
 //wipeGraphicalDisplay()
-  displayJSON(ipcRenderer, "blab")
+  displayTESTJSON(ipcRenderer)
 
   ipcRenderer.send('debug', 'finished')
 
@@ -214,5 +260,6 @@ function init (ipcRenderer) {
 
 module.exports = {
   displayJSON,
+  getSelected,
   init,
 }

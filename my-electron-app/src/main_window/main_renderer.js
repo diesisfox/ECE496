@@ -1,5 +1,6 @@
 const {ipcRenderer} = require('electron')
 
+const CONSTANTS = require("../constants.js")
 const python_terminal_renderer = require('../components/python_terminal/python_terminal_renderer.js')
 const graphical_representation_renderer = require('../components/graphical_representation_backbone/graphical_representation_renderer.js')
 //const graphical_toolbox_renderer = require('../components/graphical_representation/graphical_toolbox_renderer.js')
@@ -77,6 +78,14 @@ function addButtonListeners(){
         //     ipcRenderer.send('debug', "invalid module")
         //     ipcRenderer.send('system-message', "Invalid selection, please click on a valid module before clicking this button.")
         // }
+        let focused_id = graphical_representation_renderer.getSelected().id
+        let prefix_len = CONSTANTS.MOD_ID_PREFIX.length
+        if (focused_id.length > prefix_len && focused_id.slice(0,prefix_len) == CONSTANTS.MOD_ID_PREFIX){
+            ipcRenderer.send('system-message', "Tried to remove: " + focused_id)
+            ipcRenderer.send('system-message', "not fully implemented")
+        } else {
+            ipcRenderer.send('system-message', "Invalid selection, please click on a valid module before clicking this button.")
+        }
     })
     generate_button.addEventListener('click', function() {
         ipcRenderer.send('generate', "")
