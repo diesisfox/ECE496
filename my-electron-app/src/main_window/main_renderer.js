@@ -78,10 +78,12 @@ function addButtonListeners(){
         //     ipcRenderer.send('debug', "invalid module")
         //     ipcRenderer.send('system-message', "Invalid selection, please click on a valid module before clicking this button.")
         // }
-        let focused_id = graphical_representation_renderer.getSelected().id
+        let is_module = false
+
+        let focused = graphical_representation_renderer.getSelected()
         let prefix_len = CONSTANTS.MOD_ID_PREFIX.length
-        if (focused_id.length > prefix_len && focused_id.slice(0,prefix_len) == CONSTANTS.MOD_ID_PREFIX){
-            ipcRenderer.send('system-message', "Tried to remove: " + focused_id)
+        if (focused != null && focused.id.length > prefix_len && focused.id.slice(0,prefix_len) == CONSTANTS.MOD_ID_PREFIX){
+            ipcRenderer.send('system-message', "Tried to remove: " + focused.id)
             ipcRenderer.send('system-message', "not fully implemented")
         } else {
             ipcRenderer.send('system-message', "Invalid selection, please click on a valid module before clicking this button.")

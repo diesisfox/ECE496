@@ -44,7 +44,6 @@ function createHtmlModuleRep (){
 }
 
 function createSingleSVGModule(ipcRenderer, pos_x, module_json){
-  ipcRenderer.send('debug', 'start')
   
   let element = document.createElementNS(ns, 'g')
   element.style.cursor = 'pointer'
@@ -121,8 +120,6 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
     param_y -= padding
   }
 
-  ipcRenderer.send('debug', 'end')
-
   return element
 }
 
@@ -187,8 +184,7 @@ function createSVGRect(id, x, y, corner_r, width, height, fill_opacity, stroke_w
 }
 
 function setHighlighted(rect_element){
-  rect_element.style.outlineColor = theme.light_blue_color
-  rect_element.style.outlineStyle = 'dashed'
+  rect_element.style.outline = "2px dashed " + theme.light_blue_color
 }
 
 function resetHighlighted(rect_element){
