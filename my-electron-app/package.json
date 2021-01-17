@@ -2,7 +2,7 @@
   "name": "my-electron-app",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "./src/main.js",
   "scripts": {
     "start": "electron ."
   },
@@ -10,9 +10,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^11.0.3"
+    "electron": "^11.0.3",
+    "electron-packager": "^15.2.0",
+    "python-shell": "^2.0.3"
   },
   "dependencies": {
-    "python-shell": "^2.0.3"
+    "@sweetalert2/theme-default": "^4.0.1",
+    "electron-multi-prompt": "^1.0.5",
+    "mxgraph": "^4.2.2"
   }
 }
