@@ -3,11 +3,15 @@
         "moduleType": "GPIO",
         "source": "peripherals/gpio/gpio_main.sv",
         "verilogName": "ip_gpio_main",
+        "addrBits": 4,
         "parameters": [
             {
                 "paramName": "pins",
+                "verilogName": "PINS",
                 "paramType": "Number",
-                "default": 8
+                "default": 8,
+                "min": 1,
+                "max": 32
             },
             {
                 "paramName": "Verilog Instance Name",
@@ -15,21 +19,62 @@
             },
             {
                 "paramName": "Base Address",
+                "verilogName": "ADDR",
                 "paramType": "Number"
             }
         ],
         "interfaces": [
             {
-                "type": "AXI5-Lite",
-                "port": "<port_name>"
+                "type": "Simple_Mem_IF.COWI",
+                "port": "Bus"
             },
             {
-                "type": "IO",
-                "port": "exports",
-                "width": 8,
+                "type": "inout",
+                "port": "pins",
+                "width": "$pins",
                 "pinmap": [
                     [0, "A13", "3V3", "slow"],
                     [1, "K12", "3V3", "slow"]
+                ]
+            }
+        ]
+    },
+    {
+        "moduleType": "SPI_MANAGER",
+        "source": "peripherals/spi/spi_m_main.sv",
+        "verilogName": "spi_m_main",
+        "addrBits": 4,
+        "parameters": [
+            {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol"
+            },
+            {
+                "paramName": "Base Address",
+                "verilogName": "ADDR",
+                "paramType": "Number"
+            }
+        ],
+        "interfaces": [
+            {
+                "type": "Simple_Mem_IF.COWI",
+                "port": "Bus"
+            },
+            {
+                "type": "output",
+                "port": "pins_o",
+                "width": "3",
+                "pinmap": [
+                    [0, "A13", "3V3", "slow"],
+                    [1, "K12", "3V3", "slow"]
+                ]
+            },
+            {
+                "type": "input",
+                "port": "pins_i",
+                "width": "1",
+                "pinmap": [
+                    [0, "A13", "3V3", "slow"]
                 ]
             }
         ]

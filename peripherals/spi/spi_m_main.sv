@@ -1,13 +1,17 @@
-module ip_gpio_main #(
-    parameter unsigned int PINS = 8,
+module spi_m_main #(
     parameter bit [31:0] ADDR = 'h1000_0000
 ) (
     Simple_Mem_IF.COWI Bus,
-    inout logic [PINS-1:0] pins
+    output logic [3:0] pins_o,
+    input logic [0:0] pins_i
 );
 
+logic cs, clk, dout, din;
+assign pins_o = {cs, clk, dout};
+assign din = pins_i[0];
+
 localparam unsigned int ADDRBITS = 4;
-localparam bit [ADDRBITS-1:0] DIR_OFFSET = 'h0;
+localparam bit [ADDRBITS-1:0] CLKDIV_OFFSET = 'h0;
 localparam bit [ADDRBITS-1:0] READ_OFFSET = 'h4;
 localparam bit [ADDRBITS-1:0] WRITE_OFFSET = 'h8;
 
