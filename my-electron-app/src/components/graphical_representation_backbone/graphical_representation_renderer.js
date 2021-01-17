@@ -44,6 +44,7 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   ipcRenderer.send('debug', 'start')
   
   let element = document.createElementNS(ns, 'g')
+  element.style.cursor = 'pointer'
   
   let line = document.createElementNS(ns, 'line')
   line.setAttribute("x1", Math.round(pos_x + rect_width / 2))
@@ -52,6 +53,7 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   line.setAttribute("y2", 600)
   line.setAttribute('stroke', 'gray')
   line.setAttribute('stroke-width', '4')
+  line.style.cursor = 'grab'
   element.appendChild(line)
 
   let main_body = document.createElementNS(ns, 'rect')
