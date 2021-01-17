@@ -12,6 +12,10 @@ const rect_corner_radius = 10
 const rect_y = 200
 const padding = 20
 
+// mouse
+let pos = { top: 0, left: 0, x: 0, y: 0 };
+let mousedown = false; //mouse dragging on img
+
 
 
 // --------- Display Methods ---------
@@ -129,18 +133,59 @@ function displayJSON(ipcRenderer,json_object){
 }
 
 // ------------ Handlers ------------
+function addPanningHandlers (ipcRenderer) {
+  diagram_div.addEventListener('mousemove', mouseMoveHandler)
+  diagram_div.addEventListener('mousedown', mouseDownHandler)
+  document.addEventListener('mouseup', mouseUpHandler)
+}
 
+const mouseUpHandler = function() {
+  diagram_div.style.cursor = 'grab';
+  
+  mousedown = false;
+};
+
+const mouseMoveHandler = function(e) {
+  if (mousedown){
+    // How far the mouse has been moved
+    const dx = e.clientX - pos.x
+    //const dy = e.clientY - pos.y
+
+    // Scroll the element
+    //diagram_div.scrollTop = pos.top - dy
+    diagram_div.scrollLeft = pos.left - dx
+  }
+};
+
+const mouseDownHandler = function(e) {
+  diagram_div.style.cursor = 'grabbing';
+  
+  pos = {
+    // The current scroll 
+    left: diagram_div.scrollLeft,
+    //top: diagram_div.scrollTop,
+    // Get the current mouse position
+    x: e.clientX,
+    //y: e.clientY,
+  };
+
+  mousedown = true;
+
+    
+};
 
 // ------------ Initialization Code ------------
 function init (ipcRenderer) {
 
-    toolbox.initToolbox(ipcRenderer)
+  toolbox.initToolbox(ipcRenderer)
 
-  //displayTests()
-  //wipeGraphicalDisplay()
-    displayJSON(ipcRenderer, "blab")
+//displayTests()
+//wipeGraphicalDisplay()
+  displayJSON(ipcRenderer, "blab")
 
-    ipcRenderer.send('debug', 'finished')
+  ipcRenderer.send('debug', 'finished')
+
+  addPanningHandlers(ipcRenderer)
 }
 
 
