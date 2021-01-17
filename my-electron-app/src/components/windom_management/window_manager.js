@@ -3,7 +3,9 @@ const {BrowserWindow} = require('electron')
 function createWindow (html_path, w, h, x_offset = -1, y_offset = -1) {
     let win_options = {
         width: w,
+        minWidth: w,
         height: h,
+        minHeight: h,
         show: false,
         webPreferences: {
         nodeIntegration: true

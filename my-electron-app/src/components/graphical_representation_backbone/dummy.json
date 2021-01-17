@@ -1,28 +1,28 @@
 [
     {
-        "moduleType": "GPIO",
+        "moduleType": "CPU",
         "UUID": "128943FD78AB",
         "parameters": {
             "pins": 12,
-            "Verilog Instance Name": "ip_gpio_main_78AB",
+            "Verilog Instance Name": "ip_gpio_main_dough",
             "Base Address": 65536
         }
     },
     {
-        "moduleType": "GPIO",
+        "moduleType": "user-defined",
         "UUID": "138943FD78AB",
         "parameters": {
             "pins": 12,
-            "Verilog Instance Name": "ip_gpio_main_78AB",
+            "Verilog Instance Name": "ip_gpio_main_haha",
             "Base Address": 65536
         }
     },
     {
-        "moduleType": "GPIO",
+        "moduleType": "Memory",
         "UUID": "148943FD78AB",
         "parameters": {
             "pins": 12,
-            "Verilog Instance Name": "ip_gpio_main_78AB",
+            "Verilog Instance Name": "ip_gpio_main_meow",
             "Base Address": 65536
         }
     },
