@@ -44,28 +44,7 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   ipcRenderer.send('debug', 'start')
   
   let element = document.createElementNS(ns, 'g')
-
-  let background = document.createElementNS(ns, 'rect')
-  background.setAttribute("x",pos_x)
-  background.setAttribute("y",rect_y)
-  background.setAttribute("rx",rect_corner_radius)
-  background.setAttribute("ry",rect_corner_radius)
-  background.setAttribute("width",rect_width)
-  background.setAttribute("height",rect_height)
-  //background.setAttribute('stroke', 'gray')
-  //background.setAttribute('fill', 'white')
-  background.setAttribute('fill-opacity', 0.15)
-  background.setAttribute('stroke-width', '4')
-  background.setAttribute('stroke-opacity', 0.5)
-  if (CONSTANTS.NON_PERIPHERAL_COLOR in module_json){
-    background.setAttribute("stroke",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
-    background.setAttribute("fill",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
-  } else {
-    background.setAttribute("stroke",theme.light_blue_color)
-    background.setAttribute("fill",theme.light_blue_color)
-  }
-  element.appendChild(background)
-
+  
   let line = document.createElementNS(ns, 'line')
   line.setAttribute("x1", Math.round(pos_x + rect_width / 2))
   line.setAttribute("y1",rect_y + rect_height)
@@ -75,11 +54,45 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   line.setAttribute('stroke-width', '4')
   element.appendChild(line)
 
+  let main_body = document.createElementNS(ns, 'rect')
+  main_body.id = "mod-" + module_json[CONSTANTS.UUID]
+  main_body.setAttribute("x",pos_x)
+  main_body.setAttribute("y",rect_y)
+  main_body.setAttribute("rx",rect_corner_radius)
+  main_body.setAttribute("ry",rect_corner_radius)
+  main_body.setAttribute("width",rect_width)
+  main_body.setAttribute("height",rect_height)
+  main_body.addEventListener('focus', (ev) => {
+    main_body.style.outlineColor = theme.light_blue_color
+    main_body.style.outlineStyle = 'dashed'
+    ipcRenderer.send('debug', 'focused on: '+ ev.target.id)
+  })
+  main_body.addEventListener('focusout', (ev) => {
+    main_body.style.outlineStyle = 'none'
+  })
+  //background.setAttribute('stroke', 'gray')
+  //background.setAttribute('fill', 'white')
+  main_body.setAttribute('fill-opacity', 0.15)
+  main_body.setAttribute('stroke-width', '4')
+  main_body.setAttribute('stroke-opacity', 0.5)
+  // set to special color if it's noted in module_json, else use default
+  if (CONSTANTS.NON_PERIPHERAL_COLOR in module_json){
+    main_body.setAttribute("stroke",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
+    main_body.setAttribute("fill",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
+  } else {
+    main_body.setAttribute("stroke",theme.light_blue_color)
+    main_body.setAttribute("fill",theme.light_blue_color)
+  }
+  element.appendChild(main_body)
+
   let nick = document.createElementNS(ns, 'text')
   nick.setAttribute('x', pos_x + padding)
   nick.setAttribute('y', rect_y + padding * 2)
   nick.setAttribute('font-weight', 'bold')
   nick.textContent = module_json[CONSTANTS.PARAMETERS][CONSTANTS.INSTANCE_NAME]
+  nick.addEventListener('focus', (ev) => {
+    main_body.focus()
+  })
   element.appendChild(nick)
 
   // write other parameters
@@ -92,6 +105,9 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
     param.setAttribute('y', param_y)
     param.textContent = key + ": " + module_json[CONSTANTS.PARAMETERS][key]
     param.setAttribute('fill', 'gray')
+    param.addEventListener('focus', (ev) => {
+      main_body.focus()
+    })
     //param.style.color = 'red'
     element.appendChild(param)
     param_y -= padding
