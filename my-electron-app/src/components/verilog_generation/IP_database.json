@@ -1,6 +1,108 @@
-[
-    {
-        "moduleType": "GPIO",
+{
+    "user-defined": {
+        "source": "TEMP",
+        "verilogName": "TEMP",
+        "non_peripheral_color": "#f2f2f2",
+        "parameters": [
+            {
+                "paramName": "pins",
+                "paramType": "Number",
+                "default": 8
+            },
+            {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol"
+            },
+            {
+                "paramName": "Base Address",
+                "paramType": "Number"
+            }
+        ],
+        "interfaces": [
+            {
+                "type": "AXI5-Lite",
+                "port": "<port_name>"
+            },
+            {
+                "type": "IO",
+                "port": "exports",
+                "width": 8,
+                "pinmap": [
+                    [0, "A13", "3V3", "slow"],
+                    [1, "K12", "3V3", "slow"]
+                ]
+            }
+        ]
+    },"CPU": {
+        "source": "TEMP",
+        "verilogName": "TEMP",
+        "non_peripheral_color": "#ffffcc",
+        "parameters": [
+            {
+                "paramName": "pins",
+                "paramType": "Number",
+                "default": 8
+            },
+            {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol"
+            },
+            {
+                "paramName": "Base Address",
+                "paramType": "Number"
+            }
+        ],
+        "interfaces": [
+            {
+                "type": "AXI5-Lite",
+                "port": "<port_name>"
+            },
+            {
+                "type": "IO",
+                "port": "exports",
+                "width": 8,
+                "pinmap": [
+                    [0, "A13", "3V3", "slow"],
+                    [1, "K12", "3V3", "slow"]
+                ]
+            }
+        ]
+    },"Memory": {
+        "source": "TEMP",
+        "verilogName": "TEMP",
+        "non_peripheral_color": "#e5ffcc",
+        "parameters": [
+            {
+                "paramName": "pins",
+                "paramType": "Number",
+                "default": 8
+            },
+            {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol"
+            },
+            {
+                "paramName": "Base Address",
+                "paramType": "Number"
+            }
+        ],
+        "interfaces": [
+            {
+                "type": "AXI5-Lite",
+                "port": "<port_name>"
+            },
+            {
+                "type": "IO",
+                "port": "exports",
+                "width": 8,
+                "pinmap": [
+                    [0, "A13", "3V3", "slow"],
+                    [1, "K12", "3V3", "slow"]
+                ]
+            }
+        ]
+    },
+    "GPIO": {
         "source": "peripherals/gpio/gpio_main.sv",
         "verilogName": "ip_gpio_main",
         "parameters": [
@@ -34,5 +136,5 @@
             }
         ]
     }
-]
+}
  

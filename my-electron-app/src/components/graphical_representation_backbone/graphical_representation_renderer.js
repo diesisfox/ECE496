@@ -71,14 +71,19 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   main_body.setAttribute('fill-opacity', 0.15)
   main_body.setAttribute('stroke-width', '4')
   main_body.setAttribute('stroke-opacity', 0.5)
+  ipcRenderer.send('debug', "arrived here")
   // set to special color if it's noted in module_json, else use default
-  if (CONSTANTS.NON_PERIPHERAL_COLOR in module_json){
-    main_body.setAttribute("stroke",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
-    main_body.setAttribute("fill",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
+  if (module_json["moduleType"] in CONSTANTS.IP_database && CONSTANTS.NON_PERIPHERAL_COLOR in CONSTANTS.IP_database[module_json["moduleType"]]){
+    //main_body.setAttribute("stroke",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
+    //main_body.setAttribute("fill",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
+    main_body.setAttribute("fill", CONSTANTS.IP_database[module_json["moduleType"]][CONSTANTS.NON_PERIPHERAL_COLOR])
+    main_body.setAttribute("stroke", CONSTANTS.IP_database[module_json["moduleType"]][CONSTANTS.NON_PERIPHERAL_COLOR])
   } else {
     main_body.setAttribute("stroke",theme.light_blue_color)
     main_body.setAttribute("fill",theme.light_blue_color)
   }
+  
+  ipcRenderer.send('debug', "arrived here")
 
   main_body.addEventListener('focus', (ev) => {
     if (selected_module_element != null) {resetHighlighted(selected_module_element)}
