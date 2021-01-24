@@ -75,8 +75,6 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   // set to special color if it's noted in module_json, else use default
   let module_type = module_json[CONSTANTS.MODULE_TYPE]
   if (module_type in CONSTANTS.IP_database && CONSTANTS.NON_PERIPHERAL_COLOR in CONSTANTS.IP_database[module_type]){
-    //main_body.setAttribute("stroke",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
-    //main_body.setAttribute("fill",module_json[CONSTANTS.NON_PERIPHERAL_COLOR])
     main_body.setAttribute("fill", CONSTANTS.IP_database[module_type][CONSTANTS.NON_PERIPHERAL_COLOR])
     main_body.setAttribute("stroke", CONSTANTS.IP_database[module_type][CONSTANTS.NON_PERIPHERAL_COLOR])
   } else {
@@ -202,6 +200,7 @@ function resetHighlighted(rect_element){
 function addPanningHandlers (ipcRenderer) {
   diagram_div.addEventListener('mousemove', mouseMoveHandler)
   diagram_div.addEventListener('mousedown', mouseDownHandler)
+  diagram_div.addEventListener('wheel', mouseWheelHandler)
   document.addEventListener('mouseup', mouseUpHandler)
 }
 
@@ -239,6 +238,12 @@ const mouseDownHandler = function(e) {
 
     
 };
+
+const mouseWheelHandler = function(e) {
+  e.preventDefault()
+
+  diagram_div.scrollLeft += e.deltaY * 0.7
+}
 
 // ------------ Initialization Code ------------
 function init (ipcRenderer) {
