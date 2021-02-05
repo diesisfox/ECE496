@@ -1,4 +1,3 @@
-const toolbox = require("../toolbox/toolbox.js")
 const theme = require("../theme.js")
 const CONSTANTS = require("../../constants.js")
 const dummy_save = require("./dummy.json")
@@ -247,11 +246,6 @@ const mouseWheelHandler = function(e) {
 
 // ------------ Initialization Code ------------
 function init (ipcRenderer) {
-
-  toolbox.initToolbox(ipcRenderer)
-
-//displayTests()
-//wipeGraphicalDisplay()
   displayTESTJSON(ipcRenderer)
 
   ipcRenderer.send('debug', 'finished')

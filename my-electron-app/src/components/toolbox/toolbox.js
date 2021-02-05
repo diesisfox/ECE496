@@ -1,12 +1,26 @@
+// --------- Constants ----------
 const CONSTANTS = require("../../constants.js")
 const theme = require("../theme.js")
 
+
+// add module bar
+const add_module_bar = document.getElementById("add-module-bar")
+const add_module_button = document.getElementById("add-module-button")
+const add_module_name = document.getElementById("add-module-name")
+const add_module_type = document.getElementById("add-module-type")
+const add_module_address = document.getElementById("add-module-address")
+
 const diagram_div = document.getElementById("model-diagram-display")
 const toolbox_div = document.getElementById("module-toolbox")
+
 const tb_div_width = toolbox_div.clientWidth
+const tb_div_height = toolbox_div.clientHeight
 const tb_icon_num_per_row = 3 //number of modules per row
 const tb_rect_width = 80
 const tb_rect_height = 100
+
+// --------- Global Vars ---------
+let shown = false;
 
 // --------- Toolbox ---------
 
@@ -69,10 +83,49 @@ function initToolbox (ipcRenderer){
         ipcRenderer.send('system-message', "module type " + ev.dataTransfer.getData('type_id') + " received, however module adding is " + 
         "not implemented in the back")
     }
+
+    // edit module bar
+    add_module_button.addEventListener('click', function() {
+        ipcRenderer.send('add module', {
+            name: add_module_name.value,
+            type: add_module_type.value,
+            address: add_module_address.value
+        })
+    })
+}
+
+function toggle_visibility () {
+    // if shown, then unshow
+    if (shown){ 
+        let animation = add_module_bar.animate({top: '-150px'}, 400)
+        animation.onfinish = function() {
+            add_module_bar.style.top = '-150px'
+        }
+        animation = toolbox_div.animate({top: '-225px'}, 400)
+        animation.onfinish = function() {
+            toolbox_div.style.top = 'calc(-200px - 25px)'
+        }
+
+        shown = !shown
+    }
+    // if unshown, then show
+    else {
+        let animation = add_module_bar.animate({top: '5px'}, 400)
+        animation.onfinish = function() {
+            add_module_bar.style.top = '5px'
+        }
+        animation = toolbox_div.animate({top: '5px'}, 400)
+        animation.onfinish = function() {
+            toolbox_div.style.top = '5px'
+        }
+
+        shown = !shown
+    }
 }
 
 
 
 module.exports = {
     initToolbox,
+    toggle_visibility,
 }

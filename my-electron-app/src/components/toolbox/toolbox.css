@@ -1,11 +1,16 @@
+:root {
+    --mod-toolbox-width: 330px;
+    --mod-toolbox-height: 200px;
+}
+
 .module-toolbox {
     position:absolute;
     
     right: 5px;
-    top: -225px;
+    top: calc(-25px - var(--mod-toolbox-height));
 
-    width: 330px;
-    height: 200px;
+    width: var(--mod-toolbox-width);
+    height: var(--mod-toolbox-height);
 
     border: solid 3px var(--light-menu-background);
     background-color: white;
@@ -37,7 +42,7 @@
     position: absolute;
     /* display: flex; */
     /* justify-content: space-between; */
-    right: 350px;
+    right: calc(var(--mod-toolbox-width) + 15px);
     top: -150px;
 
     width: 115px;
