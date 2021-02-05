@@ -1,6 +1,7 @@
 :root {
-    --mod-toolbox-width: 330px;
-    --mod-toolbox-height: 200px;
+    --mod-toolbox-width: 500px;
+    --mod-toolbox-height: 170px;
+    --edit-module-bar-height: 115px;
 }
 
 .module-toolbox {
@@ -43,10 +44,10 @@
     /* display: flex; */
     /* justify-content: space-between; */
     right: calc(var(--mod-toolbox-width) + 15px);
-    top: -150px;
+    top: calc(-35px - var(--edit-module-bar-height));
 
     width: 115px;
-    height: 115px;
+    height: var(--edit-module-bar-height);
 
     border: solid 3px var(--light-menu-background);
     background-color: white;

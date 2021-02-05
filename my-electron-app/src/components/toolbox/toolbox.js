@@ -2,6 +2,8 @@
 const CONSTANTS = require("../../constants.js")
 const theme = require("../theme.js")
 
+const diagram_div = document.getElementById("model-diagram-display")
+const toolbox_div = document.getElementById("module-toolbox")
 
 // add module bar
 const add_module_bar = document.getElementById("add-module-bar")
@@ -10,14 +12,18 @@ const add_module_name = document.getElementById("add-module-name")
 const add_module_type = document.getElementById("add-module-type")
 const add_module_address = document.getElementById("add-module-address")
 
-const diagram_div = document.getElementById("model-diagram-display")
-const toolbox_div = document.getElementById("module-toolbox")
-
-const tb_div_width = toolbox_div.clientWidth
-const tb_div_height = toolbox_div.clientHeight
+// toolbox icons
 const tb_icon_num_per_row = 3 //number of modules per row
 const tb_rect_width = 80
 const tb_rect_height = 100
+
+// animation vars
+const anim_speed = 400 // in ms
+const offscreen_offset = 10 
+const tb_offscreen_offset = ((toolbox_div.offsetHeight + offscreen_offset) * -1) + "px"
+const bar_offscreen_offset = ((add_module_bar.offsetHeight + offscreen_offset) * -1) + "px"
+const onscreen_offset = 5
+const all_onscreen_offset = onscreen_offset + "px"
 
 // --------- Global Vars ---------
 let shown = false;
@@ -60,7 +66,7 @@ function createModuleIcon (ipcRenderer, type, margin, rect_width, rect_height){
 }
   
 function initToolbox (ipcRenderer){
-    const margin = (tb_div_width - tb_rect_width * tb_icon_num_per_row) / (tb_icon_num_per_row) / 2
+    const margin = (toolbox_div.clientWidth - tb_rect_width * tb_icon_num_per_row) / (tb_icon_num_per_row) / 2
 
     // add a toolbar objects
     for (var type in CONSTANTS.IP_database){
@@ -97,26 +103,26 @@ function initToolbox (ipcRenderer){
 function toggle_visibility () {
     // if shown, then unshow
     if (shown){ 
-        let animation = add_module_bar.animate({top: '-150px'}, 400)
+        let animation = add_module_bar.animate({top: bar_offscreen_offset}, anim_speed)
         animation.onfinish = function() {
-            add_module_bar.style.top = '-150px'
+            add_module_bar.style.top = bar_offscreen_offset
         }
-        animation = toolbox_div.animate({top: '-225px'}, 400)
+        animation = toolbox_div.animate({top: tb_offscreen_offset}, anim_speed)
         animation.onfinish = function() {
-            toolbox_div.style.top = 'calc(-200px - 25px)'
+            toolbox_div.style.top = tb_offscreen_offset
         }
 
         shown = !shown
     }
     // if unshown, then show
     else {
-        let animation = add_module_bar.animate({top: '5px'}, 400)
+        let animation = add_module_bar.animate({top: all_onscreen_offset}, anim_speed)
         animation.onfinish = function() {
-            add_module_bar.style.top = '5px'
+            add_module_bar.style.top = all_onscreen_offset
         }
-        animation = toolbox_div.animate({top: '5px'}, 400)
+        animation = toolbox_div.animate({top: all_onscreen_offset}, anim_speed)
         animation.onfinish = function() {
-            toolbox_div.style.top = '5px'
+            toolbox_div.style.top = all_onscreen_offset
         }
 
         shown = !shown
