@@ -24,7 +24,7 @@ interface Simple_Worker_Mem_IF ();
     logic           rd_valid;
     logic           rd_ready;
 
-    modport worker (
+    modport WORKER (
         input clock, reset_n,
 
         input wr_addr,
@@ -38,7 +38,7 @@ interface Simple_Worker_Mem_IF ();
         output rd_ready
     );
 
-    modport controller (
+    modport CONTROLLER (
         output clock, reset_n,
 
         output wr_addr,
@@ -81,7 +81,7 @@ interface Simple_Manager_Mem_IF ();
     logic           rd_valid;
     logic           rd_ready;
 
-	modport manager (
+	modport MANAGER (
 		input clock, reset_n,
 
         output wr_addr,
@@ -95,7 +95,7 @@ interface Simple_Manager_Mem_IF ();
         input rd_ready
 	);
 
-    modport controller (
+    modport CONTROLLER (
         output clock, reset_n,
 
         input wr_addr,
