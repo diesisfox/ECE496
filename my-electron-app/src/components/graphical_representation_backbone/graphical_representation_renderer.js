@@ -138,6 +138,7 @@ function createSVGModuleRep (ipcRenderer, json_object) {
   svg_diagram.addEventListener('focus', (ev) => {
     if (selected_module_element != null) {resetHighlighted(selected_module_element)}
     selected_module_element = null
+    ipcRenderer.send('edit_box_visibility', false)
   })
 
   diagram_div.appendChild(svg_diagram)

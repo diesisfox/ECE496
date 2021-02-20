@@ -110,6 +110,9 @@ function initToolbox (ipcRenderer){
     ipcRenderer.on('edit-box-change', (event, module_json) => {
         setEditBox(ipcRenderer, module_json)
     })
+    ipcRenderer.on('edit_box_visibility', (event, val) => {
+        toggle_edit_module_box_visibility(val)
+    })
 }
 
 function setEditBox (ipcRenderer, module_json){
