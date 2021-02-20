@@ -2,8 +2,9 @@ const {ipcRenderer} = require('electron')
 
 const CONSTANTS = require("../constants.js")
 const python_terminal_renderer = require('../components/python_terminal/python_terminal_renderer.js')
-const graphical_representation_renderer = require('../components/graphical_representation_backbone/graphical_representation_renderer.js')
+const gra_rep_renderer = require('../components/graphical_representation_backbone/graphical_representation_renderer.js')
 const toolbox = require("../components/toolbox/toolbox.js")
+const file_manager = require('../components/file_management/file_manager.js')
 
 // -------- HTML ELEMENTS --------
 
@@ -29,7 +30,7 @@ function addButtonListeners(){
         ipcRenderer.send('save as file', "")
     })
     add_button.addEventListener('click', function() {
-        toolbox.toggle_visibility()
+        toolbox.toggle_toolbox_visibility()
     })
     remove_button.addEventListener('click', function() {
         // let cell = graphical_representation_renderer.getSelected()
@@ -41,7 +42,7 @@ function addButtonListeners(){
         // }
         let is_module = false
 
-        let focused = graphical_representation_renderer.getSelected()
+        let focused = gra_rep_renderer.getSelected()
         let prefix_len = CONSTANTS.MOD_ID_PREFIX.length
         if (focused != null && focused.id.length > prefix_len && focused.id.slice(0,prefix_len) == CONSTANTS.MOD_ID_PREFIX){
             ipcRenderer.send('system-message', "Tried to remove: " + focused.id)
@@ -58,14 +59,31 @@ function addButtonListeners(){
     })
 }
 
+// ----------- MAIN FUNCTIONS ------------
+function displayTESTJSON (){
+    displayJSON(ipcRenderer, dummy_save)
+}
+  
+function displayJSON(json_object){
+    gra_rep_renderer.createSVGModuleRep(ipcRenderer, json_object)
+}
+
 // ----------- INITIALIZE --------------
 
 function initialize(){
     addButtonListeners()
     python_terminal_renderer.init(ipcRenderer)
-    graphical_representation_renderer.init(ipcRenderer)
+    gra_rep_renderer.init(ipcRenderer)
     toolbox.initToolbox(ipcRenderer)
     //graphical_toolbox_renderer.init(ipcRenderer)
+
+    
+    // ipcRenderer.on('displayJSON', (event, json_object) => {
+    //     ipcRenderer.send('debug', 'received!')
+    //     displayJSON(json_object)
+    // })
+    file_manager.loadDummy()
+    displayJSON(file_manager.getSave())
 }
 
 initialize()

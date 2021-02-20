@@ -5,6 +5,10 @@ const file_manager = require('../components/file_management/file_manager.js')
 const python_terminal = require('../components/python_terminal/python_terminal.js')
 const window_manager = require('../components/windom_management/window_manager.js')
 
+//const main_renderer = require('./main_renderer.js')
+
+// -------------- GLOBAL VARIABLES -------------
+
 // -------------- DEBUG --------------
 
 function setupDebug (ipcMain) {
@@ -44,6 +48,10 @@ function createMenu () {
 
   const menu = Menu.buildFromTemplate(menuTemplate)
   Menu.setApplicationMenu(menu)
+}
+
+function sendDisplayJSONCommd(){
+  main_win.webContents.send('displayJSON', file_manager.getSave())
 }
 
 function showAboutDialog (win) {
@@ -109,4 +117,5 @@ function createMainWindow (ipcMain) {
 
 module.exports = {
   createMainWindow,
+  sendDisplayJSONCommd,
 }

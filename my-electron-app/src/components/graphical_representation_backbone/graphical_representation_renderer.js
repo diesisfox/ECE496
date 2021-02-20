@@ -152,15 +152,6 @@ function createSVGModuleRep (ipcRenderer, json_object) {
   }
 }
 
-function displayTESTJSON (ipcRenderer){
-  displayJSON(ipcRenderer, dummy_save)
-}
-
-// unfinished, needs JSON schema for completion
-function displayJSON(ipcRenderer,json_object){
-  createSVGModuleRep(ipcRenderer, json_object)
-}
-
 // ------------ Selection ------------
 
 function getSelected(){
@@ -246,7 +237,7 @@ const mouseWheelHandler = function(e) {
 
 // ------------ Initialization Code ------------
 function init (ipcRenderer) {
-  displayTESTJSON(ipcRenderer)
+  //displayTESTJSON(ipcRenderer)
 
   ipcRenderer.send('debug', 'finished')
 
@@ -260,7 +251,7 @@ function init (ipcRenderer) {
 
 
 module.exports = {
-  displayJSON,
   getSelected,
+  createSVGModuleRep,
   init,
 }

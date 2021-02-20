@@ -2,6 +2,9 @@
 const NON_PERIPHERAL_COLOR = "non_peripheral_color"
 const MOD_ID_PREFIX = "mod_"
 const PARAMETERS = "parameters"
+const PARAMNAME = "paramName"
+const PARAMTYPE = "paramType"
+const DEFAULT = "default"
 const UUID = "UUID"
 const MODULE_TYPE = "moduleType"
 const INSTANCE_NAME = "Verilog Instance Name"
@@ -40,6 +43,9 @@ module.exports = {
     NON_PERIPHERAL_COLOR,
     MOD_ID_PREFIX,
     PARAMETERS,
+    PARAMNAME,
+    PARAMTYPE,
+    DEFAULT,
     UUID,
     MODULE_TYPE,
     INSTANCE_NAME,
