@@ -5,7 +5,8 @@
         "parameters": {
             "pins": "12",
             "Verilog Instance Name": "ip_gpio_main_dough",
-            "Base Address": "65536"
+            "Base Address": "65536",
+            "Wow": "wowwww"
         }
     },
     {

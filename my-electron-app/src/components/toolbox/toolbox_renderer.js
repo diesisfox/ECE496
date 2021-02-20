@@ -1,5 +1,5 @@
 // --------- Constants ----------
-const CONSTANTS = require("../../constants.js")
+const C = require("../../constants.js")
 const theme = require("../theme.js")
 
 const diagram_div = document.getElementById("model-diagram-display")
@@ -12,7 +12,7 @@ const edit_module_box_div = document.getElementById("edit-module-box")
 //const edit_module_type = document.getElementById("edit-module-type")
 //const edit_module_address = document.getElementById("edit-module-address")
 const emb_num_per_row = 2
-const emb_rect_width = 100
+const emb_rect_width = 110
 const emb_rect_height = 20
 
 // toolbox icons
@@ -59,8 +59,8 @@ function createModuleIcon (ipcRenderer, type, margin, rect_width, rect_height){
   
     // add in module type details
     text.textContent = type
-    if (CONSTANTS.NON_PERIPHERAL_COLOR in CONSTANTS.IP_database[type]){
-      moduleIcon.style.backgroundColor = CONSTANTS.IP_database[type][CONSTANTS.NON_PERIPHERAL_COLOR]
+    if (C.NON_PERIPHERAL_COLOR in C.IP_database[type]){
+      moduleIcon.style.backgroundColor = C.IP_database[type][C.NON_PERIPHERAL_COLOR]
     } else {
       moduleIcon.style.backgroundColor = theme.light_blue_color
     }
@@ -71,19 +71,22 @@ function createModuleIcon (ipcRenderer, type, margin, rect_width, rect_height){
 function createEditInput (ipcRenderer, field_name, saved_value, margin, rect_width, rect_height){
     var input_field = document.createElement("input")
     input_field.className = 'edit-module-input'
-    
+    input_field.style.width = rect_width + "px"
+    input_field.style.height = rect_height + "px"
+    input_field.style.marginLeft = margin + "px"
+    //input_field.style.marginRight = margin + "px"
     input_field.placeholder = field_name
-  
-    input_field.style.margin = margin + "px"
+    input_field.value = saved_value
   
     return input_field
 }
-  
+
+// initialize
 function initToolbox (ipcRenderer){
     const margin = (toolbox_div.clientWidth - tb_rect_width * tb_icon_num_per_row) / (tb_icon_num_per_row) / 2
 
     // add a toolbar objects
-    for (var type in CONSTANTS.IP_database){
+    for (var type in C.IP_database){
         toolbox_div.appendChild(createModuleIcon(ipcRenderer, type, margin, tb_rect_width, tb_rect_height))
     }
 
@@ -112,31 +115,35 @@ function initToolbox (ipcRenderer){
 function setEditBox (ipcRenderer, module_json){
     const margin = (edit_module_box_div.clientWidth - emb_rect_width * emb_num_per_row) / (emb_num_per_row) / 2
 
-    let module_type = module_json[CONSTANTS.MODULE_TYPE]
+    let module_type = module_json[C.MODULE_TYPE]
 
-    ipcRenderer.send('debug', module_type)
+    ipcRenderer.send('debug', C.IP_database[module_type][C.PARAMETERS])
+
+    // clear existing objects
+    while (edit_module_box_div.firstChild) {
+        edit_module_box_div.removeChild(edit_module_box_div.lastChild);
+    }
 
     // add a toolbar objects
-    for (var param in CONSTANTS.IP_database[CONSTANTS.PARAMETERS]){
-        //ipcRenderer.send('debug', )
-        let i = 0
+    let params = C.IP_database[module_type][C.PARAMETERS]
+    for (let i = 0; i < params.length; i++){
+        ipcRenderer.send('debug', params[i])
         // check for existence of key
-        if (!(CONSTANTS.PARAMNAME in param) || !(CONSTANTS.PARAMTYPE in param)){
+        if (!(C.PARAMNAME in params[i]) || !(C.PARAMTYPE in params[i])){
             ipcRenderer.send('debug', 'ERROR: IP_database entry not complete for type ' + module_type)
             break
         }
-
         // look for same parameter in module
-        if (!(param[CONSTANTS.PARAMNAME] in module_type[CONSTANTS.PARAMETERS])){
+        if (!(params[i][C.PARAMNAME] in module_json[C.PARAMETERS])){
             ipcRenderer.send('debug', "ERROR: module entry in save not complete for type " + module_type)
             break
         }
-
-        let val = module_type[CONSTANTS.PARAMETERS][param[CONSTANTS.PARAMNAME]]
-
-        edit_module_box_div.appendChild(createEditInput(ipcRenderer, param[CONSTANTS.PARAMNAME], val, margin, emb_rect_width, emb_rect_height))
+        let val = module_json[C.PARAMETERS][params[i][C.PARAMNAME]]
+        
+        edit_module_box_div.appendChild(createEditInput(ipcRenderer, params[i][C.PARAMNAME], val, margin, emb_rect_width, emb_rect_height))
     }
-    ipcRenderer.send('debug', "test")
+
+    toggle_edit_module_box_visibility(true)
 }
 
 function toggle_toolbox_visibility () {
@@ -148,7 +155,6 @@ function toggle_toolbox_visibility () {
         }
 
         toolbox_shown = !toolbox_shown
-        toggle_edit_module_box_visibility(toolbox_shown) // TODO: REMOVE AFTER FINISHED WITH RETROFITS
     }
     // if unshown, then show
     else {
@@ -158,7 +164,6 @@ function toggle_toolbox_visibility () {
         }
 
         toolbox_shown = !toolbox_shown
-        toggle_edit_module_box_visibility(toolbox_shown) // TODO: REMOVE AFTER FINISHED WITH RETROFITS
     }
 }
 

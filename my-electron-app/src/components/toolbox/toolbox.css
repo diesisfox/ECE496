@@ -2,6 +2,7 @@
     --mod-toolbox-width: 420px;
     --mod-toolbox-height: 170px;
     --edit-module-bar-height: 115px;
+    --edit-module-bar-width: 240px;
 }
 
 .module-toolbox {
@@ -46,11 +47,13 @@
     right: calc(var(--mod-toolbox-width) + 15px);
     top: calc(-35px - var(--edit-module-bar-height));
 
-    width: 115px;
+    width: var(--edit-module-bar-width);
     height: var(--edit-module-bar-height);
 
     border: solid 3px var(--light-menu-background);
     background-color: white;
+
+    overflow:visible;
 
     /*visibility: hidden; /* Note this is set a second time in main_renderer */
 }
