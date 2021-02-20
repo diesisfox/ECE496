@@ -10,6 +10,9 @@ const rect_corner_radius = 10
 const rect_y = 200
 const padding = 20
 
+const SEMI_TRANSPARENT = "0.5"
+const NOT_TRANSPARENT = "1"
+
 // mouse
 let pos = { top: 0, left: 0, x: 0, y: 0 };
 let mousedown = false; //mouse dragging on img
@@ -176,12 +179,29 @@ function createSVGRect(id, x, y, corner_r, width, height, fill_opacity, stroke_w
   return rect
 }
 
+function setSemiTransparency(val){
+  if (val){
+    val = SEMI_TRANSPARENT
+  } else {
+    val = NOT_TRANSPARENT
+  }
+
+  for (let i = 0; i < diagram_div.childNodes[0].childNodes.length; i++){
+    diagram_div.childNodes[0].childNodes[i].style.opacity = val
+  }
+}
+
 function setHighlighted(rect_element){
   rect_element.style.outline = "2px dashed " + theme.light_blue_color
+
+  setSemiTransparency(true)
+  rect_element.parentNode.style.opacity = NOT_TRANSPARENT
 }
 
 function resetHighlighted(rect_element){
   rect_element.style.outline = 'none'
+
+  setSemiTransparency(false)
 }
 
 
