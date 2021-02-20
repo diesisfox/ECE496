@@ -4,8 +4,10 @@ const main_windows = require('./main_window/main_window.js')
 const file_manager = require('./components/file_management/file_manager.js')
 
 function init(){
-  main_windows.createMainWindow(ipcMain)
+  file_manager.loadDummy()
+  file_manager.initMain(ipcMain)
   file_manager.setBasePath(app.getAppPath())
+  main_windows.createMainWindow(ipcMain)
 }
 
 app.whenReady().then(init)

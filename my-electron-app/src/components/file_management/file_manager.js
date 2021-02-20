@@ -1,4 +1,5 @@
 var fs = require('fs')
+const C = require("../../constants.js")
 const {dialog} = require('electron')
 
 // -------------- CONSTANTS & GLOBALS -------------
@@ -12,7 +13,11 @@ var base_path = false
 var save_json = false
 
 // -------------- INIT -----------------
-
+function initMain(ipcMain){
+    ipcMain.on('get-save', (event, data) => {
+        event.returnValue = getSave()
+    })
+}
 fs.mkdirSync("saves", { recursive: true })
 
 // -------------- MAIN METHODS ----------------
@@ -69,6 +74,24 @@ function getSave(){
     return save_json
 }
 
+function getModuleDict(id) {
+    if (save_json == false){
+        return false
+    } 
+
+    let i
+    for (i = 0; i < save_json.length; i++){
+        if (save_json[i][C.UUID] == id){
+            break
+        }
+    }
+    if (i != save_json.length){
+        return save_json[i]
+    } else {
+        return false
+    }
+}
+
 // --------------- HELPER FUNCTIONS ----------------
 
 function setBasePath (path){
@@ -120,6 +143,7 @@ function writeJSONToFile (filepath, output){
 }
 
 module.exports = {
+    initMain,
     setBasePath,
     openFileDialog,
     openSaveDialog,
@@ -130,4 +154,5 @@ module.exports = {
     loadDummy,
     loadSave,
     getSave,
+    getModuleDict,
 }

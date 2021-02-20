@@ -3,8 +3,7 @@ const {ipcRenderer} = require('electron')
 const CONSTANTS = require("../constants.js")
 const python_terminal_renderer = require('../components/python_terminal/python_terminal_renderer.js')
 const gra_rep_renderer = require('../components/graphical_representation_backbone/graphical_representation_renderer.js')
-const toolbox = require("../components/toolbox/toolbox.js")
-const file_manager = require('../components/file_management/file_manager.js')
+const toolbox_renderer = require("../components/toolbox/toolbox_renderer.js")
 
 // -------- HTML ELEMENTS --------
 
@@ -30,7 +29,7 @@ function addButtonListeners(){
         ipcRenderer.send('save as file', "")
     })
     add_button.addEventListener('click', function() {
-        toolbox.toggle_toolbox_visibility()
+        toolbox_renderer.toggle_toolbox_visibility()
     })
     remove_button.addEventListener('click', function() {
         // let cell = graphical_representation_renderer.getSelected()
@@ -53,6 +52,7 @@ function addButtonListeners(){
     })
     generate_button.addEventListener('click', function() {
         ipcRenderer.send('generate', "")
+        //ipcRenderer.send('debug', file_manager.base_path)
     })
     about_button.addEventListener('click', function() {
         ipcRenderer.send('about', "")
@@ -74,16 +74,9 @@ function initialize(){
     addButtonListeners()
     python_terminal_renderer.init(ipcRenderer)
     gra_rep_renderer.init(ipcRenderer)
-    toolbox.initToolbox(ipcRenderer)
-    //graphical_toolbox_renderer.init(ipcRenderer)
-
+    toolbox_renderer.initToolbox(ipcRenderer)
     
-    // ipcRenderer.on('displayJSON', (event, json_object) => {
-    //     ipcRenderer.send('debug', 'received!')
-    //     displayJSON(json_object)
-    // })
-    file_manager.loadDummy()
-    displayJSON(file_manager.getSave())
+    displayJSON(ipcRenderer.sendSync('get-save',''))
 }
 
 initialize()

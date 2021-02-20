@@ -1,6 +1,5 @@
 const theme = require("../theme.js")
 const CONSTANTS = require("../../constants.js")
-const dummy_save = require("./dummy.json")
 
 const ns = "http://www.w3.org/2000/svg"
 const diagram_div = document.getElementById("model-diagram-display")
@@ -70,7 +69,6 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   main_body.setAttribute('fill-opacity', 0.15)
   main_body.setAttribute('stroke-width', '4')
   main_body.setAttribute('stroke-opacity', 0.5)
-  ipcRenderer.send('debug', "arrived here")
   // set to special color if it's noted in module_json, else use default
   let module_type = module_json[CONSTANTS.MODULE_TYPE]
   if (module_type in CONSTANTS.IP_database && CONSTANTS.NON_PERIPHERAL_COLOR in CONSTANTS.IP_database[module_type]){
@@ -80,14 +78,14 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
     main_body.setAttribute("stroke",theme.light_blue_color)
     main_body.setAttribute("fill",theme.light_blue_color)
   }
-  
-  //ipcRenderer.send('debug', "arrived here")
 
   main_body.addEventListener('focus', (ev) => {
     if (selected_module_element != null) {resetHighlighted(selected_module_element)}
     setHighlighted(main_body)
     selected_module_element = main_body
-    //ipcRenderer.send('debug', 'focused on: '+ ev.target.id)
+    
+    // send message about selected module changing
+    ipcRenderer.send('selected-module-changed', main_body.id.slice(CONSTANTS.MOD_ID_PREFIX.length))
   })
   main_body.addEventListener('focusout', (ev) => {
     //main_body.style.outlineStyle = 'none'

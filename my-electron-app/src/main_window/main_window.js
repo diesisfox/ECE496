@@ -3,6 +3,7 @@ const prompt = require('electron-multi-prompt')
 
 const file_manager = require('../components/file_management/file_manager.js')
 const python_terminal = require('../components/python_terminal/python_terminal.js')
+const toolbox = require("../components/toolbox/toolbox.js")
 const window_manager = require('../components/windom_management/window_manager.js')
 
 //const main_renderer = require('./main_renderer.js')
@@ -103,10 +104,11 @@ function createMainWindow (ipcMain) {
   main_win = window_manager.createWindow('./src/main_window/main_window.html', 800, 600)
 
   addMenuListeners(ipcMain)
-  //createMenu()
   main_win.setMenu(null)
 
   python_terminal.initializePythonProcess(ipcMain)
+
+  toolbox.initEditBoxMain(ipcMain)
 
   ipcMain.on('system-message', (event,arg) => {
     event.reply('system-message', arg)
