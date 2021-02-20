@@ -2,14 +2,13 @@ var fs = require('fs')
 const {dialog} = require('electron')
 
 // -------------- CONSTANTS & GLOBALS -------------
-
 const dummy_save_path = './src/components/graphical_representation_backbone/dummy.json'
 const filter_list = [
-    {name: 'Custom File Type', extensions: ['as']},
-    {name: 'Images', extensions: ['jpg', 'png', 'gif']},
+    {name: '', extensions: ['sdj']}, // system description json
     {name: 'All Files', extensions: ['*']}
 ]
 
+var base_path = false
 var save_json = false
 
 // -------------- INIT -----------------
@@ -25,7 +24,7 @@ function openFileDialog (win){
         let options = {
         title : "Choose File", 
 
-        defaultPath : "C:\\",
+        defaultPath : base_path + '\\saves',
 
         buttonLabel : "Open",
 
@@ -44,7 +43,7 @@ function openSaveDialog(win){
     let options = {
         title : "Save As", 
 
-        defaultPath : "C:\\",
+        defaultPath : base_path + '\\saves',
 
         buttonLabel : "Save",
 
@@ -71,6 +70,14 @@ function getSave(){
 }
 
 // --------------- HELPER FUNCTIONS ----------------
+
+function setBasePath (path){
+    if (base_path != false){
+        console.log('Error: base path set a second time')
+    } else {
+        base_path = path
+    }
+}
 
 function readFile (filepath){
     try {
@@ -113,6 +120,7 @@ function writeJSONToFile (filepath, output){
 }
 
 module.exports = {
+    setBasePath,
     openFileDialog,
     openSaveDialog,
     readFile,

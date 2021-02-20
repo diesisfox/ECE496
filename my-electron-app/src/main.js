@@ -5,12 +5,7 @@ const file_manager = require('./components/file_management/file_manager.js')
 
 function init(){
   main_windows.createMainWindow(ipcMain)
-
-  // load in dummy save
-  file_manager.loadDummy()
-  //console.log('test', file_manager.getSave().length)
-  //main_windows.sendDisplayJSONCommd()
-  //ipcMain.once('get')
+  file_manager.setBasePath(app.getAppPath())
 }
 
 app.whenReady().then(init)
