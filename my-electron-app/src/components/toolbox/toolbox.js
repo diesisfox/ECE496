@@ -13,7 +13,7 @@ const add_module_type = document.getElementById("add-module-type")
 const add_module_address = document.getElementById("add-module-address")
 
 // toolbox icons
-const tb_icon_num_per_row = 3 //number of modules per row
+const tb_icon_num_per_row = 4 //number of modules per row
 const tb_rect_width = 80
 const tb_rect_height = 100
 
@@ -31,7 +31,6 @@ let shown = false;
 // --------- Toolbox ---------
 
 function createModuleIcon (ipcRenderer, type, margin, rect_width, rect_height){
-    let module_type_attr = CONSTANTS.IP_database[type]
     var moduleIcon = document.createElement("div")
     moduleIcon.className = 'module-toolbox-icon'
   
