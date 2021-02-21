@@ -48,7 +48,7 @@
     top: calc(-35px - var(--edit-module-bar-height));
 
     width: var(--edit-module-bar-width);
-    height: var(--edit-module-bar-height);
+    /* height: var(--edit-module-bar-height); */
 
     border: solid 3px var(--light-menu-background);
     background-color: white;

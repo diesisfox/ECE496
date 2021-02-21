@@ -74,11 +74,32 @@ function createEditInput (ipcRenderer, field_name, saved_value, margin, rect_wid
     input_field.style.width = rect_width + "px"
     input_field.style.height = rect_height + "px"
     input_field.style.marginLeft = margin + "px"
-    //input_field.style.marginRight = margin + "px"
     input_field.placeholder = field_name
     input_field.value = saved_value
   
     return input_field
+}
+
+function createFiller (ipcRenderer, margin, rect_width, rect_height){
+    var filler = document.createElement("input")
+    filler.className = 'edit-module-input'
+    filler.style.width = rect_width + "px"
+    filler.style.height = rect_height + "px"
+    filler.style.marginLeft = margin + "px"
+    filler.style.visibility = 'visible'
+  
+    return filler
+}
+
+function createEditButton (ipcRenderer, button_name, margin, rect_width, rect_height){
+    var button = document.createElement("button")
+    button.className = 'menu-button'
+    button.style.width = rect_width + "px"
+    button.style.height = rect_height + "px"
+    button.style.marginLeft = margin + "px"
+    button.textContent = button_name
+  
+    return button
 }
 
 // initialize
@@ -117,10 +138,16 @@ function initToolbox (ipcRenderer){
 
 function setEditBox (ipcRenderer, module_json){
     const margin = (edit_module_box_div.clientWidth - emb_rect_width * emb_num_per_row) / (emb_num_per_row) / 2
+    
 
     let module_type = module_json[C.MODULE_TYPE]
+    let params = C.IP_database[module_type][C.PARAMETERS]
 
-    ipcRenderer.send('debug', C.IP_database[module_type][C.PARAMETERS])
+    // set height of div to be tight to elements
+    const div_height = emb_rect_height * (Math.ceil(params.length / emb_num_per_row) + 1) + 20
+    edit_module_box_div.style.height = div_height + "px"
+
+    ipcRenderer.send('debug', div_height)
 
     // clear existing objects
     while (edit_module_box_div.firstChild) {
@@ -128,9 +155,8 @@ function setEditBox (ipcRenderer, module_json){
     }
 
     // add a toolbar objects
-    let params = C.IP_database[module_type][C.PARAMETERS]
-    for (let i = 0; i < params.length; i++){
-        ipcRenderer.send('debug', params[i])
+    let i = 0
+    for (; i < params.length; i++){
         // check for existence of key
         if (!(C.PARAMNAME in params[i]) || !(C.PARAMTYPE in params[i])){
             ipcRenderer.send('debug', 'ERROR: IP_database entry not complete for type ' + module_type)
@@ -145,6 +171,19 @@ function setEditBox (ipcRenderer, module_json){
         
         edit_module_box_div.appendChild(createEditInput(ipcRenderer, params[i][C.PARAMNAME], val, margin, emb_rect_width, emb_rect_height))
     }
+
+    // fill out the rest of the row
+    let remaining = i % emb_num_per_row
+    for (i = 0; i < remaining; i++){
+        let filler = createFiller(ipcRenderer, margin, emb_rect_width, emb_rect_height)
+        edit_module_box_div.appendChild(filler)
+    }
+
+    // add buttons
+    edit_module_box_div.appendChild(createEditButton(ipcRenderer, "Edit", margin, emb_rect_width, emb_rect_height))
+    edit_module_box_div.appendChild(createEditButton(ipcRenderer, "Delete", margin, emb_rect_width, emb_rect_height))
+
+    // TODO: add functionality
 
     toggle_edit_module_box_visibility(true)
 }
