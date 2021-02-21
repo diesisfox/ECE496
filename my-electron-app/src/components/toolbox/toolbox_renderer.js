@@ -32,6 +32,8 @@ const all_onscreen_offset = onscreen_offset + "px"
 let toolbox_shown = false;
 let edit_box_shown = false;
 
+let editing_module_UUID = false
+
 // --------- Toolbox ---------
 
 function createModuleIcon (ipcRenderer, type, margin, rect_width, rect_height){
@@ -87,6 +89,7 @@ function createFiller (ipcRenderer, margin, rect_width, rect_height){
     filler.style.height = rect_height + "px"
     filler.style.marginLeft = margin + "px"
     filler.style.visibility = 'visible'
+    filler.placeholder = "filler"
   
     return filler
 }
@@ -181,9 +184,26 @@ function setEditBox (ipcRenderer, module_json){
     }
 
     // add buttons
-    edit_module_box_div.appendChild(createEditButton(ipcRenderer, "Edit", margin, emb_rect_width, emb_rect_height))
-    //edit_module_box_div.addEventListener('click')
-    edit_module_box_div.appendChild(createEditButton(ipcRenderer, "Delete", margin, emb_rect_width, emb_rect_height))
+    let edit_button = createEditButton(ipcRenderer, "Edit", margin, emb_rect_width, emb_rect_height)
+    edit_button.addEventListener('click', function() {
+        let data = editing_module_UUID
+        let i = 0
+        for (; i < edit_module_box_div.childNodes.length - 2; i++){
+            if (edit_module_box_div.childNodes[i].placeholder != "filler"){
+                data += "|" + edit_module_box_div.childNodes[i].value
+            }
+        }
+        ipcRenderer.send('module-edit', data) // TODO: remember to disallow vertical bars and colons in any text
+    })
+    edit_module_box_div.appendChild(edit_button)
+    let delete_button = createEditButton(ipcRenderer, "Delete", margin, emb_rect_width, emb_rect_height)
+    delete_button.addEventListener('click', function() {
+        ipcRenderer.send('module-delete', editing_module_UUID);
+    })
+    edit_module_box_div.appendChild(delete_button)
+
+    // save UUID
+    editing_module_UUID = module_json[C.UUID]
 
     // TODO: add functionality
  
