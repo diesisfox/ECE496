@@ -186,7 +186,7 @@ function setEditBox (ipcRenderer, module_json){
     edit_module_box_div.appendChild(createEditButton(ipcRenderer, "Delete", margin, emb_rect_width, emb_rect_height))
 
     // TODO: add functionality
-
+ 
     toggle_edit_module_box_visibility(true)
 }
 
