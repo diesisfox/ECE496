@@ -43,7 +43,7 @@
         "moduleType": "SPI_MANAGER",
         "source": "peripherals/spi/spi_m_main.sv",
         "verilogName": "spi_m_main",
-        "addrBits": 4,
+        "addrBits": 5,
         "parameters": [
             {
                 "paramName": "Verilog Instance Name",

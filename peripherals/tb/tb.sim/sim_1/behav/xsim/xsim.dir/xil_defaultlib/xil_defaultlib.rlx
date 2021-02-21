@@ -1,0 +1,10 @@
+0.6
+2018.3
+Mar 26 2019
+04:21:55
+/media/psf/Home/Development/ECE496/ECE496/hdl/Interfaces.sv,1613616940,systemVerilog,,/media/psf/Home/Development/ECE496/ECE496/peripherals/spi/spi_m_main.sv,,AXI5_Lite_IF;Simple_Mem_IF,,,,,,,,
+/media/psf/Home/Development/ECE496/ECE496/peripherals/gpio/gpio_main.sv,1613521601,systemVerilog,,/media/psf/Home/Development/ECE496/ECE496/peripherals/gpio/gpio_main_tb.sv,,ip_gpio_main,,,,,,,,
+/media/psf/Home/Development/ECE496/ECE496/peripherals/gpio/gpio_main_tb.sv,1613525986,systemVerilog,,,,gpio_main_tb,,,,,,,,
+/media/psf/Home/Development/ECE496/ECE496/peripherals/spi/spi_m_main.sv,1613617757,systemVerilog,,/media/psf/Home/Development/ECE496/ECE496/peripherals/spi/spi_m_tb.sv,,spi_m_main,,,,,,,,
+/media/psf/Home/Development/ECE496/ECE496/peripherals/spi/spi_m_tb.sv,1613617870,systemVerilog,,,,spi_main_tb,,,,,,,,
+/media/psf/Home/Development/ECE496/ECE496/peripherals/tb/tb.sim/sim_1/behav/xsim/glbl.v,1612770602,verilog,,,,glbl,,,,,,,,
