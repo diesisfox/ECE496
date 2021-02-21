@@ -88,7 +88,7 @@ function createFiller (ipcRenderer, margin, rect_width, rect_height){
     filler.style.width = rect_width + "px"
     filler.style.height = rect_height + "px"
     filler.style.marginLeft = margin + "px"
-    filler.style.visibility = 'visible'
+    filler.style.visibility = 'hidden'
     filler.placeholder = "filler"
   
     return filler
@@ -151,8 +151,6 @@ function setEditBox (ipcRenderer, module_json){
     edit_module_box_div.style.height = div_height + "px"
     bar_offscreen_offset = ((div_height + offscreen_offset) * -1) + "px"
 
-    ipcRenderer.send('debug', div_height)
-
     // clear existing objects
     while (edit_module_box_div.firstChild) {
         edit_module_box_div.removeChild(edit_module_box_div.lastChild);
@@ -204,8 +202,6 @@ function setEditBox (ipcRenderer, module_json){
 
     // save UUID
     editing_module_UUID = module_json[C.UUID]
-
-    // TODO: add functionality
  
     toggle_edit_module_box_visibility(true)
 }
