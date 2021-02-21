@@ -21,10 +21,10 @@ const tb_rect_width = 80
 const tb_rect_height = 100
 
 // animation vars
-const anim_speed = 400 // in ms
+const anim_speed = 400 // in ms TODO: calculate this per toolbox, so that one doesn't look faster than the other
 const offscreen_offset = 10 
 const tb_offscreen_offset = ((toolbox_div.offsetHeight + offscreen_offset) * -1) + "px"
-const bar_offscreen_offset = ((edit_module_box_div.offsetHeight + offscreen_offset) * -1) + "px"
+let bar_offscreen_offset = 0 // changes
 const onscreen_offset = 5
 const all_onscreen_offset = onscreen_offset + "px"
 
@@ -146,6 +146,7 @@ function setEditBox (ipcRenderer, module_json){
     // set height of div to be tight to elements
     const div_height = emb_rect_height * (Math.ceil(params.length / emb_num_per_row) + 1) + 20
     edit_module_box_div.style.height = div_height + "px"
+    bar_offscreen_offset = ((div_height + offscreen_offset) * -1) + "px"
 
     ipcRenderer.send('debug', div_height)
 
@@ -181,6 +182,7 @@ function setEditBox (ipcRenderer, module_json){
 
     // add buttons
     edit_module_box_div.appendChild(createEditButton(ipcRenderer, "Edit", margin, emb_rect_width, emb_rect_height))
+    //edit_module_box_div.addEventListener('click')
     edit_module_box_div.appendChild(createEditButton(ipcRenderer, "Delete", margin, emb_rect_width, emb_rect_height))
 
     // TODO: add functionality
@@ -216,6 +218,7 @@ function toggle_edit_module_box_visibility (val) {
 
     // if shown, then unshow
     if (edit_box_shown){ 
+        
         let animation = edit_module_box_div.animate({top: bar_offscreen_offset}, anim_speed)
         animation.onfinish = function() {
             edit_module_box_div.style.top = bar_offscreen_offset

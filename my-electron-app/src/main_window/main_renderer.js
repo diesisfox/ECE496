@@ -12,7 +12,7 @@ const open_button = document.getElementById("open-button")
 const save_button = document.getElementById("save-button")
 const save_as_button = document.getElementById("save-as-button")
 const add_button = document.getElementById("add-button")
-const remove_button = document.getElementById("remove-button")
+//const remove_button = document.getElementById("remove-button")
 const generate_button = document.getElementById("generate-button")
 const about_button = document.getElementById("about-button")
 
@@ -31,25 +31,18 @@ function addButtonListeners(){
     add_button.addEventListener('click', function() {
         toolbox_renderer.toggle_toolbox_visibility()
     })
-    remove_button.addEventListener('click', function() {
-        // let cell = graphical_representation_renderer.getSelected()
-        // if (cell != null && cell.isVertex()){
-        //     ipcRenderer.send('remove module', cell)
-        // } else {
-        //     ipcRenderer.send('debug', "invalid module")
-        //     ipcRenderer.send('system-message', "Invalid selection, please click on a valid module before clicking this button.")
-        // }
-        let is_module = false
+    // remove_button.addEventListener('click', function() {
+    //     let is_module = false
 
-        let focused = gra_rep_renderer.getSelected()
-        let prefix_len = CONSTANTS.MOD_ID_PREFIX.length
-        if (focused != null && focused.id.length > prefix_len && focused.id.slice(0,prefix_len) == CONSTANTS.MOD_ID_PREFIX){
-            ipcRenderer.send('system-message', "Tried to remove: " + focused.id)
-            ipcRenderer.send('system-message', "not fully implemented")
-        } else {
-            ipcRenderer.send('system-message', "Invalid selection, please click on a valid module before clicking this button.")
-        }
-    })
+    //     let focused = gra_rep_renderer.getSelected()
+    //     let prefix_len = CONSTANTS.MOD_ID_PREFIX.length
+    //     if (focused != null && focused.id.length > prefix_len && focused.id.slice(0,prefix_len) == CONSTANTS.MOD_ID_PREFIX){
+    //         ipcRenderer.send('system-message', "Tried to remove: " + focused.id)
+    //         ipcRenderer.send('system-message', "not fully implemented")
+    //     } else {
+    //         ipcRenderer.send('system-message', "Invalid selection, please click on a valid module before clicking this button.")
+    //     }
+    // })
     generate_button.addEventListener('click', function() {
         ipcRenderer.send('generate', "")
         //ipcRenderer.send('debug', file_manager.base_path)
