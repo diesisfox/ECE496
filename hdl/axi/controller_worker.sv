@@ -1,6 +1,6 @@
 module AXI_Controller_Worker (
-    Simple_Mem_IF.COWI USER_IF,
-    AXI5_Lite_IF.worker AXI_IF
+    Simple_Worker_Mem_IF.CONTROLLER USER_IF,
+    AXI5_Lite_IF.WORKER AXI_IF
 );
 
     // Buffers for incoming data
@@ -26,6 +26,12 @@ module AXI_Controller_Worker (
     // Wire the clock and reset into the worker
     assign USER_IF.clock = AXI_IF.ACLK;
     assign USER_IF.reset_n = AXI_IF.ARESETn;
+    
+    // Reg used for bringing up READY signals after reset
+    logic reset_latch;
+    always @(posedge AXI_IF.ACLK) begin
+        reset_latch <= AXI_IF.ARESETn;
+    end
 
     ///////////////////////////////////////////////////////////////////////////
     ////                                                                   ////
@@ -44,12 +50,12 @@ module AXI_Controller_Worker (
     // i.e., until the end of the write transaction
     always_ff @(posedge AXI_IF.ACLK) begin
         if (AXI_IF.ARESETn == 1'b0) begin
-            AXI_IF.AWREADY <= 1'b1;            
+            AXI_IF.AWREADY <= 1'b0;            
         end else begin
-            if (AXI_IF.AWREADY && AXI_AF.AWVALID && !write_address_latched) begin
+            if (AXI_IF.AWREADY && AXI_IF.AWVALID && !write_address_latched) begin
                 AXI_IF.AWREADY <= 1'b0;
             end
-            if (!AXI_IF_AWREADY && write_done) begin
+            if (!AXI_IF.AWREADY && write_done) begin
                 AXI_IF.AWREADY <= 1'b1;
             end
         end
@@ -64,8 +70,8 @@ module AXI_Controller_Worker (
             awaddr_latch <= 'b0;
             awid_latch <= 'b0;
         end else begin
-            if (AXI_IF.AWREADY && AXI_AF.AWVALID && !write_address_latched) begin
-                awaddr_latch <= AXI_AF.AWADDR;
+            if (AXI_IF.AWREADY && AXI_IF.AWVALID && !write_address_latched) begin
+                awaddr_latch <= AXI_IF.AWADDR;
                 awid_latch <= AXI_IF.AWID;
             end
         end
@@ -83,12 +89,12 @@ module AXI_Controller_Worker (
     // i.e., until the end of the write transaction
     always_ff @(posedge AXI_IF.ACLK) begin
         if (AXI_IF.ARESETn == 1'b0) begin
-            AXI_IF.WREADY <= 1'b1;
+            AXI_IF.WREADY <= 1'b0;
         end else begin
-            if (AXI_IF.WREADY && AXI_AF.WVALID && !write_data_latched) begin
+            if (AXI_IF.WREADY && AXI_IF.WVALID && !write_data_latched) begin
                 AXI_IF.WREADY <= 1'b0;
             end
-            if (!AXI_IF_AWREADY && write_done) begin
+            if (!AXI_IF.AWREADY && write_done) begin
                 AXI_IF.WREADY <= 1'b1;
             end
         end
@@ -103,7 +109,7 @@ module AXI_Controller_Worker (
             wdata_latch <= 'b0;
             wstrb_latch <= 'b0;
         end else begin
-            if (AXI_IF.WREADY && AXI_AF.WVALID && !write_data_latched) begin
+            if (AXI_IF.WREADY && AXI_IF.WVALID && !write_data_latched) begin
                 wdata_latch <= AXI_IF.WDATA;
                 wstrb_latch <= AXI_IF.WSTRB;
             end
@@ -177,6 +183,12 @@ module AXI_Controller_Worker (
                 write_user_handshake_done <= 1'b0;
                 write_done <= 1'b1;
             end
+            // This block will assert write_done for 1 cycle when the AXI reset was LOW last cycle
+            //     and high this one. What this does is signal to the READY signals to go HIGH
+            //     once we come out of reset.
+            if (!reset_latch) begin
+                write_done <= 1'b1;
+            end
             // write_done is a 1 cycle pulse to signal to the write address
             //     and data channels to get ready again
             if (write_done == 1'b1) begin
@@ -185,9 +197,10 @@ module AXI_Controller_Worker (
         end        
     end
 
-    assign USER_IF.wr_valid = write_address_latched & write_data_latched;
     assign AXI_IF.BID = awid_latch;
     assign AXI_IF.BRESP = 3'b000;
+    assign USER_IF.wr_addr = awaddr_latch;
+    assign USER_IF.wr_data = wdata_latch;
 
 
     ///////////////////////////////////////////////////////////////////////////
@@ -205,9 +218,9 @@ module AXI_Controller_Worker (
     // i.e., until the end of the read transaction
     always_ff @(posedge AXI_IF.ACLK) begin
         if (AXI_IF.ARESETn == 1'b0) begin
-            AXI_IF.ARREADY <= 1'b1;
+            AXI_IF.ARREADY <= 1'b0;
         end else begin
-            if (AXI_IF.ARREADY && AXI_AF.ARVALID && !read_address_latched) begin
+            if (AXI_IF.ARREADY && AXI_IF.ARVALID && !read_address_latched) begin
                 AXI_IF.ARREADY <= 1'b0;
             end
             if (!AXI_IF.ARREADY && read_done) begin
@@ -225,8 +238,8 @@ module AXI_Controller_Worker (
             araddr_latch <= 'b0;
             arid_latch <= 'b0;
         end else begin
-            if (AXI_IF.ARREADY && AXI_AF.ARVALID && !read_address_latched) begin
-                araddr_latch <= AXI_AF.ARADDR;
+            if (AXI_IF.ARREADY && AXI_IF.ARVALID && !read_address_latched) begin
+                araddr_latch <= AXI_IF.ARADDR;
                 arid_latch <= AXI_IF.ARID;
             end
         end
@@ -299,6 +312,12 @@ module AXI_Controller_Worker (
                 read_user_handshake_done <= 1'b0;
                 read_done <= 1'b1;
             end
+            // This block will assert read_done for 1 cycle when the AXI reset was LOW last cycle
+            //     and high this one. What this does is signal to the READY signals to go HIGH
+            //     when we come out of reset
+            if (!reset_latch) begin
+                read_done <= 1'b1;
+            end
             // read_done is a 1 cycle pulse to signal to the read address
             //     channel to get ready again
             if (read_done) begin
@@ -314,4 +333,5 @@ module AXI_Controller_Worker (
     // TODO: allow workers to generate a response to reads
     assign AXI_IF.RRESP = 3'b000;
     assign AXI_IF.RID = arid_latch;
+    assign AXI_IF.RDATA = user_rddata_latch;
 endmodule
