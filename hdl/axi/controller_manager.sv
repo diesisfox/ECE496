@@ -12,7 +12,9 @@ module AXI_Controller_Manager (
     
     // Control signals for read datapath
     logic user_rd_addr_latched;
+    logic axi_ar_done;
     logic axi_rresp_done;
+    logic read_done;
     
     // Buffers for incoming/outgoing data
     logic [31:0] user_waddr_latch;
@@ -26,6 +28,10 @@ module AXI_Controller_Manager (
     always @(posedge AXI_IF.ACLK) begin
         reset_latch <= AXI_IF.ARESETn;
     end
+    
+    // Connect AXI reset and clock to USER_IF
+    assign USER_IF.clock = AXI_IF.ACLK;
+    assign USER_IF.reset_n = AXI_IF.ARESETn;
 
     ///////////////////////////////////////////////////////////////////////////
     ////                                                                   ////
@@ -80,7 +86,7 @@ module AXI_Controller_Manager (
             user_waddr_latch <= 'b0;
             user_wdata_latch <= 'b0;
         end else begin
-            if (USER_IF.wr_valid && USER_IF.wr_ready) begin
+            if (USER_IF.wr_valid && USER_IF.wr_ready && !user_wr_data_addr_latched) begin
                 user_waddr_latch <= USER_IF.wr_addr;
                 user_wdata_latch <= USER_IF.wr_data;
             end
@@ -93,10 +99,10 @@ module AXI_Controller_Manager (
         if (AXI_IF.ARESETn == 1'b0) begin
             AXI_IF.AWVALID <= 1'b0;
         end else begin
-            if (user_wr_data_addr_latched && !AXI_IF.AWVALID) begin
+            if (user_wr_data_addr_latched && !AXI_IF.AWVALID && !axi_aw_done) begin
                 AXI_IF.AWVALID <= 1'b1;
             end
-            if (AXI_IF.AWVALID && AXI_IF.AW_READY) begin
+            if (AXI_IF.AWVALID && AXI_IF.AWREADY) begin
                 AXI_IF.AWVALID <= 1'b0;
             end
         end
@@ -107,10 +113,10 @@ module AXI_Controller_Manager (
         if (AXI_IF.ARESETn == 1'b0) begin
             AXI_IF.WVALID <= 1'b0;
         end else begin
-            if (user_wr_data_addr_latched && !AXI_IF.WVALID) begin
+            if (user_wr_data_addr_latched && !AXI_IF.WVALID && !axi_w_done) begin
                 AXI_IF.WVALID <= 1'b1;
             end
-            if (AXI_IF.WVALID && AXI_IF.W_READY) begin
+            if (AXI_IF.WVALID && AXI_IF.WREADY) begin
                 AXI_IF.WVALID <= 1'b0;
             end
         end
@@ -119,7 +125,7 @@ module AXI_Controller_Manager (
     // AXI interface BREADY generation
     always_ff @(posedge AXI_IF.ACLK) begin
         if (AXI_IF.ARESETn == 1'b0) begin
-            AXI_IF.BREADY <= 1'b0
+            AXI_IF.BREADY <= 1'b0;
         end else begin
             if (axi_data_transferred && !AXI_IF.BREADY) begin
                 AXI_IF.BREADY <= 1'b1;
@@ -141,10 +147,10 @@ module AXI_Controller_Manager (
             if (USER_IF.wr_ready && USER_IF.wr_valid) begin
                 user_wr_data_addr_latched <= 1'b1;
             end
-            if (AXI_IF.AW_READY && AXI_IF.AWVALID) begin
+            if (AXI_IF.AWREADY && AXI_IF.AWVALID) begin
                 axi_aw_done <= 1'b1;
             end
-            if (AXI_IF.W_READY && AXI_IF.WVALID) begin
+            if (AXI_IF.WREADY && AXI_IF.WVALID) begin
                 axi_w_done <= 1'b1;
             end
             if (AXI_IF.BREADY && AXI_IF.BVALID) begin
@@ -208,11 +214,11 @@ module AXI_Controller_Manager (
         if (AXI_IF.ARESETn == 1'b0) begin
             USER_IF.rd_ready <= 1'b0;
         end else begin
-            if (axi_rresp_done && !USER_IF.rd_ready) begin
-                rd_ready <= 1'b1;
+            if (axi_rresp_done) begin
+                USER_IF.rd_ready <= 1'b1;
             end
-            if (USER_IF.rd_ready && !USER_IF.rd_valid) begin
-                rd_ready <= 1'b0;
+            if (read_done) begin
+                USER_IF.rd_ready <= 1'b0;
             end
         end
     end
@@ -228,7 +234,7 @@ module AXI_Controller_Manager (
         if (AXI_IF.ARESETn == 1'b0) begin
             user_rdaddr_latch <= 'b0;
         end else begin
-            if (USER_IF.rd_valid) begin
+            if (USER_IF.rd_valid && !user_rd_addr_latched) begin
                 user_rdaddr_latch <= USER_IF.rd_addr;
             end
         end
@@ -243,7 +249,7 @@ module AXI_Controller_Manager (
         if (AXI_IF.ARESETn == 1'b0) begin
             AXI_IF.ARVALID <= 1'b0;
         end else begin
-            if (user_rd_addr_latched && !AXI_IF.ARVALID) begin
+            if (user_rd_addr_latched && !axi_ar_done && !AXI_IF.ARVALID) begin
                 AXI_IF.ARVALID <= 1'b1;
             end
             if (AXI_IF.ARVALID && AXI_IF.ARREADY) begin
@@ -261,7 +267,7 @@ module AXI_Controller_Manager (
         if (AXI_IF.ARESETn == 1'b0) begin
             AXI_IF.RREADY <= 1'b0;
         end else begin
-            if (user_rd_addr_latched && !AXI_IF.RREADY) begin
+            if (!axi_rresp_done && !AXI_IF.RREADY) begin
                 AXI_IF.RREADY <= 1'b1;
             end
             if (AXI_IF.RREADY && AXI_IF.RVALID) begin
@@ -287,17 +293,30 @@ module AXI_Controller_Manager (
     always_ff @(posedge AXI_IF.ACLK) begin
         if (AXI_IF.ARESETn == 1'b0) begin
             user_rd_addr_latched <= 1'b0;
+            axi_ar_done <= 1'b0;
             axi_rresp_done <= 1'b0;
+            read_done <= 1'b0;
         end else begin
             if (USER_IF.rd_valid) begin
                 user_rd_addr_latched <= 1'b1;
             end
+            if (AXI_IF.ARVALID && AXI_IF.ARREADY) begin
+                axi_ar_done <= 1'b1;
+            end
             if (AXI_IF.RREADY && AXI_IF.RVALID) begin
-                user_rd_addr_latched <= 1'b0;
                 axi_rresp_done <= 1'b1;
             end
-            if (axi_rresp_done == 1'b1) begin
+            if (!reset_latch) begin
+                read_done <= 1'b1;
+            end
+            if (USER_IF.rd_ready && USER_IF.rd_valid) begin
+                read_done <= 1'b1;
+                user_rd_addr_latched <= 1'b0;
+                axi_ar_done <= 1'b0;
                 axi_rresp_done <= 1'b0;
+            end
+            if (read_done) begin
+                read_done <= 1'b0;
             end
         end
     end
@@ -305,11 +324,13 @@ module AXI_Controller_Manager (
     // Combinational logic for read channels
     always_comb begin        
         // Tie off AXI read address channel signals
-        ARPROT = 3'b000;
-        ARSIZE = 3'b010;
-        ARID = 1'b0;
+        AXI_IF.ARPROT = 3'b000;
+        AXI_IF.ARSIZE = 3'b010;
+        AXI_IF.ARID = 1'b0;
 
         // Connect rd addr and data latches
         AXI_IF.ARADDR = user_rdaddr_latch;
         USER_IF.rd_data = axi_rdata_latch;
     end
+
+endmodule
