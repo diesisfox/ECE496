@@ -1,62 +1,95 @@
 `ifdef ICARUSVERILOG `include "i2c_m_main.sv" `endif
+`timescale 1ns/1ps //#10 is 1MHz
 
-module spi_main_tb ();
+module i2c_main_tb ();
 
+// memory map
 localparam START_OFFSET = 'h00; // {...[31:1], START}
-localparam CLKDIV_OFFSET = 'h04; // {CLKDIV[31:0]}
-localparam CS_OFFSET = 'h08; // {...[31:1], CS}
-localparam SPIMODE_OFFSET = 'h0c; // {...[31:2], SPIMODE[1:0] ({CPOL,CPHA})}
-localparam DATA_OFFSET = 'h10; // {...[31:8], DATA[7:0]}
+localparam TXN_OFFSET = 'h04; // {...[31:1], TXN}
+localparam STOP_OFFSET = 'h08; // {...[31:1], STOP}
+localparam NACK_OFFSET = 'h0c; // {...[31:1], NACK}
+localparam ADDR_OFFSET = 'h10; // {...[31:7], ADDR[6:0]}
+localparam DATA_OFFSET = 'h14; // {...[31:8], DATA[7:0]}
+localparam RW_OFFSET = 'h18; // {...[31:1], R/Wn}
+localparam SPEED_OFFSET = 'h1c; // {...[31:1], FM/SMn}
+
+parameter CYCLETIME = 10;
 
 Simple_Mem_IF Bus();
 
-logic CS,SCK,DOUT;
-logic DIN=0;
+tri1 SDA,SCL;
 
-spi_m_main #(
+ip_i2c_m_main #(
     .ADDR('h0000_0000)
 ) dut (
     .Bus,
-    .CS,
-    .SCK,
-    .DOUT,
-    .DIN
+    .SCL,
+    .SDA
 );
 
-always #5 Bus.clock = ~Bus.clock;
+always #(CYCLETIME/2) Bus.clock = ~Bus.clock;
 
 logic [31:0] out;
+
+task i2cForce(input byte data);
+    while(dut.bitNum != 7) #CYCLETIME;
+    force SDA = data[7];
+    while(dut.bitNum != 6) #CYCLETIME;
+    force SDA = data[6];
+    while(dut.bitNum != 5) #CYCLETIME;
+    force SDA = data[5];
+    while(dut.bitNum != 4) #CYCLETIME;
+    force SDA = data[4];
+    while(dut.bitNum != 3) #CYCLETIME;
+    force SDA = data[3];
+    while(dut.bitNum != 2) #CYCLETIME;
+    force SDA = data[2];
+    while(dut.bitNum != 1) #CYCLETIME;
+    force SDA = data[1];
+    while(dut.bitNum != 0) #CYCLETIME;
+    force SDA = data[0];
+    while(dut.bitPhase != dut.PH2) #CYCLETIME;
+    release SDA;
+endtask //automatic
 
 initial begin
     // DIN = 1;
     Bus.clock = '0;
     Bus.reset_n = '1;
-    Bus.CWrite(CLKDIV_OFFSET, 2, 10);
-    Bus.CWrite(SPIMODE_OFFSET, 0, 10);
-    Bus.CWrite(DATA_OFFSET, 'hC3, 10);
-    Bus.CWrite(CS_OFFSET, '0, 10);
-    Bus.CWrite(START_OFFSET, '1, 10);
-    do Bus.CRead(START_OFFSET, out, 10);
+    Bus.CWrite(ADDR_OFFSET, 7'b1100111, CYCLETIME);
+    Bus.CWrite(RW_OFFSET, 0, CYCLETIME);
+    Bus.CWrite(SPEED_OFFSET, 0, CYCLETIME);
+    Bus.CWrite(START_OFFSET, 1, CYCLETIME);
+
+    do Bus.CRead(START_OFFSET, out, CYCLETIME);
     while (out == 1);
-    Bus.CWrite(CS_OFFSET, '1, 10);
-    #100
     
-    Bus.CWrite(CLKDIV_OFFSET, 0, 10);
-    Bus.CWrite(SPIMODE_OFFSET, 3, 10);
-    Bus.CWrite(DATA_OFFSET, 'h0, 10);
-    Bus.CWrite(CS_OFFSET, '0, 10);
-    Bus.CWrite(START_OFFSET, '1, 10);
-    #20 DIN = 1;
-    #20 DIN = 0;
-    #20 DIN = 1;
-    #20 DIN = 0;
-    #20 DIN = 1;
-    #20 DIN = 0;
-    #20 DIN = 1;
-    #20 DIN = 0;
-    do Bus.CRead(START_OFFSET, out, 10);
+    Bus.CWrite(DATA_OFFSET, 'hbeef, CYCLETIME);
+    Bus.CWrite(TXN_OFFSET, 1, CYCLETIME);
+    
+    do Bus.CRead(TXN_OFFSET, out, CYCLETIME);
+    while (out==1);
+
+    Bus.CWrite(RW_OFFSET, 1, CYCLETIME);
+    Bus.CWrite(START_OFFSET, 1, CYCLETIME);
+    do Bus.CRead(START_OFFSET, out, CYCLETIME);
     while (out == 1);
-    Bus.CWrite(CS_OFFSET, '1, 10);
+
+    Bus.CWrite(TXN_OFFSET, 1, CYCLETIME);
+
+    i2cForce('h45);
+
+    do Bus.CRead(TXN_OFFSET, out, CYCLETIME);
+    while (out==1);
+
+    Bus.CWrite(STOP_OFFSET, '1, CYCLETIME);
+
+    do Bus.CRead(STOP_OFFSET, out, CYCLETIME);
+    while (out == 1);
+
+    Bus.CRead(DATA_OFFSET, out, CYCLETIME);
+    
+    #500
     $finish;
 end
 

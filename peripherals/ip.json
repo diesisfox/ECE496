@@ -78,5 +78,53 @@
                 ]
             }
         ]
+    },
+    {
+        "moduleType": "SPI_WORKER (stub)"
+    },
+    {
+        "moduleType": "I2C_MANAGER",
+        "source": "peripherals/i2c/i2c_m_main.sv",
+        "verilogName": "ip_i2c_m_main",
+        "addrBits": 5,
+        "parameters": [
+            {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol"
+            },
+            {
+                "paramName": "Base Address",
+                "verilogName": "ADDR",
+                "paramType": "Number"
+            },
+            {
+                "paramName": "Bus Frequency (Hz)",
+                "verilogName": "BUS_CLK_HZ",
+                "paramType": "ClockFreq"
+            }
+        ],
+        "interfaces": [
+            {
+                "type": "Simple_Mem_IF.COWI",
+                "port": "Bus"
+            },
+            {
+                "type": "inout",
+                "port": "pins_o",
+                "width": "3",
+                "pinmap": [
+                    [0, "A13", "3V3", "slow"],
+                    [1, "K12", "3V3", "slow"]
+                ]
+            },
+            {
+                "type": "input",
+                "port": "pins_i",
+                "width": "1",
+                "pinmap": [
+                    [0, "A13", "3V3", "slow"]
+                ]
+            }
+        ]
     }
 ]

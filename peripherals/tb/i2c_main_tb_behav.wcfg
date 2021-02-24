@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="i2c_main_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="i2c_main_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="50370000001fs"></ZoomEndTime>
+      <Cursor1Time time="0fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="208"></NameColumnWidth>
+      <ValueColumnWidth column_width="130"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="30" />
+   <wvobject type="logic" fp_name="/i2c_main_tb/SDA">
+      <obj_property name="ElementShortName">SDA</obj_property>
+      <obj_property name="ObjectShortName">SDA</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/SCL">
+      <obj_property name="ElementShortName">SCL</obj_property>
+      <obj_property name="ObjectShortName">SCL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/out">
+      <obj_property name="ElementShortName">out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">out[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider101" type="divider">
+      <obj_property name="label">Bus</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/Bus/clock">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/Bus/reset_n">
+      <obj_property name="ElementShortName">reset_n</obj_property>
+      <obj_property name="ObjectShortName">reset_n</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/Bus/wr_addr">
+      <obj_property name="ElementShortName">wr_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/Bus/wr_data">
+      <obj_property name="ElementShortName">wr_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/Bus/wr_byteEn">
+      <obj_property name="ElementShortName">wr_byteEn[3:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_byteEn[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/Bus/wr_ready">
+      <obj_property name="ElementShortName">wr_ready</obj_property>
+      <obj_property name="ObjectShortName">wr_ready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/Bus/wr_valid">
+      <obj_property name="ElementShortName">wr_valid</obj_property>
+      <obj_property name="ObjectShortName">wr_valid</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/Bus/rd_addr">
+      <obj_property name="ElementShortName">rd_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/Bus/rd_data">
+      <obj_property name="ElementShortName">rd_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/Bus/rd_byteEn">
+      <obj_property name="ElementShortName">rd_byteEn[3:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_byteEn[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/Bus/rd_valid">
+      <obj_property name="ElementShortName">rd_valid</obj_property>
+      <obj_property name="ObjectShortName">rd_valid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/Bus/rd_ready">
+      <obj_property name="ElementShortName">rd_ready</obj_property>
+      <obj_property name="ObjectShortName">rd_ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider114" type="divider">
+      <obj_property name="label">state</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/dut/start">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/dut/txn">
+      <obj_property name="ElementShortName">txn</obj_property>
+      <obj_property name="ObjectShortName">txn</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/dut/stop">
+      <obj_property name="ElementShortName">stop</obj_property>
+      <obj_property name="ObjectShortName">stop</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/dut/nack">
+      <obj_property name="ElementShortName">nack</obj_property>
+      <obj_property name="ObjectShortName">nack</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/dut/addr">
+      <obj_property name="ElementShortName">addr[6:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[6:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/dut/data">
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/dut/r">
+      <obj_property name="ElementShortName">r</obj_property>
+      <obj_property name="ObjectShortName">r</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/dut/speed">
+      <obj_property name="ElementShortName">speed</obj_property>
+      <obj_property name="ObjectShortName">speed</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/dut/counter">
+      <obj_property name="ElementShortName">counter[7:0]</obj_property>
+      <obj_property name="ObjectShortName">counter[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/dut/bitNum">
+      <obj_property name="ElementShortName">bitNum[3:0]</obj_property>
+      <obj_property name="ObjectShortName">bitNum[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/dut/bitPhase">
+      <obj_property name="ElementShortName">bitPhase[1:0]</obj_property>
+      <obj_property name="ObjectShortName">bitPhase[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/i2c_main_tb/dut/active">
+      <obj_property name="ElementShortName">active</obj_property>
+      <obj_property name="ObjectShortName">active</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/i2c_main_tb/dut/counterLim">
+      <obj_property name="ElementShortName">counterLim[7:0]</obj_property>
+      <obj_property name="ObjectShortName">counterLim[7:0]</obj_property>
+   </wvobject>
+</wave_config>

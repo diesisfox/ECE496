@@ -44,14 +44,16 @@ localparam DATA_OFFSET = 'h14; // {...[31:8], DATA[7:0]}
 localparam RW_OFFSET = 'h18; // {...[31:1], R/Wn}
 localparam SPEED_OFFSET = 'h1c; // {...[31:1], FM/SMn}
 
+`define max(a, b) (((a) > (b)) ? (a) : (b))
+
 // params
-localparam FM_COUNTER_LIM = (CUS_CLK_HZ/1600_000 - 1);
-localparam SM_COUNTER_LIM = (BUS_CLK_HZ/400_000 - 1);
+localparam FM_COUNTER_LIM = `max((BUS_CLK_HZ/1600_000 - 1), 0);
+localparam SM_COUNTER_LIM = `max((BUS_CLK_HZ/400_000 - 1), 0);
 localparam COUNTERBITS = $clog2(SM_COUNTER_LIM);
 
 // types
-enum bit [1:0] {PH0, PH1, PH2, PH3} BitPhase_e;
-enum bit [3:0] {
+typedef enum bit [1:0] {PH0, PH1, PH2, PH3} BitPhase_e;
+typedef enum bit [3:0] {
     BIT0 = 0, BIT1, BIT2, BIT3, BIT4, BIT5, BIT6, BIT7, //{da,cl} = new,0; d,1; samp,1; d,0
     START, //{da,cl} = 1,1; 0,1; 0,0
     PRE, //{da,cl} = 0,0
@@ -59,15 +61,15 @@ enum bit [3:0] {
     POST, //{da,cl} = 1,0
     STOP, //{da,cl} = 0,0; 0,1; 1,1;
     RESTART //{da,cl} = 1,1; 0,1; 0,0;
-} BitNum_e
+} BitNum_e;
 
 // mapped registers
 logic start = 'b0; // transmit(ting) address byte
 logic txn = 'b0; // transceive(ing) data byte
 logic stop = 'b0;
 logic nack = 'b0;
-logic addr [6:0] = 'h0;
-logic data [7:0] = 'h0;
+logic [6:0] addr = 'h0;
+logic [7:0] data = 'h0;
 logic r = 'b0;
 logic speed = 'b1;
 
@@ -207,10 +209,10 @@ always_ff @(posedge Bus.clock) begin
                         endcase
                     end
                     PH2:begin
-                        bitPhase <= PH3
+                        bitPhase <= PH3;
                         unique case (bitNum)
                             BIT0, BIT1, BIT2, BIT3, BIT4, BIT5, BIT6, BIT7:begin
-                                scl <= 0
+                                scl <= 0;
                             end
                             START, RESTART: begin
                                 sda <= 0;
@@ -239,13 +241,10 @@ always_ff @(posedge Bus.clock) begin
                             end
                             BIT1, BIT2, BIT3, BIT4, BIT5, BIT6, BIT7:begin
                                 scl <= 0;
-                                if(r)begin
-                                    sda <= 1;
-                                end else begin
-                                    sda <= start ? firstByte[bitNum-1] : data[bitNum-1];
-                                end
+                                if(start) sda <= firstByte[bitNum-1];
+                                else sda <= r ? 1 : data[bitNum-1];
                                 bitPhase <= PH0;
-                                bitNum <= bitNum - 1;
+                                bitNum <= BitNum_e'(bitNum - 1);
                             end
                             START, RESTART: begin
                                 sda <= firstByte[BIT7];
@@ -306,34 +305,6 @@ always_ff @(posedge Bus.clock) begin
                         endcase
                     end
                 endcase
-
-                if(cpha)begin // sample on negedge, change on posedge
-                    if(sck)begin // negedge
-                        data[7] <= DIN;
-                    end else begin //posedge
-                        dout <= data[0];
-                        data <= data >> 1;
-                        bitCounter <= bitCounter + 'd1;
-                        if(bitCounter == 'd7)begin
-                            data <= data;
-                            sck <= '0;
-                            started <= '0;
-                        end
-                    end
-                end else begin // sample on posedge, change on negedge
-                    if(sck)begin // negedge
-                        dout <= data[0];
-                        data <= data >> 1;
-                        bitCounter <= bitCounter + 'd1;
-                        if(bitCounter == 'd7)begin
-                            data <= data;
-                            sck <= '0;
-                            started <= '0;
-                        end
-                    end else begin //posedge
-                        data[7] <= DIN;
-                    end
-                end
             end
         end
 
@@ -351,7 +322,7 @@ always_ff @(posedge Bus.clock) begin
                             bitNum = START;
                         end
                     end
-                    TXN_BYTE_OFFSET:; // do nothing
+                    TXN_OFFSET:; // do nothing
                     STOP_OFFSET:begin
                         // reset logic
                         if(maskBytes({31'd0,start}, Bus.wr_data, Bus.wr_byteEn)&32'b1 == 32'b1) begin
@@ -362,8 +333,8 @@ always_ff @(posedge Bus.clock) begin
                     NACK_OFFSET: nack <= maskBytes({31'd0,nack}, Bus.wr_data, Bus.wr_byteEn);
                     ADDR_OFFSET: addr <= maskBytes({25'd0,addr}, Bus.wr_data, Bus.wr_byteEn);
                     DATA_OFFSET: data <= maskBytes({24'd0,data}, Bus.wr_data, Bus.wr_byteEn);
-                    RW_OFFSET: r <= maskBytes({31'd0,cs}, Bus.wr_data, Bus.wr_byteEn);
-                    SPEED_OFFSET: speed <= maskBytes({31'd0,cs}, Bus.wr_data, Bus.wr_byteEn);
+                    RW_OFFSET: r <= maskBytes({31'd0,r}, Bus.wr_data, Bus.wr_byteEn);
+                    SPEED_OFFSET: speed <= maskBytes({31'd0,speed}, Bus.wr_data, Bus.wr_byteEn);
                 endcase
             end else begin
                 if(bitNum != POST)begin
@@ -386,7 +357,7 @@ always_ff @(posedge Bus.clock) begin
                         NACK_OFFSET: nack <= maskBytes({31'd0,nack}, Bus.wr_data, Bus.wr_byteEn);
                         ADDR_OFFSET: addr <= maskBytes({25'd0,addr}, Bus.wr_data, Bus.wr_byteEn);
                         DATA_OFFSET: data <= maskBytes({24'd0,data}, Bus.wr_data, Bus.wr_byteEn);
-                        RW_OFFSET: r <= maskBytes({31'd0,cs}, Bus.wr_data, Bus.wr_byteEn);
+                        RW_OFFSET: r <= maskBytes({31'd0,r}, Bus.wr_data, Bus.wr_byteEn);
                         SPEED_OFFSET:; // not writable while bus held
                     endcase
                 end
