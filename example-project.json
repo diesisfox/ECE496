@@ -4,7 +4,7 @@
         "UUID": "128943FD78AB",
         "parameters": {
             "pins": 12,
-            "Verilog Instance Name": "ip_gpio_main_78AB",
+            "Verilog Instance Name": "ip_gpio_main_128943FD78AB",
             "Base Address": 65536
         }
     }

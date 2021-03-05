@@ -1,11 +1,11 @@
-[
-    {
+{
+    "GPIO" : {
         "moduleType": "GPIO",
         "source": "peripherals/gpio/gpio_main.sv",
         "verilogName": "ip_gpio_main",
         "addrBits": 4,
-        "parameters": [
-            {
+        "parameters":{
+            "pins": {
                 "paramName": "pins",
                 "verilogName": "PINS",
                 "paramType": "Number",
@@ -13,16 +13,16 @@
                 "min": 1,
                 "max": 32
             },
-            {
+            "Verilog Instance Name": {
                 "paramName": "Verilog Instance Name",
                 "paramType": "Symbol"
             },
-            {
+            "Base Address": {
                 "paramName": "Base Address",
                 "verilogName": "ADDR",
                 "paramType": "Number"
             }
-        ],
+        },
         "interfaces": [
             {
                 "type": "Simple_Mem_IF.COWI",
@@ -39,22 +39,22 @@
             }
         ]
     },
-    {
+    "SPI_MANAGER" : {
         "moduleType": "SPI_MANAGER",
         "source": "peripherals/spi/spi_m_main.sv",
         "verilogName": "spi_m_main",
         "addrBits": 5,
-        "parameters": [
-            {
+        "parameters": {
+            "Verilog Instance Name": {
                 "paramName": "Verilog Instance Name",
                 "paramType": "Symbol"
             },
-            {
+            "Base Address": {
                 "paramName": "Base Address",
                 "verilogName": "ADDR",
                 "paramType": "Number"
             }
-        ],
+        },
         "interfaces": [
             {
                 "type": "Simple_Mem_IF.COWI",
@@ -79,30 +79,27 @@
             }
         ]
     },
-    {
-        "moduleType": "SPI_WORKER (stub)"
-    },
-    {
+    "I2C_MANAGER": {
         "moduleType": "I2C_MANAGER",
         "source": "peripherals/i2c/i2c_m_main.sv",
         "verilogName": "ip_i2c_m_main",
         "addrBits": 5,
-        "parameters": [
-            {
-                "paramName": "Verilog Instance Name",
-                "paramType": "Symbol"
-            },
-            {
+        "parameters": {
+            "Base Address": {
                 "paramName": "Base Address",
                 "verilogName": "ADDR",
                 "paramType": "Number"
             },
-            {
+            "Verilog Instance Name": {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol"
+            },
+            "Bus Frequency (Hz)": {
                 "paramName": "Bus Frequency (Hz)",
                 "verilogName": "BUS_CLK_HZ",
                 "paramType": "ClockFreq"
             }
-        ],
+        },
         "interfaces": [
             {
                 "type": "Simple_Mem_IF.COWI",
@@ -127,4 +124,4 @@
             }
         ]
     }
-]
+}
