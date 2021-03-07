@@ -6,14 +6,49 @@
 * Refactor ip.json such that module parameters have "isVerilog" flags
 * Refactor peripherals to use the AXI worker controller
 * Discussion with Alex:
-    - [ ] How is project JSON created and modified? Will he do it? Pass us the current state + a command, and we return updated JSON? etc
-    - [ ] How/when is our generate.py called? What outputs is he expecting (file handle, filename, string)? What inputs will he give us (JSON file names, file handles, strings)?
-    - [ ] Tell alex that the python backend will be "stateless" and won't be a daemon / require IPC
-    - [ ] System validation - will he validate systems? Is that a callback we should build?
-        - [ ] Error mechanisms - if generate.py hits some sort of error, can we have some sort of mechanism for indicating it to the user
+    - [x] How is project JSON created and modified? Will he do it? Pass us the current state + a command, and we return updated JSON? etc
+    - [x] How/when is our generate.py called? What outputs is he expecting (file handle, filename, string)? What inputs will he give us (JSON file names, file handles, strings)?
+    - [x] Tell alex that the python backend will be "stateless" and won't be a daemon / require IPC
+    - [x] System validation - will he validate systems? Is that a callback we should build?
+        - [x] Error mechanisms - if generate.py hits some sort of error, can we have some sort of mechanism for indicating it to the user
             * validate_system.py?
-    - [ ] Display of parameters to edit -- read "important" flags and use that to pick which params to display in collapsed menu - build expandable menu if possible
+    - [x] Display of parameters to edit -- read "important" flags and use that to pick which params to display in collapsed menu - build expandable menu if possible
     - [ ] UI feedback lol
+---
+### Notes 20210307 ###
+
+* UI will call project modification python script with verbs: add_module, remove_module, change_parameter, rearrange_modules.
+  * ip.json is expected to be in a hardcoded relative path (unless Alex wants to change that)
+  * verbs:
+    * add_module: `python3 modify.py add_module <current_project_json_str> <module_type>`
+    * remove_module: `python3 modify.py remove_module <current_project_json_str> <module_UUID>`
+    * change_parameter: `python3 modify.py change_parameter <current_project_json_str> <module_UUID> <parameter_name> <new_value>`
+    * rearrange_module: `python3 modify.py rearrange_module <current_project_json_str> <module_UUID> <0-indexed_position>`
+  * The python script will spit out the output json as a string on stdout, ending with `EOF`.
+* Validation:
+  * UI invokes `python3 validate.py <current_project_json_str>`
+  * validate.py will output on stdout whether the system is valid or if there are errors, what the errors are (to be displayed to the user)
+    * Error indication method:
+      * The python backend will print on stdout first a magic token indicating whether it's a pass or a fail
+      * If fail, an error message will follow, which should be displayed to the user.
+* Generation:
+  * Invoked similarly to the validator.
+  * the generator has the same error indication method as the validator. Except on pass, it will print out the path to the generated system after the magic token.
+* What the user will be doing from the built-in python terminal:
+  * User types: `add_module(...args)`
+  * When the python shell starts, it should automatically include modules you wrote that defines functions such as `add_module()` etc.
+  * This can be done by piping in `from _ import _` to python's stdin when it starts.
+  * What happens next:
+    * The python running in the python shell could invoke the python itself
+    * OR, the python could somehow tell the JS to do the thing
+      * the python terminal prints out a string starting with a magic token. upon seeing that token, the JS which is an interposer btw the python and the UI takes that as a command.
+* Important tag: prioritize other stuff first, we can circle back to this.
+
+* Roadmap:
+  * wrap up generation code within a week
+    * UI integration with python backend should be done at the same time
+  * a week to integrate after that
+  * final week allocated for final report
 ---
 ### Peripheral pin-outs ###
 * Create SystemVerilog interfaces for each peripheral's external connections
