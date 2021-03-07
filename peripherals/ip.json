@@ -57,24 +57,15 @@
         },
         "interfaces": [
             {
-                "type": "Simple_Mem_IF.COWI",
-                "port": "Bus"
+                "type": "AXI5_Lite_IF",
+                "port": "AXI_IF"
             },
             {
-                "type": "output",
-                "port": "pins_o",
-                "width": "3",
+                "type": "spi_m_if",
+                "port": "SPI_IF",
                 "pinmap": [
-                    [0, "A13", "3V3", "slow"],
+                    ["SCK", "GPIO", "output"],
                     [1, "K12", "3V3", "slow"]
-                ]
-            },
-            {
-                "type": "input",
-                "port": "pins_i",
-                "width": "1",
-                "pinmap": [
-                    [0, "A13", "3V3", "slow"]
                 ]
             }
         ]

@@ -8,11 +8,8 @@
 module spi_m_main #(
     parameter bit [31:0] ADDR = 'h1000_0000
 ) (
-    Simple_Mem_IF.COWI Bus,
-    output logic CS,
-    output logic SCK,
-    output logic DOUT,
-    input logic DIN
+    AXI5_Lite_IF.WORKER AXI_IF,
+    spi_m_if SPI_IF
 );
 
 localparam ADDRBITS = 5;
@@ -21,6 +18,20 @@ localparam CLKDIV_OFFSET = 'h04; // {CLKDIV[31:0]}
 localparam CS_OFFSET = 'h08; // {...[31:1], CS}
 localparam SPIMODE_OFFSET = 'h0c; // {...[31:2], SPIMODE[1:0] ({CPOL,CPHA})}
 localparam DATA_OFFSET = 'h10; // {...[31:8], DATA[7:0]}
+
+// Interface module with AXI
+Simple_Worker_Mem_IF Bus ();
+AXI_controller_worker AXI_controller (
+    .USER_IF(Bus),
+    .AXI_IF(AXI_IF)
+);
+
+// Break out/in module interface signals
+logic CS, SCK, DOUT, DIN;
+assign SPI_IF.CS = CS;
+assign SPI_IF.SCK = SCK;
+assign SPI_IF.DOUT = DOUT;
+assign DIN = SPI_IF.DIN;
 
 // state registers
 logic [31:0] counter = '0;
@@ -176,4 +187,4 @@ always_ff @(posedge Bus.clock) begin
 end
 
     
-endmodule
+endmodule : spi_m_main

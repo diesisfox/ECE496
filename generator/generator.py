@@ -20,11 +20,33 @@ usage:
 pp = pprint.PrettyPrinter(indent=2)
 ip_database_file: str = "../peripherals/ip.json"
 
+# At the start, for each peripheral, do the following:
+# 1. Instantiate its AXI interface
+# 2. Instantiate its external interface(s)
+# 3. Create a dict mapping between the instance name nad the created interfaces
 
 def parse_ip_database() -> list:
     with open(ip_database_file, 'r+') as file:
         project = json.load(file)
     return project
+
+
+def allocate_GPIO_pins(project_json, ip_json) -> dict:
+    module_pin_to_gpio_num_map = {}
+    return module_pin_to_gpio_num_map
+    pass
+
+
+def write_top_decl_start_and_interfaces(project_json, ip_json, gpio_pin_map) -> str:
+    verilog = ""
+    return verilog
+    pass
+
+
+def write_modules_instantiations(project_json, ip_json) -> str:
+    verilog = ""
+    return verilog
+    pass
 
 
 def create_module_instantiation(module_obj) -> str:
@@ -90,10 +112,27 @@ def create_module_instantiation(module_obj) -> str:
     pass
 
 
+def write_axi_interconnect(project_json, ip_json) -> str:
+    # axi module is just included in the top level sv file
+    verilog = ""
+    return verilog
+    pass
+
+
+def write_interconnect_instantiaion(project_json, ip_json) -> str:
+    verilog = ""
+    return verilog
+    pass
+
+
+def write_top_verilog_end() -> str:
+    verilog = ""
+    return verilog
+    pass
+
+
 def write_system(filename):
-    # For each module:
-    # 1. Create the Verilog instantiation
-    # 2. Instantiate module-specific interfaces
+    # Algorithm: see notes.md
     with open(filename, 'w+') as file:
         pass
 
