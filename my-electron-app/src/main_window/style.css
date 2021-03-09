@@ -1,0 +1,228 @@
+html
+{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+}
+
+.page-left-menu {
+    box-sizing: border-box;
+    float: left;
+
+    height: 100%;
+    width: 76px;
+    
+    background: var(--light-menu-background);
+    border-right: 4px solid var(--light-border);
+}
+
+.menu-button {
+    
+
+    width: 100%;
+    height: 63px;
+
+    background-color: var(--light-menu-background);
+    border: 0px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    
+}
+
+.menu-button:hover {
+    transition-duration: 0.5s;
+
+    border-left: 5px solid var(--button-hover-border);
+}
+
+.menu-button:active {
+    background-color: var(--dark-menu-background);
+}
+
+.menu-button:focus {
+    outline: none;
+}
+
+.page-wrap-content {
+    position: relative;
+    flex-grow: 1;
+
+    float: left;
+
+    height: 100%;
+    width: 90%;
+    
+    padding: 0px;
+    margin: 0px;
+
+    background: white;
+}
+
+.page-center-content {
+    position: relative;
+
+    height: 75%;
+
+    margin-bottom: 0;
+
+    overflow: hidden;
+}
+
+.page-bottom-content {
+    box-sizing: border-box;
+
+    margin-top: 0px;
+    height: 25%;
+
+    background: var(--console-black);
+    border-top: 4px solid var(--light-border);
+
+}
+
+.model-diagram-display{
+    position: relative; 
+    overflow: hidden; 
+    width: 100%; 
+    height: 100%; 
+    cursor: default; 
+    touch-action: none;
+    user-select: none;
+}
+
+.model-diagram-display::-webkit-scrollbar {
+    display: none;
+}
+
+.module-toolbox {
+    position:absolute;
+    right: 5px;
+    top: 5px;
+
+    width: 200px;
+    height: 350px;
+    
+    background-color: var(--light-menu-background);
+    border-radius: 10px;
+
+    overflow: auto;
+}
+
+.add-module-bar {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    right: 5px;
+    bottom: -50px;
+
+    width: 400px;
+    height: 30px;
+
+    background-color: var(--light-menu-background);
+    padding-right: 5px;
+
+    /*visibility: hidden; /* Note this is set a second time in main_renderer */
+}
+
+.add-module-input {
+    /* margin-left: 20px; */
+    margin-top: 5px;
+
+    width: 100px;
+    height: 15px;
+}
+
+/* DEPRECATED */
+.model-img {
+    display: block;
+    margin: 0 auto;
+    height: auto;
+    width: auto;
+    
+    /* disable selection/dragging of image */
+    -khtml-user-drag: none;
+    -o-user-drag: none;
+    -moz-user-drag: none;
+    -webkit-user-drag: none;
+}
+
+.console-text-wrapper {
+    box-sizing:border-box;
+
+    height: 80%;
+    padding: 5px;
+
+    overflow: auto;
+}
+
+.console-text-wrapper::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+.console-text-wrapper::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1px rgb(255, 255, 255); 
+    box-shadow: inset 0 0 1px rgb(255, 255, 255);
+    background-color: var(--console-black);
+}
+ 
+.console-text-wrapper::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 2px rgb(255, 255, 255); 
+    box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.904);
+}
+
+.console-text {
+    font-family: var(--code-font);
+    font-size: 12px;
+    color: var(--console-white);
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+.console-input-wrapper {
+    box-sizing: border-box;
+    display: flex;
+
+    height: 20%;
+
+    padding-left: 5px;
+
+    /* background-color: var(--dark-menu-background); */
+    font-family: var(--code-font);
+
+    overflow: hidden;
+}
+
+.console-input-prefix {
+    float: left;
+
+    width: fit-content;
+
+    padding-top: 4px;
+    margin: 0;
+
+    color: var(--console-white);
+}
+
+.console-input {
+    flex-grow: 1;
+    
+    border: 0;
+
+    font-family: inherit;
+    background-color: inherit;
+    color: var(--console-white);
+    outline: none;
+}
