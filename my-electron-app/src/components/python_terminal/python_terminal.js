@@ -7,20 +7,40 @@ var python_instance = null;
 function initializePythonProcess (ipcMain) {
     var initial_output = ""
 
-    python_instance = child_process.spawn('python', ['-i'])
-    var init_file_content = file_manager.readFile(path.join(__dirname, "python_init.py"))
-    python_instance.stdin.write(init_file_content + "\n")
-    python_instance.stdout.once('data', (data)=>{
-        initial_output = data.toString()
+    // initialize python process
+    python_instance = child_process.spawn('python', ['-i'], {
+        stdio: ['pipe', 'pipe', 'pipe']
     })
 
+    // use python_init.py to initialize it
+    var init_file_content = file_manager.readFile(path.join(__dirname, "python_init.py"))
+
+    python_instance.stdout.once('data', (data)=>{
+        initial_output = data.toString()
+        
+        python_instance.stdin.write(__dirname + "\n")
+        python_instance.stdout.once('data', (data)=>{
+            initial_output += data.toString()
+            console.log("received")
+        })
+    })
+    
     //throw away first message
     python_instance.stderr.once('data', function (data) {/*do nothing*/})
+
+    python_instance.stdin.write(init_file_content + "\n")
+    //python_instance.stdin.write("test\n")
+    //python_instance.stdin.write("dirname = \"" + __dirname + "\"\nprint(dirname)\n")
+    //python_instance.stdin.write(init_file_content + "\ntest\ndirname = \"" + __dirname + "\"\nprint(dirname)\n")
+    //python_instance.stdin.write("a = \"" + __dirname + "\"\nprint(a)\n")
+    //console.log(python_instance.stdio[0])
+    
 
     // show initial output of python initialization
     ipcMain.on('get-python-version', (event,arg)=>{
         event.returnValue = initial_output
     })
+
     ipcMain.on('console-input-reading', (event,arg) => {
         python_instance.stdin.write(arg+"\n")
 

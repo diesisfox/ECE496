@@ -4,4 +4,5 @@ print("Python " + sys.version.split()[0])
 
 #def readSave(path):
 
-print(os.getcwd())
+dirname = input()
+#print("hello" + sys.stdin.readline())
