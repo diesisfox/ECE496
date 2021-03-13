@@ -1,7 +1,7 @@
 var fs = require('fs')
 const C = require("../../constants.js")
 const {dialog} = require('electron')
-var path = require('path');
+const path = require('path');
 
 // -------------- CONSTANTS & GLOBALS -------------
 const dummy_save_path = path.join(__dirname, '..', 'graphical_representation_backbone', 'dummy.json')
