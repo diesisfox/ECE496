@@ -1,9 +1,10 @@
 var fs = require('fs')
 const C = require("../../constants.js")
 const {dialog} = require('electron')
+var path = require('path');
 
 // -------------- CONSTANTS & GLOBALS -------------
-const dummy_save_path = './src/components/graphical_representation_backbone/dummy.json'
+const dummy_save_path = path.join(__dirname, '..', 'graphical_representation_backbone', 'dummy.json')
 const filter_list = [
     {name: '', extensions: ['sdj']}, // system description json
     {name: 'All Files', extensions: ['*']}
@@ -14,11 +15,11 @@ var save_json = false
 
 // -------------- INIT -----------------
 function initMain(ipcMain){
+    fs.mkdirSync("saves", { recursive: true })
     ipcMain.on('get-save', (event, data) => {
         event.returnValue = getSave()
     })
 }
-fs.mkdirSync("saves", { recursive: true })
 
 // -------------- MAIN METHODS ----------------
 
@@ -29,7 +30,7 @@ function openFileDialog (win){
         let options = {
         title : "Choose File", 
 
-        defaultPath : base_path + '\\saves',
+        defaultPath : path.join(base_path, 'saves'),
 
         buttonLabel : "Open",
 
@@ -48,7 +49,7 @@ function openSaveDialog(win){
     let options = {
         title : "Save As", 
 
-        defaultPath : base_path + '\\saves',
+        defaultPath : path.join(base_path, 'saves'),
 
         buttonLabel : "Save",
 
@@ -63,11 +64,17 @@ function openSaveDialog(win){
 }
 
 function loadSave(filepath){
-    save_json = readJSONFile(filepath)
+    let data = readJSONFile(filepath)
+    if (data != false){
+        save_json = readJSONFile(filepath)
+        return true
+    } else {
+        return false
+    }
 }
   
 function loadDummy(){
-    loadSave(dummy_save_path)
+    return loadSave(dummy_save_path)
 }
 
 function getSave(){
@@ -115,10 +122,11 @@ function readJSONFile (filepath){
     try {
         var data = fs.readFileSync(filepath, 'utf8');  
         data = JSON.parse(data)
+        return data
     } catch(e) {
         console.log('Error:', e.stack);
     }
-    return data
+    return false
 }
 
 function writeFile (filepath, output){
