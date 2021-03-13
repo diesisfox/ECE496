@@ -4,5 +4,12 @@ print("Python " + sys.version.split()[0])
 
 #def readSave(path):
 
-dirname = input()
+current_dirname = os.path.join(input(), '..')
+
 #print("hello" + sys.stdin.readline())
+
+os.chdir(current_dirname)
+
+from verilog_generation.test import *
+#print(test())
+
