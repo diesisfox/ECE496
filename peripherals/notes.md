@@ -110,6 +110,9 @@
         3. The number of address bits of the worker
     2. Create the bus logic!
 5. Insert the AXI interconnect into the system and wire it to all the existing AXI interfaces created in step #2
+
+### Generation Code Notes ###
+* Yeet "Verilog Instance Name" from parameters?
     
 spi at 32'h0400_1000;
 unique case(addr[31:0]):
