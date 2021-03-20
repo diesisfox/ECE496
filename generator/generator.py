@@ -154,7 +154,7 @@ def write_axi_interconnect(project_json, ip_json) -> str:
     pass
 
 
-def write_interconnect_instantiaion(project_json, ip_json) -> str:
+def write_interconnect_instantiation(project_json, ip_json) -> str:
     verilog = ""
     return verilog
     pass
