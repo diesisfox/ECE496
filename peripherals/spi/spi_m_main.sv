@@ -9,7 +9,7 @@ module spi_m_main #(
     parameter bit [31:0] ADDR = 'h1000_0000
 ) (
     AXI5_Lite_IF.WORKER AXI_IF,
-    spi_m_if SPI_IF
+    IP_SPI_M_IF SPI_IF
 );
 
 localparam ADDRBITS = 5;

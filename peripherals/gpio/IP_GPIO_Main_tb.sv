@@ -1,11 +1,11 @@
 `ifdef ICARUSVERILOG `include "gpio_main.sv" `endif
 
-module gpio_main_tb ();
+module IP_GPIO_Main_tb ();
 
     Simple_Mem_IF Bus();
     wire [4:0] pins;
 
-    ip_gpio_main #(
+    IP_GPIO_Main #(
         .PINS(5),
         .ADDR('h1000_0000)
     ) dut (

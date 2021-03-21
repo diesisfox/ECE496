@@ -1,7 +1,7 @@
 `ifdef ICARUSVERILOG `include "interfaces.sv" `endif
 
-module ip_gpio_main #(
-    parameter PINS = 8,
+module IP_GPIO_Main #(
+    parameter PINS = 32,
     parameter ADDR = 'h1000_0000
 ) (
     Simple_Mem_IF.COWI Bus,

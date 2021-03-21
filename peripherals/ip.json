@@ -1,71 +1,76 @@
 {
     "GPIO" : {
         "moduleType": "GPIO",
-        "source": "peripherals/gpio/gpio_main.sv",
-        "verilogName": "ip_gpio_main",
+        "verilogName": "IP_GPIO_Main",
         "addrBits": 4,
         "parameters":{
-            "pins": {
-                "paramName": "pins",
-                "verilogName": "PINS",
-                "paramType": "Number",
-                "default": 8,
-                "min": 1,
-                "max": 32
-            },
             "Verilog Instance Name": {
                 "paramName": "Verilog Instance Name",
-                "paramType": "Symbol"
+                "paramType": "Symbol",
+                "important": false
             },
             "Base Address": {
                 "paramName": "Base Address",
                 "verilogName": "ADDR",
-                "paramType": "Number"
+                "paramType": "Hexadecimal",
+                "important": true
+            },
+            "Width": {
+                "paramName": "Width",
+                "verilogName": "PINS",
+                "paramType": "Number",
+                "max": 32,
+                "min": 1,
+                "default": 8,
+                "important": true
             }
         },
         "interfaces": [
             {
-                "type": "Simple_Mem_IF.COWI",
-                "port": "Bus"
+                "type": "Simple_Mem_IF",
+                "port": "Bus",
+                "pinmap": []
             },
             {
-                "type": "inout",
-                "port": "pins",
-                "width": "$pins",
+                "type": "IP_GPIO_IF",
+                "port": "Pins",
                 "pinmap": [
-                    [0, "A13", "3V3", "slow"],
-                    [1, "K12", "3V3", "slow"]
+                    ["pins[0]", "GPIO", "inout"]
                 ]
             }
         ]
     },
     "SPI_MANAGER" : {
         "moduleType": "SPI_MANAGER",
-        "source": "peripherals/spi/spi_m_main.sv",
-        "verilogName": "spi_m_main",
+        "verilogName": "IP_SPI_M_Main",
         "addrBits": 5,
         "parameters": {
             "Verilog Instance Name": {
                 "paramName": "Verilog Instance Name",
-                "paramType": "Symbol"
+                "paramType": "Symbol",
+                "important": false
             },
             "Base Address": {
                 "paramName": "Base Address",
                 "verilogName": "ADDR",
-                "paramType": "Number"
+                "paramType": "Hexadecimal",
+                "important": true
             }
         },
         "interfaces": [
             {
-                "type": "AXI5_Lite_IF",
-                "port": "AXI_IF"
+                "type": "Simple_Mem_IF",
+                "port": "Bus",
+                "pinmap": []
             },
             {
-                "type": "spi_m_if",
+                "type": "IP_SPI_M_IF",
                 "port": "SPI_IF",
                 "pinmap": [
+                    ["CS", "GPIO", "output"],
                     ["SCK", "GPIO", "output"],
-                    [1, "K12", "3V3", "slow"]
+                    ["DOUT", "GPIO", "output"],
+                    ["DIN", "GPIO", "input"]
                 ]
             }
         ]
@@ -76,41 +81,37 @@
         "verilogName": "ip_i2c_m_main",
         "addrBits": 5,
         "parameters": {
+            "Verilog Instance Name": {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol",
+                "important": false
+            },
             "Base Address": {
                 "paramName": "Base Address",
                 "verilogName": "ADDR",
-                "paramType": "Number"
-            },
-            "Verilog Instance Name": {
-                "paramName": "Verilog Instance Name",
-                "paramType": "Symbol"
+                "paramType": "Hexadecimal",
+                "important": true
             },
             "Bus Frequency (Hz)": {
-                "paramName": "Bus Frequency (Hz)",
+                "paramName": "System Bus Frequency (Hz)",
                 "verilogName": "BUS_CLK_HZ",
-                "paramType": "ClockFreq"
+                "paramType": "Number",
+                "source": "SystemClkFreq",
+                "important": false
             }
         },
         "interfaces": [
             {
-                "type": "Simple_Mem_IF.COWI",
-                "port": "Bus"
+                "type": "Simple_Mem_IF",
+                "port": "Bus",
+                "pinmap": []
             },
             {
-                "type": "inout",
-                "port": "pins_o",
-                "width": "3",
+                "type": "IP_I2C_M_IF",
+                "port": "I2C_IF",
                 "pinmap": [
-                    [0, "A13", "3V3", "slow"],
-                    [1, "K12", "3V3", "slow"]
-                ]
-            },
-            {
-                "type": "input",
-                "port": "pins_i",
-                "width": "1",
-                "pinmap": [
-                    [0, "A13", "3V3", "slow"]
+                    ["SCL", "FPGA_I2C_SCLK", "output"],
+                    ["SDA", "FPGA_I2C_SDAT", "inout"]
                 ]
             }
         ]

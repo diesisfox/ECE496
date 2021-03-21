@@ -24,7 +24,7 @@
 *
 * regs writeable while bus claimed when start|stop|txn == 0.
 **/ 
-module ip_i2c_m_main #(
+module IP_I2C_M_Main #(
     parameter ADDR = 'h1000_0000,
     parameter BUS_CLK_HZ = 100_000_000
 ) (

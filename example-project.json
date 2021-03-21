@@ -3,9 +3,43 @@
         "moduleType": "GPIO",
         "UUID": "128943FD78AB",
         "parameters": {
-            "pins": 12,
             "Verilog Instance Name": "ip_gpio_main_128943FD78AB",
-            "Base Address": 65536
-        }
+            "Base Address": "8000_0000",
+            "Width": 12
+        },
+        "pinmaps": [
+            [],
+            [
+                ["pins[0]", "GPIO", "inout"],
+                ["pins[1]", "GPIO", "inout"],
+                ["pins[2]", "GPIO", "inout"],
+                ["pins[3]", "GPIO", "inout"],
+                ["pins[4]", "GPIO", "inout"],
+                ["pins[5]", "GPIO", "inout"],
+                ["pins[6]", "GPIO", "inout"],
+                ["pins[7]", "GPIO", "inout"],
+                ["pins[8]", "GPIO", "inout"],
+                ["pins[9]", "GPIO", "inout"],
+                ["pins[10]", "GPIO", "inout"],
+                ["pins[11]", "GPIO", "inout"],
+                ["pins[12]", "GPIO", "inout"]
+            ]
+        ]
+    },
+    {
+        "moduleType": "I2C_MANAGER",
+        "UUID": "BBBB43FD78AB",
+        "parameters": {
+            "Verilog Instance Name": "ip_i2c_m_main_BBBB43FD78AB",
+            "Base Address": "8001_0000",
+            "Bus Frequency (Hz)": 100E6
+        },
+        "pinmaps": [
+            [],
+            [
+                ["SCL", "FPGA_I2C_SCLK", "output"],
+                ["SDA", "FPGA_I2C_SDAT", "inout"]
+            ]
+        ]
     }
 ]

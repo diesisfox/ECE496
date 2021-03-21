@@ -29,10 +29,10 @@ PINMAP_DIR_INDEX = 2
 
 class Errors(Enum):
     NO_ERR = 0
-    INVALID_JSON_INPUT_FROM_ARGV = -1
-    INVALID_JSON_INPUT_FROM_FILE = -2
-    INVALID_IP_INPUT_FROM_FILE = -3
-    GENERATION_FAILED = -4
+    UNKNOWN_ERR = -1
+    BAD_ARGS = -2
+    BAD_JSON = -3
+    BAD_IP_JSON = -4
     DUPLICATE_GPIO_RESERVATION = -5
     NONEXISTENT_GPIO_RESERVATION = -6
     OUT_OF_FREE_GPIOS = -7
@@ -64,30 +64,33 @@ def allocate_gpio_pins(project_json, ip_json) -> None:
     gpio_reserved_set = set()  # set for just a little bit of O(1)
     gpio_unmapped_list = []
     # reserve explicitly mapped gpio pins
-    for m in project_json:
-        ip = ip_json[m["moduleType"]]
-        for iface in [iface for iface in ip["interfaces"] if "pinmap" in iface]:
-            for pinmap in iface["pinmap"]:
+    for m in project_json:  # for each module in the project
+        # for each entry in the module's pinmaps array (which always exists even if empty)
+        for i in range(len(m['pinmaps'])):
+            for pinmap in m['pinmaps'][i]:
+                if_inst_name = f"{m['parameters']['Verilog Instance Name']}_if{i}"
                 if pinmap[PINMAP_EXTNAME_INDEX] == "GPIO":
-                    gpio_unmapped_list.append((pinmap, f"{pinmap} in {m['UUID']}.{iface['type']}"))
+                    # add to the unmapped list for later processing if it's an unassigned GPIO
+                    gpio_unmapped_list.append((pinmap, if_inst_name))
                 elif pinmap[PINMAP_EXTNAME_INDEX].startswith("GPIO_"):
+                    # register in the reserved list if it's an explicitly assigned GPIO
                     if pinmap[PINMAP_EXTNAME_INDEX] in gpio_reserved_set:
                         print(f"ERROR[{Errors.DUPLICATE_GPIO_RESERVATION}]: "
                               f"DUPLICATE GPIO PIN RESERVATION SPECIFIED: "
-                              f"{pinmap} in {m['UUID']}.{iface['type']}")
+                              f"{pinmap} in {if_inst_name}")
                         exit(Errors.DUPLICATE_GPIO_RESERVATION)
                     if pinmap[PINMAP_EXTNAME_INDEX] not in gpio_free_list:
                         print(f"ERROR[{Errors.NONEXISTENT_GPIO_RESERVATION}]: "
                               f"NON_EXISTENT GPIO PIN RESERVATION SPECIFIED: "
-                              f"{pinmap} in {m['UUID']}.{iface['type']}")
+                              f"{pinmap} in {if_inst_name}")
                         exit(Errors.NONEXISTENT_GPIO_RESERVATION)
                     gpio_free_list.remove(pinmap[PINMAP_EXTNAME_INDEX])
                     gpio_reserved_set.add(pinmap[PINMAP_EXTNAME_INDEX])
     # assign unmapped gpio pins
-    for pinmap in gpio_unmapped_list:  # (map:list, errmsg:str)
+    for pinmap in gpio_unmapped_list:  # (pinmap:list, if_inst_name:str)
         if not gpio_free_list:
             print(f"ERROR[{Errors.OUT_OF_FREE_GPIOS}]: "
-                  f"OUT OF FREE GPIOS FOR NEXT ASSIGNMENT: {pinmap[1]}")
+                  f"OUT OF FREE GPIOS FOR NEXT ASSIGNMENT: {pinmap[0]} in {pinmap[1]}")
             exit(Errors.OUT_OF_FREE_GPIOS)
         pinmap[0][PINMAP_EXTNAME_INDEX] = gpio_free_list[0]
         gpio_reserved_set.add(gpio_free_list[0])
@@ -99,52 +102,62 @@ def write_top_decl_start_and_interfaces(project_json, ip_json) -> str:
     verilog = ""
     ports = []
     if_insts = []
-    for m in project_json:
+    for m in project_json:  # for each module in the project
         ip = ip_json[m["moduleType"]]
-        for i in range(len(ip['interfaces'])):
-            iface = ip['interfaces'][i]
+        for i in range(len(ip['interfaces'])):  # for each interface specified in the IP entry
+            iface = ip['interfaces'][i]  # get interface entry under IP entry
+            # write IF instantiation
             if_inst_name = f"{m['parameters']['Verilog Instance Name']}_if{i}"
-            if_axi_inst_name = f"{m['parameters']['Verilog Instance Name']}_AXI_if{i}"
             if_inst = f"{iface['type']} {if_inst_name}();"
-            if_axi_inst = f"AXI5_Lite_IF {if_axi_inst_name} ();"
+            # write AXI Controller instantiation for Mem IFs
+            if iface['type'] == "Simple_Mem_IF":
+                if_axi_inst_name = f"{m['parameters']['Verilog Instance Name']}_AXI_if{i}"
+                if_axi_inst = f"AXI5_Lite_IF {if_axi_inst_name}();"
+                if_insts.append(if_axi_inst)
+            # wire pins to top
             if "pinmap" in iface:
-                for pinmap in iface['pinmap']:
+                for pinmap in m['pinmaps'][i]:
                     ports.append(f"{pinmap[PINMAP_DIR_INDEX]} logic {pinmap[PINMAP_EXTNAME_INDEX]}")
-                    if pinmap[PINMAP_DIR_INDEX] == 'output':
-                        if_inst += f"\nassign {pinmap[PINMAP_EXTNAME_INDEX]} " \
-                                   f"= {if_inst_name}.{pinmap[PINMAP_INTNAME_INDEX]};"
-                    else:
-                        if_inst += f"\nassign {if_inst_name}.{pinmap[PINMAP_INTNAME_INDEX]} " \
-                                   f"= {pinmap[PINMAP_EXTNAME_INDEX]}"
+                    # if pinmap[PINMAP_DIR_INDEX] == 'output':
+                    #     if_inst += f"\nassign {pinmap[PINMAP_EXTNAME_INDEX]} " \
+                    #                f"= {if_inst_name}.{pinmap[PINMAP_INTNAME_INDEX]};"
+                    # else:
+                    #     if_inst += f"\nassign {if_inst_name}.{pinmap[PINMAP_INTNAME_INDEX]} " \
+                    #                f"= {pinmap[PINMAP_EXTNAME_INDEX]};"
+                    if_inst += f"\ntran({pinmap[PINMAP_EXTNAME_INDEX]}, {if_inst_name}.{pinmap[PINMAP_INTNAME_INDEX]});"
             if_insts.append(if_inst)
-            # TODO: James did I do this right?
-            if_insts.append(if_axi_inst)
+            # TODO: James did I do this right? >> Almost :)
     verilog += f"module top(\n\t"
     verilog += ",\n\t".join(ports)
-    verilog += ");\n\n"
+    verilog += "\n);\n\n"
     verilog += "\n\n".join(if_insts)
     verilog += "\n"
     return verilog
     pass
 
 
-def write_modules_instantiations(project_json, ip_json) -> str:
+def write_module_instantiations(project_json, ip_json) -> str:
     verilog = "\n"
     m_insts = []
     for m in project_json:
         ip = ip_json[m["moduleType"]]
         m_inst = f"{ip['verilogName']} #(\n\t"
         params = []
-        for p, v in m['parameters']:
+        for p, v in m['parameters'].items():
             # TODO: handle different param types -> type casting handled by modify.py
-            params.append(f".{ip['parameters'][p]['verilogName']}({v})")
+            if 'verilogName' in ip['parameters'][p]:
+                if ip['parameters'][p]['paramType'] == "Hexadecimal":
+                    params.append(f".{ip['parameters'][p]['verilogName']}(32'h{v})")
+                else:
+                    params.append(f".{ip['parameters'][p]['verilogName']}({v})")
         m_inst += ",\n\t".join(params)
-        m_inst += f"\n) {m['Verilog Instance Name']} (\n\t"
+        m_inst += f"\n) {m['parameters']['Verilog Instance Name']} (\n\t"
         ifs = []
         for i in range(len(ip['interfaces'])):
             ifs.append(f".{ip['interfaces'][i]['port']}({m['parameters']['Verilog Instance Name']}_if{i})")
         m_inst += ",\n\t".join(ifs)
         m_inst += "\n);"
+        m_insts.append(m_inst)
     verilog += "\n\n".join(m_insts)
     verilog += '\n'
     return verilog
@@ -175,8 +188,8 @@ def write_axi_interconnect(project_json, ip_json) -> str:
         num_bits = ip_json[module["moduleType"]]["addrBits"]
 
         # Params
-        interconnect_params += ("    parameter [31:0] " + inst_name + "_base_addr = 32'h" + base_addr + ",\n"
-        interconnect_params += ("    parameter int " + inst_name + "_num_bits = " + num_bits + ",\n"
+        interconnect_params += ("    parameter [31:0] " + inst_name + "_base_addr = 32'h" + base_addr + ",\n")
+        interconnect_params += ("    parameter int " + inst_name + "_num_bits = " + str(num_bits) + ",\n")
         
         # Interfaces
         interconnect_ifs += "    AXI5_Lite_IF.MANAGER " + inst_name + "_IF,\n"
@@ -209,8 +222,8 @@ def write_axi_interconnect(project_json, ip_json) -> str:
         write_comb += "\n"
    
     # Remove the extra comma in the last entry of the params and interfaces 
-    interconnect_params = interconnect_params.substring(0, interconnect_params.length - 2) + '\n'
-    interconnect_ifs = interconnect_ifs.substring(0, interconnect_ifs.length - 2) + '\n'
+    interconnect_params = interconnect_params[0: -2] + '\n'
+    interconnect_ifs = interconnect_ifs[0: -2] + '\n'
 
     # In this block:
     # 1. Second half of read comb logic block
@@ -265,7 +278,7 @@ def write_axi_interconnect(project_json, ip_json) -> str:
             read_comb += "end\n"
             write_comb += "end\n"
 
-        i += 1;
+        i += 1
 
     verilog += "module AXI_Interconnect #(\n"
     verilog += interconnect_params
@@ -453,9 +466,9 @@ def write_controller_and_interconnect_inst (project_json, ip_json) -> str:
         base_addr = module["parameters"]["Base Address"]
         num_bits = ip_json[module["moduleType"]]["addrBits"]
         verilog += "        ." + inst_name + "_base_addr(32'h" + base_addr + "),\n"
-        verilog += "        ." + inst_name + "_num_bits(" + num_bits + "),\n"
+        verilog += "        ." + inst_name + "_num_bits(" + str(num_bits) + "),\n"
     
-    verilog = verilog.substring(0, verilog.length - 2) + '\n'
+    verilog = verilog[0: -2] + '\n'
     verilog += "    ) xbar (\n"
 
     for module in project_json:
@@ -481,15 +494,29 @@ def generate_from_json(project_json, ip_json) -> str:
     # step 1: allocate GPIO pins
     allocate_gpio_pins(project_json, ip_json)
     # step 2: Instantiate interfaces modules and write pinouts
+    verilog += "/**** write_top_decl_start_and_interfaces output below ****/\n\n"
     verilog += write_top_decl_start_and_interfaces(project_json, ip_json)
-    # ret += generate_top_level_pinouts()
+    # step 3: instantiate actual modules
+    verilog += "\n\n/**** write_module_instantiations output below ****/\n\n"
+    verilog += write_module_instantiations(project_json, ip_json)
+    # step 4: write axi interconnect logic TODO: @Andrew does this go here?
+    verilog += "\n\n/**** write_axi_interconnect output below ****/\n\n"
+    verilog += write_axi_interconnect(project_json, ip_json)
+    # step 5: write axi controller instantiations
+    verilog += "\n\n/**** write_controller_and_interconnect_inst output below ****/\n\n"
+    verilog += write_controller_and_interconnect_inst(project_json, ip_json)
+    # step 6: cap off verilog file
+    verilog += "\n\n/**** write_top_verilog_end output below ****/\n\n"
+    verilog += write_top_verilog_end()
+    # done
+    return verilog
     pass
 
 
 def main():
     if len(sys.argv) == 1:  # argv[0] is "$script.py"
-        print(f"ERROR[-1]: PLEASE SPECIFY AN INPUT")
-        exit(-1)
+        print(f"ERROR[{Errors.BAD_ARGS}]: PLEASE SPECIFY AN INPUT")
+        exit(Errors.BAD_ARGS)
     elif len(sys.argv) == 2:
         # get project json
         res = re.search(r"\.json$", sys.argv[1], re.IGNORECASE)
@@ -499,32 +526,32 @@ def main():
                 try:
                     project_json = json.load(file)
                 except json.decoder.JSONDecodeError:
-                    print(f"ERROR[{Errors.INVALID_JSON_INPUT_FROM_FILE}]: INVALID JSON INPUT FROM FILE {sys.argv[1]}")
-                    exit(Errors.INVALID_JSON_INPUT_FROM_FILE)
+                    print(f"ERROR[{Errors.BAD_JSON}]: INVALID JSON INPUT FROM FILE {sys.argv[1]}")
+                    exit(Errors.BAD_JSON)
         else:
             try:
                 project_json = json.loads(sys.argv[1])
             except json.decoder.JSONDecodeError:
-                print(f"ERROR[{Errors.INVALID_JSON_INPUT_FROM_ARGV}]: INVALID JSON INPUT FROM ARGV")
-                exit(Errors.INVALID_JSON_INPUT_FROM_ARGV)
+                print(f"ERROR[{Errors.BAD_JSON}]: INVALID JSON INPUT FROM ARGV")
+                exit(Errors.BAD_JSON)
         # get ip json
         ip_json = None
         with open(IP_DATABASE_PATH, 'r+') as file:
             try:
                 ip_json = json.load(file)
             except json.decoder.JSONDecodeError:
-                print(f"ERROR[{Errors.INVALID_IP_INPUT_FROM_FILE}]: INVALID JSON INPUT FROM FILE {IP_DATABASE_PATH}")
-                exit(Errors.ERR_INVALID_JSON_IP_FROM_FILE)
+                print(f"ERROR[{Errors.BAD_IP_JSON}]: INVALID JSON INPUT FROM FILE {IP_DATABASE_PATH}")
+                exit(Errors.BAD_IP_JSON)
         # generate
-        try:
-            verilog = generate_from_json(project_json, ip_json)
-            print(verilog)
-            exit(Errors.NO_ERR)
-        except:
-            e = sys.exc_info()[0]
-            print(f"ERROR[{Errors.GENERATION_FAILED}]: GENERATION FAILED FOR UNCAUGHT REASON: {str(e)}")
-            exit(Errors.GENERATION_FAILED)
+        verilog = generate_from_json(project_json, ip_json)
+        print(verilog)
+        exit(Errors.NO_ERR)
 
 
 if __name__ == '__main__':
-    main()
+    # try:
+        main()
+    # except:
+    #     e = sys.exc_info()[0]
+    #     print(f"ERROR[{Errors.UNKNOWN_ERR}]: GENERATION FAILED FOR UNCAUGHT REASON: {str(e)}")
+    #     exit(Errors.UNKNOWN_ERR)
