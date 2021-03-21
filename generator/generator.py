@@ -21,7 +21,7 @@ usage:
 
 pp = pprint.PrettyPrinter(indent=2)
 IP_DATABASE_PATH: str = "../peripherals/ip.json"
-GPIO_PINS_LIST: list = ["GPIO0_["+str(i)+"]" for i in range(36)] + ["GPIO1_["+str(i)+"]" for i in range(36)]
+GPIO_PINS_LIST: list = ["GPIO_0["+str(i)+"]" for i in range(36)] + ["GPIO_1["+str(i)+"]" for i in range(36)]
 PINMAP_INTNAME_INDEX = 0
 PINMAP_EXTNAME_INDEX = 1
 PINMAP_DIR_INDEX = 2
@@ -205,20 +205,20 @@ def write_axi_interconnect(project_json, ip_json) -> str:
         read_comb += "        " + inst_name + "_IF.ARVALID = 'b0;\n"
         read_comb += "        " + inst_name + "_IF.ARSIZE = 'b0;\n"
         read_comb += "        " + inst_name + "_IF.ARID = 'b0;\n"
-        read_comb += "        " + inst_name + "_IF.RREADY_ = 'b0;\n"
+        read_comb += "        " + inst_name + "_IF.RREADY = 'b0;\n"
         read_comb += "\n"
 
         # Write logic pt 1
         write_comb += "        // " + inst_name + "\n"
         write_comb += "        " + inst_name + "IF.AWADDR = 'b0;\n"
         write_comb += "        " + inst_name + "IF.AWPROT = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.AWVALID_ = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.AWSIZE_ = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.AWID_ = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.WDATA_ = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.WSTRB_ = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.AWVALID = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.AWSIZE = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.AWID = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.WDATA = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.WSTRB = 'b0;\n"
         write_comb += "        " + inst_name + "IF.WVALID = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.BREADY_ = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.BREADY = 'b0;\n"
         write_comb += "\n"
    
     # Remove the extra comma in the last entry of the params and interfaces 
@@ -275,8 +275,8 @@ def write_axi_interconnect(project_json, ip_json) -> str:
 
 
         if (i == num_modules - 1):
-            read_comb += "end\n"
-            write_comb += "end\n"
+            read_comb += "\t\tend\n"
+            write_comb += "\t\tend\n"
 
         i += 1
 
@@ -304,7 +304,7 @@ def write_axi_interconnect(project_json, ip_json) -> str:
     verilog += "        READ_IDLE,\n"
     verilog += "        ARADDR_LATCHED,\n"
     verilog += "        AR_DONE,\n"
-    verilog += "    } read_state;\n"
+    verilog += "    } read_state;\n\n"
 
     verilog += "    // Read state machine\n"
     verilog += "    always_ff @(posedge M_IF.ACLK) begin\n"
@@ -336,7 +336,7 @@ def write_axi_interconnect(project_json, ip_json) -> str:
     verilog += "                    end\n"
     verilog += "                end\n"
     verilog += "                default : begin\n"
-    verilog += "                    read_state <= read_state\n"
+    verilog += "                    read_state <= read_state;\n"
     verilog += "                end\n"
     verilog += "            endcase\n"
     verilog += "        end\n"
@@ -390,7 +390,7 @@ def write_axi_interconnect(project_json, ip_json) -> str:
     verilog += "                    end else if (M_IF.AWVALID) begin\n"
     verilog += "                        write_state <= AWADDR_LATCHED;\n"
     verilog += "                    end else begin\n"
-    verilog += "                        write_state <= WRITE_IDLE\n"
+    verilog += "                        write_state <= WRITE_IDLE;\n"
     verilog += "                    end\n"
     verilog += "                end\n"
     verilog += "                AWADDR_LATCHED : begin\n"
@@ -402,7 +402,7 @@ def write_axi_interconnect(project_json, ip_json) -> str:
     verilog += "                end\n"
     verilog += "                AW_DONE : begin\n"
     verilog += "                    if (M_IF.BREADY && M_IF.BVALID) begin\n"
-    verilog += "                        write_state <= WRITE_IDLE\n"
+    verilog += "                        write_state <= WRITE_IDLE;\n"
     verilog += "                    end else begin\n"
     verilog += "                        write_state <= AW_DONE;\n"
     verilog += "                    end\n"
@@ -455,7 +455,7 @@ def write_controller_and_interconnect_inst (project_json, ip_json) -> str:
         inst_name = module["parameters"]["Verilog Instance Name"]
         base_addr = module["parameters"]["Base Address"]
         num_bits = ip_json[module["moduleType"]]["addrBits"]
-        verilog += "    AXI_Controller_Worker " + inst_name + "_controller {\n"
+        verilog += "    AXI_Controller_Worker " + inst_name + "_controller (\n"
         verilog += "        .AXI_IF(" + inst_name + "_AXI_if0.worker),\n"
         verilog += "        .USER_IF(" + inst_name + "_if0.controller)\n"
         verilog += "    );\n\n"
@@ -499,15 +499,15 @@ def generate_from_json(project_json, ip_json) -> str:
     # step 3: instantiate actual modules
     verilog += "\n\n/**** write_module_instantiations output below ****/\n\n"
     verilog += write_module_instantiations(project_json, ip_json)
-    # step 4: write axi interconnect logic TODO: @Andrew does this go here?
-    verilog += "\n\n/**** write_axi_interconnect output below ****/\n\n"
-    verilog += write_axi_interconnect(project_json, ip_json)
     # step 5: write axi controller instantiations
     verilog += "\n\n/**** write_controller_and_interconnect_inst output below ****/\n\n"
     verilog += write_controller_and_interconnect_inst(project_json, ip_json)
     # step 6: cap off verilog file
     verilog += "\n\n/**** write_top_verilog_end output below ****/\n\n"
     verilog += write_top_verilog_end()
+    # step 4: write axi interconnect logic
+    verilog += "\n\n/**** write_axi_interconnect output below ****/\n\n"
+    verilog += write_axi_interconnect(project_json, ip_json)
     # done
     return verilog
     pass
