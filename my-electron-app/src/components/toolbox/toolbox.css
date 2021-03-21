@@ -1,0 +1,75 @@
+:root {
+    --mod-toolbox-width: 420px;
+    --mod-toolbox-height: 170px;
+    --edit-module-bar-height: 115px;
+    --edit-module-bar-width: 240px;
+}
+
+.module-toolbox {
+    position:absolute;
+    
+    right: 5px;
+    top: calc(-25px - var(--mod-toolbox-height));
+
+    width: var(--mod-toolbox-width);
+    height: var(--mod-toolbox-height);
+
+    border: solid 3px var(--light-menu-background);
+    background-color: white;
+    border-radius: 10px;
+
+    overflow-y: scroll;
+}
+
+.module-toolbox-icon {
+    display: flex;
+    float: left;
+    width: 80px;
+    height: 30px;
+
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--normal-font);
+    background-color: white;
+
+    cursor: grab;
+}
+
+.module-toolbox-icon:active {
+    cursor: grabbing;
+}
+
+.edit-module-box {
+    position: absolute;
+    /* display: flex; */
+    /* justify-content: space-between; */
+    right: calc(var(--mod-toolbox-width) + 15px);
+    top: calc(-35px - var(--edit-module-bar-height));
+
+    width: var(--edit-module-bar-width);
+    /* height: var(--edit-module-bar-height); */
+
+    border: solid 3px var(--light-menu-background);
+    background-color: white;
+
+    overflow:visible;
+
+    /*visibility: hidden; /* Note this is set a second time in main_renderer */
+}
+
+.edit-module-input {
+    margin-left: 5px;
+    margin-top: 5px;
+    
+
+    width: 100px;
+    height: 20px;
+
+    border: 0px;
+}
+
+.edit-module-input:focus {
+    outline-color: var(--button-hover-border);
+    /* border-color: var(--button-hover-border) */
+}

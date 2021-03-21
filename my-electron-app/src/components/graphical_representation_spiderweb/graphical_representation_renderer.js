@@ -1,64 +1,69 @@
-const { crashReporter} = require("electron");
-
 const mxgraph = require("mxgraph")({
     mxImageBasePath: "../../../../node_modules/mxgraph/javascript/src/images",
     mxBasePath: "../../../../node_modules/mxgraph/javascript/src"
 })
+const toolbox = require("../toolbox/toolbox.js")
+const theme = require("../theme.js")
 
 // --------- Files Variables & Constants ---------
-
-const theme_style = getComputedStyle(document.body)
-const light_blue_color = getHexFromRGB(theme_style.getPropertyValue("--button-hover-border"))
-//ipcRenderer.send("debug", variable)
+const NON_PERIPHERAL_COLOR = "non_peripheral_color"
+const module_types = [
+  {
+    type: 'user-defined',
+    non_peripheral_color: '#f2f2f2', //if not a peripheral, include a color
+  },
+  {
+    type: 'CPU',
+    non_peripheral_color: '#ffffcc', //if not a peripheral, include a color
+  },
+  {
+    type: 'Memory',
+    non_peripheral_color: '#e5ffcc', //if not a peripheral, include a color
+  }, 
+  {type: 'SPI'},
+  {type: 'GPIO'},
+  {type: 'VGA'},
+  {type: 'UART'},
+  {type: 'ADC'},
+  {type: 'I2C'},
+  {type: 'Duplex SAI and CODEC'},
+  {type: 'PS/2'},
+  {type: 'Composite Video'},
+  {type: 'On-Chip Memory'}
+]
 
 const diagram_div = document.getElementById("model-diagram-display")
 const rect_width = 80
 const rect_height = 30
 let model = null
 let graph = null
+let panningHandler = null
 
-// --------- Helper Functions ---------
+let totalNum = 1
 
-// returns 1 if positive, -1 if negative, and 0 if 0
-function getSign(x){
-  return (x / Math.max(1,Math.abs(x)))
-}
+// --------- Graph Methods ---------
 
-function getHexFromRGB(rgb_string){
-  // get R,G,B
-  var three_integers = rgb_string.split("(")[1].split(")")[0]
-  
-  // convert base 10 to base 16
-  var hex_string = three_integers.split(",").map(function(x){
-    x = parseInt(x).toString(16);
-    return (x.length==1) ? "0"+x : x; // add a 0 if there is only one number
-  })
-
-  return "#"+hex_string.join("")
-}
-
-// --------- Methods ---------
-
-function initGraph() {
+function initGraph(ipcRenderer) {
   model = new mxgraph.mxGraphModel()
   graph = new mxgraph.mxGraph(diagram_div, model)
+  panningHandler = new mxgraph.mxPanningHandler(graph)
 
   // styles
   let edge_style = graph.getStylesheet().getDefaultEdgeStyle()
   edge_style[mxgraph.mxConstants.STYLE_ENDARROW] = ""
-  edge_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = light_blue_color
+  edge_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = theme.light_blue_color
   graph.getStylesheet().putDefaultEdgeStyle(edge_style)
   let vertex_style = graph.getStylesheet().getDefaultVertexStyle()
   vertex_style[mxgraph.mxConstants.STYLE_ROUNDED] = 1
   vertex_style[mxgraph.mxConstants.STYLE_ARCSIZE] = 30
-  vertex_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = light_blue_color
+  vertex_style[mxgraph.mxConstants.STYLE_STROKECOLOR] = theme.light_blue_color
   vertex_style[mxgraph.mxConstants.STYLE_STROKEWIDTH] = 3
   vertex_style[mxgraph.mxConstants.STYLE_FILLCOLOR] = 'white'
   vertex_style[mxgraph.mxConstants.STYLE_FONTCOLOR] = 'black'
   graph.getStylesheet().putDefaultVertexStyle(vertex_style)
-  mxgraph.mxConstants.EDGE_SELECTION_COLOR = light_blue_color
+  mxgraph.mxConstants.EDGE_SELECTION_COLOR = theme.light_blue_color
   mxgraph.mxConstants.LOCKED_HANDLE_FILLCOLOR = 'white'
-  mxgraph.mxConstants.VERTEX_SELECTION_COLOR = 'black'
+  mxgraph.mxConstants.VERTEX_SELECTION_COLOR = 'white'
   mxgraph.mxConstants.VERTEX_SELECTION_STROKEWIDTH = 2
   //let cell_style = graph.getStylesheet().getCellStyle()
   //cell_style[mxgraph.mxConstants.EDGE_SELECTION_COLOR] = light_blue_color
@@ -67,7 +72,6 @@ function initGraph() {
   graph.selectionModel.setSingleSelection(true)
 
   graph.setPanning(true)
-  //graph.setEnabled(false)
   graph.setCellsCloneable(false)
   graph.setCellsDeletable(false)
   graph.setCellsMovable(false)
@@ -75,9 +79,23 @@ function initGraph() {
   graph.setConnectableEdges(false)
   graph.setCellsResizable(false)
   //graph.setCellsBendable(false) //unsure if needed
-  graph.setCellsEditable(false) // TODO: add feature so that this rename is connected to what's happening with the internal representation
+  //graph.setCellsEditable(false) // TODO: add feature so that this rename is connected to what's happening with the internal representation
   graph.setCellsDisconnectable(false)
   graph.setConnectable(false)
+
+  panningHandler.useLeftButtonForPanning = true
+  panningHandler.ignoreCell = true
+
+  // add edit event listener
+  model.valueForCellChanged = function(cell, value){
+    ipcRenderer.send('debug', "woah, edited? That's rude, because we haven't done JSON yet!")
+    var previous = cell.value;
+    cell.value = value;
+
+    return previous;
+  };
+
+  graph.center()
 }
 
 function displayTests(){
@@ -110,13 +128,14 @@ function displayTests(){
 
 function wipeGraphicalDisplay(){
   //model.beginUpdate()
+  graph.setCellsDeletable(true)
   graph.removeCells(graph.getChildCells(graph.getDefaultParent()))
+  graph.setCellsDeletable(false)
   //model.endUpdate()
 }
 
 // unfinished, needs JSON schema for completion
 function displayJSON(json){
-  const totalNum = 20 //change to number of user defined modules in total
   const angle = 2*Math.PI/totalNum
   const radius = Math.max(rect_width * 3, 140*totalNum / (2 * Math.PI))
   let curr_angle = 0
@@ -125,12 +144,12 @@ function displayJSON(json){
   var parentCell = graph.getDefaultParent()
 
   // wipe old vertices and edges
-  graph.removeCells(graph.getChildCells(parentCell))
 
   model.beginUpdate()
   try
   {
-    center = graph.insertVertex(parentCell, null, '', 0, 0, 5, 5,
+    wipeGraphicalDisplay()
+    center = graph.insertVertex(parentCell, null, '', 0, 0, 0, 0,
       'defaultVertex;arcSize=50')
   } catch (err){
     return
@@ -148,15 +167,16 @@ function displayJSON(json){
     let center_y = Math.sin(curr_angle) * radius
 
     // get posiition of top left corner of rectangle
-    let corner_x = Math.round(Math.abs(center_x) - rect_width / 2) * getSign(center_x)
-    let corner_y = Math.round(Math.abs(center_y) - rect_height / 2) * getSign(center_y)
+    let corner_x = Math.round(center_x - rect_width / 2)
+    let corner_y = Math.round(center_y - rect_height / 2)
 
     // display rectangle
     model.beginUpdate()
     try
     {
-      let v1 = graph.insertVertex(parentCell, null, 'Hello', corner_x, corner_y, rect_width, rect_height)
-      var e1 = graph.insertEdge(parentCell, null, '', v1, center)//, 'defaultEdge;endArrow='
+      let v1 = graph.insertVertex(parentCell, null, 'Hello'+i, corner_x, corner_y, rect_width, rect_height)
+      v1.uid = i
+      let e1 = graph.insertEdge(parentCell, null, '', v1, center)//, 'defaultEdge;endArrow='
     } 
     catch (err) {
       return
@@ -187,10 +207,13 @@ const scrollHandler = function(event){
 
 // ------------ Initialization Code ------------
 function init (ipcRenderer) {
-  initGraph()
+  initGraph(ipcRenderer)
 
   // enable ability to zoom in and out using the scrollwheel
   diagram_div.addEventListener('wheel', scrollHandler)
+  
+  
+  toolbox.initToolbox(ipcRenderer)
 
   //displayTests()
   //wipeGraphicalDisplay()
