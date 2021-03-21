@@ -1,16 +1,65 @@
 const child_process = require('child_process')
 const file_manager = require('../file_management/file_manager.js')
 const path = require('path');
+const CONSTANTS = require("../../constants.js");
+//const { ipcRenderer } = require('electron');
 
 var python_instance = null;
+
+// TODO: delete, unused
+function sanitize_str(string){
+    for (let i = 0; i < string.length;i++){
+        if (string[i] == '\n'){
+            string = string.substring(0,i) + "\\n" + string.substring(i+1)
+        } else if (string[i] == '\"'){
+            string = string.substring(0,i) + "\\\"" + string.substring(i+1)
+        }
+    }
+
+    return string
+}
+
+function call_backend(ipcMain, str_data, event){
+    let data_array = str_data.split(CONSTANTS.MGK)
+    
+    let filepath =  path.join(__dirname, "..", "verilog_generation", data_array[1])
+    
+    // find verilog function arguments
+    let arg_arr = []
+    arg_arr.push(filepath)
+    for (let i = 2; i < data_array.length; i++){
+        arg_arr.push(data_array[i])
+    }
+
+    // run backend python
+    let process = child_process.spawn('python', arg_arr)
+
+    process.stderr.once('data', (data) => {
+        console.log(data.toString())
+    })
+    
+    // set listener and process reply
+    process.stdout.once('data', (data) => {
+        console.log("received data")
+
+        let str_data_process = data.toString()
+
+        let data_array_process = str_data_process.split(CONSTANTS.MGK)
+
+        if (data_array_process[1].localeCompare("SUCCESS") == 0){
+            file_manager.updateSave(data.toString())
+        } else {
+            event.reply('console-message', data_array_process[2])
+        }
+        
+    })
+}
 
 function initializePythonProcess (ipcMain) {
     var initial_output = ""
 
     // initialize python process
-    python_instance = child_process.spawn('python', ['-i'], {
-        stdio: ['pipe', 'pipe', 'pipe']
-    })
+    python_instance = child_process.spawn('python', ['-i'])
 
     // use python_init.py to initialize it
     var init_file_content = file_manager.readFile(path.join(__dirname, "python_init.py"))
@@ -19,22 +68,16 @@ function initializePythonProcess (ipcMain) {
         initial_output = data.toString()
         
         python_instance.stdin.write(__dirname + "\n")
-        python_instance.stdout.once('data', (data)=>{
-            initial_output += data.toString()
-            console.log("received")
-        })
+        // python_instance.stdout.once('data', (data)=>{
+        //     initial_output += data.toString()
+        //     console.log("received")
+        // })
     })
     
     //throw away first message
     python_instance.stderr.once('data', function (data) {/*do nothing*/})
 
-    python_instance.stdin.write(init_file_content + "\n")
-    //python_instance.stdin.write("test\n")
-    //python_instance.stdin.write("dirname = \"" + __dirname + "\"\nprint(dirname)\n")
-    //python_instance.stdin.write(init_file_content + "\ntest\ndirname = \"" + __dirname + "\"\nprint(dirname)\n")
-    //python_instance.stdin.write("a = \"" + __dirname + "\"\nprint(a)\n")
-    //console.log(python_instance.stdio[0])
-    
+    python_instance.stdin.write(init_file_content + "\n")    
 
     // show initial output of python initialization
     ipcMain.on('get-python-version', (event,arg)=>{
@@ -42,12 +85,20 @@ function initializePythonProcess (ipcMain) {
     })
 
     ipcMain.on('console-input-reading', (event,arg) => {
-        python_instance.stdin.write(arg+"\n")
-
         python_instance.stdout.removeAllListeners('data')
-
+        
+        // deal with data that comes back
         python_instance.stdout.once('data', function (data) {
-            event.reply('console-message', data.toString())
+            let str_data = data.toString().slice(1, data.toString().length)
+            
+            // not a special message
+            if (str_data.slice(0, CONSTANTS.MGK.length) != (CONSTANTS.MGK)){
+                event.reply('console-message', str_data)
+            } else {
+                // process what comes back
+                // format: [MGK] [filename] [MGK] [parameters each separated by |]
+                call_backend(ipcMain, str_data, event)
+            }
         })
 
         python_instance.stderr.removeAllListeners('data')  
@@ -57,6 +108,7 @@ function initializePythonProcess (ipcMain) {
             event.reply('console-message', datastr.slice(0, datastr.length - 4))
         })
 
+        python_instance.stdin.write(arg+"\n")
     })
 }
 

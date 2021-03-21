@@ -10,6 +10,7 @@ current_dirname = os.path.join(input(), '..')
 
 os.chdir(current_dirname)
 
-from verilog_generation.test import *
-#print(test())
+from python_terminal.system_function_wrappers import *
+
+
 

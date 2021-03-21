@@ -39,6 +39,12 @@ const INSTANCE_NAME = "Verilog Instance Name"
 const data = require('./components/verilog_generation/IP_database.json')
 const IP_database = data
 
+
+// --------- OTHER ----------
+// magic word
+// TODO: get this from file
+const MGK = "&^\"%$"
+
 module.exports = {
     NON_PERIPHERAL_COLOR,
     MOD_ID_PREFIX,
@@ -51,4 +57,5 @@ module.exports = {
     INSTANCE_NAME,
     //module_types,
     IP_database,
+    MGK,
 }

@@ -11,7 +11,7 @@ const filter_list = [
 ]
 
 var base_path = false
-var save_json = false
+var save_json = false // dictionary
 
 // -------------- INIT -----------------
 function initMain(ipcMain){
@@ -79,6 +79,10 @@ function loadDummy(){
 
 function getSave(){
     return save_json
+}
+
+function updateSave(new_json_str){
+    save_json = JSON.parse(new_json)
 }
 
 function getModuleDict(id) {
@@ -162,5 +166,6 @@ module.exports = {
     loadDummy,
     loadSave,
     getSave,
+    updateSave,
     getModuleDict,
 }
