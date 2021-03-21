@@ -22,7 +22,7 @@ function sanitize_str(string){
 function call_backend(ipcMain, str_data, event){
     let data_array = str_data.split(CONSTANTS.MGK)
     
-    let filepath =  path.join(__dirname, "..", "verilog_generation", data_array[1])
+    let filepath =  path.join(__dirname, "..", "..", "..", "resources", "generator", data_array[1])
     
     console.log(filepath)
 
@@ -34,25 +34,27 @@ function call_backend(ipcMain, str_data, event){
         arg_arr.push(data_array[i])
     }
 
+    //console.log(arg_arr[])
+
     // run backend python
     let process = child_process.spawn('python', arg_arr)
 
     process.stderr.once('data', (data) => {
-        console.log(data.toString())
+        console.log("Error from child_process: " + data.toString())
     })
     
     // set listener and process reply
     process.stdout.once('data', (data) => {
-        console.log("received data")
+        console.log("received data: " + data.toString())
 
         let str_data_process = data.toString()
 
         let data_array_process = str_data_process.split(CONSTANTS.MGK)
 
-        if (data_array_process[1].localeCompare("SUCCESS") == 0){
+        if (data_array_process.length > 2 && data_array_process[1].localeCompare("SUCCESS") == 0){
             file_manager.updateSave(data.toString())
         } else {
-            event.reply('console-message', data_array_process[2])
+            event.reply('console-message', str_data_process)
         }
         
     })
@@ -92,7 +94,7 @@ function initializePythonProcess (ipcMain) {
         
         // deal with data that comes back
         python_instance.stdout.once('data', function (data) {
-            let str_data = data.toString().slice(1, data.toString().length)
+            let str_data = data.toString().slice(1, data.toString().length - 3)
             
             // not a special message
             if (str_data.slice(0, CONSTANTS.MGK.length) != (CONSTANTS.MGK)){

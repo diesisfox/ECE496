@@ -36,7 +36,7 @@ const INSTANCE_NAME = "Verilog Instance Name"
 
 // --------- JSON ---------
 //import * as data from './components/verilog_generation/IP_database.json'
-const data = require('./components/verilog_generation/IP_database.json')
+const data = require('../resources/peripherals/ip.json')
 const IP_database = data
 
 
