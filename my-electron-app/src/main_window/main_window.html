@@ -11,24 +11,26 @@
 </head>
 <body>
     <div class="page-left-menu">
-        <button id="open-button" class="menu-button"><img style="width: 40px; height: 40px" src="../../resources/images/icons/icons8-folder-52.png"></button>
-        <button id="save-button" class="menu-button"><img style="width: 35px; height: 35px" src="../../resources/images/icons/icons8-save-52.png"></button>
-        <button id="save-as-button" class="menu-button"><img style="width: 35px; height: 35px" src="../../resources/images/icons/icons8-save-as-52.png"></button>
-        <button id="add-button" class="menu-button"><img style="width: 40px; height: 40px" src="../../resources/images/icons/icons8-plus-128.png"></button>
-        <button id="remove-button" class="menu-button"><img style="width: 40px; height: 40px" src="../../resources/images/icons/icons8-minus-128.png"></button>
-        <button id="generate-button" class="menu-button"><img style="width: 45px; height: 45px" src="../../resources/images/icons/icons8-start-50.png"></button>
-        <button id="about-button" class="menu-button"><img style="width: 40px; height: 40px" src="../../resources/images/icons/icons8-question-mark-52.png"></button>
+        <button id="open-button" class="menu-button" title="Open"><img style="width: 40px; height: 40px" src="../../resources/images/icons/icons8-folder-52.png"></button>
+        <button id="save-button" class="menu-button" title="Save"><img style="width: 35px; height: 35px" src="../../resources/images/icons/icons8-save-52.png"></button>
+        <button id="save-as-button" class="menu-button" title="Save As"><img style="width: 35px; height: 35px" src="../../resources/images/icons/icons8-save-as-52.png"></button>
+        <button id="add-button" class="menu-button" title="Toggle Toolbox"><img style="width: 45px; height: 45px" src="../../resources/images/icons/icons8-toolbox-128.png"></button>
+        <!-- <button id="remove-button" class="menu-button" title="Remove Selected Module"><img style="width: 40px; height: 40px" src="../../resources/images/icons/icons8-minus-128.png"></button> -->
+        <button id="generate-button" class="menu-button" title="Generate System"><img style="width: 45px; height: 45px" src="../../resources/images/icons/icons8-start-50.png"></button>
+        <button id="about-button" class="menu-button" title="About"><img style="width: 40px; height: 40px" src="../../resources/images/icons/icons8-question-mark-52.png"></button>
     </div>
     <div class="page-wrap-content">
         
         <div class="page-center-content">
             <div class="model-diagram-display" id="model-diagram-display"></div>
-            <!-- <div class="module-toolbox" id="module-toolbox"></div> -->
-            <div class="add-module-bar" id="add-module-bar">
-                <button id="add-module-button" class="menu-button" style="height:30px">Add</button>
-                <input type="text" placeholder="Module Name" class="add-module-input" id="add-module-name">
-                <input type="text" placeholder="Type" class="add-module-input" id="add-module-type">
-                <input type="text" placeholder="Address" class="add-module-input" id="add-module-address">
+            <div class="module-toolbox" id="module-toolbox">
+                <!-- <div class="module-toolbox-icon">Test</div> -->
+            </div>
+            <div class="edit-module-box" id="edit-module-box">
+                <!-- <input type="text" placeholder="Module Name" class="edit-module-input" id="edit-module-name">
+                <input type="text" placeholder="Type" class="edit-module-input" id="edit-module-type">
+                <input type="text" placeholder="Address" class="edit-module-input" id="edit-module-address"> 
+                <button id="edit-module-button" class="menu-button" style="height:30px;margin-top:5px">edit</button>-->
             </div>
         </div>
         

@@ -1,0 +1,8 @@
+0.6
+2018.3
+Mar 26 2019
+04:21:55
+/media/psf/Home/Development/ECE496/ECE496/hdl/Interfaces.sv,1613616940,systemVerilog,,/media/psf/Home/Development/ECE496/ECE496/peripherals/i2c/i2c_m_main.sv,,AXI5_Lite_IF;Simple_Mem_IF,,,,,,,,
+/media/psf/Home/Development/ECE496/ECE496/peripherals/i2c/i2c_m_main.sv,1613973063,systemVerilog,,/media/psf/Home/Development/ECE496/ECE496/peripherals/i2c/i2c_m_tb.sv,,ip_i2c_m_main,,,,,,,,
+/media/psf/Home/Development/ECE496/ECE496/peripherals/i2c/i2c_m_tb.sv,1614042996,systemVerilog,,,,i2c_main_tb,,,,,,,,
+/media/psf/Home/Development/ECE496/ECE496/peripherals/tb/tb.sim/sim_i2c/behav/xsim/glbl.v,1544155481,verilog,,,,glbl,,,,,,,,
