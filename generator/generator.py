@@ -508,6 +508,8 @@ def generate_from_json(project_json, ip_json) -> str:
     # step 4: write axi interconnect logic
     verilog += "\n\n/**** write_axi_interconnect output below ****/\n\n"
     verilog += write_axi_interconnect(project_json, ip_json)
+    # step 7: tabs to spaces
+    verilog = verilog.replace('\t', ' '*4)
     # done
     return verilog
     pass
