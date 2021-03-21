@@ -71,17 +71,33 @@ function showAboutDialog (win) {
 // TODO: incomplete
 function addMenuListeners(ipcMain){
   ipcMain.on('open file', function (event, arg) {
-    let filepath = file_manager.openFileDialog(main_win)().join("")
-    console.log("filePath: " + filepath)
-    console.log("open file clicked")
-    file_manager.loadSave(filepath)
-    event.reply('update-renderer', file_manager.getSave())
+    let filepath = file_manager.openFileDialog(main_win)()
+    if (filepath != undefined){
+      filepath = filepath.join("")
+      console.log("filePath: " + filepath)
+      console.log("open file clicked")
+      file_manager.loadSave(filepath)
+      event.reply('update-renderer', file_manager.getSave())
+    }
   })
   ipcMain.on('save file', function(event, arg) {
-    event.reply('system-message', "saving file is still unimplemented")
+    event.reply('system-message', "attempted to save")
+    if (file_manager.saveSave()){
+      event.reply('system-message', "attempted to save: successful")
+    } else {
+      event.reply('system-message', "attempted to save: failed")
+    }
   })
   ipcMain.on('save as file', function(event, arg) {
-    console.log("filePath: " + file_manager.openSaveDialog(main_win))
+    let filepath = file_manager.openSaveDialog()
+    if (filepath != undefined){
+      console.log("filePath: " + filepath)
+      if (file_manager.writeJSONToFile(filepath, file_manager.getSave())){
+        event.reply('system-message', "attempted to save as: successful")
+      } else {
+        event.reply('system-message', "attempted to save as: failed")
+      }
+    }
   })
   ipcMain.on('remove module', function(event, arg) {
     console.log("attempting to remove cell: " + arg + ", name: " + arg.value + ", uid: " + arg.uid)

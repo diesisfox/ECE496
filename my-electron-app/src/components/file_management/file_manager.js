@@ -10,8 +10,12 @@ const filter_list = [
     {name: 'All Files', extensions: ['*']}
 ]
 
+// TODO: probably unneeded
 var base_path = false
+
+// save state
 var save_json = false // dictionary
+var save_file_path = false
 
 // -------------- INIT -----------------
 function initMain(ipcMain){
@@ -63,18 +67,35 @@ function openSaveDialog(win){
     return filePaths
 }
 
-function loadSave(filepath){
+function loadSave(filepath, dummy = false){
     let data = readJSONFile(filepath)
     if (data != false){
         save_json = readJSONFile(filepath)
+
+        //save path if not dummy
+        if (dummy){
+            save_file_path = false
+        } else {
+            save_file_path = filepath
+        }
         return true
     } else {
         return false
     }
 }
+
+function saveSave(){
+    if (save_file_path != false){
+        writeJSONToFile(save_file_path, save_json)
+        return true
+    } else {
+        console.log("Error: either save is dummy, or no save loaded")
+        return false
+    }
+}
   
 function loadDummy(){
-    return loadSave(dummy_save_path)
+    return loadSave(dummy_save_path, true)
 }
 
 function getSave(){
@@ -105,6 +126,7 @@ function getModuleDict(id) {
 
 // --------------- HELPER FUNCTIONS ----------------
 
+// TODO: probably unneeded
 function setBasePath (path){
     if (base_path != false){
         console.log('Error: base path set a second time')
@@ -165,6 +187,7 @@ module.exports = {
     writeJSONToFile,
     loadDummy,
     loadSave,
+    saveSave,
     getSave,
     updateSave,
     getModuleDict,
