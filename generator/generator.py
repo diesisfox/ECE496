@@ -104,7 +104,9 @@ def write_top_decl_start_and_interfaces(project_json, ip_json) -> str:
         for i in range(len(ip['interfaces'])):
             iface = ip['interfaces'][i]
             if_inst_name = f"{m['parameters']['Verilog Instance Name']}_if{i}"
+            if_axi_inst_name = f"{m['parameters']['Verilog Instance Name']}_AXI_if{i}"
             if_inst = f"{iface['type']} {if_inst_name}();"
+            if_axi_inst = f"AXI5_Lite_IF {if_axi_inst_name} ();"
             if "pinmap" in iface:
                 for pinmap in iface['pinmap']:
                     ports.append(f"{pinmap[PINMAP_DIR_INDEX]} logic {pinmap[PINMAP_EXTNAME_INDEX]}")
@@ -115,6 +117,8 @@ def write_top_decl_start_and_interfaces(project_json, ip_json) -> str:
                         if_inst += f"\nassign {if_inst_name}.{pinmap[PINMAP_INTNAME_INDEX]} " \
                                    f"= {pinmap[PINMAP_EXTNAME_INDEX]}"
             if_insts.append(if_inst)
+            # TODO: James did I do this right?
+            if_insts.append(if_axi_inst)
     verilog += f"module top(\n\t"
     verilog += ",\n\t".join(ports)
     verilog += ");\n\n"
@@ -150,14 +154,320 @@ def write_modules_instantiations(project_json, ip_json) -> str:
 def write_axi_interconnect(project_json, ip_json) -> str:
     # axi module is just included in the top level sv file
     verilog = ""
+    
+    interconnect_params = ""
+    interconnect_ifs = ""
+    interconnect_clocks = ""
+    read_comb = ""
+    write_comb = ""
+
+    num_modules = len(project_json)
+
+    # In this block:
+    # 1. The interconnect's params
+    # 2. The interconnect's interfaces
+    # 3. Clock/reset assignments for each worker interface
+    # 4. First half of the read comb logic block
+    # 5. First half of the write comb logic block
+    for module in project_json:
+        inst_name = module["parameters"]["Verilog Instance Name"]
+        base_addr = module["parameters"]["Base Address"]
+        num_bits = ip_json[module["moduleType"]]["addrBits"]
+
+        # Params
+        interconnect_params += ("    parameter [31:0] " + inst_name + "_base_addr = 32'h" + base_addr + ",\n"
+        interconnect_params += ("    parameter int " + inst_name + "_num_bits = " + num_bits + ",\n"
+        
+        # Interfaces
+        interconnect_ifs += "    AXI5_Lite_IF.MANAGER " + inst_name + "_IF,\n"
+
+        # Clock/resets
+        interconnect_clocks += "    assign " + inst_name + "_IF.ACLK = M_IF.ACLK;\n"
+        interconnect_clocks += "    assign " + inst_name + "_IF.ARESETn = M_IF.ARESETn;\n"
+
+        # Read logic pt 1
+        read_comb += "        // " + inst_name + "\n"
+        read_comb += "        " + inst_name + "_IF.ARADDR = 'b0;\n"
+        read_comb += "        " + inst_name + "_IF.ARPROT = 'b0;\n"
+        read_comb += "        " + inst_name + "_IF.ARVALID = 'b0;\n"
+        read_comb += "        " + inst_name + "_IF.ARSIZE = 'b0;\n"
+        read_comb += "        " + inst_name + "_IF.ARID = 'b0;\n"
+        read_comb += "        " + inst_name + "_IF.RREADY_ = 'b0;\n"
+        read_comb += "\n"
+
+        # Write logic pt 1
+        write_comb += "        // " + inst_name + "\n"
+        write_comb += "        " + inst_name + "IF.AWADDR = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.AWPROT = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.AWVALID_ = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.AWSIZE_ = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.AWID_ = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.WDATA_ = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.WSTRB_ = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.WVALID = 'b0;\n"
+        write_comb += "        " + inst_name + "IF.BREADY_ = 'b0;\n"
+        write_comb += "\n"
+   
+    # Remove the extra comma in the last entry of the params and interfaces 
+    interconnect_params = interconnect_params.substring(0, interconnect_params.length - 2) + '\n'
+    interconnect_ifs = interconnect_ifs.substring(0, interconnect_ifs.length - 2) + '\n'
+
+    # In this block:
+    # 1. Second half of read comb logic block
+    # 2. Second half of write comb logic block
+    i = 0
+    for module in project_json:
+        inst_name = module["parameters"]["Verilog Instance Name"]
+        base_addr = module["parameters"]["Base Address"]
+        num_bits = ip_json[module["moduleType"]]["addrBits"]
+        
+        if (i == 0):
+            read_comb += "        if (araddr_sel[31:" + inst_name + "_num_bits] == " + inst_name + "_base_addr[31:" + inst_name + "_num_bits]) begin\n"
+            write_comb += "        if (awaddr_sel[31:" + inst_name + "_num_bits] == " + inst_name + "_base_addr[31:" + inst_name + "_num_bits]) begin\n"
+        else:
+            read_comb += "        end else if (araddr_sel[31:" + inst_name + "_num_bits] == " + inst_name + "_base_addr[31:" + inst_name + "_num_bits]) begin\n"
+            write_comb += "        end else if (awaddr_sel[31:" + inst_name + "_num_bits] == " + inst_name + "_base_addr[31:" + inst_name + "_num_bits]) begin\n"
+
+        # Read logic
+        read_comb += "            " + inst_name + "_IF.ARADDR = M_IF.ARADDR;\n"
+        read_comb += "            " + inst_name + "_IF.ARPROT = M_IF.ARPROT;\n"
+        read_comb += "            " + inst_name + "_IF.ARVALID = M_IF.ARVALID;\n"
+        read_comb += "            M_IF.ARREADY = " + inst_name + "IF.ARREADY;\n"
+        read_comb += "            " + inst_name + "_IF.ARSIZE = M_IF.ARSIZE;\n"
+        read_comb += "            " + inst_name + "_IF.ARID = M_IF.ARID;\n"
+
+        read_comb += "            M_IF.RDATA = " + inst_name + "IF.RDATA;\n"
+        read_comb += "            M_IF.RRESP = " + inst_name + "IF.RRESP;\n"
+        read_comb += "            M_IF.RVALID = " + inst_name + "IF.RVALID;\n"
+        read_comb += "            " + inst_name + "_IF.RREADY = M_IF.RREADY;\n"
+        read_comb += "            M_IF.RID = " + inst_name + "IF.RID;\n"
+
+        # Write logic
+        write_comb += "            " + inst_name + "_IF.AWADDR = M_IF.AWADDR;\n"
+        write_comb += "            " + inst_name + "_IF.AWPROT = M_IF.AWPROT;\n"
+        write_comb += "            " + inst_name + "_IF.AWVALID = M_IF.AWVALID;\n"
+        write_comb += "            M_IF.AWREADY = " + inst_name + "_IF.AWREADY;\n"
+        write_comb += "            " + inst_name + "_IF.AWSIZE = M_IF.AWSIZE;\n"
+        write_comb += "            " + inst_name + "_IF.AWID = M_IF.AWID;\n"
+        
+        write_comb += "            " + inst_name + "_IF.WDATA = M_IF.WDATA;\n"
+        write_comb += "            " + inst_name + "_IF.WSTRB = M_IF.WSTRB;\n"
+        write_comb += "            " + inst_name + "_IF.WVALID = M_IF.WVALID;\n"
+        write_comb += "            M_IF.WREADY = " + inst_name + "_IF.WREADY;\n"
+
+        write_comb += "            M_IF.BRESP = " + inst_name + "_IF.BRESP;\n"
+        write_comb += "            M_IF.BVALID = " + inst_name + "_IF.BVALID;\n"
+        write_comb += "            " + inst_name + "_IF.BREADY = M_IF.BREADY;\n"
+        write_comb += "            M_IF.BID = " + inst_name + "_IF.BID;\n"
+
+
+        if (i == num_modules - 1):
+            read_comb += "end\n"
+            write_comb += "end\n"
+
+        i += 1;
+
+    verilog += "module AXI_Interconnect #(\n"
+    verilog += interconnect_params
+    verilog += ")(\n"
+    verilog += "    AXI5_Lite_IF.WORKER M_IF,\n"
+    verilog += interconnect_ifs
+    verilog += ");\n\n"
+
+    verilog += "    // Clock and reset wiring\n"
+    verilog += interconnect_clocks
+
+    verilog += "\n    logic [31:0] araddr;\n"
+    verilog += "    logic [31:0] araddr_latched;\n"
+    verilog += "    logic [31:0] araddr_sel;\n\n"
+    verilog += "    logic [31:0] awaddr;\n"
+    verilog += "    logic [31:0] awaddr_latched;\n"
+    verilog += "    logic [31:0] awaddr_sel;\n\n"
+
+    verilog += "    assign araddr = M_IF.ARADDR;\n"
+    verilog += "    assign awaddr = M_IF.AWADDR;\n\n"
+
+    verilog += "    enum logic [1:0] {\n"
+    verilog += "        READ_IDLE,\n"
+    verilog += "        ARADDR_LATCHED,\n"
+    verilog += "        AR_DONE,\n"
+    verilog += "    } read_state;\n"
+
+    verilog += "    // Read state machine\n"
+    verilog += "    always_ff @(posedge M_IF.ACLK) begin\n"
+    verilog += "        if (M_IF.ARESETn == 1'b0) begin\n"
+    verilog += "            read_state <= READ_IDLE;\n"
+    verilog += "        end else begin\n"
+    verilog += "            case (read_state)\n"
+    verilog += "                READ_IDLE : begin\n"
+    verilog += "                    if (M_IF.ARREADY && M_IF.ARVALID) begin\n"
+    verilog += "                        read_state <= AR_DONE;\n"
+    verilog += "                    end else if (M_IF.ARVALID) begin\n"
+    verilog += "                        read_state <= ARADDR_LATCHED;\n"
+    verilog += "                    end else begin\n"
+    verilog += "                        read_state <= READ_IDLE;\n"
+    verilog += "                    end\n"
+    verilog += "                end\n"
+    verilog += "                ARADDR_LATCHED : begin\n"
+    verilog += "                    if (M_IF.ARREADY && M_IF.ARVALID) begin\n"
+    verilog += "                        read_state <= AR_DONE;\n"
+    verilog += "                    end else begin\n"
+    verilog += "                        read_state <= ARADDR_LATCHED;\n"
+    verilog += "                    end\n"
+    verilog += "                end\n"
+    verilog += "                AR_DONE : begin\n"
+    verilog += "                    if (M_IF.RREADY && M_IF.RVALID) begin\n"
+    verilog += "                        read_state <= READ_IDLE;\n"
+    verilog += "                    end else begin\n"
+    verilog += "                        read_state <= AR_DONE;\n"
+    verilog += "                    end\n"
+    verilog += "                end\n"
+    verilog += "                default : begin\n"
+    verilog += "                    read_state <= read_state\n"
+    verilog += "                end\n"
+    verilog += "            endcase\n"
+    verilog += "        end\n"
+    verilog += "    end\n\n"
+
+    verilog += "    // ARADDR latching\n"
+    verilog += "    always_ff @(posedge M_IF.ACLK) begin\n"
+    verilog += "        if (M_IF.ARESETn == 1'b0) begin\n"
+    verilog += "            araddr_latched <= 32'b0;\n"
+    verilog += "        end else begin\n"
+    verilog += "            if (M_IF.ARREADY && read_state == READ_IDLE) begin\n"
+    verilog += "                araddr_latched <= M_IF.ARADDR;\n"
+    verilog += "            end\n"
+    verilog += "        end\n"
+    verilog += "    end\n\n"
+
+    verilog += "    // Wiring for araddr_sel, and read XBAR\n"
+    verilog += "    always_comb begin\n"
+    verilog += "        // Default case - we expect to never hit this\n"
+    verilog += "        araddr_sel = 'b0;\n"
+    verilog += "        if (read_state == ARADDR_LATCHED || read_state == AR_DONE) begin\n"
+    verilog += "            araddr_sel = araddr_latched;\n"
+    verilog += "        end else begin\n"
+    verilog += "            araddr_sel = araddr;\n"
+    verilog += "        end\n\n"
+    verilog += "        // Default tie-offs\n"
+    verilog += "        // Manager\n"
+    verilog += "        M_IF.ARREADY = 'b0;\n"
+    verilog += "        M_IF.RDATA = 'b0;\n"
+    verilog += "        M_IF.RRESP = 'b0;\n"
+    verilog += "        M_IF.RVALID = 'b0;\n"
+    verilog += "        M_IF.RID = 'b0;\n\n"
+    verilog += read_comb
+    verilog += "    end\n\n"
+
+    verilog += "    enum logic [1:0] {\n"
+    verilog += "        WRITE_IDLE,\n"
+    verilog += "        AWADDR_LATCHED,\n"
+    verilog += "        AW_DONE\n"
+    verilog += "    } write_state;\n\n"
+
+    verilog += "    // Write state machine\n"
+    verilog += "    always_ff @(posedge M_IF.ACLK) begin\n"
+    verilog += "        if (M_IF.ARESETn == 1'b0) begin\n"
+    verilog += "            write_state <= WRITE_IDLE;\n"
+    verilog += "        end else begin\n"
+    verilog += "            case (write_state)\n"
+    verilog += "                WRITE_IDLE : begin\n"
+    verilog += "                    if (M_IF.AWREADY && M_IF.AWVALID) begin\n"
+    verilog += "                        write_state <= AW_DONE;\n"
+    verilog += "                    end else if (M_IF.AWVALID) begin\n"
+    verilog += "                        write_state <= AWADDR_LATCHED;\n"
+    verilog += "                    end else begin\n"
+    verilog += "                        write_state <= WRITE_IDLE\n"
+    verilog += "                    end\n"
+    verilog += "                end\n"
+    verilog += "                AWADDR_LATCHED : begin\n"
+    verilog += "                    if (M_IF.AWREADY && M_IF.AWVALID) begin\n"
+    verilog += "                        write_state <= AW_DONE;\n"
+    verilog += "                    end else begin\n"
+    verilog += "                        write_state <= AWADDR_LATCHED;\n"
+    verilog += "                    end\n"
+    verilog += "                end\n"
+    verilog += "                AW_DONE : begin\n"
+    verilog += "                    if (M_IF.BREADY && M_IF.BVALID) begin\n"
+    verilog += "                        write_state <= WRITE_IDLE\n"
+    verilog += "                    end else begin\n"
+    verilog += "                        write_state <= AW_DONE;\n"
+    verilog += "                    end\n"
+    verilog += "                end\n"
+    verilog += "                default : begin\n"
+    verilog += "                    write_state <= write_state;\n"
+    verilog += "                end\n"
+    verilog += "            endcase\n"
+    verilog += "        end\n"
+    verilog += "    end\n\n"
+
+    verilog += "    // AWADDR latching\n"
+    verilog += "    always_ff @(posedge M_IF.ACLK) begin\n"
+    verilog += "        if (M_IF.ARESETn == 1'b0) begin\n"
+    verilog += "            awaddr_latched <= 32'b0;\n"
+    verilog += "        end else begin\n"
+    verilog += "            if (M_IF.AWREADY && write_state == WRITE_IDLE) begin\n"
+    verilog += "                awaddr_latched <= awaddr;\n"
+    verilog += "            end\n"
+    verilog += "        end\n"
+    verilog += "    end\n\n"
+
+    verilog += "    // Wiring for awaddr_sel and write XBAR\n"
+    verilog += "    always_comb begin\n"
+    verilog += "        awaddr_sel = 'b0;\n"
+    verilog += "        if (write_state == AWADDR_LATCHED || write_state == AW_DONE) begin\n"
+    verilog += "            awaddr_sel = awaddr_latched;\n"
+    verilog += "        end else begin\n"
+    verilog += "            awaddr_sel = awaddr;\n"
+    verilog += "        end\n\n"
+    verilog += "        // Default tie-offs\n"
+    verilog += "        // Manager\n"
+    verilog += "        M_IF.AWREADY = 'b0;\n"
+    verilog += "        M_IF.WREADY = 'b0;\n"
+    verilog += "        M_IF.BRESP = 'b0;\n"
+    verilog += "        M_IF.BVALID = 'b0;\n"
+    verilog += "        M_IF.BID = 'b0;\n\n"
+    verilog += write_comb
+    verilog += "    end\n\n"
+    verilog += "endmodule"
+
     return verilog
     pass
 
 
-def write_interconnect_instantiation(project_json, ip_json) -> str:
+def write_controller_and_interconnect_inst (project_json, ip_json) -> str:
     verilog = ""
+
+    for module in project_json:
+        inst_name = module["parameters"]["Verilog Instance Name"]
+        base_addr = module["parameters"]["Base Address"]
+        num_bits = ip_json[module["moduleType"]]["addrBits"]
+        verilog += "    AXI_Controller_Worker " + inst_name + "_controller {\n"
+        verilog += "        .AXI_IF(" + inst_name + "_AXI_if0.worker),\n"
+        verilog += "        .USER_IF(" + inst_name + "_if0.controller)\n"
+        verilog += "    );\n\n"
+
+    verilog += "    AXI_Interconnect #(\n"
+    for module in project_json:
+        inst_name = module["parameters"]["Verilog Instance Name"]
+        base_addr = module["parameters"]["Base Address"]
+        num_bits = ip_json[module["moduleType"]]["addrBits"]
+        verilog += "        ." + inst_name + "_base_addr(32'h" + base_addr + "),\n"
+        verilog += "        ." + inst_name + "_num_bits(" + num_bits + "),\n"
+    
+    verilog = verilog.substring(0, verilog.length - 2) + '\n'
+    verilog += "    ) xbar (\n"
+
+    for module in project_json:
+        inst_name = module["parameters"]["Verilog Instance Name"]
+        base_addr = module["parameters"]["Base Address"]
+        num_bits = ip_json[module["moduleType"]]["addrBits"]
+        verilog += "        ." + inst_name + "_IF(" + inst_name + "_AXI_if0.manager),\n"
+
+    verilog += "        .M_IF(M_IF.worker)\n"
+    verilog += "    );\n"
+
     return verilog
-    pass
 
 
 def write_top_verilog_end() -> str:
