@@ -34,6 +34,21 @@ let edit_box_shown = false;
 
 let editing_module_UUID = false
 
+// --------- Backend Communication ----------
+
+// TODO: complete these three functions
+function sendNewToBack(ipcRenderer, module_type){
+    ipcRenderer.send('console-input-reading', 'add_module("' + module_type + '")')
+}
+
+function sendEditToBack(ipcRenderer, data_array){
+    
+}
+
+function sendRemoveToBack(ipcRenderer, module_UUID){
+    ipcRenderer.send('console-input-reading', 'remove_module("' + module_type + '")')
+}
+
 // --------- Toolbox ---------
 
 function createModuleIcon (ipcRenderer, type, margin, rect_width, rect_height){
@@ -126,8 +141,9 @@ function initToolbox (ipcRenderer){
     }
     diagram_div.ondrop = function (ev) {
         ev.preventDefault()
-        ipcRenderer.send('system-message', "module type " + ev.dataTransfer.getData('type_id') + " received, however module adding is " + 
-        "not implemented in the back")
+        sendNewToBack(ipcRenderer, ev.dataTransfer.getData('type_id'))
+        // ipcRenderer.send('system-message', "module type " + ev.dataTransfer.getData('type_id') + " received, however module adding is " + 
+        // "not implemented in the back")
     }
 
     
@@ -191,12 +207,15 @@ function setEditBox (ipcRenderer, module_json){
                 data += "|" + edit_module_box_div.childNodes[i].value
             }
         }
-        ipcRenderer.send('module-edit', data) // TODO: remember to disallow vertical bars and colons in any text
+        sendEditToBack(ipcRenderer, null) // TODO: implement this
+        //ipcRenderer.send('module-edit', data) 
+
     })
     edit_module_box_div.appendChild(edit_button)
     let delete_button = createEditButton(ipcRenderer, "Delete", margin, emb_rect_width, emb_rect_height)
     delete_button.addEventListener('click', function() {
-        ipcRenderer.send('module-delete', editing_module_UUID);
+        //ipcRenderer.send('module-delete', editing_module_UUID);
+        sendRemoveToBack(ipcRenderer, editing_module_UUID)
     })
     edit_module_box_div.appendChild(delete_button)
 

@@ -44,8 +44,8 @@ function addButtonListeners(){
     //     }
     // })
     generate_button.addEventListener('click', function() {
-        ipcRenderer.send('generate', "")
-        //ipcRenderer.send('debug', file_manager.base_path)
+        //ipcRenderer.send('generate', "")
+        ipcRenderer.send('console-input-reading', 'generate()')
     })
     about_button.addEventListener('click', function() {
         ipcRenderer.send('about', "")

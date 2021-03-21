@@ -24,9 +24,12 @@ function call_backend(ipcMain, str_data, event){
     
     let filepath =  path.join(__dirname, "..", "verilog_generation", data_array[1])
     
+    console.log(filepath)
+
     // find verilog function arguments
     let arg_arr = []
     arg_arr.push(filepath)
+    arg_arr.push(JSON.stringify(file_manager.getSave()))
     for (let i = 2; i < data_array.length; i++){
         arg_arr.push(data_array[i])
     }

@@ -99,20 +99,20 @@ function addMenuListeners(ipcMain){
       }
     }
   })
-  ipcMain.on('remove module', function(event, arg) {
-    console.log("attempting to remove cell: " + arg + ", name: " + arg.value + ", uid: " + arg.uid)
-    event.reply('system-message', "removing a module is not fully implemented")
-  })
-  ipcMain.on('generate', function(event, arg) {
-    event.reply('system-message', "generate is not fully implemented")
-  })
+  // ipcMain.on('remove module', function(event, arg) {
+  //   console.log("attempting to remove cell: " + arg + ", name: " + arg.value + ", uid: " + arg.uid)
+  //   event.reply('system-message', "removing a module is not fully implemented")
+  // })
+  // ipcMain.on('generate', function(event, arg) {
+  //   event.reply('system-message', "generate is not fully implemented")
+  // })
   ipcMain.on('about', function(event, arg) {
     showAboutDialog(main_win)
   })
-  ipcMain.on('add module', function(event, arg) {
-    event.reply('system-message', "Received: " + arg.name + ", " + arg.type + ", " + arg.address)
-    event.reply('system-message', "adding module not fully implemented")
-  })
+  // ipcMain.on('add module', function(event, arg) {
+  //   event.reply('system-message', "Received: " + arg.name + ", " + arg.type + ", " + arg.address)
+  //   event.reply('system-message', "adding module not fully implemented")
+  // })
 }
 
 // main window creation function
