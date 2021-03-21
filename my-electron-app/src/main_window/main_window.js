@@ -71,8 +71,11 @@ function showAboutDialog (win) {
 // TODO: incomplete
 function addMenuListeners(ipcMain){
   ipcMain.on('open file', function (event, arg) {
-    console.log("filePath: " + file_manager.openFileDialog(main_win)())
+    let filepath = file_manager.openFileDialog(main_win)().join("")
+    console.log("filePath: " + filepath)
     console.log("open file clicked")
+    file_manager.loadSave(filepath)
+    event.reply('update-renderer', file_manager.getSave())
   })
   ipcMain.on('save file', function(event, arg) {
     event.reply('system-message', "saving file is still unimplemented")

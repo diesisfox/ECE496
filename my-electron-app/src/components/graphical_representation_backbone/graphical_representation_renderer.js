@@ -20,6 +20,9 @@ let mousedown = false; //mouse dragging on img
 // for selection
 let selected_module_element = null
 
+// current svg
+let svg_diagram = false
+
 
 
 // --------- Display Methods ---------
@@ -130,8 +133,12 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
 function createSVGModuleRep (ipcRenderer, json_object) {
   let total = json_object.length
   ipcRenderer.send('debug', "total: " + total)
+  
+  if (svg_diagram != false){
+    diagram_div.removeChild(svg_diagram)
+  }
 
-  let svg_diagram = document.createElementNS(ns, "svg")
+  svg_diagram = document.createElementNS(ns, "svg")
   svg_diagram.setAttributeNS(null, "width", (rect_width + rect_left_margin) * total + rect_left_margin)
   svg_diagram.setAttributeNS(null, "height", '100%')
   svg_diagram.style.fontFamily = theme.normal_font
@@ -256,11 +263,12 @@ const mouseWheelHandler = function(e) {
 
 // ------------ Initialization Code ------------
 function init (ipcRenderer) {
-  //displayTESTJSON(ipcRenderer)
-
-  ipcRenderer.send('debug', 'finished')
-
   addPanningHandlers(ipcRenderer)
+
+  ipcRenderer.on('update-renderer', (event, data) => {
+    createSVGModuleRep(ipcRenderer, data)
+    ipcRenderer.send('debug', "received update graphical rep command")
+  })
 }
 
 

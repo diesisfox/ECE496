@@ -97,6 +97,7 @@ function initializePythonProcess (ipcMain) {
             } else {
                 // process what comes back
                 // format: [MGK] [filename] [MGK] [parameters each separated by |]
+                // TODO: fix problem with final argument
                 call_backend(ipcMain, str_data, event)
             }
         })
