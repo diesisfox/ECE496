@@ -21,7 +21,7 @@
                 "paramType": "Number",
                 "max": 32,
                 "min": 1,
-                "default": 8,
+                "default": "8",
                 "important": true
             }
         },

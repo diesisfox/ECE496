@@ -5,7 +5,7 @@
         "parameters": {
             "Verilog Instance Name": "ip_gpio_main_128943FD78AB",
             "Base Address": "8000_0000",
-            "Width": 12
+            "Width": "12"
         },
         "pinmaps": [
             [],
@@ -32,7 +32,7 @@
         "parameters": {
             "Verilog Instance Name": "ip_i2c_m_main_BBBB43FD78AB",
             "Base Address": "8001_0000",
-            "Bus Frequency (Hz)": 100E6
+            "Bus Frequency (Hz)": "100E6"
         },
         "pinmaps": [
             [],
