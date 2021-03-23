@@ -11,7 +11,7 @@ const filter_list = [
     {name: 'All Files', extensions: ['*']}
 ]
 
-// TODO: probably unneeded
+// app path
 var base_path = false
 
 // save state

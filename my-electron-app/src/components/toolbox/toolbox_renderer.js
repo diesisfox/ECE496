@@ -42,7 +42,8 @@ function sendNewToBack(ipcRenderer, module_type){
 }
 
 function sendEditToBack(ipcRenderer, data_array){
-    
+    ipcRenderer.send('console-input-reading', 'change_parameter("' + data_array[0] + '", "' + data_array[1] + 
+        '", "' + data_array[2] + '")')
 }
 
 function sendRemoveToBack(ipcRenderer, module_UUID){
@@ -203,21 +204,21 @@ function setEditBox (ipcRenderer, module_json){
     // add buttons
     let edit_button = createEditButton(ipcRenderer, "Edit", margin, emb_rect_width, emb_rect_height)
     edit_button.addEventListener('click', function() {
-        let data = editing_module_UUID
         let i = 0
         for (; i < edit_module_box_div.childNodes.length - 2; i++){
             if (edit_module_box_div.childNodes[i].placeholder != "filler"){
-                data += "|" + edit_module_box_div.childNodes[i].value
+                let data = [editing_module_UUID, edit_module_box_div.childNodes[i].placeholder,
+                    edit_module_box_div.childNodes[i].value]
+                sendEditToBack(ipcRenderer, data)
             }
         }
-        sendEditToBack(ipcRenderer, null) // TODO: implement this
+        //sendEditToBack(ipcRenderer, null) // TODO: implement this
         //ipcRenderer.send('module-edit', data) 
 
     })
     edit_module_box_div.appendChild(edit_button)
     let delete_button = createEditButton(ipcRenderer, "Delete", margin, emb_rect_width, emb_rect_height)
     delete_button.addEventListener('click', function() {
-        //ipcRenderer.send('module-delete', editing_module_UUID);
         sendRemoveToBack(ipcRenderer, editing_module_UUID)
     })
     edit_module_box_div.appendChild(delete_button)

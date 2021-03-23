@@ -6,30 +6,13 @@ const CONSTANTS = require("../../constants.js");
 
 var python_instance = null;
 
-// for call_backend
-var stderr_data = undefined
-var stdout_data = undefined
-
-// TODO: delete, unused
-function sanitize_str(string){
-    for (let i = 0; i < string.length;i++){
-        if (string[i] == '\n'){
-            string = string.substring(0,i) + "\\n" + string.substring(i+1)
-        } else if (string[i] == '\"'){
-            string = string.substring(0,i) + "\\\"" + string.substring(i+1)
-        }
-    }
-
-    return string
-}
-
-function process_backend_modify_output(ipcMain, event, exit_value){
+function process_backend_modify_output(ipcMain, event, process, exit_value){
     if (exit_value[0] == '0'){
-        file_manager.updateSave(stdout_data.toString())
+        file_manager.updateSave(process.stdout_data.toString())
         event.reply('update-renderer', file_manager.getSave())
         event.reply('console-message', "Command successful")
     } else {
-        event.reply('system-message', stderr_data.toString())
+        event.reply('system-message', process.stderr_data.toString())
     }
 }
 
@@ -53,8 +36,8 @@ function call_backend(ipcMain, str_data, event){
     // run backend python
     let process = child_process.spawn('python', arg_arr, options)
 
-    stderr_data = undefined
-    stdout_data = undefined
+    process.stderr_data = undefined
+    process.stdout_data = undefined
     
     // remember process type
     process.type = parseInt(data_array[1])
@@ -62,47 +45,22 @@ function call_backend(ipcMain, str_data, event){
     // set listener for stdout and stderr
     process.stderr.once('data', (data) => {
         console.log("Error from child_process: " + data.toString())
-        stderr_data = data
+        process.stderr_data = data
     })
-    
     process.stdout.once('data', (data) => {
         console.log("received data: " + data.toString())
-        stdout_data = data
-
-        //let str_data_process = data.toString()
-
-        //let data_array_process = str_data_process.split(CONSTANTS.MGK)
-
-        // if (data_array_process.length > 2 && data_array_process[1].localeCompare("SUCCESS") == 0){
-        //     file_manager.updateSave(data.toString())
-        // } else {
-        //     event.reply('console-message', str_data_process)
-        // }
+        process.stdout_data = data
     })
 
+    // process the return value or error
     process.once('close', (data) => {
         console.log("exit value: " + data.toString())
-
+        
+        // if modify, then expect json string returns
         if (process.type == 2){
-            process_backend_modify_output(ipcMain, event, data.toString())
-        }
+            process_backend_modify_output(ipcMain, event, process, data.toString())
+        } // TODO: finish for validation and generation
     })
-
-    // process.stderr.once('close', (data) => {
-    //     console.log("closed: " + data.toString())
-    //     if (stderr_data == undefined){
-    //         stderr_data = 0
-    //     }
-    //     process_backend_output(ipcMain)
-    // })
-
-    // process.stdout.once('close', (data) => {
-    //     console.log("closed: " + data.toString())
-    //     if (stdout_data == undefined){
-    //         stderr_data = 0
-    //     }
-    //     process_backend_output(ipcMain)
-    // })
 }
 
 function initializePythonProcess (ipcMain) {
