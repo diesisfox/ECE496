@@ -24,7 +24,7 @@ const tb_rect_height = 100
 const anim_speed = 400 // in ms TODO: calculate this per toolbox, so that one doesn't look faster than the other
 const offscreen_offset = 10 
 const tb_offscreen_offset = ((toolbox_div.offsetHeight + offscreen_offset) * -1) + "px"
-let bar_offscreen_offset = 0 // changes
+var bar_offscreen_offset = 0 // changes
 const onscreen_offset = 5
 const all_onscreen_offset = onscreen_offset + "px"
 
@@ -151,7 +151,7 @@ function initToolbox (ipcRenderer){
         setEditBox(ipcRenderer, module_json)
     })
     ipcRenderer.on('edit_box_visibility', (event, val) => {
-        toggle_edit_module_box_visibility(val)
+        toggle_edit_module_box_visibility(ipcRenderer, val)
     })
 }
 
@@ -163,7 +163,7 @@ function setEditBox (ipcRenderer, module_json){
     let params = C.IP_database[module_type][C.PARAMETERS]
 
     // set height of div to be tight to elements
-    const div_height = emb_rect_height * (Math.ceil(params.length / emb_num_per_row) + 1) + 20
+    const div_height = emb_rect_height * (Math.ceil(Object.keys(params).length / emb_num_per_row) + 1) + 20
     edit_module_box_div.style.height = div_height + "px"
     bar_offscreen_offset = ((div_height + offscreen_offset) * -1) + "px"
 
@@ -174,20 +174,21 @@ function setEditBox (ipcRenderer, module_json){
 
     // add a toolbar objects
     let i = 0
-    for (; i < params.length; i++){
-        // check for existence of key
-        if (!(C.PARAMNAME in params[i]) || !(C.PARAMTYPE in params[i])){
-            ipcRenderer.send('debug', 'ERROR: IP_database entry not complete for type ' + module_type)
-            break
-        }
+    for (var key in params){
+        // // check for existence of key
+        // if (!(C.PARAMNAME in params[key]) || !(C.PARAMTYPE in params[key])){
+        //     ipcRenderer.send('debug', 'ERROR: IP_database entry not complete for type ' + module_type)
+        //     break
+        // }
         // look for same parameter in module
-        if (!(params[i][C.PARAMNAME] in module_json[C.PARAMETERS])){
+        if (!(key in module_json[C.PARAMETERS])){
             ipcRenderer.send('debug', "ERROR: module entry in save not complete for type " + module_type)
             break
         }
-        let val = module_json[C.PARAMETERS][params[i][C.PARAMNAME]]
+        let val = module_json[C.PARAMETERS][key]
         
-        edit_module_box_div.appendChild(createEditInput(ipcRenderer, params[i][C.PARAMNAME], val, margin, emb_rect_width, emb_rect_height))
+        edit_module_box_div.appendChild(createEditInput(ipcRenderer, key, val, margin, emb_rect_width, emb_rect_height))
+        i++
     }
 
     // fill out the rest of the row
@@ -196,6 +197,8 @@ function setEditBox (ipcRenderer, module_json){
         let filler = createFiller(ipcRenderer, margin, emb_rect_width, emb_rect_height)
         edit_module_box_div.appendChild(filler)
     }
+
+    
 
     // add buttons
     let edit_button = createEditButton(ipcRenderer, "Edit", margin, emb_rect_width, emb_rect_height)
@@ -222,7 +225,7 @@ function setEditBox (ipcRenderer, module_json){
     // save UUID
     editing_module_UUID = module_json[C.UUID]
  
-    toggle_edit_module_box_visibility(true)
+    toggle_edit_module_box_visibility(ipcRenderer, true)
 }
 
 function toggle_toolbox_visibility () {
@@ -246,7 +249,7 @@ function toggle_toolbox_visibility () {
     }
 }
 
-function toggle_edit_module_box_visibility (val) {
+function toggle_edit_module_box_visibility (ipcRenderer, val) {
     if (val != undefined){
         edit_box_shown = !val // flips the target state, since the following if statement expect the opposite
     }
