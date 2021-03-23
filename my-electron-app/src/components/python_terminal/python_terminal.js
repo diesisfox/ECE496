@@ -10,7 +10,22 @@ function process_backend_modify_output(ipcMain, event, process, exit_value){
     if (exit_value[0] == '0'){
         file_manager.updateSave(process.stdout_data.toString())
         event.reply('update-renderer', file_manager.getSave())
-        event.reply('console-message', "Command successful")
+        event.reply('console-message', "\nCommand successful")
+    } else {
+        event.reply('system-message', process.stderr_data.toString())
+    }
+}
+
+function process_backend_generation_output(ipcMain, event, process, exit_value){
+    if (exit_value[0] == '0'){
+        let save_path = file_manager.openSaveDialog(undefined, true)
+        if (save_path != undefined){
+            file_manager.writeFile(save_path, process.stdout_data.toString())
+            event.reply('console-message', "\nGeneration successful")
+        } else {
+            event.reply('console-message', "\nGeneration cancelled")
+        }
+        
     } else {
         event.reply('system-message', process.stderr_data.toString())
     }
@@ -59,7 +74,10 @@ function call_backend(ipcMain, str_data, event){
         // if modify, then expect json string returns
         if (process.type == 2){
             process_backend_modify_output(ipcMain, event, process, data.toString())
-        } // TODO: finish for validation and generation
+        } // TODO: finish for validation
+        else if (process.type == 0){
+            process_backend_generation_output(ipcMain, event, process, data.toString())
+        }
     })
 }
 

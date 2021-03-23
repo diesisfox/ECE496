@@ -6,8 +6,12 @@ const path = require('path');
 // -------------- CONSTANTS & GLOBALS -------------
 // const dummy_save_path = path.join(__dirname, '..', 'graphical_representation_backbone', 'dummy.json')
 const dummy_save_path = path.join(__dirname, '..', '..', '..', "resources", 'example-project.json')
-const filter_list = [
+const project_filter_list = [
     {name: '', extensions: ['json']}, // system description json
+    {name: 'All Files', extensions: ['*']}
+]
+const verilog_filter_list = [
+    {name: '', extensions: ['v']}, // system description json
     {name: 'All Files', extensions: ['*']}
 ]
 
@@ -39,7 +43,7 @@ function openFileDialog (win){
 
         buttonLabel : "Open",
 
-        filters : filter_list,
+        filters : project_filter_list,
         properties: ['openFile']
         }
 
@@ -50,7 +54,15 @@ function openFileDialog (win){
     }
 }
 
-function openSaveDialog(win){
+function openSaveDialog(win, verilog = false){
+    let filter = undefined
+
+    if (verilog){
+        filter = verilog_filter_list
+    } else {
+        filter = project_filter_list
+    }
+
     let options = {
         title : "Save As", 
 
@@ -58,7 +70,7 @@ function openSaveDialog(win){
 
         buttonLabel : "Save",
 
-        filters : filter_list,
+        filters : filter,
         properties: ['createDirectory', 'showOverwriteConfirmation']
     }
 

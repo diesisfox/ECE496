@@ -89,7 +89,7 @@ function addMenuListeners(ipcMain){
     }
   })
   ipcMain.on('save as file', function(event, arg) {
-    let filepath = file_manager.openSaveDialog()
+    let filepath = file_manager.openSaveDialog(main_win)
     if (filepath != undefined){
       console.log("filePath: " + filepath)
       if (file_manager.writeJSONToFile(filepath, file_manager.getSave())){
