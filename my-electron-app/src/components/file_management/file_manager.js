@@ -104,7 +104,7 @@ function getSave(){
 }
 
 function updateSave(new_json_str){
-    save_json = JSON.parse(new_json)
+    save_json = JSON.parse(new_json_str)
 }
 
 function getModuleDict(id) {

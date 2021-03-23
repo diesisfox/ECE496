@@ -17,13 +17,13 @@ function init(){
   file_manager.initMain(ipcMain)
   main_windows.createMainWindow(ipcMain)
 
-  // add listeners for change, to be moved into python backend section
-  ipcMain.on('module-edit', (event, data) => {
-    event.reply('system-message', "received instruction to edit with " + data + ", but still unimplemented")
-  })
-  ipcMain.on('module-delete', (event, UUID) => {
-    event.reply('system-message', "received instruction to delete with " + UUID + ", but still unimplemented")
-  })
+  // // add listeners for change, to be moved into python backend section
+  // ipcMain.on('module-edit', (event, data) => {
+  //   event.reply('system-message', "received instruction to edit with " + data + ", but still unimplemented")
+  // })
+  // ipcMain.on('module-delete', (event, UUID) => {
+  //   event.reply('system-message', "received instruction to delete with " + UUID + ", but still unimplemented")
+  // })
 }
 
 app.whenReady().then(init)

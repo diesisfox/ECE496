@@ -547,7 +547,7 @@ def main():
         # generate
         verilog = generate_from_json(project_json, ip_json)
         print(verilog)
-        exit(Errors.NO_ERR)
+        exit(Errors.NO_ERR.value)
 
 
 if __name__ == '__main__':

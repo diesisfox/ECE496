@@ -46,7 +46,7 @@ function sendEditToBack(ipcRenderer, data_array){
 }
 
 function sendRemoveToBack(ipcRenderer, module_UUID){
-    ipcRenderer.send('console-input-reading', 'remove_module("' + module_type + '")')
+    ipcRenderer.send('console-input-reading', 'remove_module("' + module_UUID + '")')
 }
 
 // --------- Toolbox ---------

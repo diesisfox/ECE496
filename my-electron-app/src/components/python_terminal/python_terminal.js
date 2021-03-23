@@ -23,18 +23,20 @@ function sanitize_str(string){
     return string
 }
 
-function process_backend_output(ipcMain){
-    if (stderr_data != undefined && stdout_data != undefined){
-        console.log("time to process the data!")
+function process_backend_modify_output(ipcMain, event, exit_value){
+    if (exit_value[0] == '0'){
+        file_manager.updateSave(stdout_data.toString())
+        event.reply('update-renderer', file_manager.getSave())
+        event.reply('console-message', "Command successful")
     } else {
-        console.log("waiting!")
+        event.reply('system-message', stderr_data.toString())
     }
 }
 
 function call_backend(ipcMain, str_data, event){
     let data_array = str_data.split(CONSTANTS.MGK)
     
-    let filepath =  path.join(__dirname, "..", "..", "..", "resources", "generator", data_array[1])
+    let filepath =  path.join(__dirname, "..", "..", "..", "resources", "generator", data_array[2])
     
     console.log(filepath)
 
@@ -42,11 +44,9 @@ function call_backend(ipcMain, str_data, event){
     let arg_arr = []
     arg_arr.push(filepath)
     arg_arr.push(JSON.stringify(file_manager.getSave()))
-    for (let i = 2; i < data_array.length; i++){
+    for (let i = 3; i < data_array.length; i++){
         arg_arr.push(data_array[i])
     }
-
-    //console.log(arg_arr[])
 
     let options = {cwd:path.join(__dirname,"..","..","..", "resources", "generator")}
 
@@ -55,6 +55,9 @@ function call_backend(ipcMain, str_data, event){
 
     stderr_data = undefined
     stdout_data = undefined
+    
+    // remember process type
+    process.type = parseInt(data_array[1])
 
     // set listener for stdout and stderr
     process.stderr.once('data', (data) => {
@@ -66,20 +69,23 @@ function call_backend(ipcMain, str_data, event){
         console.log("received data: " + data.toString())
         stdout_data = data
 
-        let str_data_process = data.toString()
+        //let str_data_process = data.toString()
 
-        let data_array_process = str_data_process.split(CONSTANTS.MGK)
+        //let data_array_process = str_data_process.split(CONSTANTS.MGK)
 
-        if (data_array_process.length > 2 && data_array_process[1].localeCompare("SUCCESS") == 0){
-            file_manager.updateSave(data.toString())
-        } else {
-            event.reply('console-message', str_data_process)
-        }
+        // if (data_array_process.length > 2 && data_array_process[1].localeCompare("SUCCESS") == 0){
+        //     file_manager.updateSave(data.toString())
+        // } else {
+        //     event.reply('console-message', str_data_process)
+        // }
     })
 
     process.once('close', (data) => {
-        console.log("called: " + data.toString())
-        process_backend_output(ipcMain)
+        console.log("exit value: " + data.toString())
+
+        if (process.type == 2){
+            process_backend_modify_output(ipcMain, event, data.toString())
+        }
     })
 
     // process.stderr.once('close', (data) => {
