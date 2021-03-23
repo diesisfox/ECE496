@@ -15,6 +15,9 @@ PINMAP_INTNAME_INDEX = 0
 PINMAP_EXTNAME_INDEX = 1
 PINMAP_DIR_INDEX = 2
 
+PROJECT_JSON_POS = 1
+COMMAND_POS = 2
+
 
 class Errors(Enum):
     NO_ERR = 0
@@ -80,7 +83,7 @@ def add_module(ip_json: dict) -> None:
     if len(sys.argv) != 4:
         print(f"ERROR[{Errors.BAD_ARGS}]: WRONG # OF ARGS FOR VERB add_module")
         exit(Errors.BAD_ARGS.value)
-    project_json = load_json(sys.argv[2])
+    project_json = load_json(sys.argv[PROJECT_JSON_POS])
     module_type = sys.argv[3]
     if module_type not in ip_json:
         print(f"ERROR[{Errors.BAD_MODULE_TYPE}]: NONEXISTENT MODULE TYPE: {module_type}")
@@ -123,7 +126,7 @@ def remove_module(ip_json: dict) -> None:
     if len(sys.argv) != 4:
         print(f"ERROR[{Errors.BAD_PROJ}]: WRONG # OF ARGS FOR VERB remove_module")
         exit(Errors.BAD_ARGS.value)
-    project_json = load_json(sys.argv[2])
+    project_json = load_json(sys.argv[PROJECT_JSON_POS])
     module_uuid = sys.argv[3]
     if not project_json:
         print(f"ERROR[{Errors.BAD_JSON}]: CAN'T REMOVE FROM AN EMPTY PROJECT")
@@ -138,7 +141,7 @@ def change_parameter(ip_json: dict) -> None:
     if len(sys.argv) != 6:
         print(f"ERROR[{Errors.BAD_ARGS}]: WRONG # OF ARGS FOR VERB change_parameter")
         exit(Errors.BAD_ARGS.value)
-    project_json = load_json(sys.argv[2])
+    project_json = load_json(sys.argv[PROJECT_JSON_POS])
     module_uuid = sys.argv[3]
     param_name = sys.argv[4]
     new_value = sys.argv[5]
@@ -180,7 +183,7 @@ def rearrange_module(ip_json: dict) -> None:
     if len(sys.argv) != 5:
         print(f"ERROR[{Errors.BAD_ARGS}]: WRONG # OF ARGS FOR VERB rearrange_module")
         exit(Errors.BAD_ARGS.value)
-    project_json = load_json(sys.argv[2])
+    project_json = load_json(sys.argv[PROJECT_JSON_POS])
     module_uuid = sys.argv[3]
     new_pos = int(sys.argv[4])
     if not project_json:
@@ -237,16 +240,16 @@ def main():
         exit(Errors.BAD_ARGS.value)
     else:
         ip_json = load_ip_json()
-        if sys.argv[1] == "add_module":
+        if sys.argv[COMMAND_POS] == "add_module":
             add_module(ip_json)
-        elif sys.argv[1] == "remove_module":
+        elif sys.argv[COMMAND_POS] == "remove_module":
             remove_module(ip_json)
-        elif sys.argv[1] == "change_parameter":
+        elif sys.argv[COMMAND_POS] == "change_parameter":
             change_parameter(ip_json)
-        elif sys.argv[1] == "rearrange_module":
+        elif sys.argv[COMMAND_POS] == "rearrange_module":
             rearrange_module(ip_json)
         else:
-            print(f"ERROR[{Errors.BAD_ARGS}]: UNKNOWN VERB: {sys.argv[1]}")
+            print(f"ERROR[{Errors.BAD_ARGS}]: UNKNOWN VERB: {sys.argv[COMMAND_POS]}")
             exit(Errors.BAD_ARGS.value)
             pass
         exit(Errors.NO_ERR.value)
