@@ -48,8 +48,10 @@ function call_backend(ipcMain, str_data, event){
 
     //console.log(arg_arr[])
 
+    let options = {cwd:path.join(__dirname,"..","..","..", "resources", "generator")}
+
     // run backend python
-    let process = child_process.spawn('python', arg_arr)
+    let process = child_process.spawn('python', arg_arr, options)
 
     stderr_data = undefined
     stdout_data = undefined
