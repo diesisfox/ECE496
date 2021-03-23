@@ -32,7 +32,7 @@
         "parameters": {
             "Verilog Instance Name": "ip_i2c_m_main_BBBB43FD78AB",
             "Base Address": "8001_0000",
-            "Bus Frequency (Hz)": "100E6"
+            "Bus Frequency (Hz)": "100000000"
         },
         "pinmaps": [
             [],

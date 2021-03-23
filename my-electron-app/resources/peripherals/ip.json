@@ -18,7 +18,7 @@
             "Width": {
                 "paramName": "Width",
                 "verilogName": "PINS",
-                "paramType": "Number",
+                "paramType": "Int",
                 "max": 32,
                 "min": 1,
                 "default": "8",
@@ -95,7 +95,7 @@
             "Bus Frequency (Hz)": {
                 "paramName": "System Bus Frequency (Hz)",
                 "verilogName": "BUS_CLK_HZ",
-                "paramType": "Number",
+                "paramType": "Int",
                 "source": "SystemClkFreq",
                 "important": false
             }
