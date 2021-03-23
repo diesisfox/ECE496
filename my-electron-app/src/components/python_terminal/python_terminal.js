@@ -6,6 +6,10 @@ const CONSTANTS = require("../../constants.js");
 
 var python_instance = null;
 
+// for call_backend
+var stderr_data = undefined
+var stdout_data = undefined
+
 // TODO: delete, unused
 function sanitize_str(string){
     for (let i = 0; i < string.length;i++){
@@ -17,6 +21,14 @@ function sanitize_str(string){
     }
 
     return string
+}
+
+function process_backend_output(ipcMain){
+    if (stderr_data != undefined && stdout_data != undefined){
+        console.log("time to process the data!")
+    } else {
+        console.log("waiting!")
+    }
 }
 
 function call_backend(ipcMain, str_data, event){
@@ -39,13 +51,18 @@ function call_backend(ipcMain, str_data, event){
     // run backend python
     let process = child_process.spawn('python', arg_arr)
 
+    stderr_data = undefined
+    stdout_data = undefined
+
+    // set listener for stdout and stderr
     process.stderr.once('data', (data) => {
         console.log("Error from child_process: " + data.toString())
+        stderr_data = data
     })
     
-    // set listener and process reply
     process.stdout.once('data', (data) => {
         console.log("received data: " + data.toString())
+        stdout_data = data
 
         let str_data_process = data.toString()
 
@@ -56,8 +73,28 @@ function call_backend(ipcMain, str_data, event){
         } else {
             event.reply('console-message', str_data_process)
         }
-        
     })
+
+    process.once('close', (data) => {
+        console.log("called: " + data.toString())
+        process_backend_output(ipcMain)
+    })
+
+    // process.stderr.once('close', (data) => {
+    //     console.log("closed: " + data.toString())
+    //     if (stderr_data == undefined){
+    //         stderr_data = 0
+    //     }
+    //     process_backend_output(ipcMain)
+    // })
+
+    // process.stdout.once('close', (data) => {
+    //     console.log("closed: " + data.toString())
+    //     if (stdout_data == undefined){
+    //         stderr_data = 0
+    //     }
+    //     process_backend_output(ipcMain)
+    // })
 }
 
 function initializePythonProcess (ipcMain) {

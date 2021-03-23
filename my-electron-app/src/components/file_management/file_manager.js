@@ -4,9 +4,10 @@ const {dialog} = require('electron')
 const path = require('path');
 
 // -------------- CONSTANTS & GLOBALS -------------
-const dummy_save_path = path.join(__dirname, '..', 'graphical_representation_backbone', 'dummy.json')
+// const dummy_save_path = path.join(__dirname, '..', 'graphical_representation_backbone', 'dummy.json')
+const dummy_save_path = path.join(__dirname, '..', '..', '..', "resources", 'example-project.json')
 const filter_list = [
-    {name: '', extensions: ['sdj']}, // system description json
+    {name: '', extensions: ['json']}, // system description json
     {name: 'All Files', extensions: ['*']}
 ]
 
