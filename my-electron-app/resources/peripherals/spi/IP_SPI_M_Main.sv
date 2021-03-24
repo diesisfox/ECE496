@@ -5,11 +5,11 @@
 * manually control CS via register
 * after one txn, DATA is exchanged with DIN data, which can be read by user for manager rx
 **/ 
-module spi_m_main #(
+module IP_SPI_M_Main #(
     parameter bit [31:0] ADDR = 'h1000_0000
 ) (
-    AXI5_Lite_IF.WORKER AXI_IF,
-    IP_SPI_M_IF SPI_IF
+    Simple_Mem_IF.COWI Bus,
+    IP_SPI_M_IF.Peripheral SPI_IF
 );
 
 localparam ADDRBITS = 5;
@@ -20,11 +20,11 @@ localparam SPIMODE_OFFSET = 'h0c; // {...[31:2], SPIMODE[1:0] ({CPOL,CPHA})}
 localparam DATA_OFFSET = 'h10; // {...[31:8], DATA[7:0]}
 
 // Interface module with AXI
-Simple_Worker_Mem_IF Bus ();
-AXI_controller_worker AXI_controller (
-    .USER_IF(Bus),
-    .AXI_IF(AXI_IF)
-);
+// Simple_Worker_Mem_IF Bus ();
+// AXI_controller_worker AXI_controller (
+//     .USER_IF(Bus),
+//     .AXI_IF(AXI_IF)
+// );
 
 // Break out/in module interface signals
 logic CS, SCK, DOUT, DIN;

@@ -1,6 +1,4 @@
 /**
-* REQUIRES 50.00 MHz clock on CLK_50MHZ, which should be available on the DE1-SoC
-* 
 * write 1 to START sends start condition and sends address byte.
 * STARTing while bus claimed sends repeat START and address byte.
 * START becomes 0 when start condition + address sent.
@@ -26,27 +24,24 @@
 *
 * regs writeable while bus claimed when start|stop|txn == 0.
 **/ 
-module ip_vga_main #(
+module IP_I2C_M_Main #(
     parameter ADDR = 'h1000_0000,
+    parameter BUS_CLK_HZ = 100_000_000
 ) (
     Simple_Mem_IF.COWI Bus,
-    input logic CLK_50MHZ;
-    output logic [7:0] VGA_R, VGA_G, VGA_B;
-    output logic VGA_CLK;
-    output logic VGA_SYNC_N, VGA_BLANK_N;
-    output logic VGA_HS, VGA_VS;
+    IP_I2C_M_IF.Peripheral I2C_IF,
 );
 
 // memory map
 localparam ADDRBITS = 5;
-localparam EN_OFFSET = 'h00; // {...[31:1], EN}
-localparam RES_PHYS_OFFSET = 'h04; // {...[31:1], PHYSRES}
-localparam RES_LOGI_OFFSET = 'h08; // {...[31:2], LOGIRES}
-localparam COLORMODE_OFFSET = 'h0c; // {...[31:3], COLORMODE}
-localparam X_OFFSET = 'h10; // {...[31:16], X}
-localparam Y_OFFSET = 'h14; // {...[31:16], Y}
-localparam DATA_OFFSET = 'h18; // {...[31:16], DATA}
-localparam SCANLINE_OFFSET = 'h1c; // {...[31:16], SCANLINE}
+localparam START_OFFSET = 'h00; // {...[31:1], START}
+localparam TXN_OFFSET = 'h04; // {...[31:1], TXN}
+localparam STOP_OFFSET = 'h08; // {...[31:1], STOP}
+localparam NACK_OFFSET = 'h0c; // {...[31:1], NACK}
+localparam ADDR_OFFSET = 'h10; // {...[31:7], ADDR[6:0]}
+localparam DATA_OFFSET = 'h14; // {...[31:8], DATA[7:0]}
+localparam RW_OFFSET = 'h18; // {...[31:1], R/Wn}
+localparam SPEED_OFFSET = 'h1c; // {...[31:1], FM/SMn}
 
 `define max(a, b) (((a) > (b)) ? (a) : (b))
 
@@ -77,11 +72,6 @@ logic [7:0] data = 'h0;
 logic r = 'b0;
 logic speed = 'b1;
 
-logic [1:0] res = 0; // resolution mode
-
-// synchronizers
-logic start1, start2;
-
 // additional state registers
 logic [COUNTERBITS-1:0] counter = '0; // main clock divider
 BitNum_e bitNum = START; // bit of byte and protocol
@@ -94,9 +84,9 @@ assign counterLim = speed ? FM_COUNTER_LIM : SM_COUNTER_LIM;
 
 // io registers
 logic scl = 'b1;
-assign SCL = scl ? 'bz : 'b0;
+assign I2C_IF.SCL = scl ? 'bz : 'b0;
 logic sda = 'b1;
-assign SDA = sda ? 'bz : 'b0;
+assign I2C_IF.SDA = sda ? 'bz : 'b0;
 
 // helper functions
 function logic [31:0] maskBytes(logic [31:0] old, logic [31:0] in, logic[3:0] en);
@@ -123,19 +113,7 @@ function reset();
     Bus.rd_data <= '0;
 endfunction
 
-// pll
-logic [3:0] outclk;
-ip_vga_pll pll(
-    .refclk(CLK_50MHZ),
-    .rst(0),
-    .outclk_0 (outclk[0]), // 480p60
-    .outclk_1 (outclk[1]), // 600p60
-    .outclk_2 (outclk[2]), // 720p60
-    .outclk_3 (outclk[3]), // 1080p60
-);
-assign VGA_CLK = outclk[res];
-
-// Bus side logic
+// main logic
 always_ff @(posedge Bus.clock) begin
     if (!Bus.reset_n) begin
         reset();
@@ -197,7 +175,7 @@ always_ff @(posedge Bus.clock) begin
                             BIT0, BIT1, BIT2, BIT3, BIT4, BIT5, BIT6, BIT7:begin
                                 if(SCL)begin // check for clock stretching
                                     sda <= sda;
-                                    if(r) data[bitNum] <= SDA;
+                                    if(r) data[bitNum] <= I2C_IF.SDA;
                                 end else begin
                                     counter <= counterLim;
                                     bitPhase <= PH1;
@@ -209,7 +187,7 @@ always_ff @(posedge Bus.clock) begin
                             end
                             ACK:begin
                                 if(SCL)begin // check for clock stretching
-                                    if(!r) nack <= SDA;
+                                    if(!r) nack <= I2C_IF.SDA;
                                 end else begin
                                     counter <= counterLim;
                                     bitPhase <= PH1;
@@ -401,80 +379,5 @@ always_ff @(posedge Bus.clock) begin
         end
     end
 end
-
-// VGA side logic
-
-always @(posedge VGA_CLK) begin
-    
-end
     
 endmodule
-
-
-/*
-    Name          640x480p60
-    Standard      Historical
-    VIC                    1
-    Short Name       DMT0659
-    Aspect Ratio         4:3
-
-    Pixel Clock       25.175 MHz
-    TMDS Clock       251.750 MHz
-    Pixel Time          39.7 ns ±0.5%
-    Horizontal Freq.  31.469 kHz
-    Line Time           31.8 μs
-    Vertical Freq.    59.940 Hz
-    Frame Time          16.7 ms
-
-    Horizontal Timings
-    Active Pixels        640
-    Front Porch           16
-    Sync Width            96
-    Back Porch            48
-    Blanking Total       160
-    Total Pixels         800
-    Sync Polarity        neg
-
-    Vertical Timings
-    Active Lines         480
-    Front Porch           10
-    Sync Width             2
-    Back Porch            33
-    Blanking Total        45
-    Total Lines          525
-    Sync Polarity        neg
-
-    Active Pixels    307,200 
-    Data Rate           0.60 Gbps
-
-    Frame Memory (Kbits)
-     8-bit Memory      2,400
-    12-bit Memory      3,600
-    24-bit Memory      7,200
-    32-bit Memory      9,600
-*/
-
-/*
-    1280x960p60
-    
-    Screen refresh rate	60 Hz
-    Vertical refresh	59.63785046729 kHz
-    Pixel freq.	        102.1 MHz
-
-    Horizontal timing (line)
-    Scanline part	    Pixels	Time [µs]
-    Visible area	    1280	12.536728697356
-    Front porch	        80	    0.78354554358472
-    Sync pulse	        136	    1.332027424094
-    Back porch	        216	    2.1155729676787
-    Whole line	        1712	16.767874632713
-
-    Vertical timing (frame)
-    Frame part	        Lines	Time [ms]
-    Visible area	    960	    16.097159647405
-    Front porch	        1	    0.016767874632713
-    Sync pulse	        3	    0.050303623898139
-    Back porch	        30	    0.50303623898139
-    Whole frame	        994	    16.667267384917
-
-*/

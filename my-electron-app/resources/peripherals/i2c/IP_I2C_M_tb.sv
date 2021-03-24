@@ -1,7 +1,7 @@
-`ifdef ICARUSVERILOG `include "i2c_m_main.sv" `endif
+`ifdef ICARUSVERILOG `include "IP_I2C_M_Main.sv" `endif
 `timescale 1ns/1ps //#10 is 1MHz
 
-module i2c_main_tb ();
+module IP_I2C_M_tb ();
 
 // memory map
 localparam START_OFFSET = 'h00; // {...[31:1], START}
@@ -16,15 +16,15 @@ localparam SPEED_OFFSET = 'h1c; // {...[31:1], FM/SMn}
 parameter CYCLETIME = 10;
 
 Simple_Mem_IF Bus();
+IP_I2C_M_IF I2C_IF();
 
 tri1 SDA,SCL;
 
-ip_i2c_m_main #(
+IP_I2C_M_Main #(
     .ADDR('h0000_0000)
 ) dut (
     .Bus,
-    .SCL,
-    .SDA
+    .I2C_IF
 );
 
 always #(CYCLETIME/2) Bus.clock = ~Bus.clock;

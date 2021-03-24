@@ -1,16 +1,16 @@
 `ifdef ICARUSVERILOG `include "gpio_main.sv" `endif
 
-module IP_GPIO_Main_tb ();
+module IP_GPIO_tb ();
 
     Simple_Mem_IF Bus();
-    wire [4:0] pins;
+    IP_GPIO_IF GPIO_IF();
 
     IP_GPIO_Main #(
         .PINS(5),
         .ADDR('h1000_0000)
     ) dut (
         .Bus,
-        .pins
+        .GPIO_IF
     );
 
     always #10 Bus.clock = ~Bus.clock;
@@ -24,7 +24,7 @@ module IP_GPIO_Main_tb ();
         Bus.CWrite('h1000_0008, 32'b010101, 20);
         #20;
         Bus.CWrite('h1000_0000, 32'h0, 20);
-        force pins = 'b11011;
+        force GPIO_IF.pins = 'b11011;
         Bus.CRead('h1000_0004, out, 20);
         #20;
         $finish;

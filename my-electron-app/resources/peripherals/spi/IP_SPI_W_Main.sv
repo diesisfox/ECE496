@@ -3,7 +3,7 @@
 * in worker mode, data available when AVAIL becomes 1. Write 0 to ack.
 * manager spi clock freq = clk
 **/ 
-module spi_m_main #(
+module IP_SPI_W_Main #(
     parameter bit [31:0] ADDR = 'h1000_0000
 ) (
     Simple_Mem_IF.COWI Bus,
