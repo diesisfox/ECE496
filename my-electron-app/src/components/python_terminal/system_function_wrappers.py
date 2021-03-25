@@ -1,5 +1,3 @@
-from verilog_generation.test import *
-
 MGK = "&^\"%$"
 
 def add_module(module_type):
