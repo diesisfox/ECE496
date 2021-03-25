@@ -80,6 +80,21 @@ function addMenuListeners(ipcMain){
       event.reply('update-renderer', file_manager.getSave())
     }
   })
+  ipcMain.on('new file', function (event, arg) {
+    let filepath = file_manager.openNewDialog(main_win)
+    if (filepath != undefined){
+      console.log("filePath: " + filepath)
+      console.log("new file clicked")
+      file_manager.updateSave("[]")
+      file_manager.changeSavePath(filepath)
+      if (file_manager.writeJSONToFile(filepath, file_manager.getSave())){
+        event.reply('system-message', "attempted to save as: successful")
+      } else {
+        event.reply('system-message', "attempted to save as: failed")
+      }
+      event.reply('update-renderer', file_manager.getSave())
+    }
+  })
   ipcMain.on('save file', function(event, arg) {
     event.reply('system-message', "attempted to save")
     if (file_manager.saveSave()){
@@ -93,6 +108,7 @@ function addMenuListeners(ipcMain){
     if (filepath != undefined){
       console.log("filePath: " + filepath)
       if (file_manager.writeJSONToFile(filepath, file_manager.getSave())){
+        file_manager.changeSavePath(filepath)
         event.reply('system-message', "attempted to save as: successful")
       } else {
         event.reply('system-message', "attempted to save as: failed")

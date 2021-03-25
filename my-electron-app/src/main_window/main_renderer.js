@@ -9,6 +9,7 @@ const toolbox_renderer = require("../components/toolbox/toolbox_renderer.js")
 
 // left menu
 const open_button = document.getElementById("open-button")
+const new_button = document.getElementById("new-button")
 const save_button = document.getElementById("save-button")
 const save_as_button = document.getElementById("save-as-button")
 const add_button = document.getElementById("add-button")
@@ -21,6 +22,9 @@ function addButtonListeners(){
     // left menu
     open_button.addEventListener('click', function() {
         ipcRenderer.send('open file', "")
+    })
+    new_button.addEventListener('click', function() {
+        ipcRenderer.send('new file', "")
     })
     save_button.addEventListener('click', function() {
         ipcRenderer.send('save file', "")

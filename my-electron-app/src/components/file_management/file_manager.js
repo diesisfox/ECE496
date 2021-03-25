@@ -54,6 +54,24 @@ function openFileDialog (win){
     }
 }
 
+function openNewDialog(win){
+    let options = {
+        title : "New", 
+
+        defaultPath : path.join(base_path, 'saves'),
+
+        buttonLabel : "Save",
+
+        filters : project_filter_list,
+        properties: ['createDirectory', 'showOverwriteConfirmation']
+    }
+
+    //Synchronous
+    let filePaths = dialog.showSaveDialogSync(win, options)
+
+    return filePaths
+}
+
 function openSaveDialog(win, verilog = false){
     let filter = undefined
 
@@ -105,6 +123,10 @@ function saveSave(){
         console.log("Error: either save is dummy, or no save loaded")
         return false
     }
+}
+
+function changeSavePath(file_path){
+    save_file_path = file_path
 }
   
 function loadDummy(){
@@ -193,6 +215,7 @@ module.exports = {
     initMain,
     setBasePath,
     openFileDialog,
+    openNewDialog,
     openSaveDialog,
     readFile,
     readJSONFile,
@@ -200,6 +223,7 @@ module.exports = {
     writeJSONToFile,
     loadDummy,
     loadSave,
+    changeSavePath,
     saveSave,
     getSave,
     updateSave,
