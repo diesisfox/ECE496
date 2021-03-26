@@ -5,6 +5,7 @@ import json
 import pprint
 import re
 from enum import Enum
+from sys import exit
 
 
 helptxt = """
