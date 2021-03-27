@@ -77,8 +77,7 @@
     },
     "I2C_MANAGER": {
         "moduleType": "I2C_MANAGER",
-        "source": "peripherals/i2c/i2c_m_main.sv",
-        "verilogName": "ip_i2c_m_main",
+        "verilogName": "IP_I2C_M_Main",
         "addrBits": 5,
         "parameters": {
             "Verilog Instance Name": {
