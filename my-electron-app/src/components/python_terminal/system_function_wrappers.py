@@ -1,3 +1,5 @@
+# TODO: remove this file
+
 MGK = "&^\"%$"
 
 def add_module(module_type):

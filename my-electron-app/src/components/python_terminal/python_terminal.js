@@ -2,7 +2,10 @@ const child_process = require('child_process')
 const file_manager = require('../file_management/file_manager.js')
 const path = require('path');
 const CONSTANTS = require("../../constants.js");
+const {fileURLToPath} = require('url')
 //const { ipcRenderer } = require('electron');
+
+//const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 var python_instance = null;
 var is_ecf = false
@@ -38,7 +41,7 @@ function process_backend_generation_output(ipcMain, event, process, exit_value){
 function call_backend(ipcMain, str_data, event){
     let data_array = str_data.split(CONSTANTS.MGK)
     
-    let filepath =  path.join(__dirname, "..", "..", "..", "resources", "generator", data_array[2])
+    let filepath =  path.join("..", "generator", data_array[2])
     
     console.log(filepath)
 
@@ -112,7 +115,7 @@ function tryPythonSpawn(ipcMain, args, options, is_ecf_option){
                 let str_data = undefined
                 
                 if (is_ecf){
-                    str_data = data.toString().slice(0, data.toString().length - 4)
+                    str_data = data.toString().slice(0, data.toString().length - 2)
                 } else {
                     str_data = data.toString().slice(0, data.toString().length - 2)
                 }
@@ -132,7 +135,11 @@ function tryPythonSpawn(ipcMain, args, options, is_ecf_option){
 
             python_instance.stderr.once('data', function (data) {
                 let datastr = data.toString()
-                event.reply('console-message', datastr.slice(0, datastr.length - 4))
+                if (is_ecf){
+                    event.reply('console-message', datastr.slice(0, datastr.length - 2))
+                } else {
+                    event.reply('console-message', datastr.slice(0, datastr.length - 4))
+                }
             })
 
             python_instance.stdin.write(arg+"\n")
