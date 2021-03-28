@@ -56,7 +56,7 @@ function call_backend(ipcMain, str_data, event){
     let options = {cwd:path.join(__dirname,"..","..","..", "resources", "generator")}
 
     // run backend python
-    let process = child_process.spawn('py', arg_arr, options)
+    let process = child_process.spawn(path.join(__dirname,"python",'python.exe'), arg_arr, options)
 
     process.stderr_data = undefined
     process.stdout_data = undefined
@@ -88,8 +88,8 @@ function call_backend(ipcMain, str_data, event){
     })
 }
 
-function tryPythonSpawn(ipcMain, args, options, is_ecf_option){
-    var test_python_instance = child_process.spawn('py', args, options)
+function tryPythonSpawn(ipcMain, args, options){
+    var test_python_instance = child_process.spawn(path.join('.','python','python.exe'), args, options)
 
     // use python_init.py to initialize it
     var init_file_content = file_manager.readFile(path.join(__dirname, "python_init.py"))
@@ -100,7 +100,6 @@ function tryPythonSpawn(ipcMain, args, options, is_ecf_option){
         initial_output = data.toString()
         
         python_instance = test_python_instance
-        is_ecf = is_ecf_option
         
         // show initial output of python initialization
         ipcMain.on('get-python-version', (event,arg)=>{
@@ -114,11 +113,7 @@ function tryPythonSpawn(ipcMain, args, options, is_ecf_option){
             python_instance.stdout.once('data', function (data) {
                 let str_data = undefined
                 
-                if (is_ecf){
-                    str_data = data.toString().slice(0, data.toString().length - 2)
-                } else {
-                    str_data = data.toString().slice(0, data.toString().length - 2)
-                }
+                str_data = data.toString().slice(0, data.toString().length - 2)
                 
                 // not a special message
                 if (str_data.slice(0, CONSTANTS.MGK.length) != (CONSTANTS.MGK)){
@@ -135,11 +130,7 @@ function tryPythonSpawn(ipcMain, args, options, is_ecf_option){
 
             python_instance.stderr.once('data', function (data) {
                 let datastr = data.toString()
-                if (is_ecf){
-                    event.reply('console-message', datastr.slice(0, datastr.length - 2))
-                } else {
-                    event.reply('console-message', datastr.slice(0, datastr.length - 4))
-                }
+                event.reply('console-message', datastr.slice(0, datastr.length - 4))
             })
 
             python_instance.stdin.write(arg+"\n")
@@ -153,10 +144,9 @@ function tryPythonSpawn(ipcMain, args, options, is_ecf_option){
 // external functions
 function initializePythonProcess (ipcMain) {
     let options = {
-        cwd:path.join(__dirname,"..")
+        cwd:path.join(__dirname)
     }
-    tryPythonSpawn(ipcMain, [], options, true)
-    tryPythonSpawn(ipcMain, ['-i'], options, false)
+    tryPythonSpawn(ipcMain, ['-i'], options)
 }
 
 function isECF(){
