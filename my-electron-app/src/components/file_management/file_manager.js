@@ -24,7 +24,7 @@ var save_file_path = false
 
 // -------------- INIT -----------------
 function initMain(ipcMain){
-    fs.mkdirSync("saves", { recursive: true })
+    //fs.mkdirSync("saves", { recursive: true })
     ipcMain.on('get-save', (event, data) => {
         event.returnValue = getSave()
     })
@@ -39,7 +39,7 @@ function openFileDialog (win){
         let options = {
         title : "Choose File", 
 
-        defaultPath : path.join(base_path, 'saves'),
+        defaultPath : path.join(base_path,'saves'),
 
         buttonLabel : "Open",
 
@@ -58,7 +58,7 @@ function openNewDialog(win){
     let options = {
         title : "New", 
 
-        defaultPath : path.join(base_path, 'saves'),
+        defaultPath : path.join(base_path,'saves'),
 
         buttonLabel : "Save",
 
@@ -84,7 +84,7 @@ function openSaveDialog(win, verilog = false){
     let options = {
         title : "Save As", 
 
-        defaultPath : path.join(base_path, 'saves'),
+        defaultPath : path.join(base_path,'saves'),
 
         buttonLabel : "Save",
 
