@@ -100,8 +100,10 @@ function openSaveDialog(win, verilog = false){
 
 function loadSave(filepath, dummy = false){
     let data = readJSONFile(filepath)
-    if (data != false){
-        save_json = readJSONFile(filepath)
+    console.log(data)
+    console.log(data == "-1")
+    if (data != "-1"){
+        save_json = data
 
         //save path if not dummy
         if (dummy){
@@ -187,7 +189,7 @@ function readJSONFile (filepath){
     } catch(e) {
         console.log('Error:', e.stack);
     }
-    return false
+    return "-1"
 }
 
 function writeFile (filepath, output){

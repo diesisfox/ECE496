@@ -75,7 +75,7 @@ function addMenuListeners(ipcMain){
       filepath = filepath.join("")
       console.log("filePath: " + filepath)
       console.log("open file clicked")
-      file_manager.loadSave(filepath)
+      console.log("loadfile: " + file_manager.loadSave(filepath))
       event.reply('update-renderer', file_manager.getSave())
     }
   })
