@@ -16,9 +16,9 @@ const emb_rect_width = 110
 const emb_rect_height = 20
 
 // toolbox icons
-const tb_icon_num_per_row = 4 //number of modules per row
-const tb_rect_width = 80
-const tb_rect_height = 100
+const tb_icon_num_per_row = 2 //number of modules per row
+const tb_rect_width = 170
+const tb_rect_height = 40
 
 // animation vars
 const anim_speed = 400 // in ms TODO: calculate this per toolbox, so that one doesn't look faster than the other
