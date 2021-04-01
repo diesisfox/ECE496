@@ -1,4 +1,35 @@
 {
+    "CPU" : {
+        "moduleType": "CPU",
+        "verilogName": "picorv32_axi",
+        "addrBits": 0,
+        "parameters": {
+            "Verilog Instance Name": {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol",
+                "important": false
+            },
+            "PC Start Address": {
+                "paramName": "PC Start Address",
+                "verilogName": "PROGADDR_RESET",
+                "paramType": "Hexadecimal",
+                "important": true
+            },
+            "Stack Address": {
+                "paramName": "Stack Address",
+                "verilogName": "STACKADDR",
+                "paramType": "Hexadecimal",
+                "important": true
+            }
+        },
+        "interfaces": [
+            {
+                "type": "AXI5_Lite_IF",
+                "port": "AXI_IF",
+                "pinmap": []
+            }
+        ]
+    },
     "GPIO" : {
         "moduleType": "GPIO",
         "verilogName": "IP_GPIO_Main",
