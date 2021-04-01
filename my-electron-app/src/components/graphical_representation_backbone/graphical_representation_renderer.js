@@ -99,33 +99,53 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
 
   element.appendChild(main_body)
 
-  let nick = document.createElementNS(ns, 'text')
-  nick.setAttribute('x', pos_x + padding)
-  nick.setAttribute('y', rect_y + padding * 2)
-  nick.setAttribute('font-weight', 'bold')
-  nick.textContent = module_json[CONSTANTS.PARAMETERS][CONSTANTS.INSTANCE_NAME]
-  nick.addEventListener('focus', (ev) => {
+  let nick_wrap = document.createElementNS(ns, 'foreignObject')
+  nick_wrap.setAttribute('x', pos_x + padding)
+  nick_wrap.setAttribute('y', rect_y) //+ padding * 2
+  nick_wrap.setAttribute('width', rect_width - padding * 2)
+  nick_wrap.setAttribute('height', "100")
+  nick_wrap.setAttribute('requiredFeatures', "http://www.w3.org/TR/SVG11/feature#Extensibility")
+  nick_wrap.addEventListener('focus', (ev) => {
     main_body.focus()
   })
-  element.appendChild(nick)
+  let nick = document.createElement('h4')
+  //nick.style.fontWeight = "bold"
+  nick.style.wordBreak = "break-all"
+  nick.innerHTML = module_json[CONSTANTS.PARAMETERS][CONSTANTS.INSTANCE_NAME]
+
+  nick_wrap.appendChild(nick)
+  element.appendChild(nick_wrap)
+  
+  // element.appendChild(nick)
 
   // write other parameters
-  let param_y = rect_y + rect_width - padding
+  let param_y = rect_y + padding * 3
+
+  let param_wrap = document.createElementNS(ns, 'foreignObject')
+  param_wrap.setAttribute('requiredFeatures', "http://www.w3.org/TR/SVG11/feature#Extensibility")
+  //param_wrap.setAttribute('fill', 'gray')
+  param_wrap.setAttribute('x', pos_x + padding)
+  param_wrap.setAttribute('y', param_y)
+  param_wrap.setAttribute('width', rect_width - padding * 2)
+  param_wrap.setAttribute('height', "100")
+  param_wrap.addEventListener('focus', (ev) => {
+    main_body.focus()
+  })
+
+  let param = document.createElement('p')
+  param.style.wordBreak = "break-all"
+  param.style.fontSize = "12px"
+
   for (var key in module_json[CONSTANTS.PARAMETERS]){
     if (key == CONSTANTS.INSTANCE_NAME){ continue }
 
-    let param = document.createElementNS(ns, 'text')
-    param.setAttribute('x', pos_x + padding)
-    param.setAttribute('y', param_y)
-    param.textContent = key + ": " + module_json[CONSTANTS.PARAMETERS][key]
-    param.setAttribute('fill', 'gray')
-    param.addEventListener('focus', (ev) => {
-      main_body.focus()
-    })
+    param.innerHTML += key + ": <i>" + module_json[CONSTANTS.PARAMETERS][key] + "</i><br>"
     //param.style.color = 'red'
-    element.appendChild(param)
-    param_y -= padding
+    //param_y -= padding
   }
+
+  param_wrap.appendChild(param)
+  element.appendChild(param_wrap)
 
   return element
 }
@@ -141,6 +161,7 @@ function createSVGModuleRep (ipcRenderer, json_object) {
   svg_diagram = document.createElementNS(ns, "svg")
   svg_diagram.setAttributeNS(null, "width", (rect_width + rect_left_margin) * total + rect_left_margin)
   svg_diagram.setAttributeNS(null, "height", '100%')
+  //svg_diagram.setAttributeNS(null, "version", "1.2")
   svg_diagram.style.fontFamily = theme.normal_font
   svg_diagram.style.overflow = 'visible'
   svg_diagram.style.outline = 'none'

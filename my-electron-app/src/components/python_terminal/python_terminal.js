@@ -2,9 +2,16 @@ const child_process = require('child_process')
 const file_manager = require('../file_management/file_manager.js')
 const path = require('path');
 const CONSTANTS = require("../../constants.js");
+const {fileURLToPath} = require('url')
 //const { ipcRenderer } = require('electron');
 
+//const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 var python_instance = null;
+var is_ecf = false
+var initial_output = ""
+var python_instance1 = undefined
+var python_instance2 = undefined
 
 function process_backend_modify_output(ipcMain, event, process, exit_value){
     if (exit_value[0] == '0'){
@@ -34,7 +41,7 @@ function process_backend_generation_output(ipcMain, event, process, exit_value){
 function call_backend(ipcMain, str_data, event){
     let data_array = str_data.split(CONSTANTS.MGK)
     
-    let filepath =  path.join(__dirname, "..", "..", "..", "resources", "generator", data_array[2])
+    let filepath =  path.join("..", "generator", data_array[2])
     
     console.log(filepath)
 
@@ -49,7 +56,7 @@ function call_backend(ipcMain, str_data, event){
     let options = {cwd:path.join(__dirname,"..","..","..", "resources", "generator")}
 
     // run backend python
-    let process = child_process.spawn('python', arg_arr, options)
+    let process = child_process.spawn(path.join(__dirname,"python",'python.exe'), arg_arr, options)
 
     process.stderr_data = undefined
     process.stdout_data = undefined
@@ -81,64 +88,72 @@ function call_backend(ipcMain, str_data, event){
     })
 }
 
-function initializePythonProcess (ipcMain) {
-    var initial_output = ""
-
-    // initialize python process
-    python_instance = child_process.spawn('python', ['-i'])
+function tryPythonSpawn(ipcMain, args, options){
+    var test_python_instance = child_process.spawn(path.join('.','python','python.exe'), args, options)
 
     // use python_init.py to initialize it
     var init_file_content = file_manager.readFile(path.join(__dirname, "python_init.py"))
 
-    python_instance.stdout.once('data', (data)=>{
+    test_python_instance.stdin.write(init_file_content + "\n")   
+
+    test_python_instance.stdout.once('data', (data)=>{
         initial_output = data.toString()
         
-        python_instance.stdin.write(__dirname + "\n")
-        // python_instance.stdout.once('data', (data)=>{
-        //     initial_output += data.toString()
-        //     console.log("received")
-        // })
+        python_instance = test_python_instance
+        
+        // show initial output of python initialization
+        ipcMain.on('get-python-version', (event,arg)=>{
+            event.returnValue = initial_output
+        })
+
+        ipcMain.on('console-input-reading', (event,arg) => {
+            python_instance.stdout.removeAllListeners('data')
+            
+            // deal with data that comes back
+            python_instance.stdout.once('data', function (data) {
+                let str_data = undefined
+                
+                str_data = data.toString().slice(0, data.toString().length - 2)
+                
+                // not a special message
+                if (str_data.slice(0, CONSTANTS.MGK.length) != (CONSTANTS.MGK)){
+                    event.reply('console-message', str_data)
+                } else {
+                    // process what comes back
+                    // format: [MGK] [filename] [MGK] [parameters each separated by |]
+                    // TODO: fix problem with final argument
+                    call_backend(ipcMain, str_data, event)
+                }
+            })
+
+            python_instance.stderr.removeAllListeners('data')  
+
+            python_instance.stderr.once('data', function (data) {
+                let datastr = data.toString()
+                event.reply('console-message', datastr.slice(0, datastr.length - 4))
+            })
+
+            python_instance.stdin.write(arg+"\n")
+        })
     })
     
     //throw away first message
-    python_instance.stderr.once('data', function (data) {/*do nothing*/})
+    test_python_instance.stderr.once('data', function (data) {console.log(data.toString())})
+}
 
-    python_instance.stdin.write(init_file_content + "\n")    
+// external functions
+function initializePythonProcess (ipcMain) {
+    let options = {
+        cwd:path.join(__dirname)
+    }
+    tryPythonSpawn(ipcMain, ['-i'], options)
+}
 
-    // show initial output of python initialization
-    ipcMain.on('get-python-version', (event,arg)=>{
-        event.returnValue = initial_output
-    })
-
-    ipcMain.on('console-input-reading', (event,arg) => {
-        python_instance.stdout.removeAllListeners('data')
-        
-        // deal with data that comes back
-        python_instance.stdout.once('data', function (data) {
-            let str_data = data.toString().slice(1, data.toString().length - 3)
-            
-            // not a special message
-            if (str_data.slice(0, CONSTANTS.MGK.length) != (CONSTANTS.MGK)){
-                event.reply('console-message', str_data)
-            } else {
-                // process what comes back
-                // format: [MGK] [filename] [MGK] [parameters each separated by |]
-                // TODO: fix problem with final argument
-                call_backend(ipcMain, str_data, event)
-            }
-        })
-
-        python_instance.stderr.removeAllListeners('data')  
-
-        python_instance.stderr.once('data', function (data) {
-            let datastr = data.toString()
-            event.reply('console-message', datastr.slice(0, datastr.length - 4))
-        })
-
-        python_instance.stdin.write(arg+"\n")
-    })
+function isECF(){
+    return is_ecf
 }
 
 module.exports = {
     initializePythonProcess,
+    isECF,
 }
