@@ -105,6 +105,7 @@ interface Simple_Manager_Mem_IF ();
     logic [31:0]    wr_addr;
     logic [31:0]    wr_data;
     logic           wr_ready;
+    logic           wr_byteEn;
     logic           wr_valid;
 
     logic [31:0]    rd_addr;
@@ -123,7 +124,6 @@ interface Simple_Manager_Mem_IF ();
 
         output rd_addr,
         output rd_valid,
-        output rd_byteEn,
         input rd_data,
         input rd_ready
 	);
@@ -139,7 +139,6 @@ interface Simple_Manager_Mem_IF ();
 
         input rd_addr,
         input rd_valid,
-        input rd_byteEn,
         output rd_data,
         output rd_ready
 	);

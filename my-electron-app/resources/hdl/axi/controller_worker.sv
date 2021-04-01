@@ -201,6 +201,7 @@ module AXI_Controller_Worker (
     assign AXI_IF.BRESP = 3'b000;
     assign USER_IF.wr_addr = awaddr_latch;
     assign USER_IF.wr_data = wdata_latch;
+    assign USER_IF.wr_byteEn = wstrb_latch;
 
 
     ///////////////////////////////////////////////////////////////////////////
@@ -327,6 +328,7 @@ module AXI_Controller_Worker (
     end
 
     assign USER_IF.rd_addr = araddr_latch;
+    assign USER_IF.rd_byteEn = 4'b1111;
     // To keep this module (and peripherals) simple, we will use a
     //     hardcoded "OKAY" response - workers will not be able to indicate
     //     an error for now

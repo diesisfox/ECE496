@@ -19,6 +19,7 @@ module AXI_Controller_Manager (
     // Buffers for incoming/outgoing data
     logic [31:0] user_waddr_latch;
     logic [31:0] user_wdata_latch;
+    logic [ 3:0] user_wbyteEn_latch;
 
     logic [31:0] user_rdaddr_latch;
     logic [31:0] axi_rdata_latch;
@@ -85,10 +86,12 @@ module AXI_Controller_Manager (
         if (AXI_IF.ARESETn == 1'b0) begin
             user_waddr_latch <= 'b0;
             user_wdata_latch <= 'b0;
+            user_wbyteEn_latch <= 'b0;
         end else begin
             if (USER_IF.wr_valid && USER_IF.wr_ready && !user_wr_data_addr_latched) begin
                 user_waddr_latch <= USER_IF.wr_addr;
                 user_wdata_latch <= USER_IF.wr_data;
+                user_wbyteEn_latch <= USER_IF.wr_byteEn;
             end
         end
     end
@@ -180,12 +183,10 @@ module AXI_Controller_Manager (
         AXI_IF.AWSIZE = 3'b010;
         AXI_IF.AWPROT = 3'b000;
         
-        // Tie off AXI write data channel signals
-        AXI_IF.WSTRB = 4'b1111;
-        
         // Connect user data latches to the AXI bus
         AXI_IF.AWADDR = user_waddr_latch;
         AXI_IF.WDATA = user_wdata_latch;
+        AXI_IF.WSTRB = user_wbyteEn_latch;
     end
 
 
