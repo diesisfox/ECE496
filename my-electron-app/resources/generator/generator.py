@@ -105,6 +105,11 @@ def write_top_decl_start_and_interfaces(project_json, ip_json) -> str:
     if_insts = []
     for m in project_json:  # for each module in the project
         ip = ip_json[m["moduleType"]]
+        if (m["moduleType"] == "CPU"):
+            ports.append("input clock, reset_n")
+            ports.append("output cpu_trap")
+            if_insts.append("AXI5_Lite_IF M_IF ();")
+            continue
         for i in range(len(ip['interfaces'])):  # for each interface specified in the IP entry
             iface = ip['interfaces'][i]  # get interface entry under IP entry
             # write IF instantiation
@@ -154,8 +159,14 @@ def write_module_instantiations(project_json, ip_json) -> str:
         m_inst += ",\n\t".join(params)
         m_inst += f"\n) {m['parameters']['Verilog Instance Name']} (\n\t"
         ifs = []
-        for i in range(len(ip['interfaces'])):
-            ifs.append(f".{ip['interfaces'][i]['port']}({m['parameters']['Verilog Instance Name']}_if{i})")
+        if (m["moduleType"] == "CPU"):
+            ifs.append(".clk(clock)")
+            ifs.append(".resetn(reset_n)")
+            ifs.append(".trap(cpu_trap)")
+            ifs.append(".AXI_IF(M_IF.MANAGER)")    
+        else:
+            for i in range(len(ip['interfaces'])):
+                ifs.append(f".{ip['interfaces'][i]['port']}({m['parameters']['Verilog Instance Name']}_if{i})")
         m_inst += ",\n\t".join(ifs)
         m_inst += "\n);"
         m_insts.append(m_inst)
@@ -184,6 +195,7 @@ def write_axi_interconnect(project_json, ip_json) -> str:
     # 4. First half of the read comb logic block
     # 5. First half of the write comb logic block
     for module in project_json:
+        if (module["moduleType"] == "CPU"): continue
         inst_name = module["parameters"]["Verilog Instance Name"]
         base_addr = module["parameters"]["Base Address"]
         num_bits = ip_json[module["moduleType"]]["addrBits"]
@@ -231,6 +243,7 @@ def write_axi_interconnect(project_json, ip_json) -> str:
     # 2. Second half of write comb logic block
     i = 0
     for module in project_json:
+        if (module["moduleType"] == "CPU"): continue
         inst_name = module["parameters"]["Verilog Instance Name"]
         base_addr = module["parameters"]["Base Address"]
         num_bits = ip_json[module["moduleType"]]["addrBits"]
@@ -453,6 +466,7 @@ def write_controller_and_interconnect_inst (project_json, ip_json) -> str:
     verilog = ""
 
     for module in project_json:
+        if (module["moduleType"] == "CPU"): continue
         inst_name = module["parameters"]["Verilog Instance Name"]
         base_addr = module["parameters"]["Base Address"]
         num_bits = ip_json[module["moduleType"]]["addrBits"]
@@ -463,6 +477,7 @@ def write_controller_and_interconnect_inst (project_json, ip_json) -> str:
 
     verilog += "    AXI_Interconnect #(\n"
     for module in project_json:
+        if (module["moduleType"] == "CPU"): continue
         inst_name = module["parameters"]["Verilog Instance Name"]
         base_addr = module["parameters"]["Base Address"]
         num_bits = ip_json[module["moduleType"]]["addrBits"]
@@ -473,6 +488,7 @@ def write_controller_and_interconnect_inst (project_json, ip_json) -> str:
     verilog += "    ) xbar (\n"
 
     for module in project_json:
+        if (module["moduleType"] == "CPU"): continue
         inst_name = module["parameters"]["Verilog Instance Name"]
         base_addr = module["parameters"]["Base Address"]
         num_bits = ip_json[module["moduleType"]]["addrBits"]

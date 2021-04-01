@@ -41,5 +41,17 @@
                 ["SDA", "FPGA_I2C_SDAT", "inout"]
             ]
         ]
+    },
+    {
+        "moduleType": "CPU",
+        "UUID": "A1D823B2113DFF",
+        "parameters": {
+            "Verilog Instance Name": "picorv32_axi_A1D823B2113DFF", 
+            "PC Start Address": "0000_0000",
+            "Stack Address": "0000_4000"
+        },
+        "pinmaps": [
+            []
+        ]
     }
 ]
