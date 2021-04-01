@@ -67,7 +67,7 @@ module picorv32_axi_TB(
         #PERIOD;
         #PERIOD;
         reset_n = 1'b1;
-        $readmemb("/media/storage-windows/ECE496-repo/hdl/picorv32/test_program.txt", Mem.mem);
+        $readmemb("/media/storage-windows/ECE496-repo/my-electron-app/resources/hdl/picorv32/test_program.txt", Mem.mem);
         #PERIOD;
     end
     

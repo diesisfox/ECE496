@@ -2,8 +2,8 @@
 # Webtalk v2018.3.1 (64-bit)
 # SW Build 2489853 on Tue Mar 26 04:18:30 MDT 2019
 # IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
-# Start of session at: Wed Mar 31 00:02:52 2021
-# Process ID: 18646
+# Start of session at: Wed Mar 31 00:01:32 2021
+# Process ID: 18315
 # Current directory: /media/storage-windows/ECE496-repo/my-electron-app/resources/hdl/picorv32/picorv32_testing/picorv32_testing.sim/sim_1/behav/xsim
 # Command line: wbtcv -mode batch -source /media/storage-windows/ECE496-repo/my-electron-app/resources/hdl/picorv32/picorv32_testing/picorv32_testing.sim/sim_1/behav/xsim/xsim.dir/picorv32_axi_TB_behav/webtalk/xsim_webtalk.tcl -notrace
 # Log file: /media/storage-windows/ECE496-repo/my-electron-app/resources/hdl/picorv32/picorv32_testing/picorv32_testing.sim/sim_1/behav/xsim/webtalk.log
