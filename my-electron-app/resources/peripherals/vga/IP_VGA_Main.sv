@@ -28,6 +28,9 @@
 **/ 
 module IP_VGA_Main #(
     parameter ADDR = 'h1000_0000,
+    parameter DEPTH = 3, // [0-8], max 1228800 bits total vram (1280x960 @ 1bpp), 0 means no palette
+    parameter W_DIV_1280 = 1, //[0-8]
+    parameter H_DIV_960 = 1 //[0-6]
 ) (
     Simple_Mem_IF.COWI Bus,
     IP_VGA_IF.Peripheral VGA_IF
@@ -36,20 +39,20 @@ module IP_VGA_Main #(
 // memory map
 localparam ADDRBITS = 5;
 localparam EN_OFFSET = 'h00; // {...[31:1], EN}
-localparam RES_PHYS_OFFSET = 'h04; // {...[31:1], PHYSRES}
-localparam RES_LOGI_OFFSET = 'h08; // {...[31:2], LOGIRES}
-localparam COLORMODE_OFFSET = 'h0c; // {...[31:3], COLORMODE}
-localparam X_OFFSET = 'h10; // {...[31:16], X}
-localparam Y_OFFSET = 'h14; // {...[31:16], Y}
-localparam DATA_OFFSET = 'h18; // {...[31:16], DATA}
-localparam SCANLINE_OFFSET = 'h1c; // {...[31:16], SCANLINE}
+localparam X_ADDR_OFFSET = 'h04; // {...[31:11], X[10:0]}
+localparam Y_ADDR_OFFSET = 'h08; // {...[31:10], Y[9:0]}
+localparam DATA_OFFSET = 'h0c; // {...[31:DEPTH], COLOR[DEPTH-1:0]} OR {...[31:24], B[7:0], G[7:0], R[7:0]}
+localparam PALETTE_ADDR_OFFSET = 'h10; // {...[31:DEPTH], P[DEPTH-1:0]}
+localparam COLOR_OFFSET = 'h14; // {...[31:24], B[7:0], G[7:0], R[7:0]}
+localparam UNUSED_OFFSET = 'h18;
+localparam SCANLINE_OFFSET = 'h1c; // {...[31:10], SCANLINE[9:0]}
 
 `define max(a, b) (((a) > (b)) ? (a) : (b))
 
-// params
-localparam FM_COUNTER_LIM = `max((BUS_CLK_HZ/1600_000 - 1), 0);
-localparam SM_COUNTER_LIM = `max((BUS_CLK_HZ/400_000 - 1), 0);
+// params and constants
 localparam COUNTERBITS = $clog2(SM_COUNTER_LIM);
+localparam MAX_W = 1280;
+localparam MAX_H = 960;
 
 // types
 typedef enum bit [1:0] {PH0, PH1, PH2, PH3} BitPhase_e;
@@ -64,21 +67,28 @@ typedef enum bit [3:0] {
 } BitNum_e;
 
 // mapped registers
-logic start = 'b0; // transmit(ting) address byte
-logic txn = 'b0; // transceive(ing) data byte
-logic stop = 'b0;
-logic nack = 'b0;
-logic [6:0] addr = 'h0;
-logic [7:0] data = 'h0;
-logic r = 'b0;
-logic speed = 'b1;
-
-logic [1:0] res = 0; // resolution mode
-
-// synchronizers
-logic start1, start2;
+logic en = 'b0; // transmit(ting) address byte
+logic [10-W_DIV_1280:0] x_in = 'b0;
+logic [9-H_DIV_960:0] y_in = 'b0;
+logic [max(DEPTH-1, 0):0] p_in = 'b0;
 
 // additional state registers
+logic [10-W_DIV_1280:0] x_out = 'b0;
+logic [9-H_DIV_960:0] y_out = 'b0;
+wire scanline;
+
+// synchronizers
+logic en_s1, en_s2;
+always_ff @(posedge VGA_CLK) begin
+    en_s1 <= en;
+    en_s2 <= en_s1;
+end
+logic [9-H_DIV_960:0] scanline_s1, scanline_s2;
+always_ff @(posedge Bus.clock) begin
+    scanline_s1 <= scanline;
+    scanline_s2 <= scanline_s1;
+end
+
 logic [COUNTERBITS-1:0] counter = '0; // main clock divider
 BitNum_e bitNum = START; // bit of byte and protocol
 BitPhase_e bitPhase = PH0; // intrabit timing state
@@ -94,30 +104,9 @@ assign SCL = scl ? 'bz : 'b0;
 logic sda = 'b1;
 assign SDA = sda ? 'bz : 'b0;
 
-// helper functions
-function logic [31:0] maskBytes(logic [31:0] old, logic [31:0] in, logic[3:0] en);
-    return {en[3]?in[31:24]:old[31:24], en[2]?in[23:16]:old[23:16], en[1]?in[15:8]:old[15:8], en[0]?in[7:0]:old[7:0]};
-endfunction
-
-function reset();
-    start <= 'b0;
-    txn <= 'b0;
-    stop <= 'b0;
-    nack = 'b0;
-    addr <= 'h0;
-    data <= 'h0;
-    r <= 'b0;
-    speed <= 'b1;
-    counter <= '0;
-    bitNum <= START;
-    bitPhase <= PH0;
-    active <= '0;
-    scl <= 'b1;
-    sda <= 'b1;
-    Bus.wr_ready <= '0;
-    Bus.rd_ready <= '0;
-    Bus.rd_data <= '0;
-endfunction
+// video memory
+bit [DEPTH-1:0] vram [0:(MAX_W>>W_DIV_1280)-1][0:(MAX_H>>H_DIV_960)-1];
+bit [23:0] palette [0:2**(max(DEPTH-1, 0))]; // {b[7:0], g[7:0], r[7:0]}
 
 // pll
 logic [3:0] outclk;
@@ -130,6 +119,21 @@ ip_vga_pll pll(
     .outclk_3 (outclk[3]), // 1080p60
 );
 assign VGA_CLK = outclk[res];
+
+// helper functions
+function logic [31:0] maskBytes(logic [31:0] old, logic [31:0] in, logic[3:0] en);
+    return {en[3]?in[31:24]:old[31:24], en[2]?in[23:16]:old[23:16], en[1]?in[15:8]:old[15:8], en[0]?in[7:0]:old[7:0]};
+endfunction
+
+function reset();
+    en <= 'b0;
+    x_in <= 'b0;
+    y_in <= 'b0;
+    p_in = 'b0;
+    Bus.wr_ready <= '0;
+    Bus.rd_ready <= '0;
+    Bus.rd_data <= '0;
+endfunction
 
 // Bus side logic
 always_ff @(posedge Bus.clock) begin
