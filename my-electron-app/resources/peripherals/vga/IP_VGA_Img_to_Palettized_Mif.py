@@ -12,13 +12,13 @@ import subprocess
 subprocess.run(["ffmpeg",
     "-i", sys.argv[1],
     "-vf", f"palettegen={min(2**int(sys.argv[2])+1, 256)}",
-    f"{sys.argv[1]}.palette.png"])
+    "-y", f"{sys.argv[1]}.palette.png"])
 
 subprocess.run(["ffmpeg",
     "-i", sys.argv[1],
     "-i", f"{sys.argv[1]}.palette.png",
     "-filter_complex", "paletteuse",
-    f"{sys.argv[1]}.p{2**int(sys.argv[2])}.png"])
+    "-y", f"{sys.argv[1]}.p{2**int(sys.argv[2])}.png"])
 
 subprocess.run(["python", "./IP_VGA_Palettized_Img_to_Mif.py",
     f"{sys.argv[1]}.palette.png",

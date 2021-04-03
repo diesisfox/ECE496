@@ -2,15 +2,31 @@
    Copying and distribution of this script, with or without modification,
    are permitted in any medium without royalty provided the copyright
    notice and this notice are preserved.  */
-OUTPUT_FORMAT("elf64-littleriscv", "elf64-littleriscv",
-	      "elf64-littleriscv")
+/* OUTPUT_FORMAT("elf64-littleriscv", "elf64-littleriscv",
+	      "elf64-littleriscv") */
+OUTPUT_FORMAT("elf32-littleriscv", "elf32-littleriscv",
+	      "elf32-littleriscv")
 OUTPUT_ARCH(riscv)
+
+/* >>> Our addition. <<< */
+MEMORY
+{
+   /* qemu-system-risc64 virt machine */
+   RAM (rwx)  : ORIGIN = 0x80000000, LENGTH = 128K 
+}
+/* >>> End of our addition. <<< */
+
 ENTRY(_start)
 SEARCH_DIR("/usr/local/Cellar/riscv-gnu-toolchain/master/riscv64-unknown-elf/lib");
 SECTIONS
 {
   /* Read-only sections, merged into text segment: */
   PROVIDE (__executable_start = SEGMENT_START("text-segment", 0x10000)); . = SEGMENT_START("text-segment", 0x10000) + SIZEOF_HEADERS;
+  
+  /* >>> Our addition. <<< */
+  PROVIDE(__stack_top = ORIGIN(RAM) + LENGTH(RAM));
+  /* >>> End of our addition. <<< */
+  
   .interp         : { *(.interp) }
   .note.gnu.build-id  : { *(.note.gnu.build-id) }
   .hash           : { *(.hash) }

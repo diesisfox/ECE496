@@ -1,38 +1,35 @@
 /**
-* REQUIRES 50.00 MHz clock on CLK_50MHZ, which should be available on the DE1-SoC
+* REQUIRES 50.00 MHz clock on VGA_IF.CLOCK_50, which should be available on the DE1-SoC
+*
+* DEPTH changes the bit width of the palette. maximum of 8 is attainable with the python script.
+* Use 0 to bypass the palette and write 24 bit {B,G,R} values straight into vram.
+*
+* W_DIV_1280 and H_DIV_960 controls the logical resolution. physical resolution is always 1280x960,
+* but logical vram-mapped pixels could be made of power of 2 * power of 2 physical pixels.
+*
+* VRAM_MIF and PALETTE_MIF are initial contents of those memories
 * 
-* write 1 to START sends start condition and sends address byte.
-* STARTing while bus claimed sends repeat START and address byte.
-* START becomes 0 when start condition + address sent.
+* write 1 to EN enables video output.
 *
-* write 1 to TXN after start to read/write a byte into/from DATA.
-* TXN becomes 0 when byte done. Bus is not automatically released.
+* write logical pixel address to X/Y_ADDR_OFFSET and read/write to DATA_OFFSET to
+* access vram data at that pixel.
+* The vram address automatically increments left to right then top to bottom upon each write.
+* 
+* write palette index to PALETTE_ADDR_OFFSET and read/write to COLOR_OFFSET to
+* access palette data at that index.
+* The palette index automatically increments upon each write.
 *
-* writing 1 to STOP to send stop condition and releases bus.
-* writing 1 to STOP while transacting aborts txn.
-* STOP becomes 0 when done.
-* writing 1 to STOP when already stopped resets the peripheral.
-*
-* read from NACK for the ACK/NACK status of the last byte read. 1 is NACK.
-* write to NACK before reading a byte to send appropriate ack.
-*
-* set ADDR, R/Wn appropriately before START.
-* set DATA appropriately before TXN.
-*
-* R/Wn is the R/W bit in i2c protocol, and controls what TXN does.
-* changing R/Wn while bus calimed without issuing a restart breaks the rules.
-*
-* speed may be changed when bus released. 1 = 400k, 0 = 100k.
-*
-* regs writeable while bus claimed when start|stop|txn == 0.
+* read from SCANLINE_OFFSET to acquire the current active line the VGA controller is outputting.
+* reads 0 when in sync or blank states.
+* useful for preventing screen tearing.
 **/ 
 module IP_VGA_Main #(
     parameter ADDR = 'h1000_0000,
     parameter DEPTH = 3, // [0-8], max 1228800 bits total vram (1280x960 @ 1bpp), 0 means no palette
     parameter W_DIV_1280 = 1, //[0-8]
     parameter H_DIV_960 = 1, //[0-6]
-    parameter VRAM_MIF_HEX = "",
-    parameter PALETTE_MIF_HEX = ""
+    parameter VRAM_MIF = "",
+    parameter PALETTE_MIF = ""
 ) (
     Simple_Worker_Mem_IF.WORKER Bus,
     IP_VGA_IF.Peripheral VGA_IF
@@ -78,11 +75,11 @@ always_ff @(posedge Bus.clock) begin
 end
 
 // video memory
-(* ram_init_file = VRAM_MIF_HEX *) bit [DEPTH==0?23:(DEPTH-1):0] vram [0:MAX_W*MAX_H-1];
+(* ram_init_file = VRAM_MIF *) bit [DEPTH==0?23:(DEPTH-1):0] vram [0:MAX_W*MAX_H-1];
 logic [DEPTH-1:0] vram_out_bus = '0;
 always_ff @(posedge Bus.clock) vram_out_bus <= vram[x_in+y_in*MAX_W];
 
-(* ram_init_file = PALETTE_MIF_HEX *) bit [23:0] palette [0:2**`max(DEPTH,1)-1]; // {b[7:0], g[7:0], r[7:0]}
+(* ram_init_file = PALETTE_MIF *) bit [23:0] palette [0:2**`max(DEPTH,1)-1]; // {b[7:0], g[7:0], r[7:0]}
 logic [23:0] palette_out_bus = '0;
 always_ff @(posedge Bus.clock) palette_out_bus <= palette[p_in];
 
@@ -259,7 +256,6 @@ always @(posedge VGA_IF.VGA_CLK) begin : VgaController
         xState <= SYNC;
         yState <= SYNC;
     end else begin
-        // defaults (count up)
         x_out <= x_out + 'b1;
         y_out <= y_out;
         xState <= xState;
@@ -295,35 +291,21 @@ always @(posedge VGA_IF.VGA_CLK) begin : VgaDatapath
         hsync_1 <= 'b0;
         vsync_1 <= 'b0;
         {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R} <= 24'b0;
-        VGA_IF.VGA_SYNC_N <= 'b1;
+        VGA_IF.VGA_SYNC_N <= 'b0;
         VGA_IF.VGA_BLANK_N <= 'b0;
         VGA_IF.VGA_HS <= 'b0;
-        VGA_IF.VGA_VS <= 'b0;
+        VGA_IF.VGA_VS <= 'b1;
     end else begin
-        // defaults (stasis)
-        // p_out <= p_out;
-        // blank_1 <= blank_1;
-        // hsync_1 <= hsync_1;
-        // vsync_1 <= vsync_1;
-        // {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R} <= {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R};
-        // VGA_IF.VGA_SYNC_N <= VGA_IF.VGA_SYNC_N;
-        // VGA_IF.VGA_BLANK_N <= VGA_IF.VGA_BLANK_N;
-        // VGA_IF.VGA_HS <= VGA_IF.VGA_HS;
-        // VGA_IF.VGA_VS <= VGA_IF.VGA_VS;
         // cycle 0: FSM logic
         // cycle 1:
-        if(DEPTH == 0)begin
-            p_out <= 'b0;
-        end else begin
-            p_out <= vram[(x_out>>W_DIV_1280)+(y_out>>H_DIV_960)*MAX_W];
-        end
+        p_out <= vram[(x_out>>W_DIV_1280)+(y_out>>H_DIV_960)*MAX_W];
         blank_1 <= xState != ACTIVE || yState != ACTIVE;
         hsync_1 <= xState == SYNC;
         vsync_1 <= yState == SYNC;
         // cycle 2:
         {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R} <= DEPTH == 0 ? p_out : palette[p_out];
-        // VGA_IF.VGA_SYNC_N <= ~(hsync_1 | vsync_1);
-        VGA_IF.VGA_SYNC_N <= 0;
+        // VGA_IF.VGA_SYNC_N <= ~(hsync_1 | vsync_1); // for composite hvsync
+        VGA_IF.VGA_SYNC_N <= 'b0;
         VGA_IF.VGA_BLANK_N <= ~blank_1;
         VGA_IF.VGA_HS <= ~hsync_1;
         VGA_IF.VGA_VS <= vsync_1;

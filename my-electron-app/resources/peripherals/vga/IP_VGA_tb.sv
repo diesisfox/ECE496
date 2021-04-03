@@ -19,8 +19,8 @@ IP_VGA_Main #(
     .DEPTH(4),
     .W_DIV_1280(1),
     .H_DIV_960(1),
-    .VRAM_MIF_HEX("infernet_480_p16_2.png.mif"),
-    .PALETTE_MIF_HEX("infernet_palette_2.png.mif")
+    .VRAM_MIF("infernet_480_p16_2.png.mif"),
+    .PALETTE_MIF("infernet_palette_2.png.mif")
 ) dut (
     .Bus,
     .VGA_IF
