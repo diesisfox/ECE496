@@ -78,21 +78,19 @@ always_ff @(posedge Bus.clock) begin
 end
 
 // video memory
-bit [DEPTH==0?23:(DEPTH-1):0] vram [0:MAX_W-1][0:MAX_H-1];
-initial if(VRAM_MIF_HEX != "") $readmemh(VRAM_MIF_HEX, vram);
+(* ram_init_file = VRAM_MIF_HEX *) bit [DEPTH==0?23:(DEPTH-1):0] vram [0:MAX_W*MAX_H-1];
 logic [DEPTH-1:0] vram_out_bus = '0;
-always_ff @(posedge Bus.clock) vram_out_bus <= vram[x_in][y_in];
+always_ff @(posedge Bus.clock) vram_out_bus <= vram[x_in+y_in*MAX_W];
 
-bit [23:0] palette [0:2**(`max(DEPTH-1, 0))]; // {b[7:0], g[7:0], r[7:0]}
-initial if(PALETTE_MIF_HEX != "") $readmemh(PALETTE_MIF_HEX, palette);
+(* ram_init_file = PALETTE_MIF_HEX *) bit [23:0] palette [0:2**`max(DEPTH,1)-1]; // {b[7:0], g[7:0], r[7:0]}
 logic [23:0] palette_out_bus = '0;
 always_ff @(posedge Bus.clock) palette_out_bus <= palette[p_in];
 
 // pll
 IP_VGA_PLL_Altera pll(
-    .refclk(CLK_50MHZ),
+    .refclk(VGA_IF.CLOCK_50),
     .rst(0),
-    .outclk_0 (VGA_IF.VGA_CLK),
+    .outclk_0(VGA_IF.VGA_CLK)
 );
 
 // helper functions
@@ -101,7 +99,7 @@ function logic [31:0] maskBytes(logic [31:0] old, logic [31:0] in, logic[3:0] en
 endfunction
 
 task reset();
-    en <= 'b0;
+    en <= 'b1;
     x_in <= 'b0;
     y_in <= 'b0;
     p_in <= 'b0;
@@ -150,7 +148,7 @@ always_ff @(posedge Bus.clock) begin
                 DATA_OFFSET: begin
                     if(twoBusCycle) twoBusCycle <= 1'b0;
                     else begin
-                        vram[x_in][y_in] <= maskBytes({31'd0,vram_out_bus}, Bus.wr_data, Bus.wr_byteEn);
+                        vram[x_in+y_in*MAX_W] <= maskBytes({31'd0,vram_out_bus}, Bus.wr_data, Bus.wr_byteEn);
                         twoBusCycle <= 1'b1;
                         Bus.wr_ready <= 1'b0;
                         x_in <= (x_in == MAX_W-1) ? '0 : (x_in + '1);
@@ -220,16 +218,16 @@ typedef enum bit [1:0] {
 // additional state registers
 TState_e xState = SYNC;
 TState_e yState = SYNC;
-logic [10-W_DIV_1280:0] x_out = 'b0;
-logic [9-H_DIV_960:0] y_out = 'b0;
-logic [10-W_DIV_1280:0] x_comp;
-logic [9-H_DIV_960:0] y_comp;
+logic [10:0] x_out = 'b0;
+logic [9:0] y_out = 'b0;
+logic [10:0] x_comp;
+logic [9:0] y_comp;
 logic [23:0] p_out = 'b0;
 logic blank_1, hsync_1, vsync_1;
 
 // IO init
 initial begin
-    {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.IF_VGA.R} = 24'b0;
+    {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R} = 24'b0;
     VGA_IF.VGA_SYNC_N = 'b1;
     VGA_IF.VGA_BLANK_N = 'b0;
     VGA_IF.VGA_HS = 'b0;
@@ -255,7 +253,7 @@ end
 assign scanline = yState == ACTIVE ? y_out : 'b0;
 
 always @(posedge VGA_IF.VGA_CLK) begin : VgaController
-    if(!en_s2)begin
+    if(0)begin
         x_out <= 'b0;
         y_out <= 'b0;
         xState <= SYNC;
@@ -263,17 +261,19 @@ always @(posedge VGA_IF.VGA_CLK) begin : VgaController
     end else begin
         // defaults (count up)
         x_out <= x_out + 'b1;
-        y_out <= 'b0;
+        y_out <= y_out;
         xState <= xState;
         yState <= yState;
         if(x_out == x_comp)begin
             x_out <= 'b0;
-            y_out <= y_out + 'b1;
             unique case(xState)
                 SYNC: xState <= BACK;
                 BACK: xState <= ACTIVE;
                 ACTIVE: xState <= FRONT;
-                FRONT: xState <= SYNC;
+                FRONT:begin
+                    xState <= SYNC;
+                    y_out <= y_out + 'b1;
+                end
             endcase
             if(y_out == y_comp)begin
                 y_out <= 'b0;
@@ -289,42 +289,43 @@ always @(posedge VGA_IF.VGA_CLK) begin : VgaController
 end
 
 always @(posedge VGA_IF.VGA_CLK) begin : VgaDatapath
-    if(!en_s2)begin
+    if(0)begin
         p_out <= 'b0;
         blank_1 <= 'b0;
         hsync_1 <= 'b0;
         vsync_1 <= 'b0;
-        {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA.R} <= 24'b0;
+        {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R} <= 24'b0;
         VGA_IF.VGA_SYNC_N <= 'b1;
         VGA_IF.VGA_BLANK_N <= 'b0;
         VGA_IF.VGA_HS <= 'b0;
         VGA_IF.VGA_VS <= 'b0;
     end else begin
         // defaults (stasis)
-        p_out <= p_out;
-        blank_1 <= blank_1;
-        hsync_1 <= hsync_1;
-        vsync_1 <= vsync_1;
-        {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA.R} <= {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA.R};
-        VGA_IF.VGA_SYNC_N <= VGA_IF.VGA_SYNC_N;
-        VGA_IF.VGA_BLANK_N <= VGA_IF.VGA_BLANK_N;
-        VGA_IF.VGA_HS <= VGA_IF.VGA_HS;
-        VGA_IF.VGA_VS <= VGA_IF.VGA_VS;
+        // p_out <= p_out;
+        // blank_1 <= blank_1;
+        // hsync_1 <= hsync_1;
+        // vsync_1 <= vsync_1;
+        // {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R} <= {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R};
+        // VGA_IF.VGA_SYNC_N <= VGA_IF.VGA_SYNC_N;
+        // VGA_IF.VGA_BLANK_N <= VGA_IF.VGA_BLANK_N;
+        // VGA_IF.VGA_HS <= VGA_IF.VGA_HS;
+        // VGA_IF.VGA_VS <= VGA_IF.VGA_VS;
         // cycle 0: FSM logic
         // cycle 1:
         if(DEPTH == 0)begin
             p_out <= 'b0;
         end else begin
-            p_out <= vram[x_out][y_out];
+            p_out <= vram[(x_out>>W_DIV_1280)+(y_out>>H_DIV_960)*MAX_W];
         end
         blank_1 <= xState != ACTIVE || yState != ACTIVE;
         hsync_1 <= xState == SYNC;
         vsync_1 <= yState == SYNC;
         // cycle 2:
-        {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA.R} <= DEPTH == 0 ? p_out : palette[p_out];
-        VGA_IF.VGA_SYNC_N <= ~(hsync_1 | vsync_1);
+        {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R} <= DEPTH == 0 ? p_out : palette[p_out];
+        // VGA_IF.VGA_SYNC_N <= ~(hsync_1 | vsync_1);
+        VGA_IF.VGA_SYNC_N <= 0;
         VGA_IF.VGA_BLANK_N <= ~blank_1;
-        VGA_IF.VGA_HS <= hsync_1;
+        VGA_IF.VGA_HS <= ~hsync_1;
         VGA_IF.VGA_VS <= vsync_1;
     end
 end

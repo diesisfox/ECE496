@@ -1,6 +1,6 @@
 Flow report for top
-Fri Apr  2 20:58:55 2021
-Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+Sat Apr 03 03:52:59 2021
+Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
 ---------------------
@@ -21,7 +21,7 @@ Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 2019  Intel Corporation. All rights reserved.
+Copyright (C) 2020  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
 and other software and tools, and any partner logic 
 functions, and any output files from any of the foregoing 
@@ -38,24 +38,29 @@ https://fpgasoftware.intel.com/eula.
 
 
 
-+---------------------------------------------------------------------------+
-; Flow Summary                                                              ;
-+-----------------------------+---------------------------------------------+
-; Flow Status                 ; Flow Failed - Fri Apr  2 20:58:55 2021      ;
-; Quartus Prime Version       ; 19.1.0 Build 670 09/22/2019 SJ Lite Edition ;
-; Revision Name               ; top                                         ;
-; Top-level Entity Name       ; IP_VGA_tb                                   ;
-; Family                      ; Cyclone V                                   ;
-; Device                      ; 5CSEMA5F31C6                                ;
-; Timing Models               ; Final                                       ;
-; Logic utilization (in ALMs) ; N/A until Partition Merge                   ;
-; Total registers             ; N/A until Partition Merge                   ;
-; Total pins                  ; N/A until Partition Merge                   ;
-; Total virtual pins          ; N/A until Partition Merge                   ;
-; Total block memory bits     ; N/A until Partition Merge                   ;
-; Total PLLs                  ; N/A until Partition Merge                   ;
-; Total DLLs                  ; N/A until Partition Merge                   ;
-+-----------------------------+---------------------------------------------+
++-------------------------------------------------------------------------------+
+; Flow Summary                                                                  ;
++---------------------------------+---------------------------------------------+
+; Flow Status                     ; Successful - Sat Apr 03 03:52:59 2021       ;
+; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
+; Revision Name                   ; top                                         ;
+; Top-level Entity Name           ; IP_VGA_hwtb                                 ;
+; Family                          ; Cyclone V                                   ;
+; Device                          ; 5CSEMA5F31C6                                ;
+; Timing Models                   ; Final                                       ;
+; Logic utilization (in ALMs)     ; 159 / 32,070 ( < 1 % )                      ;
+; Total registers                 ; 49                                          ;
+; Total pins                      ; 30 / 457 ( 7 % )                            ;
+; Total virtual pins              ; 0                                           ;
+; Total block memory bits         ; 2,463,744 / 4,065,280 ( 61 % )              ;
+; Total DSP Blocks                ; 0 / 87 ( 0 % )                              ;
+; Total HSSI RX PCSs              ; 0                                           ;
+; Total HSSI PMA RX Deserializers ; 0                                           ;
+; Total HSSI TX PCSs              ; 0                                           ;
+; Total HSSI PMA TX Serializers   ; 0                                           ;
+; Total PLLs                      ; 1 / 6 ( 17 % )                              ;
+; Total DLLs                      ; 0 / 4 ( 0 % )                               ;
++---------------------------------+---------------------------------------------+
 
 
 +-----------------------------------------+
@@ -63,7 +68,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/02/2021 20:58:46 ;
+; Start date & time ; 04/03/2021 03:51:00 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; top                 ;
 +-------------------+---------------------+
@@ -74,7 +79,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id                        ;
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
-; COMPILER_SIGNATURE_ID               ; 121370768571.161741152616796           ; --            ; --          ; --                                ;
+; COMPILER_SIGNATURE_ID               ; 121376537145.161743626008972           ; --            ; --          ; --                                ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_timing           ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_boundary_scan    ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_signal_integrity ;
@@ -82,15 +87,18 @@ https://fpgasoftware.intel.com/eula.
 ; EDA_OUTPUT_DATA_FORMAT              ; Systemverilog Hdl                      ; --            ; --          ; eda_simulation                    ;
 ; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (SystemVerilog)        ; <None>        ; --          ; --                                ;
 ; EDA_TIME_SCALE                      ; 1 ps                                   ; --            ; --          ; eda_simulation                    ;
+; ENABLE_SIGNALTAP                    ; On                                     ; --            ; --          ; --                                ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --            ; --          ; --                                ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --            ; --          ; --                                ;
-; PARTITION_COLOR                     ; -- (Not supported for targeted family) ; --            ; IP_VGA_tb   ; Top                               ;
-; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family) ; --            ; IP_VGA_tb   ; Top                               ;
-; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family) ; --            ; IP_VGA_tb   ; Top                               ;
+; PARTITION_COLOR                     ; -- (Not supported for targeted family) ; --            ; IP_VGA_hwtb ; Top                               ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family) ; --            ; IP_VGA_hwtb ; Top                               ;
+; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family) ; --            ; IP_VGA_hwtb ; Top                               ;
 ; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                    ; --            ; --          ; --                                ;
 ; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --            ; --          ; --                                ;
 ; PROJECT_OUTPUT_DIRECTORY            ; output_files                           ; --            ; --          ; --                                ;
-; TOP_LEVEL_ENTITY                    ; IP_VGA_tb                              ; top           ; --          ; --                                ;
+; SLD_FILE                            ; db/stp1_auto_stripped.stp              ; --            ; --          ; --                                ;
+; TOP_LEVEL_ENTITY                    ; IP_VGA_hwtb                            ; top           ; --          ; --                                ;
+; USE_SIGNALTAP_FILE                  ; stp1.stp                               ; --            ; --          ; --                                ;
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
 
 
@@ -99,24 +107,36 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:09     ; 1.0                     ; 936 MB              ; 00:00:14                           ;
-; Total                ; 00:00:09     ; --                      ; --                  ; 00:00:14                           ;
+; Analysis & Synthesis ; 00:00:18     ; 1.0                     ; 5182 MB             ; 00:00:28                           ;
+; Fitter               ; 00:01:11     ; 1.1                     ; 6698 MB             ; 00:02:24                           ;
+; Assembler            ; 00:00:09     ; 1.0                     ; 4883 MB             ; 00:00:09                           ;
+; Timing Analyzer      ; 00:00:11     ; 1.9                     ; 5231 MB             ; 00:00:17                           ;
+; EDA Netlist Writer   ; 00:00:03     ; 1.0                     ; 4855 MB             ; 00:00:02                           ;
+; Total                ; 00:01:52     ; --                      ; --                  ; 00:03:20                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
-+--------------------------------------------------------------------------------------------------------+
-; Flow OS Summary                                                                                        ;
-+----------------------+--------------------------------------+------------+------------+----------------+
-; Module Name          ; Machine Hostname                     ; OS Name    ; OS Version ; Processor type ;
-+----------------------+--------------------------------------+------------+------------+----------------+
-; Analysis & Synthesis ; parallels-Parallels-Virtual-Platform ; Linux Mint ; 19         ; x86_64         ;
-+----------------------+--------------------------------------+------------+------------+----------------+
++------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                    ;
++----------------------+------------------+------------+------------+----------------+
+; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
++----------------------+------------------+------------+------------+----------------+
+; Analysis & Synthesis ; JAMESLIUA003     ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter               ; JAMESLIUA003     ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler            ; JAMESLIUA003     ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer      ; JAMESLIUA003     ; Windows 10 ; 10.0       ; x86_64         ;
+; EDA Netlist Writer   ; JAMESLIUA003     ; Windows 10 ; 10.0       ; x86_64         ;
++----------------------+------------------+------------+------------+----------------+
 
 
 ------------
 ; Flow Log ;
 ------------
 quartus_map --read_settings_files=on --write_settings_files=off tb -c top
+quartus_fit --read_settings_files=off --write_settings_files=off tb -c top
+quartus_asm --read_settings_files=off --write_settings_files=off tb -c top
+quartus_sta tb -c top
+quartus_eda --read_settings_files=off --write_settings_files=off tb -c top
 
 
 
