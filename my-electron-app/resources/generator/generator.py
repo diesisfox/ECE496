@@ -288,12 +288,10 @@ def write_axi_interconnect(project_json, ip_json) -> str:
         write_comb += "            " + inst_name + "_IF.BREADY = M_IF.BREADY;\n"
         write_comb += "            M_IF.BID = " + inst_name + "_IF.BID;\n"
 
-
-        if (i == num_modules - 1):
-            read_comb += "\t\tend\n"
-            write_comb += "\t\tend\n"
-
         i += 1
+
+    read_comb += "\t\tend\n"
+    write_comb += "\t\tend\n"
 
     verilog += "module AXI_Interconnect #(\n"
     verilog += interconnect_params
@@ -318,7 +316,7 @@ def write_axi_interconnect(project_json, ip_json) -> str:
     verilog += "    enum logic [1:0] {\n"
     verilog += "        READ_IDLE,\n"
     verilog += "        ARADDR_LATCHED,\n"
-    verilog += "        AR_DONE,\n"
+    verilog += "        AR_DONE\n"
     verilog += "    } read_state;\n\n"
 
     verilog += "    // Read state machine\n"
