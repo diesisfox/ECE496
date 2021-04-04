@@ -13,4 +13,4 @@ _start:
     .cfi_endproc
     .end
 
-; riscv64-unknown-elf-gcc -march=rv32im -g -ffreestanding -O0 -Wl,--gc-sections -nostartfiles -nostdlib -nodefaultlibs -Wl,-T,riscv64-virt.ld crt0.s test.c
+; riscv64-unknown-elf-gcc -march=rv32im -mabi=ilp32 -g -ffreestanding -O0 -Wl,--gc-sections -nostartfiles -nostdlib -nodefaultlibs -Wl,-T,riscv32.ld crt0.s test.c

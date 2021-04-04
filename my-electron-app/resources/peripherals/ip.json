@@ -176,5 +176,86 @@
                 ]
             }
         ]
+    },
+    "VGA": {
+        "moduleType": "VGA",
+        "verilogName": "IP_VGA_Main",
+        "addrBits": 5,
+        "parameters": {
+            "Verilog Instance Name": {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol",
+                "important": false
+            },
+            "Base Address": {
+                "paramName": "Base Address",
+                "verilogName": "ADDR",
+                "paramType": "Hexadecimal",
+                "important": true
+            },
+            "Palette Depth": {
+                "paramName": "Palette Depth",
+                "verilogName": "DEPTH",
+                "paramType": "Int",
+                "max": 8,
+                "min": 0,
+                "default": "4",
+                "important": true
+            },
+            "Horizontal Pixel Downsampling": {
+                "paramName": "Horizontal Pixel Downsampling",
+                "verilogName": "W_DIV_1280",
+                "paramType": "Int",
+                "max": 8,
+                "min": 0,
+                "default": "1",
+                "important": false
+            },
+            "Vertical Pixel Downsampling": {
+                "paramName": "Vertical Pixel Downsampling",
+                "verilogName": "H_DIV_960",
+                "paramType": "Int",
+                "max": 6,
+                "min": 0,
+                "default": "1",
+                "important": false
+            },
+            "VRAM Init Mif": {
+                "paramName": "VRAM Init Mif",
+                "verilogName": "VRAM_MIF",
+                "paramType": "FilePath",
+                "default": "",
+                "important": false
+            },
+            "Palette Init Mif": {
+                "paramName": "Palette Init Mif",
+                "verilogName": "PALETTE_MIF",
+                "paramType": "FilePath",
+                "default": "",
+                "important": false
+            }
+        },
+        "interfaces": [
+            {
+                "type": "Simple_Mem_IF",
+                "port": "Bus",
+                "pinmap": []
+            },
+            {
+                "type": "IP_VGA_IF",
+                "port": "VGA_IF",
+                "pinmap": [
+                    ["CLOCK_50", "CLOCK_50", "input"],
+                    ["VGA_R", "[7:0]VGA_R", "output"],
+                    ["VGA_G", "[7:0]VGA_G", "output"],
+                    ["VGA_B", "[7:0]VGA_B", "output"],
+                    ["VGA_CLK", "VGA_CLK", "output"],
+                    ["VGA_SYNC_N", "VGA_SYNC_N", "output"],
+                    ["VGA_BLANK_N", "VGA_BLANK_N", "output"],
+                    ["VGA_HS", "VGA_HS", "output"],
+                    ["VGA_VS", "VGA_VS", "output"]
+                ]
+            }
+        ]
     }
 }

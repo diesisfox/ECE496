@@ -12,7 +12,7 @@ OUTPUT_ARCH(riscv)
 MEMORY
 {
    /* qemu-system-risc64 virt machine */
-   RAM (rwx)  : ORIGIN = 0x80000000, LENGTH = 128K 
+   RAM (rwx)  : ORIGIN = 0x00000000, LENGTH = 128K 
 }
 /* >>> End of our addition. <<< */
 
@@ -255,6 +255,3 @@ SECTIONS
   .gnu.attributes 0 : { KEEP (*(.gnu.attributes)) }
   /DISCARD/ : { *(.note.GNU-stack) *(.gnu_debuglink) *(.gnu.lto_*) }
 }
-
-
-==================================================
