@@ -1,8 +1,10 @@
 #!python
 
 import sys
+import os
 import json
 import pprint
+import shutil
 import re
 from enum import Enum
 from sys import exit
@@ -21,7 +23,8 @@ usage:
 
 
 pp = pprint.PrettyPrinter(indent=2)
-IP_DATABASE_PATH: str = "../peripherals/ip.json"
+PERIPHERALS_DIR_PATH: str = "../peripherals/"
+IP_DATABASE_PATH: str = os.path.join(PERIPHERALS_DIR_PATH + "ip.json")
 GPIO_PINS_LIST: list = ["GPIO_0["+str(i)+"]" for i in range(36)] + ["GPIO_1["+str(i)+"]" for i in range(36)]
 PINMAP_INTNAME_INDEX = 0
 PINMAP_EXTNAME_INDEX = 1
@@ -500,6 +503,34 @@ def write_controller_and_interconnect_inst (project_json, ip_json) -> str:
     return verilog
 
 
+# dirpath is the path for the directory to copy files into
+def copy_source_into_project(project_json, ip_json, dirpath):
+    # We'll use this to keep track of the types of module we've already copied,
+    #     to avoid doing duplicate copies
+    module_types_copied = set()
+    for module in project_json:
+        moduleType = module["moduleType"]
+        if (moduleType in module_types_copied):
+            continue
+
+        moduleSubdirPath = os.path.join(dirpath, moduleType)
+        os.mkdir(moduleSubdirPath)
+ 
+        for rel_path in ip_json[moduleType]["sourceFilePaths"]:
+            # copy PERIPHERALS_DIR_PATH + rel_path into dirpath/moduleType
+            shutil.copy(os.path.join(PERIPHERALS_DIR_PATH, rel_path), moduleSubdirPath)
+
+        module_types_copied.add(moduleType)
+
+    # Hardcoded copies for Interfaces.sv and the AXI worker controller
+    axi_path = os.path.join(dirpath, "AXI")
+    os.mkdir(axi_path)
+    shutil.copy(os.path.join(PERIPHERALS_DIR_PATH, "../hdl/Interfaces.sv"), axi_path)
+    shutil.copy(os.path.join(PERIPHERALS_DIR_PATH, "../hdl/axi/controller_worker.sv"), axi_path)
+    return
+    pass
+
+
 def write_top_verilog_end() -> str:
     verilog = "\nendmodule //top\n"
     return verilog
@@ -527,6 +558,10 @@ def generate_from_json(project_json, ip_json) -> str:
     verilog += write_axi_interconnect(project_json, ip_json)
     # step 7: tabs to spaces
     verilog = verilog.replace('\t', ' '*4)
+    # step 8: copy source files for each peripheral into the project dir
+    # TODO: replace this with a real path
+    os.mkdir("./generated_project/")
+    copy_source_into_project(project_json, ip_json, "./generated_project/")
     # done
     return verilog
     pass
