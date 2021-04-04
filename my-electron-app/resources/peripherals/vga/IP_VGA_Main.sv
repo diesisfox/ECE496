@@ -53,7 +53,7 @@ localparam MAX_W = 1280 >> W_DIV_1280;
 localparam MAX_H = 960 >> H_DIV_960;
 
 // mapped registers
-logic en = 'b0; // transmit(ting) address byte
+logic en = 'b1; // transmit(ting) address byte
 logic [10-W_DIV_1280:0] x_in = 'b0;
 logic [9-H_DIV_960:0] y_in = 'b0;
 logic [`max(DEPTH-1, 0):0] p_in = 'b0;
@@ -247,10 +247,10 @@ always_comb begin : xyComp
     endcase
 end
 
-assign scanline = yState == ACTIVE ? y_out : 'b0;
+assign scanline = yState == ACTIVE ? y_out<<H_DIV_960 : 'b0;
 
 always @(posedge VGA_IF.VGA_CLK) begin : VgaController
-    if(0)begin
+    if(en_s2)begin
         x_out <= 'b0;
         y_out <= 'b0;
         xState <= SYNC;
@@ -285,7 +285,7 @@ always @(posedge VGA_IF.VGA_CLK) begin : VgaController
 end
 
 always @(posedge VGA_IF.VGA_CLK) begin : VgaDatapath
-    if(0)begin
+    if(en_s2)begin
         p_out <= 'b0;
         blank_1 <= 'b0;
         hsync_1 <= 'b0;
