@@ -2538,7 +2538,7 @@ module picorv32_axi #(
 ) (
 
     AXI5_Lite_IF.MANAGER AXI_IF,
-//	input clk, resetn,
+	input clk, resetn,
 	output trap,
 
 	// AXI5-lite master memory interface
@@ -2618,8 +2618,8 @@ module picorv32_axi #(
 	wire [31:0] mem_rdata;
 
 	picorv32_axi_adapter axi_adapter (
-//		.clk            (clk            ),
-//		.resetn         (resetn         ),
+		.clk            (clk            ),
+		.resetn         (resetn         ),
 //		.mem_axi_awvalid(mem_axi_awvalid),
 //		.mem_axi_awready(mem_axi_awready),
 //		.mem_axi_awaddr (mem_axi_awaddr ),
@@ -2678,8 +2678,8 @@ module picorv32_axi #(
 		.PROGADDR_IRQ        (PROGADDR_IRQ        ),
 		.STACKADDR           (STACKADDR           )
 	) picorv32_core (
-		.clk      (AXI_IF.ACLK),
-		.resetn   (AXI_IF.ARESETn),
+		.clk      (clk),
+		.resetn   (resetn),
 		.trap     (trap  ),
 
 		.mem_valid(mem_valid),
@@ -2735,7 +2735,7 @@ endmodule
  ***************************************************************/
 
 module picorv32_axi_adapter (
-//	input clk, resetn,
+	input clk, resetn,
 
 //	// AXI4-lite master memory interface
 
@@ -2782,6 +2782,9 @@ module picorv32_axi_adapter (
 	reg ack_wvalid;
 	reg xfer_done;
 
+    assign AXI_IF.ACLK = clk;
+    assign AXI_IF.ARESETn = resetn;
+
 	assign AXI_IF.AWVALID = mem_valid && |mem_wstrb && !ack_awvalid;
 	assign AXI_IF.AWADDR = mem_addr;
 	assign AXI_IF.AWPROT = 0;
@@ -2805,8 +2808,8 @@ module picorv32_axi_adapter (
 	assign AXI_IF.ARID = 1'b0;
 	assign AXI_IF.ARSIZE = 3'b010;
 
-	always @(posedge AXI_IF.ACLK) begin
-		if (!AXI_IF.ARESETn) begin
+	always @(posedge clk) begin
+		if (!resetn) begin
 			ack_awvalid <= 0;
 		end else begin
 			xfer_done <= mem_valid && mem_ready;

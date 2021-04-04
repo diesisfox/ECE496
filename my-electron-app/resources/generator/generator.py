@@ -163,7 +163,7 @@ def write_module_instantiations(project_json, ip_json) -> str:
             ifs.append(".clk(clock)")
             ifs.append(".resetn(reset_n)")
             ifs.append(".trap(cpu_trap)")
-            ifs.append(".AXI_IF(M_IF.MANAGER)")    
+            ifs.append(".AXI_IF(M_IF)")    
         else:
             for i in range(len(ip['interfaces'])):
                 ifs.append(f".{ip['interfaces'][i]['port']}({m['parameters']['Verilog Instance Name']}_if{i})")
@@ -224,15 +224,15 @@ def write_axi_interconnect(project_json, ip_json) -> str:
 
         # Write logic pt 1
         write_comb += "        // " + inst_name + "\n"
-        write_comb += "        " + inst_name + "IF.AWADDR = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.AWPROT = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.AWVALID = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.AWSIZE = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.AWID = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.WDATA = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.WSTRB = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.WVALID = 'b0;\n"
-        write_comb += "        " + inst_name + "IF.BREADY = 'b0;\n"
+        write_comb += "        " + inst_name + "_IF.AWADDR = 'b0;\n"
+        write_comb += "        " + inst_name + "_IF.AWPROT = 'b0;\n"
+        write_comb += "        " + inst_name + "_IF.AWVALID = 'b0;\n"
+        write_comb += "        " + inst_name + "_IF.AWSIZE = 'b0;\n"
+        write_comb += "        " + inst_name + "_IF.AWID = 'b0;\n"
+        write_comb += "        " + inst_name + "_IF.WDATA = 'b0;\n"
+        write_comb += "        " + inst_name + "_IF.WSTRB = 'b0;\n"
+        write_comb += "        " + inst_name + "_IF.WVALID = 'b0;\n"
+        write_comb += "        " + inst_name + "_IF.BREADY = 'b0;\n"
         write_comb += "\n"
    
     # Remove the extra comma in the last entry of the params and interfaces 
@@ -260,15 +260,15 @@ def write_axi_interconnect(project_json, ip_json) -> str:
         read_comb += "            " + inst_name + "_IF.ARADDR = M_IF.ARADDR;\n"
         read_comb += "            " + inst_name + "_IF.ARPROT = M_IF.ARPROT;\n"
         read_comb += "            " + inst_name + "_IF.ARVALID = M_IF.ARVALID;\n"
-        read_comb += "            M_IF.ARREADY = " + inst_name + "IF.ARREADY;\n"
+        read_comb += "            M_IF.ARREADY = " + inst_name + "_IF.ARREADY;\n"
         read_comb += "            " + inst_name + "_IF.ARSIZE = M_IF.ARSIZE;\n"
         read_comb += "            " + inst_name + "_IF.ARID = M_IF.ARID;\n"
 
-        read_comb += "            M_IF.RDATA = " + inst_name + "IF.RDATA;\n"
-        read_comb += "            M_IF.RRESP = " + inst_name + "IF.RRESP;\n"
-        read_comb += "            M_IF.RVALID = " + inst_name + "IF.RVALID;\n"
+        read_comb += "            M_IF.RDATA = " + inst_name + "_IF.RDATA;\n"
+        read_comb += "            M_IF.RRESP = " + inst_name + "_IF.RRESP;\n"
+        read_comb += "            M_IF.RVALID = " + inst_name + "_IF.RVALID;\n"
         read_comb += "            " + inst_name + "_IF.RREADY = M_IF.RREADY;\n"
-        read_comb += "            M_IF.RID = " + inst_name + "IF.RID;\n"
+        read_comb += "            M_IF.RID = " + inst_name + "_IF.RID;\n"
 
         # Write logic
         write_comb += "            " + inst_name + "_IF.AWADDR = M_IF.AWADDR;\n"
@@ -470,8 +470,8 @@ def write_controller_and_interconnect_inst (project_json, ip_json) -> str:
         base_addr = module["parameters"]["Base Address"]
         num_bits = ip_json[module["moduleType"]]["addrBits"]
         verilog += "    AXI_Controller_Worker " + inst_name + "_controller (\n"
-        verilog += "        .AXI_IF(" + inst_name + "_AXI_if0.worker),\n"
-        verilog += "        .USER_IF(" + inst_name + "_if0.controller)\n"
+        verilog += "        .AXI_IF(" + inst_name + "_AXI_if0),\n"
+        verilog += "        .USER_IF(" + inst_name + "_if0)\n"
         verilog += "    );\n\n"
 
     verilog += "    AXI_Interconnect #(\n"
@@ -492,9 +492,9 @@ def write_controller_and_interconnect_inst (project_json, ip_json) -> str:
         inst_name = module["parameters"]["Verilog Instance Name"]
         base_addr = module["parameters"]["Base Address"]
         num_bits = ip_json[module["moduleType"]]["addrBits"]
-        verilog += "        ." + inst_name + "_IF(" + inst_name + "_AXI_if0.manager),\n"
+        verilog += "        ." + inst_name + "_IF(" + inst_name + "_AXI_if0),\n"
 
-    verilog += "        .M_IF(M_IF.worker)\n"
+    verilog += "        .M_IF(M_IF)\n"
     verilog += "    );\n"
 
     return verilog

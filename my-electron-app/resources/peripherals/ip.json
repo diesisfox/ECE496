@@ -55,8 +55,8 @@
         },
         "interfaces": [
             {
-                "type": "Simple_Mem_IF",
-                "port": "Bus",
+                "type": "Simple_Worker_Mem_IF",
+                "port": "mem_if",
                 "pinmap": []
             }
         ]
@@ -89,7 +89,7 @@
         },
         "interfaces": [
             {
-                "type": "Simple_Mem_IF",
+                "type": "Simple_Worker_Mem_IF",
                 "port": "Bus",
                 "pinmap": []
             },
@@ -121,7 +121,7 @@
         },
         "interfaces": [
             {
-                "type": "Simple_Mem_IF",
+                "type": "Simple_Worker_Mem_IF",
                 "port": "Bus",
                 "pinmap": []
             },
@@ -163,7 +163,7 @@
         },
         "interfaces": [
             {
-                "type": "Simple_Mem_IF",
+                "type": "Simple_Worker_Mem_IF",
                 "port": "Bus",
                 "pinmap": []
             },
@@ -237,7 +237,7 @@
         },
         "interfaces": [
             {
-                "type": "Simple_Mem_IF",
+                "type": "Simple_Worker_Mem_IF",
                 "port": "Bus",
                 "pinmap": []
             },
