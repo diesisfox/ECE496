@@ -1,0 +1,95 @@
+[
+    {
+        "moduleType":"CPU",
+        "UUID":"7CB48A78B25546A8AC109ED58AE32A4A",
+        "parameters":{
+            "Verilog Instance Name":"picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A",
+            "PC Start Address":"0000_0000",
+            "Stack Address":"0000_8000"
+        },
+        "pinmaps":[
+            [
+                
+            ]
+        ]
+    },
+    {
+        "moduleType":"Memory",
+        "UUID":"931897D0B4814B10A0108CB4D8FD8FD7",
+        "parameters":{
+            "Verilog Instance Name": "mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7",
+            "Base Address": "0000_0000",
+            "Address Width": "17"
+        },
+        "pinmaps":[
+            [
+                
+            ]
+        ]
+    },
+    {
+        "moduleType":"VGA",
+        "UUID":"6367E892C4E74E548BDF4DBD747EC45F",
+        "parameters":{
+            "Verilog Instance Name":"IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F",
+            "Base Address":"8000_0000",
+            "Palette Depth":"4",
+            "Horizontal Pixel Downsampling":"1",
+            "Vertical Pixel Downsampling":"1",
+            "VRAM Init Mif":"",
+            "Palette Init Mif":""
+        },
+        "pinmaps":[
+            [
+                
+            ],
+            [
+                [
+                    "CLOCK_50",
+                    "CLOCK_50",
+                    "input"
+                ],
+                [
+                    "VGA_R",
+                    "[7:0]VGA_R",
+                    "output"
+                ],
+                [
+                    "VGA_G",
+                    "[7:0]VGA_G",
+                    "output"
+                ],
+                [
+                    "VGA_B",
+                    "[7:0]VGA_B",
+                    "output"
+                ],
+                [
+                    "VGA_CLK",
+                    "VGA_CLK",
+                    "output"
+                ],
+                [
+                    "VGA_SYNC_N",
+                    "VGA_SYNC_N",
+                    "output"
+                ],
+                [
+                    "VGA_BLANK_N",
+                    "VGA_BLANK_N",
+                    "output"
+                ],
+                [
+                    "VGA_HS",
+                    "VGA_HS",
+                    "output"
+                ],
+                [
+                    "VGA_VS",
+                    "VGA_VS",
+                    "output"
+                ]
+            ]
+        ]
+    }
+]
