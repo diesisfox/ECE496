@@ -1,0 +1,28 @@
+#-----------------------------------------------------------
+# Vivado v2018.3.1 (64-bit)
+# SW Build 2489853 on Tue Mar 26 04:18:30 MDT 2019
+# IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
+# Start of session at: Sun Apr  4 01:20:37 2021
+# Process ID: 23059
+# Current directory: /home/andrew
+# Command line: vivado
+# Log file: /home/andrew/vivado.log
+# Journal file: /home/andrew/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project /home/andrew/ECE496-sandbox/Demo_System_Smoke_Test/Demo_System_Smoke_Test.xpr
+update_compile_order -fileset sources_1
+launch_simulation
+open_wave_config /home/andrew/ECE496-sandbox/Demo_System_Smoke_Test/Demo_Project_TB_behav.wcfg
+source Demo_Project_TB.tcl
+restart
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us

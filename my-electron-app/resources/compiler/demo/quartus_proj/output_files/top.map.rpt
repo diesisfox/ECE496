@@ -1,0 +1,1091 @@
+Analysis & Synthesis report for top
+Sun Apr 04 04:51:48 2021
+Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. State Machine - |top|AXI_Interconnect:xbar|write_state
+  6. State Machine - |top|AXI_Interconnect:xbar|read_state
+  7. State Machine - |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|yState
+  8. State Machine - |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|xState
+  9. State Machine - |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_wordsize
+ 10. State Machine - |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpu_state
+ 11. Registers Packed Into Inferred Megafunctions
+ 12. Registers Added for RAM Pass-Through Logic
+ 13. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 14. Parameter Settings for User Entity Instance: picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A
+ 15. Parameter Settings for User Entity Instance: picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core
+ 16. Parameter Settings for User Entity Instance: mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7
+ 17. Parameter Settings for User Entity Instance: IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F
+ 18. Parameter Settings for User Entity Instance: IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll|altera_pll:altera_pll_i
+ 19. Parameter Settings for User Entity Instance: AXI_Interconnect:xbar
+ 20. Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll|altera_pll:altera_pll_i"
+ 21. Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll"
+ 22. Port Connectivity Checks: "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core"
+ 23. Port Connectivity Checks: "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A"
+ 24. Elapsed Time Per Partition
+ 25. Analysis & Synthesis Messages
+ 26. Analysis & Synthesis Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2020  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++---------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                              ;
++-----------------------------+---------------------------------------------+
+; Analysis & Synthesis Status ; Failed - Sun Apr 04 04:51:48 2021           ;
+; Quartus Prime Version       ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
+; Revision Name               ; top                                         ;
+; Top-level Entity Name       ; top                                         ;
+; Family                      ; Cyclone V                                   ;
+; Logic utilization (in ALMs) ; N/A until Partition Merge                   ;
+; Total registers             ; N/A until Partition Merge                   ;
+; Total pins                  ; N/A until Partition Merge                   ;
+; Total virtual pins          ; N/A until Partition Merge                   ;
+; Total block memory bits     ; N/A until Partition Merge                   ;
+; Total PLLs                  ; N/A until Partition Merge                   ;
+; Total DLLs                  ; N/A until Partition Merge                   ;
++-----------------------------+---------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                             ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                          ; Setting            ; Default Value      ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                          ; 5CSEMA5F31C6       ;                    ;
+; Top-level entity name                                                           ; top                ; top                ;
+; Family name                                                                     ; Cyclone V          ; Cyclone V          ;
+; Use smart compilation                                                           ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation                ; On                 ; On                 ;
+; Enable compact report table                                                     ; Off                ; Off                ;
+; Restructure Multiplexers                                                        ; Auto               ; Auto               ;
+; MLAB Add Timing Constraints For Mixed-Port Feed-Through Mode Setting Don't Care ; Off                ; Off                ;
+; Create Debugging Nodes for IP Cores                                             ; Off                ; Off                ;
+; Preserve fewer node names                                                       ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                                   ; Enable             ; Enable             ;
+; Verilog Version                                                                 ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                                    ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                        ; Auto               ; Auto               ;
+; Safe State Machine                                                              ; Off                ; Off                ;
+; Extract Verilog State Machines                                                  ; On                 ; On                 ;
+; Extract VHDL State Machines                                                     ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                               ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                      ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                                  ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                         ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                       ; On                 ; On                 ;
+; Parallel Synthesis                                                              ; On                 ; On                 ;
+; DSP Block Balancing                                                             ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                              ; On                 ; On                 ;
+; Power-Up Don't Care                                                             ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                                    ; Off                ; Off                ;
+; Remove Duplicate Registers                                                      ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                            ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                          ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                           ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                       ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                            ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                             ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                                  ; Off                ; Off                ;
+; Optimization Technique                                                          ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                              ; 70                 ; 70                 ;
+; Auto Carry Chains                                                               ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                            ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                           ; Off                ; Off                ;
+; Auto ROM Replacement                                                            ; On                 ; On                 ;
+; Auto RAM Replacement                                                            ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                      ; On                 ; On                 ;
+; Auto Shift Register Replacement                                                 ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                                 ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                                   ; On                 ; On                 ;
+; Strict RAM Replacement                                                          ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                               ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                           ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                                   ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                             ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                               ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                         ; On                 ; On                 ;
+; Report Parameter Settings                                                       ; On                 ; On                 ;
+; Report Source Assignments                                                       ; On                 ; On                 ;
+; Report Connectivity Checks                                                      ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                              ; Off                ; Off                ;
+; Synchronization Register Chain Length                                           ; 3                  ; 3                  ;
+; Power Optimization During Synthesis                                             ; Normal compilation ; Normal compilation ;
+; HDL message level                                                               ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                                 ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                        ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                              ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                       ; 100                ; 100                ;
+; Clock MUX Protection                                                            ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                     ; Off                ; Off                ;
+; Block Design Naming                                                             ; Auto               ; Auto               ;
+; SDC constraint protection                                                       ; Off                ; Off                ;
+; Synthesis Effort                                                                ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal                    ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                            ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                              ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                     ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                          ; On                 ; On                 ;
+; Automatic Parallel Synthesis                                                    ; On                 ; On                 ;
+; Partial Reconfiguration Bitstream ID                                            ; Off                ; Off                ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 4           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 1           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
++----------------------------+-------------+
+
+
+Encoding Type:  One-Hot
++--------------------------------------------------------------------------------------------------------+
+; State Machine - |top|AXI_Interconnect:xbar|write_state                                                 ;
++----------------------------+------------------------+---------------------+----------------------------+
+; Name                       ; write_state.WRITE_IDLE ; write_state.AW_DONE ; write_state.AWADDR_LATCHED ;
++----------------------------+------------------------+---------------------+----------------------------+
+; write_state.WRITE_IDLE     ; 0                      ; 0                   ; 0                          ;
+; write_state.AWADDR_LATCHED ; 1                      ; 0                   ; 1                          ;
+; write_state.AW_DONE        ; 1                      ; 1                   ; 0                          ;
++----------------------------+------------------------+---------------------+----------------------------+
+
+
+Encoding Type:  One-Hot
++---------------------------------------------------------------------------------------------------+
+; State Machine - |top|AXI_Interconnect:xbar|read_state                                             ;
++---------------------------+----------------------+--------------------+---------------------------+
+; Name                      ; read_state.READ_IDLE ; read_state.AR_DONE ; read_state.ARADDR_LATCHED ;
++---------------------------+----------------------+--------------------+---------------------------+
+; read_state.READ_IDLE      ; 0                    ; 0                  ; 0                         ;
+; read_state.ARADDR_LATCHED ; 1                    ; 0                  ; 1                         ;
+; read_state.AR_DONE        ; 1                    ; 1                  ; 0                         ;
++---------------------------+----------------------+--------------------+---------------------------+
+
+
+Encoding Type:  One-Hot
++--------------------------------------------------------------------------------------+
+; State Machine - |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|yState ;
++---------------+--------------+---------------+-------------+-------------------------+
+; Name          ; yState.FRONT ; yState.ACTIVE ; yState.BACK ; yState.SYNC             ;
++---------------+--------------+---------------+-------------+-------------------------+
+; yState.SYNC   ; 0            ; 0             ; 0           ; 0                       ;
+; yState.BACK   ; 0            ; 0             ; 1           ; 1                       ;
+; yState.ACTIVE ; 0            ; 1             ; 0           ; 1                       ;
+; yState.FRONT  ; 1            ; 0             ; 0           ; 1                       ;
++---------------+--------------+---------------+-------------+-------------------------+
+
+
+Encoding Type:  One-Hot
++--------------------------------------------------------------------------------------+
+; State Machine - |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|xState ;
++---------------+--------------+---------------+-------------+-------------------------+
+; Name          ; xState.FRONT ; xState.ACTIVE ; xState.BACK ; xState.SYNC             ;
++---------------+--------------+---------------+-------------+-------------------------+
+; xState.SYNC   ; 0            ; 0             ; 0           ; 0                       ;
+; xState.BACK   ; 0            ; 0             ; 1           ; 1                       ;
+; xState.ACTIVE ; 0            ; 1             ; 0           ; 1                       ;
+; xState.FRONT  ; 1            ; 0             ; 0           ; 1                       ;
++---------------+--------------+---------------+-------------+-------------------------+
+
+
+Encoding Type:  One-Hot
++---------------------------------------------------------------------------------------------------------------------+
+; State Machine - |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_wordsize ;
++-----------------+-----------------+-----------------+---------------------------------------------------------------+
+; Name            ; mem_wordsize.00 ; mem_wordsize.10 ; mem_wordsize.01                                               ;
++-----------------+-----------------+-----------------+---------------------------------------------------------------+
+; mem_wordsize.00 ; 0               ; 0               ; 0                                                             ;
+; mem_wordsize.01 ; 1               ; 0               ; 1                                                             ;
+; mem_wordsize.10 ; 1               ; 1               ; 0                                                             ;
++-----------------+-----------------+-----------------+---------------------------------------------------------------+
+
+
+Encoding Type:  One-Hot
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpu_state                                                                                                                                           ;
++----------------------------+--------------------------+---------------------------+----------------------------+----------------------------+--------------------------+---------------------------+---------------------------+---------------------------+
+; Name                       ; cpu_state.cpu_state_trap ; cpu_state.cpu_state_fetch ; cpu_state.cpu_state_ld_rs1 ; cpu_state.cpu_state_ld_rs2 ; cpu_state.cpu_state_exec ; cpu_state.cpu_state_shift ; cpu_state.cpu_state_stmem ; cpu_state.cpu_state_ldmem ;
++----------------------------+--------------------------+---------------------------+----------------------------+----------------------------+--------------------------+---------------------------+---------------------------+---------------------------+
+; cpu_state.cpu_state_trap   ; 0                        ; 0                         ; 0                          ; 0                          ; 0                        ; 0                         ; 0                         ; 0                         ;
+; cpu_state.cpu_state_stmem  ; 1                        ; 0                         ; 0                          ; 0                          ; 0                        ; 0                         ; 1                         ; 0                         ;
+; cpu_state.cpu_state_shift  ; 1                        ; 0                         ; 0                          ; 0                          ; 0                        ; 1                         ; 0                         ; 0                         ;
+; cpu_state.cpu_state_exec   ; 1                        ; 0                         ; 0                          ; 0                          ; 1                        ; 0                         ; 0                         ; 0                         ;
+; cpu_state.cpu_state_ld_rs2 ; 1                        ; 0                         ; 0                          ; 1                          ; 0                        ; 0                         ; 0                         ; 0                         ;
+; cpu_state.cpu_state_ld_rs1 ; 1                        ; 0                         ; 1                          ; 0                          ; 0                        ; 0                         ; 0                         ; 0                         ;
+; cpu_state.cpu_state_fetch  ; 1                        ; 1                         ; 0                          ; 0                          ; 0                        ; 0                         ; 0                         ; 0                         ;
+; cpu_state.cpu_state_ldmem  ; 1                        ; 0                         ; 0                          ; 0                          ; 0                        ; 0                         ; 0                         ; 1                         ;
++----------------------------+--------------------------+---------------------------+----------------------------+----------------------------+--------------------------+---------------------------+---------------------------+---------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Registers Packed Into Inferred Megafunctions                                                                                                                    ;
++---------------------------------------------------------------------------------+------------------------------------------------------------------------+------+
+; Register Name                                                                   ; Megafunction                                                           ; Type ;
++---------------------------------------------------------------------------------+------------------------------------------------------------------------+------+
+; IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|vram_out_bus[0..7]     ; IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|vram_rtl_0    ; RAM  ;
+; IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|palette_out_bus[0..23] ; IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|palette_rtl_0 ; RAM  ;
+; IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|p_out[0..7]            ; IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|palette_rtl_1 ; RAM  ;
+; mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem_if.rd_data[0..31]        ; mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem_rtl_0           ; RAM  ;
++---------------------------------------------------------------------------------+------------------------------------------------------------------------+------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Registers Added for RAM Pass-Through Logic                                                                                                                                                                   ;
++------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+
+; Register Name                                                                                              ; RAM Name                                                                                        ;
++------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[0]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[1]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[2]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[3]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[4]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[5]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[6]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[7]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[8]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[9]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[10] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[11] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[12] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[13] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[14] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[15] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[16] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[17] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[18] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[19] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[20] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[21] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[22] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[23] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[24] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[25] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[26] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[27] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[28] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[29] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[30] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[31] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[32] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[33] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[34] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[35] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[36] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[37] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[38] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[39] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[40] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[41] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0_bypass[42] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[0]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[1]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[2]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[3]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[4]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[5]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[6]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[7]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[8]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[9]  ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[10] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[11] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[12] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[13] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[14] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[15] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[16] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[17] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[18] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[19] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[20] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[21] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[22] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[23] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[24] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[25] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[26] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[27] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[28] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[29] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[30] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[31] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[32] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[33] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[34] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[35] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[36] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[37] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[38] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[39] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[40] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[41] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1_bypass[42] ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1 ;
++------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                                                        ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                              ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------------+
+; 3:1                ; 95 bits   ; 190 LEs       ; 0 LEs                ; 190 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|count_instr[16]  ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 0 LEs                ; 22 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|x_out[7]                                  ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_wstrb[3]     ;
+; 3:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_addr[27]     ;
+; 3:1                ; 27 bits   ; 54 LEs        ; 0 LEs                ; 54 LEs                 ; Yes        ; |top|AXI_Interconnect:xbar|awaddr_latched[6]                                                            ;
+; 3:1                ; 27 bits   ; 54 LEs        ; 0 LEs                ; 54 LEs                 ; Yes        ; |top|AXI_Interconnect:xbar|araddr_latched[6]                                                            ;
+; 3:1                ; 22 bits   ; 44 LEs        ; 0 LEs                ; 44 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|instr_xor        ;
+; 3:1                ; 24 bits   ; 48 LEs        ; 0 LEs                ; 48 LEs                 ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|user_rddata_latch[8] ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 0 LEs                ; 64 LEs                 ; Yes        ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|user_rddata_latch[30]   ;
+; 3:1                ; 14 bits   ; 28 LEs        ; 0 LEs                ; 28 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|Bus.rd_data[19]                           ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_wdata[31]    ;
+; 4:1                ; 14 bits   ; 28 LEs        ; 0 LEs                ; 28 LEs                 ; Yes        ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|awaddr_latch[8]         ;
+; 4:1                ; 36 bits   ; 72 LEs        ; 0 LEs                ; 72 LEs                 ; Yes        ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|wdata_latch[27]         ;
+; 4:1                ; 14 bits   ; 28 LEs        ; 0 LEs                ; 28 LEs                 ; Yes        ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|araddr_latch[3]         ;
+; 5:1                ; 10 bits   ; 30 LEs        ; 0 LEs                ; 30 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|y_out[4]                                  ;
+; 5:1                ; 30 bits   ; 90 LEs        ; 0 LEs                ; 90 LEs                 ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|awaddr_latch[14]     ;
+; 5:1                ; 27 bits   ; 81 LEs        ; 0 LEs                ; 81 LEs                 ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|wdata_latch[6]       ;
+; 5:1                ; 30 bits   ; 90 LEs        ; 0 LEs                ; 90 LEs                 ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|araddr_latch[10]     ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op2[1]       ;
+; 5:1                ; 30 bits   ; 90 LEs        ; 60 LEs               ; 30 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_next_pc[5]   ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm[7]   ;
+; 3:1                ; 19 bits   ; 38 LEs        ; 38 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm[14]  ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|latched_rd[3]    ;
+; 5:1                ; 31 bits   ; 93 LEs        ; 62 LEs               ; 31 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|alu_out_q[15]    ;
+; 9:1                ; 7 bits    ; 42 LEs        ; 42 LEs               ; 0 LEs                  ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|Bus.rd_data[6]                            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm[1]   ;
+; 5:1                ; 27 bits   ; 81 LEs        ; 54 LEs               ; 27 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op2[15]      ;
+; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|x_in[7]                                   ;
+; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|p_in[1]                                   ;
+; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|y_in[4]                                   ;
+; 11:1               ; 2 bits    ; 14 LEs        ; 4 LEs                ; 10 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|x_in[8]                                   ;
+; 11:1               ; 2 bits    ; 14 LEs        ; 4 LEs                ; 10 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_state[1]     ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_sh[0]        ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_sh[2]        ;
+; 14:1               ; 3 bits    ; 27 LEs        ; 18 LEs               ; 9 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op1[30]      ;
+; 15:1               ; 3 bits    ; 30 LEs        ; 18 LEs               ; 12 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op1[1]       ;
+; 15:1               ; 24 bits   ; 240 LEs       ; 120 LEs              ; 120 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op1[21]      ;
+; 9:1                ; 7 bits    ; 42 LEs        ; 42 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_out[8]       ;
+; 11:1               ; 16 bits   ; 112 LEs       ; 96 LEs               ; 16 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_out[16]      ;
+; 14:1               ; 7 bits    ; 63 LEs        ; 49 LEs               ; 14 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_out[2]       ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.BREADY[0]                    ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|M_IF.AWREADY[0]                                                              ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.RREADY[0]                    ;
+; 3:1                ; 26 bits   ; 52 LEs        ; 52 LEs               ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|M_IF.RDATA[5]                                                                ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|xState                                    ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|yState                                    ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|vram                                      ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rs2[2]   ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|Selector11       ;
+; 7:1                ; 3 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; No         ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_wordsize     ;
+; 15:1               ; 2 bits    ; 20 LEs        ; 12 LEs               ; 8 LEs                  ; No         ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpu_state        ;
+; 16:1               ; 3 bits    ; 30 LEs        ; 18 LEs               ; 12 LEs                 ; No         ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpu_state        ;
+; 16:1               ; 2 bits    ; 20 LEs        ; 12 LEs               ; 8 LEs                  ; No         ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpu_state        ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A ;
++----------------------+----------------------------------+-----------------------------------------------+
+; Parameter Name       ; Value                            ; Type                                          ;
++----------------------+----------------------------------+-----------------------------------------------+
+; ENABLE_COUNTERS      ; 1                                ; Unsigned Binary                               ;
+; ENABLE_COUNTERS64    ; 1                                ; Unsigned Binary                               ;
+; ENABLE_REGS_16_31    ; 1                                ; Unsigned Binary                               ;
+; ENABLE_REGS_DUALPORT ; 1                                ; Unsigned Binary                               ;
+; TWO_STAGE_SHIFT      ; 1                                ; Unsigned Binary                               ;
+; BARREL_SHIFTER       ; 0                                ; Unsigned Binary                               ;
+; TWO_CYCLE_COMPARE    ; 0                                ; Unsigned Binary                               ;
+; TWO_CYCLE_ALU        ; 0                                ; Unsigned Binary                               ;
+; COMPRESSED_ISA       ; 0                                ; Unsigned Binary                               ;
+; CATCH_MISALIGN       ; 1                                ; Unsigned Binary                               ;
+; CATCH_ILLINSN        ; 1                                ; Unsigned Binary                               ;
+; ENABLE_PCPI          ; 0                                ; Unsigned Binary                               ;
+; ENABLE_MUL           ; 0                                ; Unsigned Binary                               ;
+; ENABLE_FAST_MUL      ; 0                                ; Unsigned Binary                               ;
+; ENABLE_DIV           ; 0                                ; Unsigned Binary                               ;
+; ENABLE_IRQ           ; 0                                ; Unsigned Binary                               ;
+; ENABLE_IRQ_QREGS     ; 1                                ; Unsigned Binary                               ;
+; ENABLE_IRQ_TIMER     ; 1                                ; Unsigned Binary                               ;
+; ENABLE_TRACE         ; 0                                ; Unsigned Binary                               ;
+; REGS_INIT_ZERO       ; 0                                ; Unsigned Binary                               ;
+; MASKED_IRQ           ; 00000000000000000000000000000000 ; Unsigned Binary                               ;
+; LATCHED_IRQ          ; 11111111111111111111111111111111 ; Unsigned Binary                               ;
+; PROGADDR_RESET       ; 00000000000000000000000000000000 ; Unsigned Binary                               ;
+; PROGADDR_IRQ         ; 00000000000000000000000000010000 ; Unsigned Binary                               ;
+; STACKADDR            ; 00000000000000001000000000000000 ; Unsigned Binary                               ;
++----------------------+----------------------------------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core ;
++----------------------+----------------------------------+----------------------------------------------------------------------+
+; Parameter Name       ; Value                            ; Type                                                                 ;
++----------------------+----------------------------------+----------------------------------------------------------------------+
+; ENABLE_COUNTERS      ; 1                                ; Unsigned Binary                                                      ;
+; ENABLE_COUNTERS64    ; 1                                ; Unsigned Binary                                                      ;
+; ENABLE_REGS_16_31    ; 1                                ; Unsigned Binary                                                      ;
+; ENABLE_REGS_DUALPORT ; 1                                ; Unsigned Binary                                                      ;
+; LATCHED_MEM_RDATA    ; 0                                ; Unsigned Binary                                                      ;
+; TWO_STAGE_SHIFT      ; 1                                ; Unsigned Binary                                                      ;
+; BARREL_SHIFTER       ; 0                                ; Unsigned Binary                                                      ;
+; TWO_CYCLE_COMPARE    ; 0                                ; Unsigned Binary                                                      ;
+; TWO_CYCLE_ALU        ; 0                                ; Unsigned Binary                                                      ;
+; COMPRESSED_ISA       ; 0                                ; Unsigned Binary                                                      ;
+; CATCH_MISALIGN       ; 1                                ; Unsigned Binary                                                      ;
+; CATCH_ILLINSN        ; 1                                ; Unsigned Binary                                                      ;
+; ENABLE_PCPI          ; 0                                ; Unsigned Binary                                                      ;
+; ENABLE_MUL           ; 0                                ; Unsigned Binary                                                      ;
+; ENABLE_FAST_MUL      ; 0                                ; Unsigned Binary                                                      ;
+; ENABLE_DIV           ; 0                                ; Unsigned Binary                                                      ;
+; ENABLE_IRQ           ; 0                                ; Unsigned Binary                                                      ;
+; ENABLE_IRQ_QREGS     ; 1                                ; Unsigned Binary                                                      ;
+; ENABLE_IRQ_TIMER     ; 1                                ; Unsigned Binary                                                      ;
+; ENABLE_TRACE         ; 0                                ; Unsigned Binary                                                      ;
+; REGS_INIT_ZERO       ; 0                                ; Unsigned Binary                                                      ;
+; MASKED_IRQ           ; 00000000000000000000000000000000 ; Unsigned Binary                                                      ;
+; LATCHED_IRQ          ; 11111111111111111111111111111111 ; Unsigned Binary                                                      ;
+; PROGADDR_RESET       ; 00000000000000000000000000000000 ; Unsigned Binary                                                      ;
+; PROGADDR_IRQ         ; 00000000000000000000000000010000 ; Unsigned Binary                                                      ;
+; STACKADDR            ; 00000000000000001000000000000000 ; Unsigned Binary                                                      ;
++----------------------+----------------------------------+----------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7 ;
++----------------+----------------------------------+---------------------------------------------+
+; Parameter Name ; Value                            ; Type                                        ;
++----------------+----------------------------------+---------------------------------------------+
+; N_ADDR_BITS    ; 16                               ; Signed Integer                              ;
+; ADDR           ; 00000000000000000000000000000000 ; Unsigned Binary                             ;
+; MIF_FILENAME   ;                                  ; String                                      ;
++----------------+----------------------------------+---------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F ;
++----------------+----------------------------------+---------------------------------------------------+
+; Parameter Name ; Value                            ; Type                                              ;
++----------------+----------------------------------+---------------------------------------------------+
+; ADDR           ; 10000000000000000000000000000000 ; Unsigned Binary                                   ;
+; DEPTH          ; 8                                ; Signed Integer                                    ;
+; W_DIV_1280     ; 1                                ; Signed Integer                                    ;
+; H_DIV_960      ; 1                                ; Signed Integer                                    ;
+; VRAM_MIF       ;                                  ; String                                            ;
+; PALETTE_MIF    ;                                  ; String                                            ;
++----------------+----------------------------------+---------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll|altera_pll:altera_pll_i ;
++--------------------------------------+------------------------+-------------------------------------------------------------------------------------+
+; Parameter Name                       ; Value                  ; Type                                                                                ;
++--------------------------------------+------------------------+-------------------------------------------------------------------------------------+
+; reference_clock_frequency            ; 50.0 MHz               ; String                                                                              ;
+; fractional_vco_multiplier            ; true                   ; String                                                                              ;
+; pll_type                             ; General                ; String                                                                              ;
+; pll_subtype                          ; General                ; String                                                                              ;
+; number_of_clocks                     ; 1                      ; Signed Integer                                                                      ;
+; operation_mode                       ; normal                 ; String                                                                              ;
+; deserialization_factor               ; 4                      ; Signed Integer                                                                      ;
+; data_rate                            ; 0                      ; Signed Integer                                                                      ;
+; sim_additional_refclk_cycles_to_lock ; 0                      ; Signed Integer                                                                      ;
+; output_clock_frequency0              ; 102.100000 MHz         ; String                                                                              ;
+; phase_shift0                         ; 0 ps                   ; String                                                                              ;
+; duty_cycle0                          ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency1              ; 0 MHz                  ; String                                                                              ;
+; phase_shift1                         ; 0 ps                   ; String                                                                              ;
+; duty_cycle1                          ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency2              ; 0 MHz                  ; String                                                                              ;
+; phase_shift2                         ; 0 ps                   ; String                                                                              ;
+; duty_cycle2                          ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency3              ; 0 MHz                  ; String                                                                              ;
+; phase_shift3                         ; 0 ps                   ; String                                                                              ;
+; duty_cycle3                          ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency4              ; 0 MHz                  ; String                                                                              ;
+; phase_shift4                         ; 0 ps                   ; String                                                                              ;
+; duty_cycle4                          ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency5              ; 0 MHz                  ; String                                                                              ;
+; phase_shift5                         ; 0 ps                   ; String                                                                              ;
+; duty_cycle5                          ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency6              ; 0 MHz                  ; String                                                                              ;
+; phase_shift6                         ; 0 ps                   ; String                                                                              ;
+; duty_cycle6                          ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency7              ; 0 MHz                  ; String                                                                              ;
+; phase_shift7                         ; 0 ps                   ; String                                                                              ;
+; duty_cycle7                          ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency8              ; 0 MHz                  ; String                                                                              ;
+; phase_shift8                         ; 0 ps                   ; String                                                                              ;
+; duty_cycle8                          ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency9              ; 0 MHz                  ; String                                                                              ;
+; phase_shift9                         ; 0 ps                   ; String                                                                              ;
+; duty_cycle9                          ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency10             ; 0 MHz                  ; String                                                                              ;
+; phase_shift10                        ; 0 ps                   ; String                                                                              ;
+; duty_cycle10                         ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency11             ; 0 MHz                  ; String                                                                              ;
+; phase_shift11                        ; 0 ps                   ; String                                                                              ;
+; duty_cycle11                         ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency12             ; 0 MHz                  ; String                                                                              ;
+; phase_shift12                        ; 0 ps                   ; String                                                                              ;
+; duty_cycle12                         ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency13             ; 0 MHz                  ; String                                                                              ;
+; phase_shift13                        ; 0 ps                   ; String                                                                              ;
+; duty_cycle13                         ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency14             ; 0 MHz                  ; String                                                                              ;
+; phase_shift14                        ; 0 ps                   ; String                                                                              ;
+; duty_cycle14                         ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency15             ; 0 MHz                  ; String                                                                              ;
+; phase_shift15                        ; 0 ps                   ; String                                                                              ;
+; duty_cycle15                         ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency16             ; 0 MHz                  ; String                                                                              ;
+; phase_shift16                        ; 0 ps                   ; String                                                                              ;
+; duty_cycle16                         ; 50                     ; Signed Integer                                                                      ;
+; output_clock_frequency17             ; 0 MHz                  ; String                                                                              ;
+; phase_shift17                        ; 0 ps                   ; String                                                                              ;
+; duty_cycle17                         ; 50                     ; Signed Integer                                                                      ;
+; clock_name_0                         ;                        ; String                                                                              ;
+; clock_name_1                         ;                        ; String                                                                              ;
+; clock_name_2                         ;                        ; String                                                                              ;
+; clock_name_3                         ;                        ; String                                                                              ;
+; clock_name_4                         ;                        ; String                                                                              ;
+; clock_name_5                         ;                        ; String                                                                              ;
+; clock_name_6                         ;                        ; String                                                                              ;
+; clock_name_7                         ;                        ; String                                                                              ;
+; clock_name_8                         ;                        ; String                                                                              ;
+; clock_name_global_0                  ; false                  ; String                                                                              ;
+; clock_name_global_1                  ; false                  ; String                                                                              ;
+; clock_name_global_2                  ; false                  ; String                                                                              ;
+; clock_name_global_3                  ; false                  ; String                                                                              ;
+; clock_name_global_4                  ; false                  ; String                                                                              ;
+; clock_name_global_5                  ; false                  ; String                                                                              ;
+; clock_name_global_6                  ; false                  ; String                                                                              ;
+; clock_name_global_7                  ; false                  ; String                                                                              ;
+; clock_name_global_8                  ; false                  ; String                                                                              ;
+; m_cnt_hi_div                         ; 1                      ; Signed Integer                                                                      ;
+; m_cnt_lo_div                         ; 1                      ; Signed Integer                                                                      ;
+; m_cnt_bypass_en                      ; false                  ; String                                                                              ;
+; m_cnt_odd_div_duty_en                ; false                  ; String                                                                              ;
+; n_cnt_hi_div                         ; 1                      ; Signed Integer                                                                      ;
+; n_cnt_lo_div                         ; 1                      ; Signed Integer                                                                      ;
+; n_cnt_bypass_en                      ; false                  ; String                                                                              ;
+; n_cnt_odd_div_duty_en                ; false                  ; String                                                                              ;
+; c_cnt_hi_div0                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div0                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en0                     ; false                  ; String                                                                              ;
+; c_cnt_in_src0                        ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en0               ; false                  ; String                                                                              ;
+; c_cnt_prst0                          ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst0                   ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div1                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div1                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en1                     ; false                  ; String                                                                              ;
+; c_cnt_in_src1                        ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en1               ; false                  ; String                                                                              ;
+; c_cnt_prst1                          ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst1                   ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div2                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div2                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en2                     ; false                  ; String                                                                              ;
+; c_cnt_in_src2                        ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en2               ; false                  ; String                                                                              ;
+; c_cnt_prst2                          ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst2                   ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div3                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div3                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en3                     ; false                  ; String                                                                              ;
+; c_cnt_in_src3                        ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en3               ; false                  ; String                                                                              ;
+; c_cnt_prst3                          ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst3                   ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div4                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div4                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en4                     ; false                  ; String                                                                              ;
+; c_cnt_in_src4                        ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en4               ; false                  ; String                                                                              ;
+; c_cnt_prst4                          ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst4                   ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div5                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div5                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en5                     ; false                  ; String                                                                              ;
+; c_cnt_in_src5                        ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en5               ; false                  ; String                                                                              ;
+; c_cnt_prst5                          ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst5                   ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div6                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div6                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en6                     ; false                  ; String                                                                              ;
+; c_cnt_in_src6                        ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en6               ; false                  ; String                                                                              ;
+; c_cnt_prst6                          ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst6                   ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div7                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div7                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en7                     ; false                  ; String                                                                              ;
+; c_cnt_in_src7                        ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en7               ; false                  ; String                                                                              ;
+; c_cnt_prst7                          ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst7                   ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div8                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div8                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en8                     ; false                  ; String                                                                              ;
+; c_cnt_in_src8                        ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en8               ; false                  ; String                                                                              ;
+; c_cnt_prst8                          ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst8                   ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div9                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div9                        ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en9                     ; false                  ; String                                                                              ;
+; c_cnt_in_src9                        ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en9               ; false                  ; String                                                                              ;
+; c_cnt_prst9                          ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst9                   ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div10                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div10                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en10                    ; false                  ; String                                                                              ;
+; c_cnt_in_src10                       ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en10              ; false                  ; String                                                                              ;
+; c_cnt_prst10                         ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst10                  ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div11                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div11                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en11                    ; false                  ; String                                                                              ;
+; c_cnt_in_src11                       ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en11              ; false                  ; String                                                                              ;
+; c_cnt_prst11                         ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst11                  ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div12                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div12                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en12                    ; false                  ; String                                                                              ;
+; c_cnt_in_src12                       ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en12              ; false                  ; String                                                                              ;
+; c_cnt_prst12                         ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst12                  ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div13                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div13                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en13                    ; false                  ; String                                                                              ;
+; c_cnt_in_src13                       ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en13              ; false                  ; String                                                                              ;
+; c_cnt_prst13                         ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst13                  ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div14                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div14                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en14                    ; false                  ; String                                                                              ;
+; c_cnt_in_src14                       ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en14              ; false                  ; String                                                                              ;
+; c_cnt_prst14                         ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst14                  ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div15                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div15                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en15                    ; false                  ; String                                                                              ;
+; c_cnt_in_src15                       ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en15              ; false                  ; String                                                                              ;
+; c_cnt_prst15                         ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst15                  ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div16                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div16                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en16                    ; false                  ; String                                                                              ;
+; c_cnt_in_src16                       ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en16              ; false                  ; String                                                                              ;
+; c_cnt_prst16                         ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst16                  ; 0                      ; Signed Integer                                                                      ;
+; c_cnt_hi_div17                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_lo_div17                       ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_bypass_en17                    ; false                  ; String                                                                              ;
+; c_cnt_in_src17                       ; ph_mux_clk             ; String                                                                              ;
+; c_cnt_odd_div_duty_en17              ; false                  ; String                                                                              ;
+; c_cnt_prst17                         ; 1                      ; Signed Integer                                                                      ;
+; c_cnt_ph_mux_prst17                  ; 0                      ; Signed Integer                                                                      ;
+; pll_vco_div                          ; 1                      ; Signed Integer                                                                      ;
+; pll_slf_rst                          ; false                  ; String                                                                              ;
+; pll_bw_sel                           ; low                    ; String                                                                              ;
+; pll_output_clk_frequency             ; 0 MHz                  ; String                                                                              ;
+; pll_cp_current                       ; 0                      ; Signed Integer                                                                      ;
+; pll_bwctrl                           ; 0                      ; Signed Integer                                                                      ;
+; pll_fractional_division              ; 1                      ; Signed Integer                                                                      ;
+; pll_fractional_cout                  ; 24                     ; Signed Integer                                                                      ;
+; pll_dsm_out_sel                      ; 1st_order              ; String                                                                              ;
+; mimic_fbclk_type                     ; gclk                   ; String                                                                              ;
+; pll_fbclk_mux_1                      ; glb                    ; String                                                                              ;
+; pll_fbclk_mux_2                      ; fb_1                   ; String                                                                              ;
+; pll_m_cnt_in_src                     ; ph_mux_clk             ; String                                                                              ;
+; pll_vcoph_div                        ; 1                      ; Signed Integer                                                                      ;
+; refclk1_frequency                    ; 0 MHz                  ; String                                                                              ;
+; pll_clkin_0_src                      ; clk_0                  ; String                                                                              ;
+; pll_clkin_1_src                      ; clk_0                  ; String                                                                              ;
+; pll_clk_loss_sw_en                   ; false                  ; String                                                                              ;
+; pll_auto_clk_sw_en                   ; false                  ; String                                                                              ;
+; pll_manu_clk_sw_en                   ; false                  ; String                                                                              ;
+; pll_clk_sw_dly                       ; 0                      ; Signed Integer                                                                      ;
+; pll_extclk_0_cnt_src                 ; pll_extclk_cnt_src_vss ; String                                                                              ;
+; pll_extclk_1_cnt_src                 ; pll_extclk_cnt_src_vss ; String                                                                              ;
++--------------------------------------+------------------------+-------------------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: AXI_Interconnect:xbar                                          ;
++--------------------------------------------------------+----------------------------------+-----------------+
+; Parameter Name                                         ; Value                            ; Type            ;
++--------------------------------------------------------+----------------------------------+-----------------+
+; mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_base_addr    ; 00000000000000000000000000000000 ; Unsigned Binary ;
+; mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_num_bits     ; 8                                ; Signed Integer  ;
+; IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_base_addr ; 10000000000000000000000000000000 ; Unsigned Binary ;
+; IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_num_bits  ; 5                                ; Signed Integer  ;
++--------------------------------------------------------+----------------------------------+-----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll|altera_pll:altera_pll_i"                                                   ;
++-------------------+--------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; Port              ; Type   ; Severity ; Details                                                                                                                                      ;
++-------------------+--------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; fboutclk          ; Output ; Info     ; Explicitly unconnected                                                                                                                       ;
+; fbclk             ; Input  ; Info     ; Stuck at GND                                                                                                                                 ;
+; refclk1           ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; phase_en          ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; updn              ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; num_phase_shifts  ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; scanclk           ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; cntsel            ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; reconfig_to_pll   ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; extswitch         ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; adjpllin          ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; cclk              ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; phase_done        ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; reconfig_from_pll ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; activeclk         ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; clkbad            ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; phout             ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; lvds_clk          ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; loaden            ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; extclk_out        ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; cascade_out       ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; zdbfbclk          ; Bidir  ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
++-------------------+--------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll"                            ;
++--------+--------+----------+----------------------------------------------------------------------------------------------------------+
+; Port   ; Type   ; Severity ; Details                                                                                                  ;
++--------+--------+----------+----------------------------------------------------------------------------------------------------------+
+; rst    ; Input  ; Info     ; Stuck at GND                                                                                             ;
+; locked ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed. ;
++--------+--------+----------+----------------------------------------------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core"                               ;
++--------------+--------+----------+----------------------------------------------------------------------------------------------------------+
+; Port         ; Type   ; Severity ; Details                                                                                                  ;
++--------------+--------+----------+----------------------------------------------------------------------------------------------------------+
+; mem_la_read  ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed. ;
+; mem_la_write ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed. ;
+; mem_la_addr  ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed. ;
+; mem_la_wdata ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed. ;
+; mem_la_wstrb ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed. ;
++--------------+--------+----------+----------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A"                                                                                         ;
++-------------+--------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; Port        ; Type   ; Severity ; Details                                                                                                                                      ;
++-------------+--------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; pcpi_valid  ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; pcpi_insn   ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; pcpi_rs1    ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; pcpi_rs2    ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; pcpi_wr     ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; pcpi_rd     ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; pcpi_wait   ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; pcpi_ready  ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; irq         ; Input  ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
+; eoi         ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; trace_valid ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
+; trace_data  ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed.                                     ;
++-------------+--------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:00     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+    Info: Processing started: Sun Apr 04 04:51:23 2021
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off demo -c top
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file resources/peripherals/vga/ip_vga_pll_altera.v
+    Info (12023): Found entity 1: IP_VGA_PLL_Altera File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_PLL_Altera.v Line: 2
+Info (12021): Found 1 design units, including 1 entities, in source file resources/peripherals/vga/ip_vga_main.sv
+    Info (12023): Found entity 1: IP_VGA_Main File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 26
+Info (12021): Found 1 design units, including 1 entities, in source file resources/peripherals/vga/ip_vga_if.sv
+    Info (12023): Found entity 1: IP_VGA_IF File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_IF.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file resources/peripherals/mem/mem_m10k.sv
+    Info (12023): Found entity 1: mem_m10k File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/mem/mem_m10k.sv Line: 1
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(331) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 331
+Warning (10335): Unrecognized synthesis attribute "full_case" at resources/hdl/picorv32/picorv32.sv(402) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 402
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1116) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1116
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1246) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1246
+Warning (10335): Unrecognized synthesis attribute "full_case" at resources/hdl/picorv32/picorv32.sv(1246) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1246
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1263) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1263
+Warning (10335): Unrecognized synthesis attribute "full_case" at resources/hdl/picorv32/picorv32.sv(1263) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1263
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1309) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1309
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1480) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1480
+Warning (10335): Unrecognized synthesis attribute "full_case" at resources/hdl/picorv32/picorv32.sv(1480) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1480
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1492) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1492
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1578) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1578
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1622) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1622
+Warning (10335): Unrecognized synthesis attribute "full_case" at resources/hdl/picorv32/picorv32.sv(1622) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1622
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1730) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1730
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1761) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1761
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1831) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1831
+Warning (10335): Unrecognized synthesis attribute "full_case" at resources/hdl/picorv32/picorv32.sv(1831) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1831
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1839) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1839
+Warning (10335): Unrecognized synthesis attribute "full_case" at resources/hdl/picorv32/picorv32.sv(1839) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1839
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1854) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1854
+Warning (10335): Unrecognized synthesis attribute "full_case" at resources/hdl/picorv32/picorv32.sv(1854) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1854
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1879) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1879
+Warning (10335): Unrecognized synthesis attribute "full_case" at resources/hdl/picorv32/picorv32.sv(1879) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1879
+Warning (10335): Unrecognized synthesis attribute "parallel_case" at resources/hdl/picorv32/picorv32.sv(1896) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1896
+Warning (10335): Unrecognized synthesis attribute "full_case" at resources/hdl/picorv32/picorv32.sv(1896) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1896
+Info (12021): Found 8 design units, including 8 entities, in source file resources/hdl/picorv32/picorv32.sv
+    Info (12023): Found entity 1: picorv32 File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 62
+    Info (12023): Found entity 2: picorv32_regs File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2169
+    Info (12023): Found entity 3: picorv32_pcpi_mul File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2192
+    Info (12023): Found entity 4: picorv32_pcpi_fast_mul File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2313
+    Info (12023): Found entity 5: picorv32_pcpi_div File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2415
+    Info (12023): Found entity 6: picorv32_axi File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2512
+    Info (12023): Found entity 7: picorv32_axi_adapter File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2737
+    Info (12023): Found entity 8: picorv32_wb File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2836
+Info (12021): Found 1 design units, including 1 entities, in source file resources/hdl/axi/controller_worker.sv
+    Info (12023): Found entity 1: AXI_Controller_Worker File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/axi/controller_worker.sv Line: 1
+Info (12021): Found 3 design units, including 3 entities, in source file resources/hdl/interfaces.sv
+    Info (12023): Found entity 1: Simple_Worker_Mem_IF File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/Interfaces.sv Line: 1
+    Info (12023): Found entity 2: Simple_Manager_Mem_IF File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/Interfaces.sv Line: 89
+    Info (12023): Found entity 3: AXI5_Lite_IF File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/Interfaces.sv Line: 149
+Info (12021): Found 2 design units, including 2 entities, in source file generator/demo_project.sv
+    Info (12023): Found entity 1: top File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 3
+    Info (12023): Found entity 2: AXI_Interconnect File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 111
+Info (12127): Elaborating entity "top" for the top level hierarchy
+Info (12128): Elaborating entity "AXI5_Lite_IF" for hierarchy "AXI5_Lite_IF:M_IF" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 17
+Info (12128): Elaborating entity "Simple_Worker_Mem_IF" for hierarchy "Simple_Worker_Mem_IF:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_if0" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 21
+Info (12128): Elaborating entity "IP_VGA_IF" for hierarchy "IP_VGA_IF:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if1" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 27
+Info (12128): Elaborating entity "picorv32_axi" for hierarchy "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 53
+Info (12128): Elaborating entity "picorv32_axi_adapter" for hierarchy "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32_axi_adapter:axi_adapter" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2652
+Info (12128): Elaborating entity "picorv32" for hierarchy "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2729
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(181): object "dbg_insn_addr" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 181
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(183): object "dbg_mem_valid" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 183
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(184): object "dbg_mem_instr" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 184
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(185): object "dbg_mem_ready" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 185
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(186): object "dbg_mem_addr" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 186
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(187): object "dbg_mem_wdata" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 187
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(188): object "dbg_mem_wstrb" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 188
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(189): object "dbg_mem_rdata" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 189
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(375): object "mem_busy" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 375
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(695): object "dbg_rs1val" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 695
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(696): object "dbg_rs2val" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 696
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(697): object "dbg_rs1val_valid" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 697
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(698): object "dbg_rs2val_valid" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 698
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(767): object "dbg_valid_insn" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 767
+Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(1179): object "dbg_ascii_state" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1179
+Warning (10270): Verilog HDL Case Statement warning at picorv32.sv(332): incomplete case statement has no default case item File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 332
+Warning (10230): Verilog HDL assignment warning at picorv32.sv(617): truncated value with size 32 to match size of target (2) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 617
+Warning (10230): Verilog HDL assignment warning at picorv32.sv(1240): truncated value with size 33 to match size of target (32) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1240
+Warning (10230): Verilog HDL assignment warning at picorv32.sv(1245): truncated value with size 32 to match size of target (1) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1245
+Warning (10763): Verilog HDL warning at picorv32.sv(1247): case statement has overlapping case item expressions with non-constant or don't care bits - unable to check case statement for completeness File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1247
+Warning (10208): Verilog HDL Case Statement warning at picorv32.sv(1247): honored full_case synthesis attribute - differences between design synthesis and simulation may occur File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1247
+Warning (10763): Verilog HDL warning at picorv32.sv(1264): case statement has overlapping case item expressions with non-constant or don't care bits - unable to check case statement for completeness File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1264
+Warning (10208): Verilog HDL Case Statement warning at picorv32.sv(1264): honored full_case synthesis attribute - differences between design synthesis and simulation may occur File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1264
+Warning (10763): Verilog HDL warning at picorv32.sv(1310): case statement has overlapping case item expressions with non-constant or don't care bits - unable to check case statement for completeness File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1310
+Warning (10270): Verilog HDL Case Statement warning at picorv32.sv(1310): incomplete case statement has no default case item File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1310
+Warning (10230): Verilog HDL assignment warning at picorv32.sv(1344): truncated value with size 32 to match size of target (5) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1344
+Warning (10230): Verilog HDL assignment warning at picorv32.sv(1399): truncated value with size 32 to match size of target (5) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1399
+Warning (10763): Verilog HDL warning at picorv32.sv(1493): case statement has overlapping case item expressions with non-constant or don't care bits - unable to check case statement for completeness File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1493
+Warning (10763): Verilog HDL warning at picorv32.sv(1623): case statement has overlapping case item expressions with non-constant or don't care bits - unable to check case statement for completeness File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1623
+Warning (10208): Verilog HDL Case Statement warning at picorv32.sv(1623): honored full_case synthesis attribute - differences between design synthesis and simulation may occur File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1623
+Warning (10230): Verilog HDL assignment warning at picorv32.sv(1726): truncated value with size 32 to match size of target (5) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1726
+Warning (10230): Verilog HDL assignment warning at picorv32.sv(1756): truncated value with size 32 to match size of target (5) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1756
+Warning (10763): Verilog HDL warning at picorv32.sv(1832): case statement has overlapping case item expressions with non-constant or don't care bits - unable to check case statement for completeness File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1832
+Warning (10208): Verilog HDL Case Statement warning at picorv32.sv(1832): honored full_case synthesis attribute - differences between design synthesis and simulation may occur File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1832
+Warning (10230): Verilog HDL assignment warning at picorv32.sv(1837): truncated value with size 32 to match size of target (5) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1837
+Warning (10763): Verilog HDL warning at picorv32.sv(1840): case statement has overlapping case item expressions with non-constant or don't care bits - unable to check case statement for completeness File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1840
+Warning (10208): Verilog HDL Case Statement warning at picorv32.sv(1840): honored full_case synthesis attribute - differences between design synthesis and simulation may occur File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1840
+Warning (10230): Verilog HDL assignment warning at picorv32.sv(1845): truncated value with size 32 to match size of target (5) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1845
+Warning (10763): Verilog HDL warning at picorv32.sv(1855): case statement has overlapping case item expressions with non-constant or don't care bits - unable to check case statement for completeness File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1855
+Warning (10208): Verilog HDL Case Statement warning at picorv32.sv(1855): honored full_case synthesis attribute - differences between design synthesis and simulation may occur File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1855
+Warning (10763): Verilog HDL warning at picorv32.sv(1880): case statement has overlapping case item expressions with non-constant or don't care bits - unable to check case statement for completeness File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1880
+Warning (10208): Verilog HDL Case Statement warning at picorv32.sv(1880): honored full_case synthesis attribute - differences between design synthesis and simulation may occur File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1880
+Warning (10763): Verilog HDL warning at picorv32.sv(1897): case statement has overlapping case item expressions with non-constant or don't care bits - unable to check case statement for completeness File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1897
+Warning (10208): Verilog HDL Case Statement warning at picorv32.sv(1897): honored full_case synthesis attribute - differences between design synthesis and simulation may occur File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 1897
+Warning (10034): Output port "pcpi_insn" at picorv32.sv(111) has no driver File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 111
+Info (12128): Elaborating entity "mem_m10k" for hierarchy "mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 60
+Warning (10850): Verilog HDL warning at mem_m10k.sv(22): number of words (1244) in memory file does not match the number of elements in the address range [0:16383] File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/mem/mem_m10k.sv Line: 22
+Info (12128): Elaborating entity "IP_VGA_Main" for hierarchy "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 76
+Warning (10306): Invalid value "" for synthesis attribute "ram_init_file" at resources/peripherals/vga/IP_VGA_Main.sv(78) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 78
+Warning (10306): Invalid value "" for synthesis attribute "ram_init_file" at resources/peripherals/vga/IP_VGA_Main.sv(82) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 82
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(130): truncated value with size 32 to match size of target (1) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 130
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(134): truncated value with size 32 to match size of target (10) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 134
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(142): truncated value with size 32 to match size of target (9) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 142
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(150): truncated value with size 32 to match size of target (8) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 150
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(161): truncated value with size 32 to match size of target (8) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 161
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(171): truncated value with size 32 to match size of target (24) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 171
+Warning (10958): SystemVerilog warning at IP_VGA_Main.sv(129): unique or priority keyword makes case statement complete File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 129
+Warning (10958): SystemVerilog warning at IP_VGA_Main.sv(184): unique or priority keyword makes case statement complete File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 184
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(239): truncated value with size 32 to match size of target (11) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 239
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(240): truncated value with size 32 to match size of target (11) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 240
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(241): truncated value with size 32 to match size of target (11) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 241
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(242): truncated value with size 32 to match size of target (11) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 242
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(245): truncated value with size 32 to match size of target (10) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 245
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(246): truncated value with size 32 to match size of target (10) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 246
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(247): truncated value with size 32 to match size of target (10) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 247
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(248): truncated value with size 32 to match size of target (10) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 248
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(252): truncated value with size 32 to match size of target (9) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 252
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(261): truncated value with size 32 to match size of target (11) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 261
+Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(273): truncated value with size 32 to match size of target (10) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 273
+Info (12128): Elaborating entity "IP_VGA_PLL_Altera" for hierarchy "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 91
+Info (12128): Elaborating entity "altera_pll" for hierarchy "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll|altera_pll:altera_pll_i" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_PLL_Altera.v Line: 85
+Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "wire_to_nowhere_64" into its bus
+Info (12130): Elaborated megafunction instantiation "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll|altera_pll:altera_pll_i" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_PLL_Altera.v Line: 85
+Info (12133): Instantiated megafunction "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll|altera_pll:altera_pll_i" with the following parameter: File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_PLL_Altera.v Line: 85
+    Info (12134): Parameter "fractional_vco_multiplier" = "true"
+    Info (12134): Parameter "reference_clock_frequency" = "50.0 MHz"
+    Info (12134): Parameter "operation_mode" = "normal"
+    Info (12134): Parameter "number_of_clocks" = "1"
+    Info (12134): Parameter "output_clock_frequency0" = "102.100000 MHz"
+    Info (12134): Parameter "phase_shift0" = "0 ps"
+    Info (12134): Parameter "duty_cycle0" = "50"
+    Info (12134): Parameter "output_clock_frequency1" = "0 MHz"
+    Info (12134): Parameter "phase_shift1" = "0 ps"
+    Info (12134): Parameter "duty_cycle1" = "50"
+    Info (12134): Parameter "output_clock_frequency2" = "0 MHz"
+    Info (12134): Parameter "phase_shift2" = "0 ps"
+    Info (12134): Parameter "duty_cycle2" = "50"
+    Info (12134): Parameter "output_clock_frequency3" = "0 MHz"
+    Info (12134): Parameter "phase_shift3" = "0 ps"
+    Info (12134): Parameter "duty_cycle3" = "50"
+    Info (12134): Parameter "output_clock_frequency4" = "0 MHz"
+    Info (12134): Parameter "phase_shift4" = "0 ps"
+    Info (12134): Parameter "duty_cycle4" = "50"
+    Info (12134): Parameter "output_clock_frequency5" = "0 MHz"
+    Info (12134): Parameter "phase_shift5" = "0 ps"
+    Info (12134): Parameter "duty_cycle5" = "50"
+    Info (12134): Parameter "output_clock_frequency6" = "0 MHz"
+    Info (12134): Parameter "phase_shift6" = "0 ps"
+    Info (12134): Parameter "duty_cycle6" = "50"
+    Info (12134): Parameter "output_clock_frequency7" = "0 MHz"
+    Info (12134): Parameter "phase_shift7" = "0 ps"
+    Info (12134): Parameter "duty_cycle7" = "50"
+    Info (12134): Parameter "output_clock_frequency8" = "0 MHz"
+    Info (12134): Parameter "phase_shift8" = "0 ps"
+    Info (12134): Parameter "duty_cycle8" = "50"
+    Info (12134): Parameter "output_clock_frequency9" = "0 MHz"
+    Info (12134): Parameter "phase_shift9" = "0 ps"
+    Info (12134): Parameter "duty_cycle9" = "50"
+    Info (12134): Parameter "output_clock_frequency10" = "0 MHz"
+    Info (12134): Parameter "phase_shift10" = "0 ps"
+    Info (12134): Parameter "duty_cycle10" = "50"
+    Info (12134): Parameter "output_clock_frequency11" = "0 MHz"
+    Info (12134): Parameter "phase_shift11" = "0 ps"
+    Info (12134): Parameter "duty_cycle11" = "50"
+    Info (12134): Parameter "output_clock_frequency12" = "0 MHz"
+    Info (12134): Parameter "phase_shift12" = "0 ps"
+    Info (12134): Parameter "duty_cycle12" = "50"
+    Info (12134): Parameter "output_clock_frequency13" = "0 MHz"
+    Info (12134): Parameter "phase_shift13" = "0 ps"
+    Info (12134): Parameter "duty_cycle13" = "50"
+    Info (12134): Parameter "output_clock_frequency14" = "0 MHz"
+    Info (12134): Parameter "phase_shift14" = "0 ps"
+    Info (12134): Parameter "duty_cycle14" = "50"
+    Info (12134): Parameter "output_clock_frequency15" = "0 MHz"
+    Info (12134): Parameter "phase_shift15" = "0 ps"
+    Info (12134): Parameter "duty_cycle15" = "50"
+    Info (12134): Parameter "output_clock_frequency16" = "0 MHz"
+    Info (12134): Parameter "phase_shift16" = "0 ps"
+    Info (12134): Parameter "duty_cycle16" = "50"
+    Info (12134): Parameter "output_clock_frequency17" = "0 MHz"
+    Info (12134): Parameter "phase_shift17" = "0 ps"
+    Info (12134): Parameter "duty_cycle17" = "50"
+    Info (12134): Parameter "pll_type" = "General"
+    Info (12134): Parameter "pll_subtype" = "General"
+Info (12128): Elaborating entity "AXI_Controller_Worker" for hierarchy "AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 84
+Warning (10230): Verilog HDL assignment warning at controller_worker.sv(201): truncated value with size 3 to match size of target (2) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/axi/controller_worker.sv Line: 201
+Warning (10230): Verilog HDL assignment warning at controller_worker.sv(336): truncated value with size 3 to match size of target (2) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/axi/controller_worker.sv Line: 336
+Info (12128): Elaborating entity "AXI_Interconnect" for hierarchy "AXI_Interconnect:xbar" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 100
+Warning (276027): Inferred dual-clock RAM node "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|palette_rtl_1" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
+Warning (276020): Inferred RAM node "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
+Warning (276020): Inferred RAM node "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
+Info (276014): Found 2 instances of uninferred RAM logic
+    Info (276007): RAM logic "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|vram" is uninferred due to asynchronous read logic File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 78
+    Info (276007): RAM logic "mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem" is uninferred due to asynchronous read logic File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/mem/mem_m10k.sv Line: 20
+Error (276003): Cannot convert all sets of registers into RAM megafunctions when creating nodes. The resulting number of registers remaining in design exceeds the number of registers in the device or the number specified by the assignment max_number_of_registers_from_uninferred_rams. This can cause longer compilation time or result in insufficient memory to complete Analysis and Synthesis
+Warning (12241): 4 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Info (144001): Generated suppressed messages file Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/output_files/top.map.smsg
+Error: Quartus Prime Analysis & Synthesis was unsuccessful. 1 error, 100 warnings
+    Error: Peak virtual memory: 5182 megabytes
+    Error: Processing ended: Sun Apr 04 04:51:48 2021
+    Error: Elapsed time: 00:00:25
+    Error: Total CPU time (on all processors): 00:00:37
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/output_files/top.map.smsg.
+
+

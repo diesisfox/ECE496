@@ -250,7 +250,7 @@ end
 assign scanline = yState == ACTIVE ? y_out<<H_DIV_960 : 'b0;
 
 always @(posedge VGA_IF.VGA_CLK) begin : VgaController
-    if(en_s2)begin
+    if(!en_s2)begin
         x_out <= 'b0;
         y_out <= 'b0;
         xState <= SYNC;
@@ -285,7 +285,7 @@ always @(posedge VGA_IF.VGA_CLK) begin : VgaController
 end
 
 always @(posedge VGA_IF.VGA_CLK) begin : VgaDatapath
-    if(en_s2)begin
+    if(!en_s2)begin
         p_out <= 'b0;
         blank_1 <= 'b0;
         hsync_1 <= 'b0;
