@@ -199,6 +199,7 @@ def write_axi_interconnect(project_json, ip_json) -> str:
         inst_name = module["parameters"]["Verilog Instance Name"]
         base_addr = module["parameters"]["Base Address"]
         num_bits = ip_json[module["moduleType"]]["addrBits"]
+        if (module["moduleType"] == "Memory"): num_bits = module["parameters"]["Address Width"]
 
         # Params
         interconnect_params += ("    parameter [31:0] " + inst_name + "_base_addr = 32'h" + base_addr + ",\n")
@@ -481,6 +482,7 @@ def write_controller_and_interconnect_inst (project_json, ip_json) -> str:
         inst_name = module["parameters"]["Verilog Instance Name"]
         base_addr = module["parameters"]["Base Address"]
         num_bits = ip_json[module["moduleType"]]["addrBits"]
+        if (module["moduleType"] == "Memory"): num_bits = module["parameters"]["Address Width"]
         verilog += "        ." + inst_name + "_base_addr(32'h" + base_addr + "),\n"
         verilog += "        ." + inst_name + "_num_bits(" + str(num_bits) + "),\n"
     

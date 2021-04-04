@@ -1,5 +1,6 @@
 module mem_m10k #(
-    parameter int N_ADDR_BITS = 8
+    parameter int N_ADDR_BITS = 8,
+    parameter [31:0] ADDR = 32'h0000_0000
 ) (
     Simple_Worker_Mem_IF.WORKER mem_if
 );

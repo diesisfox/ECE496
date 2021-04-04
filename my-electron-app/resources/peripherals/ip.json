@@ -30,6 +30,37 @@
             }
         ]
     },
+    "Memory" : {
+        "moduleType": "Memory",
+        "verilogName": "mem_m10k",
+        "addrBits": 0,
+        "parameters": {
+            "Verilog Instance Name": {
+                "paramName": "Verilog Instance Name",
+                "paramType": "Symbol",
+                "important": false
+            },
+            "Base Address": {
+                "paramName": "Base Address",
+                "verilogName": "ADDR",
+                "paramType": "Hexadecimal",
+                "important": true
+            },
+            "Address Width": {
+                "paramName": "Address Width",
+                "verilogName": "N_ADDR_BITS",
+                "paramType": "Int",
+                "important": true
+            }
+        },
+        "interfaces": [
+            {
+                "type": "Simple_Mem_IF",
+                "port": "Bus",
+                "pinmap": []
+            }
+        ]
+    },
     "GPIO" : {
         "moduleType": "GPIO",
         "verilogName": "IP_GPIO_Main",
