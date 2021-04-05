@@ -1,0 +1,16 @@
+# compile verilog/system verilog design source files
+sv xil_defaultlib  \
+"../../../../../../ECE496/my-electron-app/resources/peripherals/vga/IP_VGA_IF.sv" \
+"../../../../../../ECE496/my-electron-app/resources/peripherals/vga/IP_VGA_Main.sv" \
+"../../../../../../ECE496/my-electron-app/resources/hdl/Interfaces.sv" \
+"../../../../../../ECE496/my-electron-app/resources/hdl/axi/controller_worker.sv" \
+"../../../../Demo_System_Smoke_Test.srcs/sources_1/imports/generator/demo_project.sv" \
+"../../../../../../ECE496/my-electron-app/resources/peripherals/mem/mem_m10k.sv" \
+"../../../../../../ECE496/my-electron-app/resources/hdl/picorv32/picorv32.sv" \
+"../../../../Demo_System_Smoke_Test.srcs/sim_1/new/Demo_Project_TB.sv" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

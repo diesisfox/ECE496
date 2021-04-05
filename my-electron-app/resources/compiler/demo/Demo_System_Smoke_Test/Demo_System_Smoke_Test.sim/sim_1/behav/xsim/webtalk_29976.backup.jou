@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2018.3.1 (64-bit)
+# SW Build 2489853 on Tue Mar 26 04:18:30 MDT 2019
+# IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
+# Start of session at: Sat Apr  3 22:34:39 2021
+# Process ID: 29976
+# Current directory: /home/andrew/ECE496-sandbox/Demo_System_Smoke_Test/Demo_System_Smoke_Test.sim/sim_1/behav/xsim
+# Command line: wbtcv -mode batch -source /home/andrew/ECE496-sandbox/Demo_System_Smoke_Test/Demo_System_Smoke_Test.sim/sim_1/behav/xsim/xsim.dir/Demo_Project_TB_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/andrew/ECE496-sandbox/Demo_System_Smoke_Test/Demo_System_Smoke_Test.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: /home/andrew/ECE496-sandbox/Demo_System_Smoke_Test/Demo_System_Smoke_Test.sim/sim_1/behav/xsim/webtalk.jou
+#-----------------------------------------------------------
+source /home/andrew/ECE496-sandbox/Demo_System_Smoke_Test/Demo_System_Smoke_Test.sim/sim_1/behav/xsim/xsim.dir/Demo_Project_TB_behav/webtalk/xsim_webtalk.tcl -notrace

@@ -1,0 +1,191 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dZ:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus
+YAXI5_Lite_IF
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z2 !s110 1617422458
+!i10b 1
+!s100 e3nn599ZhbjI:?2_n5XPi2
+Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IX6INnRTB7J9:2lgao_RS13
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+Z5 w1617341116
+Z6 8Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/Interfaces.sv
+Z7 FZ:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/Interfaces.sv
+!i122 0
+L0 149 0
+Z8 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z9 !s108 1617422458.000000
+Z10 !s107 Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/Interfaces.sv|
+Z11 !s90 -reportprogress|300|-work|work|Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/Interfaces.sv|
+!i113 1
+Z12 o-work work
+Z13 tCvgOpt 0
+n@a@x@i5_@lite_@i@f
+YIP_VGA_IF
+R1
+!s110 1617422489
+!i10b 1
+!s100 Ql9dbhW`l`OTFEgWWfcSD2
+R3
+IKBG]T@:=AG8mV38Lc3YjI2
+R4
+S1
+R0
+w1617410904
+8Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_IF.sv
+FZ:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_IF.sv
+!i122 1
+Z14 L0 1 0
+R8
+r1
+!s85 0
+31
+!s108 1617422489.000000
+!s107 Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_IF.sv|
+!s90 -reportprogress|300|-work|work|Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_IF.sv|
+!i113 1
+R12
+R13
+n@i@p_@v@g@a_@i@f
+vIP_VGA_Main
+R1
+!s110 1617422724
+!i10b 1
+!s100 =@MzGz_PL=WJ_>9J;ZEND1
+R3
+IYiM]H1I_IL1OjnQXXQ6@_0
+R4
+S1
+R0
+w1617422722
+8Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_Main.sv
+FZ:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_Main.sv
+!i122 3
+L0 29 304
+R8
+r1
+!s85 0
+31
+!s108 1617422724.000000
+!s107 Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_Main.sv|
+!s90 -reportprogress|300|-work|work|Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_Main.sv|
+!i113 1
+R12
+R13
+n@i@p_@v@g@a_@main
+vIP_VGA_PLL_Altera
+!s110 1617422491
+!i10b 1
+!s100 lQek:5olnM_FA7G4DD_Z82
+R3
+I[=`Ni]<@QPC@24JiGoX1Y3
+R4
+R0
+w1617396138
+8Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_PLL_Altera.v
+FZ:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_PLL_Altera.v
+!i122 2
+L0 2 85
+R8
+r1
+!s85 0
+31
+!s108 1617422491.000000
+!s107 Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_PLL_Altera.v|
+!s90 -reportprogress|300|-work|work|Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_PLL_Altera.v|
+!i113 1
+R12
+R13
+n@i@p_@v@g@a_@p@l@l_@altera
+vIP_VGA_tb
+R1
+!s110 1617422731
+!i10b 1
+!s100 JSm9cT?C;4DeYKH9QjbGk0
+R3
+IL3P<`baGBC851X2FCU2FG1
+R4
+S1
+R0
+w1617411424
+8Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_tb.sv
+FZ:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_tb.sv
+!i122 4
+L0 1 64
+R8
+r1
+!s85 0
+31
+!s108 1617422731.000000
+!s107 Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_tb.sv|
+!s90 -reportprogress|300|-work|work|Z:/Development/ECE496/ECE496/my-electron-app/resources/peripherals/tb_quartus/vga_src/IP_VGA_tb.sv|
+!i113 1
+R12
+R13
+n@i@p_@v@g@a_tb
+YSimple_Manager_Mem_IF
+R1
+R2
+!i10b 1
+!s100 4LF_VCej`n2GQG3G951D;2
+R3
+I908?=]XIg`F=dCKm=5FY@1
+R4
+S1
+R0
+R5
+R6
+R7
+!i122 0
+L0 89 0
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R12
+R13
+n@simple_@manager_@mem_@i@f
+YSimple_Worker_Mem_IF
+R1
+R2
+!i10b 1
+!s100 =7`OhmW[c^[3OL=ne7NiP2
+R3
+IofzeS[8JUC_Kb?KG;J_9H2
+R4
+S1
+R0
+R5
+R6
+R7
+!i122 0
+R14
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R12
+R13
+n@simple_@worker_@mem_@i@f

@@ -1,0 +1,43 @@
+
+State Machine - |top|AXI_Interconnect:xbar|read_state
+Name read_state.READ_IDLE read_state.AR_DONE read_state.ARADDR_LATCHED 
+read_state.READ_IDLE 0 0 0 
+read_state.ARADDR_LATCHED 1 0 1 
+read_state.AR_DONE 1 1 0 
+
+State Machine - |top|AXI_Interconnect:xbar|write_state
+Name write_state.WRITE_IDLE write_state.AW_DONE write_state.AWADDR_LATCHED 
+write_state.WRITE_IDLE 0 0 0 
+write_state.AWADDR_LATCHED 1 0 1 
+write_state.AW_DONE 1 1 0 
+
+State Machine - |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpu_state
+Name cpu_state.cpu_state_trap cpu_state.cpu_state_fetch cpu_state.cpu_state_ld_rs1 cpu_state.cpu_state_ld_rs2 cpu_state.cpu_state_exec cpu_state.cpu_state_shift cpu_state.cpu_state_stmem cpu_state.cpu_state_ldmem 
+cpu_state.cpu_state_trap 0 0 0 0 0 0 0 0 
+cpu_state.cpu_state_stmem 1 0 0 0 0 0 1 0 
+cpu_state.cpu_state_shift 1 0 0 0 0 1 0 0 
+cpu_state.cpu_state_exec 1 0 0 0 1 0 0 0 
+cpu_state.cpu_state_ld_rs2 1 0 0 1 0 0 0 0 
+cpu_state.cpu_state_ld_rs1 1 0 1 0 0 0 0 0 
+cpu_state.cpu_state_fetch 1 1 0 0 0 0 0 0 
+cpu_state.cpu_state_ldmem 1 0 0 0 0 0 0 1 
+
+State Machine - |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_wordsize
+Name mem_wordsize.00 mem_wordsize.10 mem_wordsize.01 
+mem_wordsize.00 0 0 0 
+mem_wordsize.01 1 0 1 
+mem_wordsize.10 1 1 0 
+
+State Machine - |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|xState
+Name xState.FRONT xState.ACTIVE xState.BACK xState.SYNC 
+xState.SYNC 0 0 0 0 
+xState.BACK 0 0 1 1 
+xState.ACTIVE 0 1 0 1 
+xState.FRONT 1 0 0 1 
+
+State Machine - |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|yState
+Name yState.FRONT yState.ACTIVE yState.BACK yState.SYNC 
+yState.SYNC 0 0 0 0 
+yState.BACK 0 0 1 1 
+yState.ACTIVE 0 1 0 1 
+yState.FRONT 1 0 0 1 

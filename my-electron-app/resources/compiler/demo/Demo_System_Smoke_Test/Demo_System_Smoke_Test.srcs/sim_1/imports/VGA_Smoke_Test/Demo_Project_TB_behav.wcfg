@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="Demo_Project_TB_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="Demo_Project_TB" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="54670478276284fs"></ZoomStartTime>
+      <ZoomEndTime time="54673515277674fs"></ZoomEndTime>
+      <Cursor1Time time="109984950000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="374"></NameColumnWidth>
+      <ValueColumnWidth column_width="101"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="35" />
+   <wvobject type="logic" fp_name="/Demo_Project_TB/clock">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/reset_n">
+      <obj_property name="ElementShortName">reset_n</obj_property>
+      <obj_property name="ObjectShortName">reset_n</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/cpu_trap">
+      <obj_property name="ElementShortName">cpu_trap</obj_property>
+      <obj_property name="ObjectShortName">cpu_trap</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F/en_s1">
+      <obj_property name="ElementShortName">en_s1</obj_property>
+      <obj_property name="ObjectShortName">en_s1</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F/en_s2">
+      <obj_property name="ElementShortName">en_s2</obj_property>
+      <obj_property name="ObjectShortName">en_s2</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/VGA_R">
+      <obj_property name="ElementShortName">VGA_R[7:0]</obj_property>
+      <obj_property name="ObjectShortName">VGA_R[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/VGA_G">
+      <obj_property name="ElementShortName">VGA_G[7:0]</obj_property>
+      <obj_property name="ObjectShortName">VGA_G[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/VGA_B">
+      <obj_property name="ElementShortName">VGA_B[7:0]</obj_property>
+      <obj_property name="ObjectShortName">VGA_B[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/VGA_CLK">
+      <obj_property name="ElementShortName">VGA_CLK</obj_property>
+      <obj_property name="ObjectShortName">VGA_CLK</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/VGA_SYNC_N">
+      <obj_property name="ElementShortName">VGA_SYNC_N</obj_property>
+      <obj_property name="ObjectShortName">VGA_SYNC_N</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/VGA_BLANK_N">
+      <obj_property name="ElementShortName">VGA_BLANK_N</obj_property>
+      <obj_property name="ObjectShortName">VGA_BLANK_N</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/VGA_HS">
+      <obj_property name="ElementShortName">VGA_HS</obj_property>
+      <obj_property name="ObjectShortName">VGA_HS</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/VGA_VS">
+      <obj_property name="ElementShortName">VGA_VS</obj_property>
+      <obj_property name="ObjectShortName">VGA_VS</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/PERIOD">
+      <obj_property name="ElementShortName">PERIOD[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PERIOD[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/HALF_PERIOD">
+      <obj_property name="ElementShortName">HALF_PERIOD[31:0]</obj_property>
+      <obj_property name="ObjectShortName">HALF_PERIOD[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A/picorv32_core/reg_pc">
+      <obj_property name="ElementShortName">reg_pc[31:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_pc[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A/picorv32_core/cpuregs">
+      <obj_property name="ElementShortName">cpuregs[0:31][31:0]</obj_property>
+      <obj_property name="ObjectShortName">cpuregs[0:31][31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem">
+      <obj_property name="ElementShortName">mem[0:63][31:0]</obj_property>
+      <obj_property name="ObjectShortName">mem[0:63][31:0]</obj_property>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[0]">
+         <obj_property name="ElementShortName">[0][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][31:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[1]">
+         <obj_property name="ElementShortName">[1][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[2]">
+         <obj_property name="ElementShortName">[2][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[3]">
+         <obj_property name="ElementShortName">[3][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[4]">
+         <obj_property name="ElementShortName">[4][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[4][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[5]">
+         <obj_property name="ElementShortName">[5][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[5][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[6]">
+         <obj_property name="ElementShortName">[6][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[6][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[7]">
+         <obj_property name="ElementShortName">[7][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[7][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[8]">
+         <obj_property name="ElementShortName">[8][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[8][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[9]">
+         <obj_property name="ElementShortName">[9][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[9][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[10]">
+         <obj_property name="ElementShortName">[10][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[10][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[11]">
+         <obj_property name="ElementShortName">[11][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[11][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[12]">
+         <obj_property name="ElementShortName">[12][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[12][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[13]">
+         <obj_property name="ElementShortName">[13][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[13][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[14]">
+         <obj_property name="ElementShortName">[14][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[14][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[15]">
+         <obj_property name="ElementShortName">[15][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[15][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[16]">
+         <obj_property name="ElementShortName">[16][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[16][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[17]">
+         <obj_property name="ElementShortName">[17][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[17][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[18]">
+         <obj_property name="ElementShortName">[18][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[18][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[19]">
+         <obj_property name="ElementShortName">[19][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[19][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[20]">
+         <obj_property name="ElementShortName">[20][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[20][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[21]">
+         <obj_property name="ElementShortName">[21][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[21][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[22]">
+         <obj_property name="ElementShortName">[22][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[22][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[23]">
+         <obj_property name="ElementShortName">[23][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[23][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[24]">
+         <obj_property name="ElementShortName">[24][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[24][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[25]">
+         <obj_property name="ElementShortName">[25][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[25][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[26]">
+         <obj_property name="ElementShortName">[26][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[26][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[27]">
+         <obj_property name="ElementShortName">[27][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[27][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[28]">
+         <obj_property name="ElementShortName">[28][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[28][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[29]">
+         <obj_property name="ElementShortName">[29][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[29][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[30]">
+         <obj_property name="ElementShortName">[30][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[30][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[31]">
+         <obj_property name="ElementShortName">[31][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[31][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[32]">
+         <obj_property name="ElementShortName">[32][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[32][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[33]">
+         <obj_property name="ElementShortName">[33][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[33][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[34]">
+         <obj_property name="ElementShortName">[34][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[34][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[35]">
+         <obj_property name="ElementShortName">[35][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[35][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[36]">
+         <obj_property name="ElementShortName">[36][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[36][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[37]">
+         <obj_property name="ElementShortName">[37][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[37][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[38]">
+         <obj_property name="ElementShortName">[38][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[38][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[39]">
+         <obj_property name="ElementShortName">[39][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[39][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[40]">
+         <obj_property name="ElementShortName">[40][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[40][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[41]">
+         <obj_property name="ElementShortName">[41][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[41][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[42]">
+         <obj_property name="ElementShortName">[42][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[42][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[43]">
+         <obj_property name="ElementShortName">[43][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[43][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[44]">
+         <obj_property name="ElementShortName">[44][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[44][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[45]">
+         <obj_property name="ElementShortName">[45][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[45][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[46]">
+         <obj_property name="ElementShortName">[46][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[46][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[47]">
+         <obj_property name="ElementShortName">[47][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[47][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[48]">
+         <obj_property name="ElementShortName">[48][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[48][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[49]">
+         <obj_property name="ElementShortName">[49][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[49][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[50]">
+         <obj_property name="ElementShortName">[50][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[50][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[51]">
+         <obj_property name="ElementShortName">[51][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[51][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[52]">
+         <obj_property name="ElementShortName">[52][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[52][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[53]">
+         <obj_property name="ElementShortName">[53][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[53][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[54]">
+         <obj_property name="ElementShortName">[54][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[54][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[55]">
+         <obj_property name="ElementShortName">[55][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[55][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[56]">
+         <obj_property name="ElementShortName">[56][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[56][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[57]">
+         <obj_property name="ElementShortName">[57][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[57][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[58]">
+         <obj_property name="ElementShortName">[58][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[58][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[59]">
+         <obj_property name="ElementShortName">[59][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[59][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[60]">
+         <obj_property name="ElementShortName">[60][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[60][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[61]">
+         <obj_property name="ElementShortName">[61][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[61][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[62]">
+         <obj_property name="ElementShortName">[62][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[62][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7/mem[63]">
+         <obj_property name="ElementShortName">[63][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[63][31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group33285">
+      <obj_property name="label">AXI M_IF</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/ACLK">
+         <obj_property name="ElementShortName">ACLK[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ACLK[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/ARESETn">
+         <obj_property name="ElementShortName">ARESETn[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ARESETn[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/AWADDR">
+         <obj_property name="ElementShortName">AWADDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">AWADDR[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/AWPROT">
+         <obj_property name="ElementShortName">AWPROT[2:0]</obj_property>
+         <obj_property name="ObjectShortName">AWPROT[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/AWVALID">
+         <obj_property name="ElementShortName">AWVALID[0:0]</obj_property>
+         <obj_property name="ObjectShortName">AWVALID[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/AWREADY">
+         <obj_property name="ElementShortName">AWREADY[0:0]</obj_property>
+         <obj_property name="ObjectShortName">AWREADY[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/AWSIZE">
+         <obj_property name="ElementShortName">AWSIZE[2:0]</obj_property>
+         <obj_property name="ObjectShortName">AWSIZE[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/AWID">
+         <obj_property name="ElementShortName">AWID[0:0]</obj_property>
+         <obj_property name="ObjectShortName">AWID[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/WDATA">
+         <obj_property name="ElementShortName">WDATA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">WDATA[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/WSTRB">
+         <obj_property name="ElementShortName">WSTRB[3:0]</obj_property>
+         <obj_property name="ObjectShortName">WSTRB[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/WVALID">
+         <obj_property name="ElementShortName">WVALID[0:0]</obj_property>
+         <obj_property name="ObjectShortName">WVALID[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/WREADY">
+         <obj_property name="ElementShortName">WREADY[0:0]</obj_property>
+         <obj_property name="ObjectShortName">WREADY[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/BRESP">
+         <obj_property name="ElementShortName">BRESP[1:0]</obj_property>
+         <obj_property name="ObjectShortName">BRESP[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/BVALID">
+         <obj_property name="ElementShortName">BVALID[0:0]</obj_property>
+         <obj_property name="ObjectShortName">BVALID[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/BREADY">
+         <obj_property name="ElementShortName">BREADY[0:0]</obj_property>
+         <obj_property name="ObjectShortName">BREADY[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/BID">
+         <obj_property name="ElementShortName">BID[0:0]</obj_property>
+         <obj_property name="ObjectShortName">BID[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/ARADDR">
+         <obj_property name="ElementShortName">ARADDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ARADDR[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/ARPROT">
+         <obj_property name="ElementShortName">ARPROT[2:0]</obj_property>
+         <obj_property name="ObjectShortName">ARPROT[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/ARVALID">
+         <obj_property name="ElementShortName">ARVALID[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ARVALID[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/ARREADY">
+         <obj_property name="ElementShortName">ARREADY[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ARREADY[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/ARSIZE">
+         <obj_property name="ElementShortName">ARSIZE[2:0]</obj_property>
+         <obj_property name="ObjectShortName">ARSIZE[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/ARID">
+         <obj_property name="ElementShortName">ARID[0:0]</obj_property>
+         <obj_property name="ObjectShortName">ARID[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/RDATA">
+         <obj_property name="ElementShortName">RDATA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">RDATA[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/RRESP">
+         <obj_property name="ElementShortName">RRESP[1:0]</obj_property>
+         <obj_property name="ObjectShortName">RRESP[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/RVALID">
+         <obj_property name="ElementShortName">RVALID[0:0]</obj_property>
+         <obj_property name="ObjectShortName">RVALID[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/RREADY">
+         <obj_property name="ElementShortName">RREADY[0:0]</obj_property>
+         <obj_property name="ObjectShortName">RREADY[0:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/Demo_Project_TB/DUT/M_IF/RID">
+         <obj_property name="ElementShortName">RID[0:0]</obj_property>
+         <obj_property name="ObjectShortName">RID[0:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F/x_in">
+      <obj_property name="ElementShortName">x_in[9:0]</obj_property>
+      <obj_property name="ObjectShortName">x_in[9:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F/y_in">
+      <obj_property name="ElementShortName">y_in[8:0]</obj_property>
+      <obj_property name="ObjectShortName">y_in[8:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F/p_in">
+      <obj_property name="ElementShortName">p_in[3:0]</obj_property>
+      <obj_property name="ObjectShortName">p_in[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/clock">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/reset_n">
+      <obj_property name="ElementShortName">reset_n</obj_property>
+      <obj_property name="ObjectShortName">reset_n</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/wr_addr">
+      <obj_property name="ElementShortName">wr_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/wr_data">
+      <obj_property name="ElementShortName">wr_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/wr_byteEn">
+      <obj_property name="ElementShortName">wr_byteEn[3:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_byteEn[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/wr_ready">
+      <obj_property name="ElementShortName">wr_ready</obj_property>
+      <obj_property name="ObjectShortName">wr_ready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/wr_valid">
+      <obj_property name="ElementShortName">wr_valid</obj_property>
+      <obj_property name="ObjectShortName">wr_valid</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/rd_addr">
+      <obj_property name="ElementShortName">rd_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/rd_data">
+      <obj_property name="ElementShortName">rd_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/rd_byteEn">
+      <obj_property name="ElementShortName">rd_byteEn[3:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_byteEn[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/rd_valid">
+      <obj_property name="ElementShortName">rd_valid</obj_property>
+      <obj_property name="ObjectShortName">rd_valid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller/USER_IF/rd_ready">
+      <obj_property name="ElementShortName">rd_ready</obj_property>
+      <obj_property name="ObjectShortName">rd_ready</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/Demo_Project_TB/DUT/IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F/palette">
+      <obj_property name="ElementShortName">palette[0:15][23:0]</obj_property>
+      <obj_property name="ObjectShortName">palette[0:15][23:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+</wave_config>

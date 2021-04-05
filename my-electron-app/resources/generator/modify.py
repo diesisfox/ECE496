@@ -79,6 +79,76 @@ def get_module_index_by_uuid(project_json: list, module_uuid: str) -> int:
         exit(Errors.BAD_PROJ.value)
     return index
 
+def validate(ip_json: dict) -> None:
+    project_json = load_json(sys.argv[PROJECT_JSON_POS])
+    PASS = 1
+    NUM_ERRORS = 0
+    NUM_WARNINGS = 0
+
+    moduleOccurrenceDict = dict()
+    for module in ip_json:
+        moduleOccurrenceDict[ip_json[module]["moduleType"]] = 0
+
+    for module in project_json:
+        moduleOccurrenceDict[module["moduleType"]] += 1
+
+    # Check numbers of modules in a system
+    # Note: we don't check anything using GPIO pins because the math would
+    #       be a bit tricky
+    if (moduleOccurrenceDict["CPU"] != 1):
+        print("Error: number of 'CPU' modules in system must be exactly 1")
+        NUM_ERRORS += 1
+        PASS = 0
+    
+    if (moduleOccurrenceDict["Memory"] == 0):
+        print("Error: must have at least one 'Memory' in system")
+        NUM_ERRORS += 1
+        PASS = 0
+
+    if (moduleOccurrenceDict["VGA"] > 6):
+        print("Error: cannot have more than six VGAs in system due to PLL limitations")
+        NUM_ERRORS += 1
+        PASS = 0
+    elif (moduleOccurrenceDict["VGA"] > 1):
+        NUM_WARNINGS += 1
+        print("Warning: more than 1 VGA in system will require using GPIO pins for VGA outputs")
+
+        
+    # TODO: would be nice if we checked the following:
+    #       CPU's PC Start Address lands in a memory block's address range
+    #       GPIO pin math - don't exceed number of GPIOs
+
+    # We're doing this O(n^2) - kinda gross, but as long as systems don't get
+    #     too big it should be OK
+    # Check no address ranges overlap
+    addressRanges = {}
+    for module in project_json:
+        if (module["moduleType"] == "CPU"): continue
+        base_address = module["parameters"]["Base Address"]
+        base_address = int(base_address.replace("_", ""), 16)
+        addr_bits = ip_json[module["moduleType"]]["addrBits"]
+        if (module["moduleType"] == "Memory"): addr_bits = int(module["parameters"]["Address Width"])
+        # We subtract 1 here to make the range inclusive
+        upper_address = base_address + 2**addr_bits - 1
+        for verilog_name, address_range in addressRanges.items():
+            if (base_address >= address_range[0] and base_address <= address_range[1]):
+                PASS = 0
+                NUM_ERRORS += 1
+                print("Error: base address of module " + module["parameters"]["Verilog Instance Name"] + " overlaps with address range of module " + verilog_name)
+            if (upper_address >= address_range[0] and upper_address <= address_range[1]):
+                PASS = 0
+                NUM_ERRORS += 1
+                print("Error: upper address bound of module " + module["parameters"]["Verilog Instance Name"] + " overlaps with address range of module " + verilog_name)
+        addressRanges[module["parameters"]["Verilog Instance Name"]] = [base_address, upper_address]
+
+    if (PASS == 1):
+        print("Validation passed! Found " + str(NUM_ERRORS) + " errors and " + str(NUM_WARNINGS) + " warnings")
+    else:
+        print("Validation failed! Found " + str(NUM_ERRORS) + " errors and " + str(NUM_WARNINGS) + " warnings")
+
+    return
+    
+
 
 def add_module(ip_json: dict) -> None:
     if len(sys.argv) != 4:
@@ -249,6 +319,8 @@ def main():
             change_parameter(ip_json)
         elif sys.argv[COMMAND_POS] == "rearrange_module":
             rearrange_module(ip_json)
+        elif sys.argv[COMMAND_POS] == "validate":
+            validate(ip_json)
         else:
             print(f"ERROR[{Errors.BAD_ARGS}]: UNKNOWN VERB: {sys.argv[COMMAND_POS]}")
             exit(Errors.BAD_ARGS.value)

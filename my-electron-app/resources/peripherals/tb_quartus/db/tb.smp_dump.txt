@@ -1,0 +1,14 @@
+
+State Machine - |IP_VGA_hwtb|IP_VGA_Main:dut|yState
+Name yState.FRONT yState.ACTIVE yState.BACK yState.SYNC 
+yState.SYNC 0 0 0 0 
+yState.BACK 0 0 1 1 
+yState.ACTIVE 0 1 0 1 
+yState.FRONT 1 0 0 1 
+
+State Machine - |IP_VGA_hwtb|IP_VGA_Main:dut|xState
+Name xState.FRONT xState.ACTIVE xState.BACK xState.SYNC 
+xState.SYNC 0 0 0 0 
+xState.BACK 0 0 1 1 
+xState.ACTIVE 0 1 0 1 
+xState.FRONT 1 0 0 1 

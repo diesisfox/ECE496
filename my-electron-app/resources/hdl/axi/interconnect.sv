@@ -89,7 +89,7 @@ module AXI_Interconnect #(
         if (M_IF.ARESETn == 1'b0) begin
             araddr_latched <= 32'b0;
         end else begin
-            if (M_IF.ARREADY && read_state == READ_IDLE) begin
+            if (M_IF.ARVALID && read_state == READ_IDLE) begin
                 araddr_latched <= M_IF.ARADDR;
             end
         end
@@ -248,7 +248,7 @@ module AXI_Interconnect #(
         if (M_IF.ARESETn == 1'b0) begin
             awaddr_latched <= 32'b0;
         end else begin
-            if (M_IF.AWREADY && write_state == WRITE_IDLE) begin
+            if (M_IF.AWVALID && write_state == WRITE_IDLE) begin
                 awaddr_latched <= awaddr;
             end
         end
