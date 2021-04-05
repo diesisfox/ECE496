@@ -23,6 +23,18 @@
                 "verilogName": "STACKADDR",
                 "paramType": "Hexadecimal",
                 "important": true
+            },
+            "Enable Multiplication": {
+                "paramName": "Enable Multiplication",
+                "verilogName": "ENABLE_FAST_MUL",
+                "paramType": "Int",
+                "important": false
+            },
+            "Enable Division": {
+                "paramName": "Enable Division",
+                "verilogName": "ENABLE_DIV",
+                "paramType": "Int",
+                "important": false
             }
         },
         "interfaces": [
@@ -57,6 +69,12 @@
                 "verilogName": "N_ADDR_BITS",
                 "paramType": "Int",
                 "important": true
+            },
+            "Initialization File (MIF)": {
+                "paramName": "Initialization File (MIF)",
+                "verilogName": "MIF_FILENAME",
+                "paramType": "FilePath",
+                "important": false
             }
         },
         "interfaces": [
