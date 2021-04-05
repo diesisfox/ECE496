@@ -58,7 +58,7 @@ localparam MAX_H = 960 >> H_DIV_960;
 logic en = 'b1; // transmit(ting) address byte
 logic [10-W_DIV_1280:0] x_in = 'b0;
 logic [9-H_DIV_960:0] y_in = 'b0;
-logic [`max(DEPTH-1, 0):0] p_in = 'b0;
+logic [2**DEPTH-1:0] p_in = 'b0;
 
 // additional state registers
 wire [9-H_DIV_960:0] scanline;
@@ -189,8 +189,16 @@ always_ff @(posedge Bus.clock) begin
                 DATA_OFFSET: begin
                     if(twoBusCycle)begin
                         twoBusCycle <= 1'b0;
-                        x_in <= (x_in == MAX_W-1) ? '0 : (x_in + '1);
-                        y_in <= (x_in == MAX_W-1) ? ((y_in == MAX_H-1) ? '0 : (y_in + '1)) : y_in;
+                        if(x_in == MAX_W - 'b1)begin
+                            x_in <= 'b0;
+                            if(y_in == MAX_H - 'b1)begin
+                                y_in <= 'b0;
+                            end else begin
+                                y_in <= y_in + 'b1;
+                            end
+                        end else begin
+                            x_in <= x_in + 'b1;
+                        end
                     end else begin
                         twoBusCycle <= 1'b1;
                         vram_data_a <= Bus.wr_data;
@@ -207,7 +215,11 @@ always_ff @(posedge Bus.clock) begin
                     if(DEPTH!=0)begin
                         if(twoBusCycle)begin
                             twoBusCycle <= 1'b0;
-                            p_in <= (p_in == 2**DEPTH-1) ? '0 : (p_in + '1);
+                            if(p_in == 2**DEPTH-1)begin
+                                p_in <= 'b0;
+                            end else begin
+                                p_in <= p_in + 'b1;
+                            end
                         end else begin
                             palette_data_a <= Bus.wr_data;
                             palette_wren_a <= 1'b1;

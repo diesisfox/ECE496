@@ -52,7 +52,7 @@ with open(sys.argv[1], "r") as in_vh:
     out = "DATA_RADIX = HEX;\n" + out
     out = "ADDRESS_RADIX = HEX;\n" + out
     out = "WIDTH = 32;\n" + out
-    out = "DEPTH = " + str(curr_addr_write - 1) + ";\n" + out
+    out = "DEPTH = " + str(curr_addr_write) + ";\n" + out
 
 with open(output_filename, "w") as out_fh:
     out_fh.write(out)

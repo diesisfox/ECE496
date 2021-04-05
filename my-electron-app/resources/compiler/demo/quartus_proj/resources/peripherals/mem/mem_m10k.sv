@@ -79,7 +79,7 @@ module mem_m10k #(
 		.wraddress(mem_if.wr_addr[N_ADDR_BITS - 1 : 2]),
 		.wren(mem_if.wr_valid & mem_if.wr_ready),
 		
-		.rdaddress(mem_if.rd_addr),
+		.rdaddress(mem_if.rd_addr[N_ADDR_BITS - 1 : 2]),
 		.q(mem_if.rd_data)
 	);
 

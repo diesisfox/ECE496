@@ -1,8 +1,8 @@
 /**** write_top_decl_start_and_interfaces output below ****/
 
 module top(
-    input clock, reset_n,
-    output cpu_trap,
+    input KEY[0],
+    output LED[0],
     input logic CLOCK_50,
     output wire [7:0]VGA_R,
     output wire [7:0]VGA_G,
@@ -44,17 +44,20 @@ assign VGA_VS = IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if1.VGA_VS;
 
 picorv32_axi #(
     .PROGADDR_RESET(32'h0000_0000),
-    .STACKADDR(32'h0000_8000)
+    .STACKADDR(32'h0000_8000),
+    .ENABLE_FAST_MUL(1),
+    .ENABLE_DIV(1)
 ) picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A (
-    .clk(clock),
-    .resetn(reset_n),
-    .trap(cpu_trap),
+    .clk(CLOCK_50),
+    .resetn(KEY[0]),
+    .trap(LED[0]),
     .AXI_IF(M_IF)
 );
 
 mem_m10k #(
     .ADDR(32'h0000_0000),
-    .N_ADDR_BITS(16)
+    .N_ADDR_BITS(16),
+	 .MIF_FILENAME("resources/mandel.mif")
 ) mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7 (
     .mem_if(mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_if0)
 );
@@ -90,7 +93,7 @@ IP_VGA_Main #(
 
     AXI_Interconnect #(
         .mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_base_addr(32'h0000_0000),
-        .mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_num_bits(8),
+        .mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_num_bits(16),
         .IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_base_addr(32'h8000_0000),
         .IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_num_bits(5)
     ) xbar (
@@ -110,7 +113,7 @@ endmodule //top
 
 module AXI_Interconnect #(
     parameter [31:0] mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_base_addr = 32'h0000_0000,
-    parameter int mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_num_bits = 8,
+    parameter int mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_num_bits = 16,
     parameter [31:0] IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_base_addr = 32'h8000_0000,
     parameter int IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_num_bits = 5
 )(
@@ -183,7 +186,7 @@ module AXI_Interconnect #(
         if (M_IF.ARESETn == 1'b0) begin
             araddr_latched <= 32'b0;
         end else begin
-            if (M_IF.ARREADY && read_state == READ_IDLE) begin
+            if (M_IF.ARVALID && read_state == READ_IDLE) begin
                 araddr_latched <= M_IF.ARADDR;
             end
         end
@@ -297,7 +300,7 @@ module AXI_Interconnect #(
         if (M_IF.ARESETn == 1'b0) begin
             awaddr_latched <= 32'b0;
         end else begin
-            if (M_IF.AWREADY && write_state == WRITE_IDLE) begin
+            if (M_IF.AWVALID && write_state == WRITE_IDLE) begin
                 awaddr_latched <= awaddr;
             end
         end
