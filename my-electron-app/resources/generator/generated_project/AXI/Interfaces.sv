@@ -247,8 +247,8 @@ interface AXI5_Lite_IF ();
 
     modport MANAGER (
         // General signals
-        input ACLK,
-        input ARESETn,
+        output ACLK,
+        output ARESETn,
         
         // Write address channel
         output AWADDR,

@@ -19,7 +19,7 @@ def rearrange_module(module_UUID, target_index):
     print(MGK + "2" + MGK + "modify.exe" + MGK + "rearrange_module"  + MGK + module_UUID + MGK + target_index)
 
 def validate():
-    print(MGK + "1" + MGK + "validate.exe")
+    print(MGK + "1" + MGK + "modify.exe" + MGK + "validate")
 
 def generate():
     global MGK

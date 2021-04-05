@@ -100,8 +100,6 @@ function openSaveDialog(win, verilog = false){
 
 function loadSave(filepath, dummy = false){
     let data = readJSONFile(filepath)
-    console.log(data)
-    console.log(data == "-1")
     if (data != "-1"){
         save_json = data
 

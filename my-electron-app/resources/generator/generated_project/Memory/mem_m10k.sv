@@ -1,6 +1,7 @@
 module mem_m10k #(
     parameter int N_ADDR_BITS = 8,
-    parameter [31:0] ADDR = 32'h0000_0000
+    parameter [31:0] ADDR = 32'h0000_0000,
+    parameter MIF_FILENAME = ""
 ) (
     Simple_Worker_Mem_IF.WORKER mem_if
 );
@@ -14,10 +15,16 @@ module mem_m10k #(
     localparam BYTE_WIDTH = 8;
     localparam BYTES = 4;
 	localparam int WORDS = 2**(N_ADDR_BITS - 2);
+	
+//	reg [31:0] r_data;
+//	assign mem_if.rd_data = r_data;
 
     // This _should_ synthesize correctly to M10Ks with the pragma attached
-	(* ramstyle = "M10K" *) logic [BYTES-1:0][BYTE_WIDTH-1:0] mem [0:WORDS-1];
-//    logic [31:0] mem [0:WORDS-1];
+//	(* ramstyle = "M10K, no_rw_check" *) logic [31:0] mem [0:WORDS-1];
+//    initial begin
+//        $readmemh("mandel.vh", mem);
+//    end
+    // logic [31:0] mem [0:WORDS-1];
 
     // wr_ready generation
     always_ff @(posedge mem_if.clock) begin
@@ -53,14 +60,28 @@ module mem_m10k #(
         end
     end
 
-	always_ff@(posedge mem_if.clock) begin
-		if (mem_if.wr_valid && mem_if.wr_ready) begin
-            // Our index into mem does not use the lowest 2 bits of the address because
-            //     we assume accesses will always be word-aligned (i.e. aligned to 4 bytes)
-            // This behaviour is true of the PicoRV32 CPU shipped with this project
-            mem[mem_if.wr_addr[N_ADDR_BITS-1 : 2]] <= maskBytes(mem[mem_if.wr_addr[N_ADDR_BITS-1 : 2]], mem_if.wr_data, mem_if.wr_byteEn);
-	end
-		mem_if.rd_data <= mem[mem_if.rd_addr[N_ADDR_BITS - 1 : 2]];
-	end
+//	always_ff@(posedge mem_if.clock) begin
+//		if (mem_if.wr_valid && mem_if.wr_ready) begin
+//            // Our index into mem does not use the lowest 2 bits of the address because
+//            //     we assume accesses will always be word-aligned (i.e. aligned to 4 bytes)
+//            // This behaviour is true of the PicoRV32 CPU shipped with this project
+//            mem[mem_if.wr_addr[N_ADDR_BITS-1 : 2]] <= maskBytes(mem[mem_if.wr_addr[N_ADDR_BITS-1 : 2]], mem_if.wr_data, mem_if.wr_byteEn);
+//	end
+//		r_data <= mem[mem_if.rd_addr[N_ADDR_BITS - 1 : 2]];
+//	end
+	
+	mem10k_megafunction #(
+		.MIF_FILE(MIF_FILENAME)
+	) mem (
+		.clock(mem_if.clock),
+		.byteena_a(mem_if.wr_byteEn),
+		.data(mem_if.wr_data),
+		.wraddress(mem_if.wr_addr[N_ADDR_BITS - 1 : 2]),
+		.wren(mem_if.wr_valid & mem_if.wr_ready),
+		
+		.rdaddress(mem_if.rd_addr[N_ADDR_BITS - 1 : 2]),
+		.q(mem_if.rd_data)
+	);
 
 endmodule : mem_m10k 
+

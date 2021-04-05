@@ -26,7 +26,7 @@ def rearrange_module(module_UUID, target_index):
     print(MGK + "2" + MGK + "modify.py" + MGK + "rearrange_module"  + MGK + module_UUID + MGK + target_index)
 
 def validate():
-    print(MGK + "1" + MGK + "validate.py")
+    print(MGK + "1" + MGK + "modify.py" + MGK + "validate")
 
 def generate():
     print(MGK + "0" + MGK + "generator.py")

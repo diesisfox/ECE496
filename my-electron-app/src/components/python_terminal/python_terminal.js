@@ -3,15 +3,10 @@ const file_manager = require('../file_management/file_manager.js')
 const path = require('path');
 const CONSTANTS = require("../../constants.js");
 const {fileURLToPath} = require('url')
-//const { ipcRenderer } = require('electron');
-
-//const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 var python_instance = null;
 var is_ecf = false
 var initial_output = ""
-var python_instance1 = undefined
-var python_instance2 = undefined
 
 function process_backend_modify_output(ipcMain, event, process, exit_value){
     if (exit_value[0] == '0'){
@@ -21,6 +16,10 @@ function process_backend_modify_output(ipcMain, event, process, exit_value){
     } else {
         event.reply('system-message', process.stderr_data.toString())
     }
+}
+
+function process_backend_validate_output(ipcMain, event, process, exit_value){
+    event.reply('system-message', process.stdout_data.toString())
 }
 
 function process_backend_generation_output(ipcMain, event, process, exit_value){
@@ -58,20 +57,20 @@ function call_backend(ipcMain, str_data, event){
     // run backend python
     let process = child_process.spawn(path.join(__dirname,"python",'python.exe'), arg_arr, options)
 
-    process.stderr_data = undefined
-    process.stdout_data = undefined
+    process.stderr_data = ""
+    process.stdout_data = ""
     
     // remember process type
     process.type = parseInt(data_array[1])
 
     // set listener for stdout and stderr
-    process.stderr.once('data', (data) => {
+    process.stderr.on('data', (data) => {
         console.log("Error from child_process: " + data.toString())
-        process.stderr_data = data
+        process.stderr_data += data
     })
-    process.stdout.once('data', (data) => {
+    process.stdout.on('data', (data) => {
         console.log("received data: " + data.toString())
-        process.stdout_data = data
+        process.stdout_data += data
     })
 
     // process the return value or error
@@ -81,8 +80,9 @@ function call_backend(ipcMain, str_data, event){
         // if modify, then expect json string returns
         if (process.type == 2){
             process_backend_modify_output(ipcMain, event, process, data.toString())
-        } // TODO: finish for validation
-        else if (process.type == 0){
+        } else if (process.type == 1){
+            process_backend_validate_output(ipcMain, event, process, data.toString())
+        } else if (process.type == 0){
             process_backend_generation_output(ipcMain, event, process, data.toString())
         }
     })
@@ -121,7 +121,6 @@ function tryPythonSpawn(ipcMain, args, options){
                 } else {
                     // process what comes back
                     // format: [MGK] [filename] [MGK] [parameters each separated by |]
-                    // TODO: fix problem with final argument
                     call_backend(ipcMain, str_data, event)
                 }
             })
@@ -149,11 +148,6 @@ function initializePythonProcess (ipcMain) {
     tryPythonSpawn(ipcMain, ['-i'], options)
 }
 
-function isECF(){
-    return is_ecf
-}
-
 module.exports = {
     initializePythonProcess,
-    isECF,
 }
