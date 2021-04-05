@@ -33,7 +33,12 @@ int32_t xStart = QP_X_MIN;
 int32_t yStart = QP_Y_MIN;
 uint8_t scale = 0;
 
+uint32_t lastSw = 0;
+
 volatile Vga_t* vgaHandle = (void*) 0x80000000;
+volatile uint32_t* sw = (void*) 0x80010004;
+
+int processSw();
 
 int32_t qmul(int32_t a, int32_t b){
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
@@ -91,7 +96,7 @@ uint8_t getIters(int32_t x0, int32_t y0){
     int32_t x = 0;
     int32_t y = 0;
     uint16_t iters = 0;
-    for(; iters <= maxIters; iters++){
+    for(; iters < maxIters; iters++){
         int32_t xx = qmul(x, x);
         int32_t yy = qmul(y, y);
         if(xx + yy > QP_4) break;
@@ -127,14 +132,20 @@ void paintBigPixel(uint32_t x, uint32_t y, uint8_t p, uint8_t pow){
     }
 }
 
-void drawMandelInterlaced(void){
+int drawMandelInterlaced(void){
     int32_t dx = DX_SCALE[scale];
+    int32_t itersAccum = 0;
 
     int32_t y0 = yStart;
     for(size_t j = 0; j < 480>>5; j++){
         int32_t x0 = xStart;
         for(size_t i = 0; i < 640>>5; i++){
             uint8_t iters = getIters(x0, y0);
+            itersAccum += iters;
+            if(itersAccum > 4096){
+                if(processSw()) return 1;
+                itersAccum = 0;
+            }
             paintBigPixel(i<<5, j<<5, iters, 5);
             x0 += dx<<5;
         }
@@ -149,6 +160,11 @@ void drawMandelInterlaced(void){
                 if((j&1)|(i&i)){
                     uint8_t iters = getIters(x0, y0);
                     paintBigPixel(i<<l, j<<l, iters, l);
+                    itersAccum += iters;
+                    if(itersAccum > 4096){
+                        if(processSw()) return 1;
+                        itersAccum = 0;
+                    }
                 }
                 x0 += dx<<l;
             }
@@ -163,7 +179,12 @@ void drawMandelInterlaced(void){
         for(size_t i = 0; i < 640; i++){
             if((j&1)|(i&i)){
                 uint8_t iters = getIters(x0, y0);
+                itersAccum += iters;
                 vgaHandle->pxlData = iters;
+                if(itersAccum > 4096){
+                    if(processSw()) return 1;
+                    itersAccum = 0;
+                }
             }else{
                 vgaHandle->xAddr = i+1;
             }
@@ -171,6 +192,7 @@ void drawMandelInterlaced(void){
         }
         y0 += dx;
     }
+    return 0;
 }
 
 void setPalette0(void){ // greyscale
@@ -200,16 +222,52 @@ void setPalette2(void){
     }
 }
 
+int processSw(){
+    uint32_t newSw = *sw;
+    int ret = 0;
+    if(newSw != lastSw){
+        uint32_t changes = newSw & ~lastSw;
+        if(changes&0xf){
+            ret = 1;
+            moveFrame(changes&0xf);
+        }
+        if(changes&0x10){
+            ret = 1;
+            zoomIn();
+        }
+        if(changes & 0x20){
+            ret = 1;
+            zoomOut();
+        }
+        uint32_t flips = newSw ^ lastSw;
+        if((flips >> 6) & 0xf){
+            ret = 0;
+            switch((newSw >> 6) & 0xf){
+                case 0: setPalette0(); break;
+                case 1: setPalette1(); break;
+                case 2: setPalette2(); break;
+                default: setPalette0(); break;
+            }
+        }
+    }else ret = 0;
+    lastSw = newSw;
+    return ret;
+}
+
 int main(void){
     // enable video
     vgaHandle->en = 1;
     // set palette
-    setPalette2();
+    setPalette1();
     // set pixel address to 0
     // vgaHandle->xAddr = 0;
     // vgaHandle->yAddr = 0;
     // draw
-    drawMandelInterlaced();
-    for(;;);
+    for(;;){
+        int update = drawMandelInterlaced();
+        if(!update){
+            while(!processSw());
+        }
+    }
     return 0;
 }

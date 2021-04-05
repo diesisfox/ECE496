@@ -1,5 +1,5 @@
 Analysis & Synthesis report for top
-Mon Apr 05 07:55:37 2021
+Mon Apr 05 08:50:33 2021
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -45,20 +45,21 @@ Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
  37. Parameter Settings for User Entity Instance: IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:palette
  38. Parameter Settings for User Entity Instance: IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:palette|altsyncram:altsyncram_component
  39. Parameter Settings for User Entity Instance: IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll|altera_pll:altera_pll_i
- 40. Parameter Settings for User Entity Instance: AXI_Interconnect:xbar
- 41. Parameter Settings for Inferred Entity Instance: picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|altsyncram:cpuregs_rtl_0
- 42. Parameter Settings for Inferred Entity Instance: picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|altsyncram:cpuregs_rtl_1
- 43. altsyncram Parameter Settings by Entity Instance
- 44. Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll|altera_pll:altera_pll_i"
- 45. Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll"
- 46. Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:palette"
- 47. Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram"
- 48. Port Connectivity Checks: "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core"
- 49. Port Connectivity Checks: "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A"
- 50. Post-Synthesis Netlist Statistics for Top Partition
- 51. Elapsed Time Per Partition
- 52. Analysis & Synthesis Messages
- 53. Analysis & Synthesis Suppressed Messages
+ 40. Parameter Settings for User Entity Instance: IP_GPIO_Main:IP_GPIO_Main_lol
+ 41. Parameter Settings for User Entity Instance: AXI_Interconnect:xbar
+ 42. Parameter Settings for Inferred Entity Instance: picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|altsyncram:cpuregs_rtl_0
+ 43. Parameter Settings for Inferred Entity Instance: picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|altsyncram:cpuregs_rtl_1
+ 44. altsyncram Parameter Settings by Entity Instance
+ 45. Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll|altera_pll:altera_pll_i"
+ 46. Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_PLL_Altera:pll"
+ 47. Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:palette"
+ 48. Port Connectivity Checks: "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram"
+ 49. Port Connectivity Checks: "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core"
+ 50. Port Connectivity Checks: "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A"
+ 51. Post-Synthesis Netlist Statistics for Top Partition
+ 52. Elapsed Time Per Partition
+ 53. Analysis & Synthesis Messages
+ 54. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -85,14 +86,14 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Mon Apr 05 07:55:37 2021       ;
+; Analysis & Synthesis Status     ; Successful - Mon Apr 05 08:50:33 2021       ;
 ; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name                   ; top                                         ;
 ; Top-level Entity Name           ; top                                         ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 1796                                        ;
-; Total pins                      ; 34                                          ;
+; Total registers                 ; 2038                                        ;
+; Total pins                      ; 44                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 2,990,080                                   ;
 ; Total DSP Blocks                ; 3                                           ;
@@ -216,6 +217,8 @@ https://fpgasoftware.intel.com/eula.
 +--------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
 ; File Name with User-Entered Path                                                                                                                 ; Used in Netlist ; File Type                        ; File Name with Absolute Path                                                                                                                                                                                                       ; Library ;
 +--------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
+; resources/peripherals/gpio/IP_GPIO_Main.sv                                                                                                       ; yes             ; User SystemVerilog HDL File      ; Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/gpio/IP_GPIO_Main.sv                                                                                                       ;         ;
+; resources/peripherals/gpio/IP_GPIO_IF.sv                                                                                                         ; yes             ; User SystemVerilog HDL File      ; Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/gpio/IP_GPIO_IF.sv                                                                                                         ;         ;
 ; resources/mandel.mif                                                                                                                             ; yes             ; User Memory Initialization File  ; Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/mandel.mif                                                                                                                             ;         ;
 ; resources/peripherals/vga/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.palette.png.mif ; yes             ; User Memory Initialization File  ; Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.palette.png.mif ;         ;
 ; resources/peripherals/vga/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.p256.png.mif    ; yes             ; User Memory Initialization File  ; Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.p256.png.mif    ;         ;
@@ -257,18 +260,18 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimate of Logic utilization (ALMs needed) ; 1649           ;
+; Estimate of Logic utilization (ALMs needed) ; 1700           ;
 ;                                             ;                ;
-; Combinational ALUT usage for logic          ; 2594           ;
+; Combinational ALUT usage for logic          ; 2690           ;
 ;     -- 7 input functions                    ; 16             ;
-;     -- 6 input functions                    ; 523            ;
-;     -- 5 input functions                    ; 563            ;
-;     -- 4 input functions                    ; 340            ;
-;     -- <=3 input functions                  ; 1152           ;
+;     -- 6 input functions                    ; 455            ;
+;     -- 5 input functions                    ; 604            ;
+;     -- 4 input functions                    ; 387            ;
+;     -- <=3 input functions                  ; 1228           ;
 ;                                             ;                ;
-; Dedicated logic registers                   ; 1796           ;
+; Dedicated logic registers                   ; 2038           ;
 ;                                             ;                ;
-; I/O pins                                    ; 34             ;
+; I/O pins                                    ; 44             ;
 ; Total MLAB memory bits                      ; 0              ;
 ; Total block memory bits                     ; 2990080        ;
 ;                                             ;                ;
@@ -278,9 +281,9 @@ https://fpgasoftware.intel.com/eula.
 ;     -- PLLs                                 ; 1              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 2182           ;
-; Total fan-out                               ; 30356          ;
-; Average fan-out                             ; 6.17           ;
+; Maximum fan-out                             ; 2424           ;
+; Total fan-out                               ; 31487          ;
+; Average fan-out                             ; 5.97           ;
 +---------------------------------------------+----------------+
 
 
@@ -289,19 +292,21 @@ https://fpgasoftware.intel.com/eula.
 +------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
 ; Compilation Hierarchy Node                                                         ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                               ; Entity Name            ; Library Name ;
 +------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
-; |top                                                                               ; 2594 (1)            ; 1796 (0)                  ; 2990080           ; 3          ; 34   ; 0            ; |top                                                                                                                                                                              ; top                    ; work         ;
-;    |AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller| ; 26 (26)             ; 143 (143)                 ; 0                 ; 0          ; 0    ; 0            ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller                                                                                                ; AXI_Controller_Worker  ; work         ;
-;    |AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|    ; 58 (58)             ; 110 (110)                 ; 0                 ; 0          ; 0    ; 0            ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller                                                                                                   ; AXI_Controller_Worker  ; work         ;
-;    |AXI_Interconnect:xbar|                                                         ; 79 (79)             ; 58 (58)                   ; 0                 ; 0          ; 0    ; 0            ; |top|AXI_Interconnect:xbar                                                                                                                                                        ; AXI_Interconnect       ; work         ;
-;    |IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|                      ; 842 (571)           ; 438 (426)                 ; 2463744           ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F                                                                                                                     ; IP_VGA_Main            ; work         ;
+; |top                                                                               ; 2690 (1)            ; 2038 (0)                  ; 2990080           ; 3          ; 44   ; 0            ; |top                                                                                                                                                                              ; top                    ; work         ;
+;    |AXI_Controller_Worker:IP_GPIO_Main_lol_controller|                             ; 28 (28)             ; 143 (143)                 ; 0                 ; 0          ; 0    ; 0            ; |top|AXI_Controller_Worker:IP_GPIO_Main_lol_controller                                                                                                                            ; AXI_Controller_Worker  ; work         ;
+;    |AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller| ; 28 (28)             ; 142 (142)                 ; 0                 ; 0          ; 0    ; 0            ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller                                                                                                ; AXI_Controller_Worker  ; work         ;
+;    |AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|    ; 60 (60)             ; 110 (110)                 ; 0                 ; 0          ; 0    ; 0            ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller                                                                                                   ; AXI_Controller_Worker  ; work         ;
+;    |AXI_Interconnect:xbar|                                                         ; 92 (92)             ; 60 (60)                   ; 0                 ; 0          ; 0    ; 0            ; |top|AXI_Interconnect:xbar                                                                                                                                                        ; AXI_Interconnect       ; work         ;
+;    |IP_GPIO_Main:IP_GPIO_Main_lol|                                                 ; 36 (36)             ; 98 (98)                   ; 0                 ; 0          ; 0    ; 0            ; |top|IP_GPIO_Main:IP_GPIO_Main_lol                                                                                                                                                ; IP_GPIO_Main           ; work         ;
+;    |IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|                      ; 856 (580)           ; 438 (426)                 ; 2463744           ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F                                                                                                                     ; IP_VGA_Main            ; work         ;
 ;       |IP_VGA_AsyncRam_Altera:palette|                                             ; 0 (0)               ; 0 (0)                     ; 6144              ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:palette                                                                                      ; IP_VGA_AsyncRam_Altera ; work         ;
 ;          |altsyncram:altsyncram_component|                                         ; 0 (0)               ; 0 (0)                     ; 6144              ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:palette|altsyncram:altsyncram_component                                                      ; altsyncram             ; work         ;
 ;             |altsyncram_1t13:auto_generated|                                       ; 0 (0)               ; 0 (0)                     ; 6144              ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:palette|altsyncram:altsyncram_component|altsyncram_1t13:auto_generated                       ; altsyncram_1t13        ; work         ;
-;       |IP_VGA_AsyncRam_Altera:vram|                                                ; 271 (0)             ; 12 (0)                    ; 2457600           ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram                                                                                         ; IP_VGA_AsyncRam_Altera ; work         ;
-;          |altsyncram:altsyncram_component|                                         ; 271 (0)             ; 12 (0)                    ; 2457600           ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component                                                         ; altsyncram             ; work         ;
-;             |altsyncram_5n13:auto_generated|                                       ; 271 (0)             ; 12 (12)                   ; 2457600           ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated                          ; altsyncram_5n13        ; work         ;
-;                |decode_3na:decode2|                                                ; 41 (41)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|decode_3na:decode2       ; decode_3na             ; work         ;
-;                |decode_s2a:rden_decode_a|                                          ; 45 (45)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|decode_s2a:rden_decode_a ; decode_s2a             ; work         ;
+;       |IP_VGA_AsyncRam_Altera:vram|                                                ; 276 (0)             ; 12 (0)                    ; 2457600           ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram                                                                                         ; IP_VGA_AsyncRam_Altera ; work         ;
+;          |altsyncram:altsyncram_component|                                         ; 276 (0)             ; 12 (0)                    ; 2457600           ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component                                                         ; altsyncram             ; work         ;
+;             |altsyncram_5n13:auto_generated|                                       ; 276 (0)             ; 12 (12)                   ; 2457600           ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated                          ; altsyncram_5n13        ; work         ;
+;                |decode_3na:decode2|                                                ; 47 (47)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|decode_3na:decode2       ; decode_3na             ; work         ;
+;                |decode_s2a:rden_decode_a|                                          ; 44 (44)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|decode_s2a:rden_decode_a ; decode_s2a             ; work         ;
 ;                |decode_s2a:rden_decode_b|                                          ; 38 (38)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|decode_s2a:rden_decode_b ; decode_s2a             ; work         ;
 ;                |mux_jhb:mux4|                                                      ; 35 (35)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|mux_jhb:mux4             ; mux_jhb                ; work         ;
 ;                |mux_jhb:mux5|                                                      ; 112 (112)           ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|mux_jhb:mux5             ; mux_jhb                ; work         ;
@@ -312,15 +317,15 @@ https://fpgasoftware.intel.com/eula.
 ;          |altsyncram:altsyncram_component|                                         ; 2 (0)               ; 2 (0)                     ; 524288            ; 0          ; 0    ; 0            ; |top|mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem10k_megafunction:mem|altsyncram:altsyncram_component                                                                   ; altsyncram             ; work         ;
 ;             |altsyncram_r532:auto_generated|                                       ; 2 (0)               ; 2 (2)                     ; 524288            ; 0          ; 0    ; 0            ; |top|mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem10k_megafunction:mem|altsyncram:altsyncram_component|altsyncram_r532:auto_generated                                    ; altsyncram_r532        ; work         ;
 ;                |decode_5la:decode2|                                                ; 2 (2)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |top|mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem10k_megafunction:mem|altsyncram:altsyncram_component|altsyncram_r532:auto_generated|decode_5la:decode2                 ; decode_5la             ; work         ;
-;    |picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|                    ; 1585 (0)            ; 1043 (0)                  ; 2048              ; 3          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A                                                                                                                   ; picorv32_axi           ; work         ;
-;       |picorv32:picorv32_core|                                                     ; 1575 (1198)         ; 1039 (672)                ; 2048              ; 3          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core                                                                                            ; picorv32               ; work         ;
+;    |picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|                    ; 1586 (0)            ; 1043 (0)                  ; 2048              ; 3          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A                                                                                                                   ; picorv32_axi           ; work         ;
+;       |picorv32:picorv32_core|                                                     ; 1578 (1201)         ; 1039 (672)                ; 2048              ; 3          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core                                                                                            ; picorv32               ; work         ;
 ;          |altsyncram:cpuregs_rtl_0|                                                ; 0 (0)               ; 0 (0)                     ; 1024              ; 0          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|altsyncram:cpuregs_rtl_0                                                                   ; altsyncram             ; work         ;
 ;             |altsyncram_d2k1:auto_generated|                                       ; 0 (0)               ; 0 (0)                     ; 1024              ; 0          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|altsyncram:cpuregs_rtl_0|altsyncram_d2k1:auto_generated                                    ; altsyncram_d2k1        ; work         ;
 ;          |altsyncram:cpuregs_rtl_1|                                                ; 0 (0)               ; 0 (0)                     ; 1024              ; 0          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|altsyncram:cpuregs_rtl_1                                                                   ; altsyncram             ; work         ;
 ;             |altsyncram_d2k1:auto_generated|                                       ; 0 (0)               ; 0 (0)                     ; 1024              ; 0          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|altsyncram:cpuregs_rtl_1|altsyncram_d2k1:auto_generated                                    ; altsyncram_d2k1        ; work         ;
 ;          |picorv32_pcpi_div:pcpi_div|                                              ; 325 (325)           ; 200 (200)                 ; 0                 ; 0          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|picorv32_pcpi_div:pcpi_div                                                                 ; picorv32_pcpi_div      ; work         ;
 ;          |picorv32_pcpi_fast_mul:pcpi_mul|                                         ; 52 (52)             ; 167 (167)                 ; 0                 ; 3          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|picorv32_pcpi_fast_mul:pcpi_mul                                                            ; picorv32_pcpi_fast_mul ; work         ;
-;       |picorv32_axi_adapter:axi_adapter|                                           ; 10 (10)             ; 4 (4)                     ; 0                 ; 0          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32_axi_adapter:axi_adapter                                                                                  ; picorv32_axi_adapter   ; work         ;
+;       |picorv32_axi_adapter:axi_adapter|                                           ; 8 (8)               ; 4 (4)                     ; 0                 ; 0          ; 0    ; 0            ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32_axi_adapter:axi_adapter                                                                                  ; picorv32_axi_adapter   ; work         ;
 +------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -561,10 +566,15 @@ Encoding Type:  One-Hot
 ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_rs1[2]                                               ; Merged with picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm_j[17]                     ;
 ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_rs1[1]                                               ; Merged with picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm_j[16]                     ;
 ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_rs1[0]                                               ; Merged with picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm_j[15]                     ;
-; AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|reset_latch                                                         ; Merged with AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|reset_latch                               ;
+; AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|reset_latch                                                      ; Merged with AXI_Controller_Worker:IP_GPIO_Main_lol_controller|reset_latch                                                           ;
+; AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|reset_latch                                                         ; Merged with AXI_Controller_Worker:IP_GPIO_Main_lol_controller|reset_latch                                                           ;
 ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm_j[21..31]                                        ; Merged with picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm_j[20]                     ;
 ; AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|awaddr_latch[1]                                                  ; Merged with AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|awaddr_latch[0]                           ;
+; AXI_Controller_Worker:IP_GPIO_Main_lol_controller|araddr_latch[1]                                                                              ; Merged with AXI_Controller_Worker:IP_GPIO_Main_lol_controller|araddr_latch[0]                                                       ;
 ; AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|araddr_latch[1]                                                  ; Merged with AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|araddr_latch[0]                           ;
+; AXI_Controller_Worker:IP_GPIO_Main_lol_controller|awaddr_latch[1]                                                                              ; Merged with AXI_Controller_Worker:IP_GPIO_Main_lol_controller|awaddr_latch[0]                                                       ;
+; AXI_Controller_Worker:IP_GPIO_Main_lol_controller|araddr_latch[0]                                                                              ; Stuck at GND due to stuck port data_in                                                                                              ;
+; AXI_Controller_Worker:IP_GPIO_Main_lol_controller|awaddr_latch[0]                                                                              ; Stuck at GND due to stuck port data_in                                                                                              ;
 ; AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|araddr_latch[0]                                                  ; Stuck at GND due to stuck port data_in                                                                                              ;
 ; AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|awaddr_latch[0]                                                  ; Stuck at GND due to stuck port data_in                                                                                              ;
 ; IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|twoBusCycle[1]                                                                        ; Stuck at GND due to stuck port data_in                                                                                              ;
@@ -578,7 +588,7 @@ Encoding Type:  One-Hot
 ; AXI_Interconnect:xbar|write_state.AWADDR_LATCHED                                                                                               ; Lost fanout                                                                                                                         ;
 ; AXI_Interconnect:xbar|read_state.ARADDR_LATCHED                                                                                                ; Lost fanout                                                                                                                         ;
 ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpu_state.cpu_state_ld_rs2                                   ; Stuck at GND due to stuck port data_in                                                                                              ;
-; Total Number of Removed Registers = 143                                                                                                        ;                                                                                                                                     ;
+; Total Number of Removed Registers = 148                                                                                                        ;                                                                                                                                     ;
 +------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -587,8 +597,10 @@ Encoding Type:  One-Hot
 +----------------------------------------------------------------------------------------------------+---------------------------+-------------------------------------------------------------------------------------------------+
 ; Register name                                                                                      ; Reason for Removal        ; Registers Removed due to This Register                                                          ;
 +----------------------------------------------------------------------------------------------------+---------------------------+-------------------------------------------------------------------------------------------------+
-; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_addr[0]      ; Stuck at GND              ; AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|araddr_latch[0],  ;
-;                                                                                                    ; due to stuck port data_in ; AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|awaddr_latch[0]   ;
+; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_addr[0]      ; Stuck at GND              ; AXI_Controller_Worker:IP_GPIO_Main_lol_controller|araddr_latch[0],                              ;
+;                                                                                                    ; due to stuck port data_in ; AXI_Controller_Worker:IP_GPIO_Main_lol_controller|awaddr_latch[0],                              ;
+;                                                                                                    ;                           ; AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|araddr_latch[0],  ;
+;                                                                                                    ;                           ; AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|awaddr_latch[0]   ;
 ; IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|scanline_s1[0]                            ; Stuck at GND              ; IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|scanline_s2[0]                         ;
 ;                                                                                                    ; due to stuck port data_in ;                                                                                                 ;
 ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|compressed_instr ; Stuck at GND              ; picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|latched_compr ;
@@ -601,12 +613,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 1796  ;
-; Number of registers using Synchronous Clear  ; 1108  ;
-; Number of registers using Synchronous Load   ; 252   ;
+; Total registers                              ; 2038  ;
+; Number of registers using Synchronous Clear  ; 1350  ;
+; Number of registers using Synchronous Load   ; 274   ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 1225  ;
+; Number of registers using Clock Enable       ; 1419  ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -721,69 +733,85 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                                                                                                                 ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; 3:1                ; 95 bits   ; 190 LEs       ; 0 LEs                ; 190 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|count_instr[42]                                                                                     ;
-; 3:1                ; 11 bits   ; 22 LEs        ; 0 LEs                ; 22 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|x_out[2]                                                                                                                     ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_wstrb[2]                                                                                        ;
-; 3:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_addr[5]                                                                                         ;
-; 3:1                ; 27 bits   ; 54 LEs        ; 0 LEs                ; 54 LEs                 ; Yes        ; |top|AXI_Interconnect:xbar|awaddr_latched[10]                                                                                                                                              ;
-; 3:1                ; 27 bits   ; 54 LEs        ; 0 LEs                ; 54 LEs                 ; Yes        ; |top|AXI_Interconnect:xbar|araddr_latched[11]                                                                                                                                              ;
-; 3:1                ; 22 bits   ; 44 LEs        ; 0 LEs                ; 44 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|instr_xor                                                                                           ;
+; 3:1                ; 95 bits   ; 190 LEs       ; 0 LEs                ; 190 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|count_instr[29]                                                                                     ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 0 LEs                ; 22 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|x_out[7]                                                                                                                     ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_wstrb[0]                                                                                        ;
+; 3:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_addr[4]                                                                                         ;
+; 3:1                ; 28 bits   ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|AXI_Interconnect:xbar|awaddr_latched[22]                                                                                                                                              ;
+; 3:1                ; 28 bits   ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|AXI_Interconnect:xbar|araddr_latched[31]                                                                                                                                              ;
+; 3:1                ; 22 bits   ; 44 LEs        ; 0 LEs                ; 44 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|instr_sub                                                                                           ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|pcpi_timeout_counter[3]                                                                             ;
-; 3:1                ; 62 bits   ; 124 LEs       ; 0 LEs                ; 124 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|picorv32_pcpi_div:pcpi_div|quotient_msk[10]                                                         ;
-; 3:1                ; 32 bits   ; 64 LEs        ; 0 LEs                ; 64 LEs                 ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|user_rddata_latch[23]                                                                                   ;
-; 3:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|picorv32_pcpi_div:pcpi_div|pcpi_rd[6]                                                               ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|Bus.rd_data[29]                                                                                                              ;
-; 3:1                ; 24 bits   ; 48 LEs        ; 0 LEs                ; 48 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|palette_data_a[2]                                                                                                            ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|vram_data_a[0]                                                                                                               ;
+; 3:1                ; 62 bits   ; 124 LEs       ; 0 LEs                ; 124 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|picorv32_pcpi_div:pcpi_div|quotient_msk[17]                                                         ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 0 LEs                ; 64 LEs                 ; Yes        ; |top|AXI_Controller_Worker:IP_GPIO_Main_lol_controller|user_rddata_latch[21]                                                                                                               ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 0 LEs                ; 64 LEs                 ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|user_rddata_latch[21]                                                                                   ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|picorv32_pcpi_div:pcpi_div|pcpi_rd[14]                                                              ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|Bus.rd_data[25]                                                                                                              ;
+; 3:1                ; 24 bits   ; 48 LEs        ; 0 LEs                ; 48 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|palette_data_a[1]                                                                                                            ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|vram_data_a[4]                                                                                                               ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_GPIO_Main:IP_GPIO_Main_lol|GPIO_IF.oe[11]                                                                                                                                          ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_GPIO_Main:IP_GPIO_Main_lol|GPIO_IF.out[8]                                                                                                                                          ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_GPIO_Main:IP_GPIO_Main_lol|GPIO_IF.oe[17]                                                                                                                                          ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_GPIO_Main:IP_GPIO_Main_lol|GPIO_IF.out[17]                                                                                                                                         ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_GPIO_Main:IP_GPIO_Main_lol|GPIO_IF.oe[25]                                                                                                                                          ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_GPIO_Main:IP_GPIO_Main_lol|GPIO_IF.out[25]                                                                                                                                         ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_GPIO_Main:IP_GPIO_Main_lol|GPIO_IF.oe[6]                                                                                                                                           ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |top|IP_GPIO_Main:IP_GPIO_Main_lol|GPIO_IF.out[7]                                                                                                                                          ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_wdata[24]                                                                                       ;
-; 4:1                ; 14 bits   ; 28 LEs        ; 0 LEs                ; 28 LEs                 ; Yes        ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|awaddr_latch[13]                                                                                           ;
-; 4:1                ; 36 bits   ; 72 LEs        ; 0 LEs                ; 72 LEs                 ; Yes        ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|wdata_latch[20]                                                                                            ;
+; 4:1                ; 14 bits   ; 28 LEs        ; 0 LEs                ; 28 LEs                 ; Yes        ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|awaddr_latch[10]                                                                                           ;
+; 4:1                ; 36 bits   ; 72 LEs        ; 0 LEs                ; 72 LEs                 ; Yes        ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|wdata_latch[31]                                                                                            ;
 ; 4:1                ; 14 bits   ; 28 LEs        ; 0 LEs                ; 28 LEs                 ; Yes        ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|araddr_latch[15]                                                                                           ;
-; 4:1                ; 31 bits   ; 62 LEs        ; 62 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|picorv32_pcpi_div:pcpi_div|divisor[40]                                                              ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|user_rddata_latch[28]                                                                                      ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|picorv32_pcpi_div:pcpi_div|dividend[15]                                                             ;
-; 5:1                ; 10 bits   ; 30 LEs        ; 0 LEs                ; 30 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|y_out[6]                                                                                                                     ;
-; 5:1                ; 30 bits   ; 90 LEs        ; 0 LEs                ; 90 LEs                 ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|awaddr_latch[4]                                                                                         ;
-; 5:1                ; 36 bits   ; 108 LEs       ; 0 LEs                ; 108 LEs                ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|wdata_latch[15]                                                                                         ;
-; 5:1                ; 30 bits   ; 90 LEs        ; 0 LEs                ; 90 LEs                 ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|araddr_latch[25]                                                                                        ;
-; 5:1                ; 30 bits   ; 90 LEs        ; 60 LEs               ; 30 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_next_pc[6]                                                                                      ;
+; 4:1                ; 31 bits   ; 62 LEs        ; 62 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|picorv32_pcpi_div:pcpi_div|divisor[37]                                                              ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |top|AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller|user_rddata_latch[4]                                                                                       ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|picorv32_pcpi_div:pcpi_div|dividend[14]                                                             ;
+; 5:1                ; 10 bits   ; 30 LEs        ; 0 LEs                ; 30 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|y_out[7]                                                                                                                     ;
+; 5:1                ; 30 bits   ; 90 LEs        ; 0 LEs                ; 90 LEs                 ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|awaddr_latch[3]                                                                                         ;
+; 5:1                ; 36 bits   ; 108 LEs       ; 0 LEs                ; 108 LEs                ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|wdata_latch[22]                                                                                         ;
+; 5:1                ; 30 bits   ; 90 LEs        ; 0 LEs                ; 90 LEs                 ; Yes        ; |top|AXI_Controller_Worker:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_controller|araddr_latch[13]                                                                                        ;
+; 6:1                ; 22 bits   ; 88 LEs        ; 0 LEs                ; 88 LEs                 ; Yes        ; |top|IP_GPIO_Main:IP_GPIO_Main_lol|Bus.rd_data[27]                                                                                                                                         ;
+; 6:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |top|IP_GPIO_Main:IP_GPIO_Main_lol|Bus.rd_data[4]                                                                                                                                          ;
+; 5:1                ; 30 bits   ; 90 LEs        ; 60 LEs               ; 30 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_next_pc[27]                                                                                     ;
 ; 4:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op2[4]                                                                                          ;
-; 3:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm[9]                                                                                      ;
-; 3:1                ; 19 bits   ; 38 LEs        ; 38 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm[15]                                                                                     ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm[10]                                                                                     ;
+; 3:1                ; 19 bits   ; 38 LEs        ; 38 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm[30]                                                                                     ;
+; 6:1                ; 30 bits   ; 120 LEs       ; 0 LEs                ; 120 LEs                ; Yes        ; |top|AXI_Controller_Worker:IP_GPIO_Main_lol_controller|awaddr_latch[22]                                                                                                                    ;
+; 6:1                ; 36 bits   ; 144 LEs       ; 0 LEs                ; 144 LEs                ; Yes        ; |top|AXI_Controller_Worker:IP_GPIO_Main_lol_controller|wdata_latch[22]                                                                                                                     ;
+; 6:1                ; 30 bits   ; 120 LEs       ; 0 LEs                ; 120 LEs                ; Yes        ; |top|AXI_Controller_Worker:IP_GPIO_Main_lol_controller|araddr_latch[26]                                                                                                                    ;
 ; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|latched_rd[0]                                                                                       ;
-; 5:1                ; 31 bits   ; 93 LEs        ; 62 LEs               ; 31 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|alu_out_q[13]                                                                                       ;
-; 9:1                ; 14 bits   ; 84 LEs        ; 0 LEs                ; 84 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|Bus.rd_data[21]                                                                                                              ;
+; 5:1                ; 31 bits   ; 93 LEs        ; 62 LEs               ; 31 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|alu_out_q[14]                                                                                       ;
+; 9:1                ; 14 bits   ; 84 LEs        ; 0 LEs                ; 84 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|Bus.rd_data[22]                                                                                                              ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|decoded_imm[4]                                                                                      ;
-; 5:1                ; 27 bits   ; 81 LEs        ; 54 LEs               ; 27 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op2[21]                                                                                         ;
-; 10:1               ; 224 bits  ; 1344 LEs      ; 0 LEs                ; 1344 LEs               ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|p_in[104]                                                                                                                    ;
+; 5:1                ; 27 bits   ; 81 LEs        ; 54 LEs               ; 27 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op2[20]                                                                                         ;
+; 10:1               ; 224 bits  ; 1344 LEs      ; 0 LEs                ; 1344 LEs               ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|p_in[212]                                                                                                                    ;
 ; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|p_in[7]                                                                                                                      ;
-; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|x_in[6]                                                                                                                      ;
-; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|y_in[7]                                                                                                                      ;
-; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|p_in[11]                                                                                                                     ;
+; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|x_in[2]                                                                                                                      ;
+; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|y_in[1]                                                                                                                      ;
+; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|p_in[8]                                                                                                                      ;
 ; 11:1               ; 2 bits    ; 14 LEs        ; 4 LEs                ; 10 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|x_in[8]                                                                                                                      ;
-; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|p_in[22]                                                                                                                     ;
-; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|p_in[30]                                                                                                                     ;
-; 11:1               ; 2 bits    ; 14 LEs        ; 4 LEs                ; 10 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_state[1]                                                                                        ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_sh[1]                                                                                           ;
+; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|p_in[18]                                                                                                                     ;
+; 11:1               ; 8 bits    ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|p_in[24]                                                                                                                     ;
+; 11:1               ; 2 bits    ; 14 LEs        ; 4 LEs                ; 10 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_state[0]                                                                                        ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_sh[0]                                                                                           ;
 ; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_sh[4]                                                                                           ;
-; 14:1               ; 3 bits    ; 27 LEs        ; 18 LEs               ; 9 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op1[30]                                                                                         ;
-; 15:1               ; 3 bits    ; 30 LEs        ; 18 LEs               ; 12 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op1[1]                                                                                          ;
-; 15:1               ; 24 bits   ; 240 LEs       ; 120 LEs              ; 120 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op1[27]                                                                                         ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 70 LEs               ; -14 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_out[8]                                                                                          ;
-; 14:1               ; 16 bits   ; 144 LEs       ; 160 LEs              ; -16 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_out[20]                                                                                         ;
-; 17:1               ; 7 bits    ; 77 LEs        ; 77 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_out[6]                                                                                          ;
-; 41:1               ; 7 bits    ; 189 LEs       ; 189 LEs              ; 0 LEs                  ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|Bus.rd_data[2]                                                                                                               ;
+; 14:1               ; 3 bits    ; 27 LEs        ; 18 LEs               ; 9 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op1[29]                                                                                         ;
+; 15:1               ; 3 bits    ; 30 LEs        ; 18 LEs               ; 12 LEs                 ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op1[2]                                                                                          ;
+; 15:1               ; 24 bits   ; 240 LEs       ; 120 LEs              ; 120 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_op1[5]                                                                                          ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 70 LEs               ; -14 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_out[10]                                                                                         ;
+; 14:1               ; 16 bits   ; 144 LEs       ; 160 LEs              ; -16 LEs                ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_out[21]                                                                                         ;
+; 17:1               ; 7 bits    ; 77 LEs        ; 77 LEs               ; 0 LEs                  ; Yes        ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|reg_out[1]                                                                                          ;
+; 41:1               ; 7 bits    ; 189 LEs       ; 189 LEs              ; 0 LEs                  ; Yes        ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|Bus.rd_data[3]                                                                                                               ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.AWVALID[0]                                                                                                      ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|M_IF.AWREADY[0]                                                                                                                                                 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.ARVALID[0]                                                                                                      ;
-; 3:1                ; 34 bits   ; 68 LEs        ; 68 LEs               ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|M_IF.RDATA[24]                                                                                                                                                  ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.RREADY[0]                                                                                                       ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|xState                                                                                                                       ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|yState                                                                                                                       ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpu_state                                                                                           ;
 ; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rs2[0]                                                                                      ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|Selector41                                                                                          ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|mux_jhb:mux5|l3_w7_n4_mux_dataout ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|mux_jhb:mux4|l3_w4_n4_mux_dataout ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|IP_GPIO_Main_lol_IF.WVALID[0]                                                                                                                                   ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|M_IF.AWREADY[0]                                                                                                                                                 ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|IP_GPIO_Main_lol_IF.RREADY[0]                                                                                                                                   ;
+; 4:1                ; 34 bits   ; 68 LEs        ; 68 LEs               ; 0 LEs                  ; No         ; |top|AXI_Interconnect:xbar|M_IF.RDATA[3]                                                                                                                                                   ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|mux_jhb:mux5|l3_w1_n4_mux_dataout ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|mux_jhb:mux4|l3_w7_n4_mux_dataout ;
 ; 7:1                ; 3 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; No         ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|mem_wordsize                                                                                        ;
 ; 18:1               ; 3 bits    ; 36 LEs        ; 21 LEs               ; 15 LEs                 ; No         ; |top|picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpu_state                                                                                           ;
 ; 33:1               ; 8 bits    ; 176 LEs       ; 176 LEs              ; 0 LEs                  ; No         ; |top|IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F|IP_VGA_AsyncRam_Altera:vram|altsyncram:altsyncram_component|altsyncram_5n13:auto_generated|mux_jhb:mux5|l6_w3_n0_mux_dataout ;
@@ -1407,6 +1435,17 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
++----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: IP_GPIO_Main:IP_GPIO_Main_lol ;
++----------------+----------------------------------+------------------------+
+; Parameter Name ; Value                            ; Type                   ;
++----------------+----------------------------------+------------------------+
+; PINS           ; 10                               ; Signed Integer         ;
+; ADDR           ; 10000000000000010000000000000000 ; Unsigned Binary        ;
++----------------+----------------------------------+------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
 +-------------------------------------------------------------------------------------------------------------+
 ; Parameter Settings for User Entity Instance: AXI_Interconnect:xbar                                          ;
 +--------------------------------------------------------+----------------------------------+-----------------+
@@ -1416,6 +1455,8 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_num_bits     ; 16                               ; Signed Integer  ;
 ; IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_base_addr ; 10000000000000000000000000000000 ; Unsigned Binary ;
 ; IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_num_bits  ; 5                                ; Signed Integer  ;
+; IP_GPIO_Main_lol_base_addr                             ; 10000000000000010000000000000000 ; Unsigned Binary ;
+; IP_GPIO_Main_lol_num_bits                              ; 4                                ; Signed Integer  ;
 +--------------------------------------------------------+----------------------------------+-----------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
@@ -1704,16 +1745,16 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 1796                        ;
+; arriav_ff             ; 2038                        ;
 ;     ENA               ; 284                         ;
-;     ENA SCLR          ; 804                         ;
+;     ENA SCLR          ; 998                         ;
 ;     ENA SCLR SLD      ; 48                          ;
 ;     ENA SLD           ; 89                          ;
-;     SCLR              ; 241                         ;
-;     SCLR SLD          ; 15                          ;
+;     SCLR              ; 267                         ;
+;     SCLR SLD          ; 37                          ;
 ;     SLD               ; 100                         ;
 ;     plain             ; 215                         ;
-; arriav_lcell_comb     ; 2595                        ;
+; arriav_lcell_comb     ; 2691                        ;
 ;     arith             ; 753                         ;
 ;         1 data inputs ; 518                         ;
 ;         2 data inputs ; 110                         ;
@@ -1722,26 +1763,26 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;         5 data inputs ; 31                          ;
 ;     extend            ; 16                          ;
 ;         7 data inputs ; 16                          ;
-;     normal            ; 1770                        ;
+;     normal            ; 1866                        ;
 ;         0 data inputs ; 1                           ;
 ;         1 data inputs ; 10                          ;
-;         2 data inputs ; 106                         ;
-;         3 data inputs ; 320                         ;
-;         4 data inputs ; 278                         ;
-;         5 data inputs ; 532                         ;
-;         6 data inputs ; 523                         ;
+;         2 data inputs ; 162                         ;
+;         3 data inputs ; 340                         ;
+;         4 data inputs ; 325                         ;
+;         5 data inputs ; 573                         ;
+;         6 data inputs ; 455                         ;
 ;     shared            ; 56                          ;
 ;         0 data inputs ; 2                           ;
 ;         1 data inputs ; 4                           ;
 ;         2 data inputs ; 48                          ;
 ;         3 data inputs ; 2                           ;
 ; arriav_mac            ; 3                           ;
-; boundary_port         ; 34                          ;
+; boundary_port         ; 44                          ;
 ; generic_pll           ; 1                           ;
 ; stratixv_ram_block    ; 456                         ;
 ;                       ;                             ;
 ; Max LUT depth         ; 26.50                       ;
-; Average LUT depth     ; 5.80                        ;
+; Average LUT depth     ; 5.65                        ;
 +-----------------------+-----------------------------+
 
 
@@ -1760,10 +1801,14 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Mon Apr 05 07:55:10 2021
+    Info: Processing started: Mon Apr 05 08:50:08 2021
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off demo -c top
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file resources/peripherals/gpio/ip_gpio_main.sv
+    Info (12023): Found entity 1: IP_GPIO_Main File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/gpio/IP_GPIO_Main.sv Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file resources/peripherals/gpio/ip_gpio_if.sv
+    Info (12023): Found entity 1: IP_GPIO_IF File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/gpio/IP_GPIO_IF.sv Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file resources/peripherals/vga/ip_vga_asyncram_altera.sv
     Info (12023): Found entity 1: IP_VGA_AsyncRam_Altera File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_AsyncRam_Altera.sv Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file resources/peripherals/vga/ip_vga_pll_altera.v
@@ -1817,17 +1862,19 @@ Info (12021): Found 3 design units, including 3 entities, in source file resourc
     Info (12023): Found entity 3: AXI5_Lite_IF File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/Interfaces.sv Line: 149
 Info (12021): Found 2 design units, including 2 entities, in source file generator/demo_project.sv
     Info (12023): Found entity 1: top File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 3
-    Info (12023): Found entity 2: AXI_Interconnect File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 114
+    Info (12023): Found entity 2: AXI_Interconnect File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 143
 Info (12021): Found 1 design units, including 1 entities, in source file twoportram.v
     Info (12023): Found entity 1: twoportram File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/twoportram.v Line: 40
 Info (12021): Found 1 design units, including 1 entities, in source file mem10k_megafunction.v
     Info (12023): Found entity 1: mem10k_megafunction File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/mem10k_megafunction.v Line: 40
 Info (12127): Elaborating entity "top" for the top level hierarchy
-Warning (10034): Output port "LED[-1]" at demo_project.sv(5) has no driver File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 5
-Info (12128): Elaborating entity "AXI5_Lite_IF" for hierarchy "AXI5_Lite_IF:M_IF" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 17
-Info (12128): Elaborating entity "Simple_Worker_Mem_IF" for hierarchy "Simple_Worker_Mem_IF:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_if0" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 21
-Info (12128): Elaborating entity "IP_VGA_IF" for hierarchy "IP_VGA_IF:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if1" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 27
-Info (12128): Elaborating entity "picorv32_axi" for hierarchy "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 55
+Warning (10034): Output port "LEDR[-1]" at demo_project.sv(5) has no driver File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 5
+Info (12128): Elaborating entity "AXI5_Lite_IF" for hierarchy "AXI5_Lite_IF:M_IF" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 18
+Info (12128): Elaborating entity "Simple_Worker_Mem_IF" for hierarchy "Simple_Worker_Mem_IF:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_if0" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 22
+Info (12128): Elaborating entity "IP_VGA_IF" for hierarchy "IP_VGA_IF:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if1" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 28
+Info (12128): Elaborating entity "IP_GPIO_IF" for hierarchy "IP_GPIO_IF:IP_GPIO_Main_lol_if1" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 33
+Warning (12158): Entity "IP_GPIO_IF" contains only dangling pins File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 33
+Info (12128): Elaborating entity "picorv32_axi" for hierarchy "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 64
 Info (12128): Elaborating entity "picorv32_axi_adapter" for hierarchy "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32_axi_adapter:axi_adapter" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2652
 Info (12128): Elaborating entity "picorv32" for hierarchy "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2729
 Warning (10036): Verilog HDL or VHDL warning at picorv32.sv(181): object "dbg_insn_addr" assigned a value but never read File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 181
@@ -1885,7 +1932,7 @@ Warning (10230): Verilog HDL assignment warning at picorv32.sv(2406): truncated 
 Info (12128): Elaborating entity "picorv32_pcpi_div" for hierarchy "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|picorv32_pcpi_div:pcpi_div" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 317
 Warning (10259): Verilog HDL error at picorv32.sv(2473): constant value overflow File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2473
 Warning (10230): Verilog HDL assignment warning at picorv32.sv(2494): truncated value with size 63 to match size of target (32) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/picorv32/picorv32.sv Line: 2494
-Info (12128): Elaborating entity "mem_m10k" for hierarchy "mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 63
+Info (12128): Elaborating entity "mem_m10k" for hierarchy "mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 72
 Info (12128): Elaborating entity "mem10k_megafunction" for hierarchy "mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem10k_megafunction:mem" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/mem/mem_m10k.sv Line: 84
 Info (12128): Elaborating entity "altsyncram" for hierarchy "mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem10k_megafunction:mem|altsyncram:altsyncram_component" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/mem10k_megafunction.v Line: 94
 Info (12130): Elaborated megafunction instantiation "mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem10k_megafunction:mem|altsyncram:altsyncram_component" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/mem10k_megafunction.v Line: 94
@@ -1914,7 +1961,7 @@ Info (12133): Instantiated megafunction "mem_m10k:mem_m10k_931897D0B4814B10A0108
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_r532.tdf
     Info (12023): Found entity 1: altsyncram_r532 File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/db/altsyncram_r532.tdf Line: 34
 Info (12128): Elaborating entity "altsyncram_r532" for hierarchy "mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem10k_megafunction:mem|altsyncram:altsyncram_component|altsyncram_r532:auto_generated" File: c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Critical Warning (127005): Memory depth (16384) in the design file differs from memory depth (952) in the Memory Initialization File "Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/mandel.mif" -- setting initial value for remaining addresses to 0 File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/mem10k_megafunction.v Line: 94
+Critical Warning (127005): Memory depth (16384) in the design file differs from memory depth (1160) in the Memory Initialization File "Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/mandel.mif" -- setting initial value for remaining addresses to 0 File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/mem10k_megafunction.v Line: 94
 Info (12021): Found 1 design units, including 1 entities, in source file db/decode_5la.tdf
     Info (12023): Found entity 1: decode_5la File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/db/decode_5la.tdf Line: 23
 Info (12128): Elaborating entity "decode_5la" for hierarchy "mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem10k_megafunction:mem|altsyncram:altsyncram_component|altsyncram_r532:auto_generated|decode_5la:decode2" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/db/altsyncram_r532.tdf Line: 47
@@ -1924,7 +1971,7 @@ Info (12128): Elaborating entity "decode_u0a" for hierarchy "mem_m10k:mem_m10k_9
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_2hb.tdf
     Info (12023): Found entity 1: mux_2hb File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/db/mux_2hb.tdf Line: 23
 Info (12128): Elaborating entity "mux_2hb" for hierarchy "mem_m10k:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7|mem10k_megafunction:mem|altsyncram:altsyncram_component|altsyncram_r532:auto_generated|mux_2hb:mux3" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/db/altsyncram_r532.tdf Line: 50
-Info (12128): Elaborating entity "IP_VGA_Main" for hierarchy "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 79
+Info (12128): Elaborating entity "IP_VGA_Main" for hierarchy "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 88
 Warning (10958): SystemVerilog warning at IP_VGA_Main.sv(167): unique or priority keyword makes case statement complete File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 167
 Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(182): truncated value with size 32 to match size of target (1) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 182
 Warning (10230): Verilog HDL assignment warning at IP_VGA_Main.sv(184): truncated value with size 32 to match size of target (10) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/peripherals/vga/IP_VGA_Main.sv Line: 184
@@ -2085,10 +2132,11 @@ Info (12133): Instantiated megafunction "IP_VGA_Main:IP_VGA_Main_6367E892C4E74E5
     Info (12134): Parameter "duty_cycle17" = "50"
     Info (12134): Parameter "pll_type" = "General"
     Info (12134): Parameter "pll_subtype" = "General"
-Info (12128): Elaborating entity "AXI_Controller_Worker" for hierarchy "AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 87
+Info (12128): Elaborating entity "IP_GPIO_Main" for hierarchy "IP_GPIO_Main:IP_GPIO_Main_lol" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 97
+Info (12128): Elaborating entity "AXI_Controller_Worker" for hierarchy "AXI_Controller_Worker:mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_controller" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 105
 Warning (10230): Verilog HDL assignment warning at controller_worker.sv(201): truncated value with size 3 to match size of target (2) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/axi/controller_worker.sv Line: 201
 Warning (10230): Verilog HDL assignment warning at controller_worker.sv(336): truncated value with size 3 to match size of target (2) File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/resources/hdl/axi/controller_worker.sv Line: 336
-Info (12128): Elaborating entity "AXI_Interconnect" for hierarchy "AXI_Interconnect:xbar" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 103
+Info (12128): Elaborating entity "AXI_Interconnect" for hierarchy "AXI_Interconnect:xbar" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 132
 Warning (276020): Inferred RAM node "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_0" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
 Warning (276020): Inferred RAM node "picorv32_axi:picorv32_axi_7CB48A78B25546A8AC109ED58AE32A4A|picorv32:picorv32_core|cpuregs_rtl_1" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
 Info (19000): Inferred 2 megafunctions from design logic
@@ -2142,7 +2190,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/alts
     Info (12023): Found entity 1: altsyncram_d2k1 File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/db/altsyncram_d2k1.tdf Line: 28
 Warning (12241): 4 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "LED[-1]" is stuck at GND File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 5
+    Warning (13410): Pin "LEDR[-1]" is stuck at GND File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 5
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 98 registers lost all their fanouts during netlist optimizations.
 Warning (20013): Ignored 571 assignments for entity "DE1_SoC" -- entity does not exist in design
@@ -2724,18 +2772,18 @@ Warning: RST port on the PLL is not properly connected on instance IP_VGA_Main:I
     Info: Must be connected
 Warning (21074): Design contains 1 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "KEY[-1]" File: Z:/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/quartus_proj/generator/demo_project.sv Line: 4
-Info (21057): Implemented 3917 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 3 input pins
+Info (21057): Implemented 4239 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 13 input pins
     Info (21059): Implemented 31 output pins
-    Info (21061): Implemented 3423 logic cells
+    Info (21061): Implemented 3735 logic cells
     Info (21064): Implemented 456 RAM segments
     Info (21065): Implemented 1 PLLs
     Info (21062): Implemented 3 DSP elements
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 684 warnings
-    Info: Peak virtual memory: 4911 megabytes
-    Info: Processing ended: Mon Apr 05 07:55:37 2021
-    Info: Elapsed time: 00:00:27
-    Info: Total CPU time (on all processors): 00:00:37
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 685 warnings
+    Info: Peak virtual memory: 4906 megabytes
+    Info: Processing ended: Mon Apr 05 08:50:33 2021
+    Info: Elapsed time: 00:00:25
+    Info: Total CPU time (on all processors): 00:00:35
 
 
 +------------------------------------------+
