@@ -115,8 +115,6 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
 
   nick_wrap.appendChild(nick)
   element.appendChild(nick_wrap)
-  
-  // element.appendChild(nick)
 
   // write other parameters
   let param_y = rect_y + padding * 3
@@ -127,7 +125,7 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
   param_wrap.setAttribute('x', pos_x + padding)
   param_wrap.setAttribute('y', param_y)
   param_wrap.setAttribute('width', rect_width - padding * 2)
-  param_wrap.setAttribute('height', "100")
+  param_wrap.setAttribute('height', "200")
   param_wrap.addEventListener('focus', (ev) => {
     main_body.focus()
   })
@@ -140,8 +138,6 @@ function createSingleSVGModule(ipcRenderer, pos_x, module_json){
     if (key == CONSTANTS.INSTANCE_NAME){ continue }
 
     param.innerHTML += key + ": <i>" + module_json[CONSTANTS.PARAMETERS][key] + "</i><br>"
-    //param.style.color = 'red'
-    //param_y -= padding
   }
 
   param_wrap.appendChild(param)
