@@ -72,6 +72,24 @@ function openNewDialog(win){
     return filePaths
 }
 
+function openFolderDialog(win){
+    let options = {
+        title : "Generation", 
+
+        defaultPath : path.join(base_path,'saves'),
+
+        buttonLabel : "Output Here",
+
+        filters : project_filter_list,
+        properties: ['createDirectory', 'showOverwriteConfirmation', 'openDirectory']
+    }
+
+    //Synchronous
+    let filePaths = dialog.showOpenDialogSync(win, options)
+
+    return filePaths
+}
+
 function openSaveDialog(win, verilog = false){
     let filter = undefined
 
@@ -216,6 +234,7 @@ module.exports = {
     setBasePath,
     openFileDialog,
     openNewDialog,
+    openFolderDialog,
     openSaveDialog,
     readFile,
     readJSONFile,

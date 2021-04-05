@@ -27,14 +27,7 @@ function process_backend_validate_output(ipcMain, event, process, exit_value){
 
 function process_backend_generation_output(ipcMain, event, process, exit_value){
     if (exit_value[0] == '0'){
-        let save_path = file_manager.openSaveDialog(undefined, true)
-        if (save_path != undefined){
-            file_manager.writeFile(save_path, process.stdout_data.toString())
-            event.reply('console-message', "\nGeneration successful")
-        } else {
-            event.reply('console-message', "\nGeneration cancelled")
-        }
-        
+        event.reply('console-message', "\nGeneration successful\n")
     } else {
         event.reply('system-message', process.stderr_data.toString())
     }
@@ -42,7 +35,7 @@ function process_backend_generation_output(ipcMain, event, process, exit_value){
 
 function call_backend(ipcMain, str_data, event){
     let data_array = str_data.split(CONSTANTS.MGK)
-    
+    let target_folder = "default"
     let filepath =  path.join("..", "generator", data_array[2])
     
     console.log(filepath)
@@ -53,6 +46,18 @@ function call_backend(ipcMain, str_data, event){
     arg_arr.push(JSON.stringify(file_manager.getSave()))
     for (let i = 3; i < data_array.length; i++){
         arg_arr.push(data_array[i])
+    }
+
+    // choose destination folder, if generating
+    if (parseInt(data_array[1]) == 0){
+        target_folder = file_manager.openFolderDialog(undefined)
+        console.log("chose: " + target_folder)
+        if (target_folder == undefined) {
+            event.reply('system-message', "\nGeneration cancelled\n")
+            return
+        } else {
+            arg_arr.push(path.join(target_folder[0],"\\"))
+        }
     }
 
     let options = {cwd:path.join(__dirname,"..","..","..", "resources", "generator")}
