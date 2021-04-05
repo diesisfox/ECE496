@@ -143,8 +143,6 @@ function initToolbox (ipcRenderer){
     diagram_div.ondrop = function (ev) {
         ev.preventDefault()
         sendNewToBack(ipcRenderer, ev.dataTransfer.getData('type_id'))
-        // ipcRenderer.send('system-message', "module type " + ev.dataTransfer.getData('type_id') + " received, however module adding is " + 
-        // "not implemented in the back")
     }
 
     
@@ -159,12 +157,11 @@ function initToolbox (ipcRenderer){
 function setEditBox (ipcRenderer, module_json){
     const margin = (edit_module_box_div.clientWidth - emb_rect_width * emb_num_per_row) / (emb_num_per_row) / 2
     
-
     let module_type = module_json[C.MODULE_TYPE]
     let params = C.IP_database[module_type][C.PARAMETERS]
 
     // set height of div to be tight to elements
-    const div_height = emb_rect_height * (Math.ceil(Object.keys(params).length / emb_num_per_row) + 1) + 20
+    const div_height = (emb_rect_height + margin * 1.5) * (Math.ceil(Object.keys(params).length / emb_num_per_row) + 1)
     edit_module_box_div.style.height = div_height + "px"
     bar_offscreen_offset = ((div_height + offscreen_offset) * -1) + "px"
 
@@ -176,11 +173,6 @@ function setEditBox (ipcRenderer, module_json){
     // add a toolbar objects
     let i = 0
     for (var key in params){
-        // // check for existence of key
-        // if (!(C.PARAMNAME in params[key]) || !(C.PARAMTYPE in params[key])){
-        //     ipcRenderer.send('debug', 'ERROR: IP_database entry not complete for type ' + module_type)
-        //     break
-        // }
         // look for same parameter in module
         if (!(key in module_json[C.PARAMETERS])){
             ipcRenderer.send('debug', "ERROR: module entry in save not complete for type " + module_type)
@@ -200,7 +192,6 @@ function setEditBox (ipcRenderer, module_json){
     }
 
     
-
     // add buttons
     let edit_button = createEditButton(ipcRenderer, "Edit", margin, emb_rect_width, emb_rect_height)
     edit_button.addEventListener('click', function() {
@@ -212,9 +203,6 @@ function setEditBox (ipcRenderer, module_json){
                 sendEditToBack(ipcRenderer, data)
             }
         }
-        //sendEditToBack(ipcRenderer, null) // TODO: implement this
-        //ipcRenderer.send('module-edit', data) 
-
     })
     edit_module_box_div.appendChild(edit_button)
     let delete_button = createEditButton(ipcRenderer, "Delete", margin, emb_rect_width, emb_rect_height)
