@@ -34,6 +34,10 @@
     background-color: white;
 
     cursor: grab;
+
+    user-select: none;
+    -webkit-user-select: none;
+	-webkit-user-drag: element;
 }
 
 .module-toolbox-icon:active {

@@ -28,6 +28,9 @@
     color: var(--console-white);
     white-space: pre-wrap;
     line-height: 1.5;
+
+    user-select: text;
+    -webkit-user-select: text;
 }
 
 .console-input-wrapper {
