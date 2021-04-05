@@ -48,7 +48,8 @@
         "parameters": {
             "Verilog Instance Name": "mem_m10k_AB9918C0AAB437FE",
             "Base Address": "0000_0000",
-            "Address Width": 16
+            "Address Width": 16,
+            "Initialization File (MIF)": ""
         },
         "pinmaps": [
             []
@@ -60,7 +61,9 @@
         "parameters": {
             "Verilog Instance Name": "picorv32_axi_A1D823B2113DFF", 
             "PC Start Address": "0000_0000",
-            "Stack Address": "0000_8000"
+            "Stack Address": "0000_8000",
+            "Enable Multiplication": "",
+            "Enable Division": ""
         },
         "pinmaps": [
             []
