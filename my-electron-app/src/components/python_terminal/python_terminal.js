@@ -12,9 +12,12 @@ function process_backend_modify_output(ipcMain, event, process, exit_value){
     if (exit_value[0] == '0'){
         file_manager.updateSave(process.stdout_data.toString())
         event.reply('update-renderer', file_manager.getSave())
-        event.reply('console-message', "\nCommand successful")
+        event.reply('console-message', "\nCommand successful\n")
     } else {
-        event.reply('system-message', process.stderr_data.toString())
+        if (process.stdout_data.length != 0)
+            event.reply('console-message', process.stdout_data.toString())
+        if (process.stderr_data.length != 0)
+            event.reply('system-message', process.stderr_data.toString())
     }
 }
 
