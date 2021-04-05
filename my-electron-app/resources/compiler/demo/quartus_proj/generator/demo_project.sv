@@ -54,7 +54,7 @@ picorv32_axi #(
 
 mem_m10k #(
     .ADDR(32'h0000_0000),
-    .N_ADDR_BITS(17)
+    .N_ADDR_BITS(16)
 ) mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7 (
     .mem_if(mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_if0)
 );
