@@ -14,10 +14,12 @@
 * write logical pixel address to X/Y_ADDR_OFFSET and read/write to DATA_OFFSET to
 * access vram data at that pixel.
 * The vram address automatically increments left to right then top to bottom upon each write.
+* vram MUST be written by whole word access in 24 bit mode (DEPTH=0)
 * 
 * write palette index to PALETTE_ADDR_OFFSET and read/write to COLOR_OFFSET to
 * access palette data at that index.
 * The palette index automatically increments upon each write.
+* palette MUST be written by whole word access
 *
 * read from SCANLINE_OFFSET to acquire the current active line the VGA controller is outputting.
 * reads 0 when in sync or blank states.
@@ -75,13 +77,47 @@ always_ff @(posedge Bus.clock) begin
 end
 
 // video memory
-(* ram_init_file = VRAM_MIF *) bit [DEPTH==0?23:(DEPTH-1):0] vram [0:MAX_W*MAX_H-1];
-logic [DEPTH-1:0] vram_out_bus = '0;
-always_ff @(posedge Bus.clock) vram_out_bus <= vram[x_in+y_in*MAX_W];
+logic   [(DEPTH==0 ? 24 : DEPTH)-1:0]     vram_data_a;
+logic                   vram_wren_a;
+wire    [(DEPTH==0 ? 24 : DEPTH)-1:0]     vram_q_a;
+wire    [(DEPTH==0 ? 24 : DEPTH)-1:0]     vram_q_b;
+IP_VGA_AsyncRam_Altera #(
+    .WIDTH(DEPTH==0 ? 24 : DEPTH),
+    .DEPTH(307200),
+    .MIF(VRAM_MIF)
+) vram (
+    .address_a(x_in+y_in*MAX_W),
+    .address_b((x_out>>W_DIV_1280)+(y_out>>H_DIV_960)*MAX_W),
+    .clock_a(Bus.clock),
+    .clock_b(VGA_IF.VGA_CLK),
+    .data_a(vram_data_a),
+    .data_b(0),
+    .wren_a(vram_wren_a),
+    .wren_b(1'b0),
+    .q_a(vram_q_a),
+    .q_b(vram_q_b)
+);
 
-(* ram_init_file = PALETTE_MIF *) bit [23:0] palette [0:2**`max(DEPTH,1)-1]; // {b[7:0], g[7:0], r[7:0]}
-logic [23:0] palette_out_bus = '0;
-always_ff @(posedge Bus.clock) palette_out_bus <= palette[p_in];
+logic   [23:0]      palette_data_a;
+logic               palette_wren_a;
+wire    [23:0]      palette_q_a;
+wire    [23:0]      palette_q_b;
+IP_VGA_AsyncRam_Altera #(
+    .WIDTH(24),
+    .DEPTH(2**DEPTH),
+    .MIF(PALETTE_MIF)
+) palette (
+    .address_a(p_in),
+    .address_b(vram_q_b),
+    .clock_a(Bus.clock),
+    .clock_b(VGA_IF.VGA_CLK),
+    .data_a(palette_data_a),
+    .data_b(32'b0),
+    .wren_a(palette_wren_a),
+    .wren_b(1'b0),
+    .q_a(palette_q_a),
+    .q_b(palette_q_b)
+);
 
 // pll
 IP_VGA_PLL_Altera pll(
@@ -120,61 +156,10 @@ always_ff @(posedge Bus.clock) begin
         Bus.wr_ready <= '0;
         Bus.rd_ready <= '0;
         Bus.rd_data <= '0;
-
-        // write register
-        if(Bus.wr_addr[31:ADDRBITS] == ADDR[31:ADDRBITS] && Bus.wr_valid)begin
-            Bus.wr_ready <= '1;
-            unique case (Bus.wr_addr[ADDRBITS-1:0])
-                EN_OFFSET: en <= maskBytes({31'd0,en}, Bus.wr_data, Bus.wr_byteEn);
-                X_ADDR_OFFSET:begin
-                    if(twoBusCycle) twoBusCycle <= 1'b0;
-                    else begin
-                        x_in <= maskBytes({31'd0,x_in}, Bus.wr_data, Bus.wr_byteEn);
-                        twoBusCycle <= 1'b1;
-                        Bus.wr_ready <= 1'b0;
-                    end
-                end
-                Y_ADDR_OFFSET:begin
-                    if(twoBusCycle) twoBusCycle <= 1'b0;
-                    else begin
-                        y_in <= maskBytes({31'd0,y_in}, Bus.wr_data, Bus.wr_byteEn);
-                        twoBusCycle <= 1'b1;
-                        Bus.wr_ready <= 1'b0;
-                    end
-                end
-                DATA_OFFSET: begin
-                    if(twoBusCycle) twoBusCycle <= 1'b0;
-                    else begin
-                        vram[x_in+y_in*MAX_W] <= maskBytes({31'd0,vram_out_bus}, Bus.wr_data, Bus.wr_byteEn);
-                        twoBusCycle <= 1'b1;
-                        Bus.wr_ready <= 1'b0;
-                        x_in <= (x_in == MAX_W-1) ? '0 : (x_in + '1);
-                        y_in <= (x_in == MAX_W-1) ? ((y_in == MAX_H-1) ? '0 : (y_in + '1)) : y_in;
-                    end
-                end
-                PALETTE_ADDR_OFFSET: begin
-                    if(DEPTH!=0)begin
-                        if(twoBusCycle) twoBusCycle <= 1'b0;
-                        else begin
-                            p_in <= maskBytes({31'd0,p_in}, Bus.wr_data, Bus.wr_byteEn);
-                            twoBusCycle <= 1'b1;
-                            Bus.wr_ready <= 1'b0;
-                        end
-                    end
-                end
-                COLOR_OFFSET: begin
-                    if(DEPTH!=0)begin
-                        if(twoBusCycle) twoBusCycle <= 1'b0;
-                        else begin
-                            palette[p_in] <= maskBytes({31'd0,palette_out_bus}, Bus.wr_data, Bus.wr_byteEn);
-                            twoBusCycle <= 1'b1;
-                            Bus.wr_ready <= 1'b0;
-                            p_in <= (p_in == 2**DEPTH-1) ? '0 : (p_in + '1);
-                        end
-                    end
-                end
-            endcase
-        end
+        vram_data_a <= vram_data_a;
+        vram_wren_a <= 'b0;
+        palette_data_a <= palette_data_a;
+        palette_wren_a <= 'b0;
 
         // read register
         if(Bus.rd_addr[31:ADDRBITS] == ADDR[31:ADDRBITS] && Bus.rd_valid)begin
@@ -183,10 +168,54 @@ always_ff @(posedge Bus.clock) begin
                 EN_OFFSET: Bus.rd_data <= maskBytes('0, {31'd0,en}, Bus.rd_byteEn);
                 X_ADDR_OFFSET: Bus.rd_data <= maskBytes('0, {31'd0,x_in}, Bus.rd_byteEn);
                 Y_ADDR_OFFSET: Bus.rd_data <= maskBytes('0, {31'd0,y_in}, Bus.rd_byteEn);
-                DATA_OFFSET: Bus.rd_data <= maskBytes('0, {31'd0,vram_out_bus}, Bus.rd_byteEn);
+                DATA_OFFSET: Bus.rd_data <= maskBytes('0, {31'd0,vram_q_a}, Bus.rd_byteEn);
                 PALETTE_ADDR_OFFSET: Bus.rd_data <= maskBytes('0, {31'd0,p_in}, Bus.rd_byteEn);
-                COLOR_OFFSET: Bus.rd_data <= maskBytes('0, {31'd0,palette_out_bus}, Bus.rd_byteEn);
+                COLOR_OFFSET: Bus.rd_data <= maskBytes('0, {31'd0,palette_q_a}, Bus.rd_byteEn);
                 SCANLINE_OFFSET: Bus.rd_data <= maskBytes('0, {31'd0,scanline_s2}, Bus.rd_byteEn);
+            endcase
+        end
+
+        // write register (higher prio than read)
+        if(Bus.wr_addr[31:ADDRBITS] == ADDR[31:ADDRBITS] && Bus.wr_valid)begin
+            Bus.wr_ready <= '1;
+            unique case (Bus.wr_addr[ADDRBITS-1:0])
+                EN_OFFSET: en <= maskBytes({31'd0,en}, Bus.wr_data, Bus.wr_byteEn);
+                X_ADDR_OFFSET:begin
+                    x_in <= maskBytes({31'd0,x_in}, Bus.wr_data, Bus.wr_byteEn);
+                end
+                Y_ADDR_OFFSET:begin
+                    y_in <= maskBytes({31'd0,y_in}, Bus.wr_data, Bus.wr_byteEn);
+                end
+                DATA_OFFSET: begin
+                    if(twoBusCycle)begin
+                        twoBusCycle <= 1'b0;
+                        x_in <= (x_in == MAX_W-1) ? '0 : (x_in + '1);
+                        y_in <= (x_in == MAX_W-1) ? ((y_in == MAX_H-1) ? '0 : (y_in + '1)) : y_in;
+                    end else begin
+                        twoBusCycle <= 1'b1;
+                        vram_data_a <= Bus.wr_data;
+                        vram_wren_a <= 1'b1;
+                        Bus.wr_ready <= 1'b0;
+                    end
+                end
+                PALETTE_ADDR_OFFSET: begin
+                    if(DEPTH!=0)begin
+                        p_in <= maskBytes({31'd0,p_in}, Bus.wr_data, Bus.wr_byteEn);
+                    end
+                end
+                COLOR_OFFSET: begin
+                    if(DEPTH!=0)begin
+                        if(twoBusCycle)begin
+                            twoBusCycle <= 1'b0;
+                            p_in <= (p_in == 2**DEPTH-1) ? '0 : (p_in + '1);
+                        end else begin
+                            palette_data_a <= Bus.wr_data;
+                            palette_wren_a <= 1'b1;
+                            twoBusCycle <= 1'b1;
+                            Bus.wr_ready <= 1'b0;
+                        end
+                    end
+                end
             endcase
         end
     end
@@ -221,6 +250,7 @@ logic [10:0] x_comp;
 logic [9:0] y_comp;
 logic [23:0] p_out = 'b0;
 logic blank_1, hsync_1, vsync_1;
+logic blank_2, hsync_2, vsync_2;
 
 // IO init
 initial begin
@@ -290,6 +320,9 @@ always @(posedge VGA_IF.VGA_CLK) begin : VgaDatapath
         blank_1 <= 'b0;
         hsync_1 <= 'b0;
         vsync_1 <= 'b0;
+        blank_2 <= 'b0;
+        hsync_2 <= 'b0;
+        vsync_2 <= 'b0;
         {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R} <= 24'b0;
         VGA_IF.VGA_SYNC_N <= 'b0;
         VGA_IF.VGA_BLANK_N <= 'b0;
@@ -297,18 +330,22 @@ always @(posedge VGA_IF.VGA_CLK) begin : VgaDatapath
         VGA_IF.VGA_VS <= 'b1;
     end else begin
         // cycle 0: FSM logic
-        // cycle 1:
-        p_out <= vram[(x_out>>W_DIV_1280)+(y_out>>H_DIV_960)*MAX_W];
+        // cycle 1: vram inputs registered
         blank_1 <= xState != ACTIVE || yState != ACTIVE;
         hsync_1 <= xState == SYNC;
         vsync_1 <= yState == SYNC;
-        // cycle 2:
-        {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R} <= DEPTH == 0 ? p_out : palette[p_out];
-        // VGA_IF.VGA_SYNC_N <= ~(hsync_1 | vsync_1); // for composite hvsync
+        // cycle 2: palette inputs registered
+        p_out <= palette_q_b;
+        blank_2 <= blank_1;
+        hsync_2 <= hsync_1;
+        vsync_2 <= vsync_1;
+        // cycle 3:
+        // VGA_IF.VGA_SYNC_N <= ~(hsync_2 | vsync_2); // for composite hvsync
+        {VGA_IF.VGA_B, VGA_IF.VGA_G, VGA_IF.VGA_R} <= DEPTH == 0 ? p_out : palette_q_b;
         VGA_IF.VGA_SYNC_N <= 'b0;
-        VGA_IF.VGA_BLANK_N <= ~blank_1;
-        VGA_IF.VGA_HS <= ~hsync_1;
-        VGA_IF.VGA_VS <= vsync_1;
+        VGA_IF.VGA_BLANK_N <= ~blank_2;
+        VGA_IF.VGA_HS <= ~hsync_2;
+        VGA_IF.VGA_VS <= vsync_2;
     end
 end
     

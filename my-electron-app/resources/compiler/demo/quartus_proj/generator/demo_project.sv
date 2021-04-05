@@ -54,7 +54,7 @@ picorv32_axi #(
 
 mem_m10k #(
     .ADDR(32'h0000_0000),
-    .N_ADDR_BITS(16)
+    .N_ADDR_BITS(17)
 ) mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7 (
     .mem_if(mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_if0)
 );
@@ -68,8 +68,8 @@ IP_VGA_Main #(
     .DEPTH(8),
     .W_DIV_1280(1),
     .H_DIV_960(1),
-    .VRAM_MIF(),
-    .PALETTE_MIF()
+    .VRAM_MIF("resources/peripherals/vga/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.p256.png.mif"),
+    .PALETTE_MIF("resources/peripherals/vga/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.palette.png.mif")
 ) IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F (
     .Bus(IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if0),
     .VGA_IF(IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if1)

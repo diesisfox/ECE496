@@ -881,6 +881,9 @@ set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name MIF_FILE "resources/peripherals/vga/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.palette.png.mif"
+set_global_assignment -name MIF_FILE "resources/peripherals/vga/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.p256.png.mif"
+set_global_assignment -name SYSTEMVERILOG_FILE resources/peripherals/vga/IP_VGA_AsyncRam_Altera.sv
 set_global_assignment -name VERILOG_FILE resources/peripherals/vga/IP_VGA_PLL_Altera.v
 set_global_assignment -name SYSTEMVERILOG_FILE resources/peripherals/vga/IP_VGA_Main.sv
 set_global_assignment -name SYSTEMVERILOG_FILE resources/peripherals/vga/IP_VGA_IF.sv
@@ -890,5 +893,5 @@ set_global_assignment -name SYSTEMVERILOG_FILE resources/hdl/axi/controller_work
 set_global_assignment -name SYSTEMVERILOG_FILE resources/hdl/Interfaces.sv
 set_global_assignment -name SYSTEMVERILOG_FILE generator/demo_project.sv
 set_global_assignment -name VERILOG_INCLUDE_FILE mandel.vh
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name QIP_FILE twoportram.qip
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

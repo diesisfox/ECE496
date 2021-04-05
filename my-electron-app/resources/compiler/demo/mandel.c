@@ -12,29 +12,31 @@
 
 volatile Vga_t* vgaHandle = (void*) 0x80000000;
 
-static inline int32_t qmul(int32_t a, int32_t b){
+int32_t qmul(int32_t a, int32_t b){
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
 }
 
 uint8_t getIters(int32_t x0, int32_t y0){
-    uint8_t maxIters = 255;
-    uint8_t iters = 0;
+    uint16_t maxIters = 255;
     int32_t x = 0;
     int32_t y = 0;
-    while(qmul(x, x) + qmul(y, y) <= QP_4 && iters < maxIters){
-        int32_t newX = qmul(x, x) - qmul(y, y) + x0;
-        int32_t newY = qmul(qmul(QP_2, x), y) + y0;
+    uint16_t iters = 0;
+    for(; iters <= maxIters; iters++){
+        int32_t xx = qmul(x, x);
+        int32_t yy = qmul(y, y);
+        if(xx + yy > QP_4) break;
+        int32_t newX = xx - yy + x0;
+        int32_t newY = (qmul(x, y) << 1) + y0;
         x = newX;
         y = newY;
-        iters++;
     }
     return iters;
 }
 
 void drawMandel(int32_t xMin, int32_t xMax, int32_t yMin, int32_t yMax){
     int32_t dx = qmul(xMax - xMin, QP_INV_640);
-    int32_t xStart = xMin + dx >> 1;
-    int32_t yStart = yMin + dx >> 1;
+    int32_t xStart = xMin + (dx >> 1);
+    int32_t yStart = yMin + (dx >> 1);
     int32_t y0 = yStart;
     for(size_t j = 0; j < 480; j++){
         int32_t x0 = xStart;
