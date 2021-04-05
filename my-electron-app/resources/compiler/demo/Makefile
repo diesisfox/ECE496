@@ -2,7 +2,7 @@ CFLAGS = -march=rv32im -mabi=ilp32 -g -ffreestanding -fstrict-volatile-bitfields
 TOOLCHAIN_PREFIX = riscv64-unknown-elf-
 
 mandel: mandel.c vga.h
-	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) -O0 $^ -o mandel.elf
+	$(TOOLCHAIN_PREFIX)gcc $(CFLAGS) -O3 $^ -o mandel.elf
 	$(TOOLCHAIN_PREFIX)objdump -S -d -l mandel.elf > mandel.s
 	$(TOOLCHAIN_PREFIX)objcopy -O verilog mandel.elf mandel_bytes.vh
 	python ../endian_flip.py mandel_bytes.vh mandel.vh

@@ -62,7 +62,7 @@ logic [2**DEPTH-1:0] p_in = 'b0;
 
 // additional state registers
 wire [9-H_DIV_960:0] scanline;
-logic twoBusCycle = '0;
+logic [1:0] twoBusCycle = '0;
 
 // synchronizers
 logic en_s1, en_s2;
@@ -200,7 +200,7 @@ always_ff @(posedge Bus.clock) begin
                             x_in <= x_in + 'b1;
                         end
                     end else begin
-                        twoBusCycle <= 1'b1;
+                        twoBusCycle <= 1'd1;
                         vram_data_a <= Bus.wr_data;
                         vram_wren_a <= 1'b1;
                         Bus.wr_ready <= 1'b0;
@@ -222,8 +222,8 @@ always_ff @(posedge Bus.clock) begin
                             end
                         end else begin
                             palette_data_a <= Bus.wr_data;
-                            palette_wren_a <= 1'b1;
                             twoBusCycle <= 1'b1;
+                            palette_wren_a <= 1'b1;
                             Bus.wr_ready <= 1'b0;
                         end
                     end

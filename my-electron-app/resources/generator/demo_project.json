@@ -19,10 +19,10 @@
         "moduleType":"Memory",
         "UUID":"931897D0B4814B10A0108CB4D8FD8FD7",
         "parameters":{
-            "Verilog Instance Name": "mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7",
-            "Base Address": "0000_0000",
-            "Address Width": "17",
-            "Initialization File (MIF)": ""
+            "Verilog Instance Name":"mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7",
+            "Base Address":"0000_0000",
+            "Address Width":"16",
+            "Initialization File (MIF)":"\"generated_project/CPU/mandel.mif\""
         },
         "pinmaps":[
             [
@@ -36,11 +36,11 @@
         "parameters":{
             "Verilog Instance Name":"IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F",
             "Base Address":"8000_0000",
-            "Palette Depth":"4",
+            "Palette Depth":"8",
             "Horizontal Pixel Downsampling":"1",
             "Vertical Pixel Downsampling":"1",
-            "VRAM Init Mif":"",
-            "Palette Init Mif":""
+            "VRAM Init Mif":"\"generated_project/VGA/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.p256.png.mif\"",
+            "Palette Init Mif":"\"generated_project/VGA/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.palette.png.mif\""
         },
         "pinmaps":[
             [
@@ -91,6 +91,120 @@
                     "VGA_VS",
                     "VGA_VS",
                     "output"
+                ]
+            ]
+        ]
+    },
+    {
+        "moduleType":"GPIO",
+        "UUID":"EDCBA89957144E9786243CBAB6035F9B",
+        "parameters":{
+            "Verilog Instance Name":"IP_GPIO_Main_EDCBA89957144E9786243CBAB6035F9B",
+            "Base Address":"8000_0020",
+            "Width":"9"
+        },
+        "pinmaps":[
+            [
+                
+            ],
+            [
+                [
+                    "pins",
+                    "[8:0]SW",
+                    "input"
+                ]
+            ]
+        ]
+    },
+    {
+        "moduleType":"GPIO",
+        "UUID":"03E7C7957D28435F9FEA43E474E12689",
+        "parameters":{
+            "Verilog Instance Name":"IP_GPIO_Main_03E7C7957D28435F9FEA43E474E12689",
+            "Base Address":"8000_0030",
+            "Width":"4"
+        },
+        "pinmaps":[
+            [
+                
+            ],
+            [
+                [
+                    "pins",
+                    "[3:0]KEY",
+                    "input"
+                ]
+            ]
+        ]
+    },
+    {
+        "moduleType":"GPIO",
+        "UUID":"A82B8DF9798D4A83A773B4EB08A2678D",
+        "parameters":{
+            "Verilog Instance Name":"IP_GPIO_Main_A82B8DF9798D4A83A773B4EB08A2678D",
+            "Base Address":"8000_0040",
+            "Width":"9"
+        },
+        "pinmaps":[
+            [
+                
+            ],
+            [
+                [
+                    "pins",
+                    "[8:0]LEDR",
+                    "output"
+                ]
+            ]
+        ]
+    },
+    {
+        "moduleType":"GPIO",
+        "UUID":"E55DA6BDF4EC42659239D2DD6B45F15E",
+        "parameters":{
+            "Verilog Instance Name":"IP_GPIO_Main_E55DA6BDF4EC42659239D2DD6B45F15E",
+            "Base Address":"8000_0050",
+            "Width":"7"
+        },
+        "pinmaps":[
+            [
+                
+            ],
+            [
+                [
+                    "pins[0]",
+                    "GPIO",
+                    "inout"
+                ],
+                [
+                    "pins[1]",
+                    "GPIO",
+                    "inout"
+                ],
+                [
+                    "pins[2]",
+                    "GPIO",
+                    "inout"
+                ],
+                [
+                    "pins[3]",
+                    "GPIO",
+                    "inout"
+                ],
+                [
+                    "pins[4]",
+                    "GPIO",
+                    "inout"
+                ],
+                [
+                    "pins[5]",
+                    "GPIO",
+                    "inout"
+                ],
+                [
+                    "pins[6]",
+                    "GPIO",
+                    "inout"
                 ]
             ]
         ]
