@@ -30,6 +30,10 @@ PINMAP_INTNAME_INDEX = 0
 PINMAP_EXTNAME_INDEX = 1
 PINMAP_DIR_INDEX = 2
 
+# argv positions
+PROJECT_JSON_POS = 1
+OUTPUT_PATH_POS = 2
+
 
 class Errors(Enum):
     NO_ERR = 0
@@ -537,7 +541,7 @@ def write_top_verilog_end() -> str:
     pass
 
 
-def generate_from_json(project_json, ip_json) -> str:
+def generate_from_json(project_json, ip_json, output_folder) -> str:
     verilog = ""
     # step 1: allocate GPIO pins
     allocate_gpio_pins(project_json, ip_json)
@@ -560,8 +564,8 @@ def generate_from_json(project_json, ip_json) -> str:
     verilog = verilog.replace('\t', ' '*4)
     # step 8: copy source files for each peripheral into the project dir
     # TODO: replace this with a real path
-    os.mkdir("./generated_project/")
-    copy_source_into_project(project_json, ip_json, "./generated_project/")
+    #os.mkdir(output_folder)
+    copy_source_into_project(project_json, ip_json, output_folder)
     # done
     return verilog
     pass
@@ -571,7 +575,7 @@ def main():
     if len(sys.argv) == 1:  # argv[0] is "$script.py"
         print(f"ERROR[{Errors.BAD_ARGS}]: PLEASE SPECIFY AN INPUT")
         exit(Errors.BAD_ARGS)
-    elif len(sys.argv) == 2:
+    elif len(sys.argv) == 3:
         # get project json
         res = re.search(r"\.json$", sys.argv[1], re.IGNORECASE)
         project_json = None
@@ -597,9 +601,14 @@ def main():
                 print(f"ERROR[{Errors.BAD_IP_JSON}]: INVALID JSON INPUT FROM FILE {IP_DATABASE_PATH}")
                 exit(Errors.BAD_IP_JSON)
         # generate
-        verilog = generate_from_json(project_json, ip_json)
-        print(verilog)
+        verilog = generate_from_json(project_json, ip_json, sys.argv[2])
+        verilog_file = open(os.path.join(sys.argv[2], 'top.sv'),"w")
+        verilog_file.write(verilog)
+        verilog_file.close()
         exit(Errors.NO_ERR.value)
+    else:
+        print(f"ERROR[{Errors.BAD_ARGS}]: INVALID NUMBER OF ARGUMENTS")
+        exit(Errors.BAD_ARGS)
 
 
 if __name__ == '__main__':
