@@ -602,7 +602,7 @@ def main():
                 exit(Errors.BAD_IP_JSON)
         # generate
         verilog = generate_from_json(project_json, ip_json, sys.argv[2])
-        verilog_file = open(os.path.join(sys.argv[2], 'main.v'),"w")
+        verilog_file = open(os.path.join(sys.argv[2], 'top.sv'),"w")
         verilog_file.write(verilog)
         verilog_file.close()
         exit(Errors.NO_ERR.value)
