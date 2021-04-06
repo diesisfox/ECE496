@@ -80,8 +80,8 @@ IP_VGA_Main #(
     .DEPTH(8),
     .W_DIV_1280(1),
     .H_DIV_960(1),
-    .VRAM_MIF("resources/peripherals/vga/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.p256.png.mif"),
-    .PALETTE_MIF("resources/peripherals/vga/480_1502934674.inkh_59_melloque_waifu2x_art_scale_tta_1 copy_waifu2x_art_noise3_scale_tta_1 copy 2.png.palette.png.mif")
+    .VRAM_MIF("resources/peripherals/vga/Artboard 2.png.p256.png.mif"),
+    .PALETTE_MIF("resources/peripherals/vga/Artboard 2.png.palette.png.mif")
 ) IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F (
     .Bus(IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if0),
     .VGA_IF(IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if1)

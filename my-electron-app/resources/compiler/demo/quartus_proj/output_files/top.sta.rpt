@@ -1,5 +1,5 @@
 Timing Analyzer report for top
-Mon Apr 05 08:54:03 2021
+Mon Apr 05 19:36:00 2021
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -100,14 +100,14 @@ https://fpgasoftware.intel.com/eula.
 ; Number detected on machine ; 4           ;
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
-; Average used               ; 2.35        ;
+; Average used               ; 2.20        ;
 ; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  45.5%      ;
-;     Processor 3            ;  44.6%      ;
-;     Processor 4            ;  44.5%      ;
+;     Processor 2            ;  40.8%      ;
+;     Processor 3            ;  39.6%      ;
+;     Processor 4            ;  39.4%      ;
 +----------------------------+-------------+
 
 
@@ -785,7 +785,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime Timing Analyzer
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Mon Apr 05 08:53:42 2021
+    Info: Processing started: Mon Apr 05 19:35:32 2021
 Info: Command: quartus_sta demo -c top
 Info: qsta_default_script.tcl version: #1
 Warning (20013): Ignored 571 assignments for entity "DE1_SoC" -- entity does not exist in design
@@ -1513,9 +1513,9 @@ Info (332114): Report Metastability: Found 24 synchronizer chains.
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 578 warnings
-    Info: Peak virtual memory: 5325 megabytes
-    Info: Processing ended: Mon Apr 05 08:54:03 2021
-    Info: Elapsed time: 00:00:21
-    Info: Total CPU time (on all processors): 00:00:43
+    Info: Peak virtual memory: 5328 megabytes
+    Info: Processing ended: Mon Apr 05 19:36:00 2021
+    Info: Elapsed time: 00:00:28
+    Info: Total CPU time (on all processors): 00:00:50
 
 
