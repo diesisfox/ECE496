@@ -10,10 +10,12 @@ var initial_output = ""
 
 function process_backend_modify_output(ipcMain, event, process, exit_value){
     if (exit_value[0] == '0'){
+        console.log("got here")
         file_manager.updateSave(process.stdout_data.toString())
         event.reply('update-renderer', file_manager.getSave())
         event.reply('console-message', "\nCommand successful\n")
     } else {
+        console.log("got here")
         if (process.stdout_data.length != 0)
             event.reply('console-message', process.stdout_data.toString())
         if (process.stderr_data.length != 0)
@@ -22,7 +24,10 @@ function process_backend_modify_output(ipcMain, event, process, exit_value){
 }
 
 function process_backend_validate_output(ipcMain, event, process, exit_value){
-    event.reply('system-message', process.stdout_data.toString())
+    if (process.stdout_data.length != 0)
+            event.reply('console-message', process.stdout_data.toString())
+    if (process.stderr_data.length != 0)
+        event.reply('system-message', process.stderr_data.toString())
 }
 
 function process_backend_generation_output(ipcMain, event, process, exit_value){
