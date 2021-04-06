@@ -36,11 +36,11 @@ function addButtonListeners(){
         toolbox_renderer.toggle_toolbox_visibility()
     })
     val_button.addEventListener('click', function() {
-        ipcRenderer.send('console-input-reading', 'validate()')
+        ipcRenderer.sendSync('console-input-reading', 'validate()')
     })
     generate_button.addEventListener('click', function() {
         //ipcRenderer.send('generate', "")
-        ipcRenderer.send('console-input-reading', 'generate()')
+        ipcRenderer.sendSync('console-input-reading', 'generate()')
     })
     about_button.addEventListener('click', function() {
         ipcRenderer.send('about', "")

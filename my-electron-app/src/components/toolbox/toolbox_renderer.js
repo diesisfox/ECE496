@@ -38,16 +38,16 @@ let editing_module_UUID = false
 
 // TODO: complete these three functions
 function sendNewToBack(ipcRenderer, module_type){
-    ipcRenderer.send('console-input-reading', 'add_module("' + module_type + '")')
+    ipcRenderer.sendSync('console-input-reading', 'add_module("' + module_type + '")')
 }
 
 function sendEditToBack(ipcRenderer, data_array){
-    ipcRenderer.send('console-input-reading', 'change_parameter("' + data_array[0] + '", "' + data_array[1] + 
+    ipcRenderer.sendSync('console-input-reading', 'change_parameter("' + data_array[0] + '", "' + data_array[1] + 
         '", "' + data_array[2] + '")')
 }
 
 function sendRemoveToBack(ipcRenderer, module_UUID){
-    ipcRenderer.send('console-input-reading', 'remove_module("' + module_UUID + '")')
+    ipcRenderer.sendSync('console-input-reading', 'remove_module("' + module_UUID + '")')
 }
 
 // --------- Toolbox ---------
@@ -200,6 +200,7 @@ function setEditBox (ipcRenderer, module_json){
             if (edit_module_box_div.childNodes[i].placeholder != "filler"){
                 let data = [editing_module_UUID, edit_module_box_div.childNodes[i].placeholder,
                     edit_module_box_div.childNodes[i].value]
+                ipcRenderer.send('debug', "editing")
                 sendEditToBack(ipcRenderer, data)
             }
         }

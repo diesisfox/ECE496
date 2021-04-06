@@ -2,6 +2,7 @@
     "CPU" : {
         "moduleType": "CPU",
         "verilogName": "picorv32_axi",
+        "non_peripheral_color": "#de733e",
         "addrBits": 0,
         "sourceFilePaths": [
             "../hdl/picorv32/picorv32.sv"
@@ -48,6 +49,7 @@
     "Memory" : {
         "moduleType": "Memory",
         "verilogName": "mem_m10k",
+        "non_peripheral_color": "#ded13e",
         "addrBits": 0,
         "sourceFilePaths": [
             "mem/mem_m10k.sv"

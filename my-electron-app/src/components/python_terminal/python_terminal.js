@@ -7,6 +7,7 @@ const {fileURLToPath} = require('url')
 var python_instance = null;
 var is_ecf = false
 var initial_output = ""
+var lock = false
 
 function process_backend_modify_output(ipcMain, event, process, exit_value){
     if (exit_value[0] == '0'){
@@ -25,7 +26,7 @@ function process_backend_modify_output(ipcMain, event, process, exit_value){
 
 function process_backend_validate_output(ipcMain, event, process, exit_value){
     if (process.stdout_data.length != 0)
-            event.reply('console-message', process.stdout_data.toString())
+        event.reply('system-message', process.stdout_data.toString())
     if (process.stderr_data.length != 0)
         event.reply('system-message', process.stderr_data.toString())
 }
@@ -43,6 +44,7 @@ function call_backend(ipcMain, str_data, event){
     let target_folder = "default"
     let filepath =  path.join("..", "generator", data_array[2])
     
+    console.log("test")
     console.log(filepath)
 
     // find verilog function arguments
@@ -64,6 +66,7 @@ function call_backend(ipcMain, str_data, event){
             arg_arr.push(path.join(target_folder[0],"\\"))
         }
     }
+    console.log(arg_arr)
 
     let options = {cwd:path.join(__dirname,"..","..","..", "resources", "generator")}
 
@@ -98,6 +101,8 @@ function call_backend(ipcMain, str_data, event){
         } else if (process.type == 0){
             process_backend_generation_output(ipcMain, event, process, data.toString())
         }
+        
+        event.returnValue = "done"
     })
 }
 
@@ -131,10 +136,20 @@ function tryPythonSpawn(ipcMain, args, options){
                 // not a special message
                 if (str_data.slice(0, CONSTANTS.MGK.length) != (CONSTANTS.MGK)){
                     event.reply('console-message', str_data)
+                    event.returnValue = "done"
                 } else {
                     // process what comes back
-                    // format: [MGK] [filename] [MGK] [parameters each separated by |]
-                    call_backend(ipcMain, str_data, event)
+                    // format: [MGK] [filename] [MGK] [parameters]
+                    var split_data = str_data.split("\n")
+                    console.log("test10491:" + split_data)
+                    let i = 0
+                    for (i = 0; i < split_data.length; i++){
+                        console.log("test3949419: " + split_data[i])
+                        if (split_data[i] == undefined)
+                            continue
+                        call_backend(ipcMain, split_data[i], event)
+                    }
+                    // call_backend(ipcMain, str_data, event)
                 }
             })
 
@@ -143,6 +158,7 @@ function tryPythonSpawn(ipcMain, args, options){
             python_instance.stderr.once('data', function (data) {
                 let datastr = data.toString()
                 event.reply('console-message', datastr.slice(0, datastr.length - 4))
+                setTimeout(() => {event.returnValue = "done"},50); // times out and allows further input
             })
 
             python_instance.stdin.write(arg+"\n")

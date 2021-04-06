@@ -9,7 +9,7 @@ const addToTextBox = function(e){
             text_box.textContent = ""
             input_box.value = ""
         } else {
-            ipcRenderer.send('console-input-reading', input_box.value);
+            ipcRenderer.sendSync('console-input-reading', input_box.value);
             text_box.textContent = text_box.textContent + "\r\n>>> " + input_box.value + "\r\n";
             input_box.value = ""
             text_wrapper.scrollTop = text_wrapper.scrollHeight
