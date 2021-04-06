@@ -13,8 +13,8 @@ _start:
     .option push
     .option norelax
     la gp, __global_pointer$
-   0:	00002197          	auipc	gp,0x2
-   4:	cd818193          	addi	gp,gp,-808 # 1cd8 <__global_pointer$>
+   0:	00003197          	auipc	gp,0x3
+   4:	48818193          	addi	gp,gp,1160 # 3488 <__global_pointer$>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/../crt0.s:10
     .option pop
     la sp, __stack_top
@@ -31,63 +31,53 @@ Disassembly of section .text:
 
 00000018 <main>:
 main():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:259
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:240
     return ret;
 }
 
 int main(void){
     // enable video
     vgaHandle->en = 1;
-  18:	000017b7          	lui	a5,0x1
-  1c:	4dc7a603          	lw	a2,1244(a5) # 14dc <vgaHandle>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:257
+  18:	000037b7          	lui	a5,0x3
+  1c:	c8c7a603          	lw	a2,-884(a5) # 2c8c <vgaHandle>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:238
 int main(void){
   20:	ff010113          	addi	sp,sp,-16
-  24:	00112623          	sw	ra,12(sp)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:259
+  24:	000017b7          	lui	a5,0x1
+  28:	bf078793          	addi	a5,a5,-1040 # bf0 <DX_SCALE>
+  2c:	00112623          	sw	ra,12(sp)
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:240
     vgaHandle->en = 1;
-  28:	00100793          	li	a5,1
-  2c:	000016b7          	lui	a3,0x1
-  30:	c6068693          	addi	a3,a3,-928 # c60 <DX_SCALE>
-  34:	00f62023          	sw	a5,0(a2)
-setPalette1():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:210
-    vgaHandle->pAddr = 0;
-  38:	00062823          	sw	zero,16(a2)
+  30:	00100713          	li	a4,1
+  34:	06c78593          	addi	a1,a5,108
+  38:	00e62023          	sw	a4,0(a2)
+setPalette():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:211
-    for(size_t i = 0; i < 256; i++){
-  3c:	04c68793          	addi	a5,a3,76
-  40:	44c68693          	addi	a3,a3,1100
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:212
-        vgaHandle->pltData = palette[i];
-  44:	0007a703          	lw	a4,0(a5)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:211
-    for(size_t i = 0; i < 256; i++){
-  48:	00478793          	addi	a5,a5,4
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:212
-        vgaHandle->pltData = palette[i];
-  4c:	00e62a23          	sw	a4,20(a2)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:211
-    for(size_t i = 0; i < 256; i++){
-  50:	fed79ae3          	bne	a5,a3,44 <main+0x2c>
+    else for(int i = 255; i >= 0; i--) vgaHandle->pltData = palette[i];
+  3c:	46878793          	addi	a5,a5,1128
+  40:	0007a683          	lw	a3,0(a5)
+  44:	00078713          	mv	a4,a5
+  48:	ffc78793          	addi	a5,a5,-4
+  4c:	00d62a23          	sw	a3,20(a2)
+  50:	fee598e3          	bne	a1,a4,40 <main+0x28>
 main():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:267
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:248
     // set pixel address to 0
     // vgaHandle->xAddr = 0;
     // vgaHandle->yAddr = 0;
     // draw
     for(;;){
         int update = drawMandelInterlaced();
-  54:	72c000ef          	jal	ra,780 <drawMandelInterlaced>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:268
+  54:	6bc000ef          	jal	ra,710 <drawMandelInterlaced>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:249
         if(!update){
   58:	fe051ee3          	bnez	a0,54 <main+0x3c>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:269 (discriminator 1)
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:250 (discriminator 1)
             while(!processSw());
-  5c:	540000ef          	jal	ra,59c <processSw>
+  5c:	50c000ef          	jal	ra,568 <processSw>
   60:	fe051ae3          	bnez	a0,54 <main+0x3c>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:269
-  64:	538000ef          	jal	ra,59c <processSw>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:250
+  64:	504000ef          	jal	ra,568 <processSw>
   68:	fe050ae3          	beqz	a0,5c <main+0x44>
   6c:	fe9ff06f          	j	54 <main+0x3c>
 
@@ -108,25 +98,25 @@ qmul():
 zoomIn():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:48
     if(scale == MAX_SCALING - 1) return;
-  88:	8141c683          	lbu	a3,-2028(gp) # 14ec <scale>
+  88:	8141c683          	lbu	a3,-2028(gp) # 2c9c <scale>
   8c:	01200793          	li	a5,18
   90:	04f68a63          	beq	a3,a5,e4 <zoomIn+0x5c>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:49
     int32_t dx = DX_SCALE[scale];
   94:	000017b7          	lui	a5,0x1
   98:	00269713          	slli	a4,a3,0x2
-  9c:	c6078793          	addi	a5,a5,-928 # c60 <DX_SCALE>
+  9c:	bf078793          	addi	a5,a5,-1040 # bf0 <DX_SCALE>
   a0:	00e787b3          	add	a5,a5,a4
   a4:	0007a603          	lw	a2,0(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:51
     yStart = yStart + 120 * dx;
-  a8:	00001537          	lui	a0,0x1
+  a8:	00003537          	lui	a0,0x3
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:50
     xStart = xStart + 160 * dx;
-  ac:	80c1a303          	lw	t1,-2036(gp) # 14e4 <xStart>
+  ac:	80c1a303          	lw	t1,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:51
     yStart = yStart + 120 * dx;
-  b0:	4e052883          	lw	a7,1248(a0) # 14e0 <yStart>
+  b0:	c9052883          	lw	a7,-880(a0) # 2c90 <yStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:50
     xStart = xStart + 160 * dx;
   b4:	00261713          	slli	a4,a2,0x2
@@ -156,13 +146,13 @@ zoomIn():
   d4:	00168693          	addi	a3,a3,1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:50
     xStart = xStart + 160 * dx;
-  d8:	80e1a623          	sw	a4,-2036(gp) # 14e4 <xStart>
+  d8:	80e1a623          	sw	a4,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:51
     yStart = yStart + 120 * dx;
-  dc:	4ef52023          	sw	a5,1248(a0)
+  dc:	c8f52823          	sw	a5,-880(a0)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:52
     scale++;
-  e0:	80d18a23          	sb	a3,-2028(gp) # 14ec <scale>
+  e0:	80d18a23          	sb	a3,-2028(gp) # 2c9c <scale>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:53
 }
   e4:	00008067          	ret
@@ -171,30 +161,30 @@ zoomIn():
 zoomOut():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:56
     if(scale == 0) return;
-  e8:	8141c783          	lbu	a5,-2028(gp) # 14ec <scale>
+  e8:	8141c783          	lbu	a5,-2028(gp) # 2c9c <scale>
   ec:	0c078863          	beqz	a5,1bc <zoomOut+0xd4>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:57
     scale --;
   f0:	fff78793          	addi	a5,a5,-1
   f4:	0ff7f793          	andi	a5,a5,255
-  f8:	80f18a23          	sb	a5,-2028(gp) # 14ec <scale>
+  f8:	80f18a23          	sb	a5,-2028(gp) # 2c9c <scale>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:58
     if(scale == 0){
   fc:	0c078263          	beqz	a5,1c0 <zoomOut+0xd8>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:63
     int32_t dx = DX_SCALE[scale];
  100:	00001737          	lui	a4,0x1
- 104:	c6070713          	addi	a4,a4,-928 # c60 <DX_SCALE>
+ 104:	bf070713          	addi	a4,a4,-1040 # bf0 <DX_SCALE>
  108:	00279793          	slli	a5,a5,0x2
  10c:	00f707b3          	add	a5,a4,a5
  110:	0007a683          	lw	a3,0(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:65
     yStart = yStart - 120 * dx;
- 114:	00001837          	lui	a6,0x1
- 118:	4e082503          	lw	a0,1248(a6) # 14e0 <yStart>
+ 114:	00003837          	lui	a6,0x3
+ 118:	c9082503          	lw	a0,-880(a6) # 2c90 <yStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:64
     xStart = xStart - 160 * dx;
- 11c:	80c1a583          	lw	a1,-2036(gp) # 14e4 <xStart>
+ 11c:	80c1a583          	lw	a1,-2036(gp) # 2c94 <xStart>
  120:	00269713          	slli	a4,a3,0x2
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:65
     yStart = yStart - 120 * dx;
@@ -226,10 +216,10 @@ zoomOut():
  148:	02fc6537          	lui	a0,0x2fc6
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:64
     xStart = xStart - 160 * dx;
- 14c:	80b1a623          	sw	a1,-2036(gp) # 14e4 <xStart>
+ 14c:	80b1a623          	sw	a1,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:65
     yStart = yStart - 120 * dx;
- 150:	4ec82023          	sw	a2,1248(a6)
+ 150:	c8c82823          	sw	a2,-880(a6)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:67
     if(xStart + 639 * dx > QP_X_MAX) xStart = QP_X_MAX - 639 * dx;
  154:	00b70733          	add	a4,a4,a1
@@ -239,7 +229,7 @@ zoomOut():
  160:	d8100593          	li	a1,-639
  164:	02b685b3          	mul	a1,a3,a1
  168:	00a585b3          	add	a1,a1,a0
- 16c:	80b1a623          	sw	a1,-2036(gp) # 14e4 <xStart>
+ 16c:	80b1a623          	sw	a1,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:68
     if(yStart + 479 * dx > QP_Y_MAX) yStart = QP_Y_MAX - 479 * dx;
  170:	40d787b3          	sub	a5,a5,a3
@@ -253,19 +243,19 @@ zoomOut():
  18c:	e2100793          	li	a5,-479
  190:	02f686b3          	mul	a3,a3,a5
  194:	00e68633          	add	a2,a3,a4
- 198:	4ec82023          	sw	a2,1248(a6)
+ 198:	c8c82823          	sw	a2,-880(a6)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:70
     if(xStart < QP_X_MIN) xStart = QP_X_MIN;
  19c:	fa03a7b7          	lui	a5,0xfa03a
  1a0:	99a78793          	addi	a5,a5,-1638 # fa03999a <__stack_top+0xfa02999a>
  1a4:	00f5d463          	bge	a1,a5,1ac <zoomOut+0xc4>
- 1a8:	80f1a623          	sw	a5,-2036(gp) # 14e4 <xStart>
+ 1a8:	80f1a623          	sw	a5,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:71
     if(yStart < QP_Y_MIN) yStart = QP_Y_MIN;
  1ac:	fca3a7b7          	lui	a5,0xfca3a
  1b0:	99a78793          	addi	a5,a5,-1638 # fca3999a <__stack_top+0xfca2999a>
  1b4:	00f65463          	bge	a2,a5,1bc <zoomOut+0xd4>
- 1b8:	4ef82023          	sw	a5,1248(a6)
+ 1b8:	c8f82823          	sw	a5,-880(a6)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:72
 }
  1bc:	00008067          	ret
@@ -273,13 +263,13 @@ zoomOut():
         xStart = QP_X_MIN;
  1c0:	fa03a7b7          	lui	a5,0xfa03a
  1c4:	99a78793          	addi	a5,a5,-1638 # fa03999a <__stack_top+0xfa02999a>
- 1c8:	80f1a623          	sw	a5,-2036(gp) # 14e4 <xStart>
+ 1c8:	80f1a623          	sw	a5,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:60
         yStart = QP_Y_MIN;
  1cc:	fca3a7b7          	lui	a5,0xfca3a
- 1d0:	00001737          	lui	a4,0x1
+ 1d0:	00003737          	lui	a4,0x3
  1d4:	99a78793          	addi	a5,a5,-1638 # fca3999a <__stack_top+0xfca2999a>
- 1d8:	4ef72023          	sw	a5,1248(a4) # 14e0 <yStart>
+ 1d8:	c8f72823          	sw	a5,-880(a4) # 2c90 <yStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:61
         return;
  1dc:	00008067          	ret
@@ -288,16 +278,16 @@ zoomOut():
 moveFrame():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:75
     int32_t dx = DX_SCALE[scale];
- 1e0:	8141c783          	lbu	a5,-2028(gp) # 14ec <scale>
+ 1e0:	8141c783          	lbu	a5,-2028(gp) # 2c9c <scale>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:77
         yStart += dx << MOVEPOWER;
- 1e4:	000015b7          	lui	a1,0x1
- 1e8:	4e05a803          	lw	a6,1248(a1) # 14e0 <yStart>
+ 1e4:	000035b7          	lui	a1,0x3
+ 1e8:	c905a803          	lw	a6,-880(a1) # 2c90 <yStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:75
     int32_t dx = DX_SCALE[scale];
  1ec:	00279713          	slli	a4,a5,0x2
  1f0:	000017b7          	lui	a5,0x1
- 1f4:	c6078793          	addi	a5,a5,-928 # c60 <DX_SCALE>
+ 1f4:	bf078793          	addi	a5,a5,-1040 # bf0 <DX_SCALE>
  1f8:	00e787b3          	add	a5,a5,a4
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:76
     if(dirs & UP){
@@ -312,13 +302,13 @@ moveFrame():
         yStart += dx << MOVEPOWER;
  208:	00679713          	slli	a4,a5,0x6
  20c:	00e80833          	add	a6,a6,a4
- 210:	4f05a023          	sw	a6,1248(a1)
+ 210:	c905a823          	sw	a6,-880(a1)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:81
     if(dirs & RIGHT){
  214:	00157713          	andi	a4,a0,1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:82
         xStart += dx << MOVEPOWER;
- 218:	80c1a683          	lw	a3,-2036(gp) # 14e4 <xStart>
+ 218:	80c1a683          	lw	a3,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:81
     if(dirs & RIGHT){
  21c:	08070a63          	beqz	a4,2b0 <moveFrame+0xd0>
@@ -326,7 +316,7 @@ moveFrame():
         xStart += dx << MOVEPOWER;
  220:	00679713          	slli	a4,a5,0x6
  224:	00e686b3          	add	a3,a3,a4
- 228:	80d1a623          	sw	a3,-2036(gp) # 14e4 <xStart>
+ 228:	80d1a623          	sw	a3,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:87
     if(xStart + 639 * dx > QP_X_MAX) xStart = QP_X_MAX - 639 * dx;
  22c:	00279713          	slli	a4,a5,0x2
@@ -341,7 +331,7 @@ moveFrame():
  24c:	d8100693          	li	a3,-639
  250:	02d786b3          	mul	a3,a5,a3
  254:	00c686b3          	add	a3,a3,a2
- 258:	80d1a623          	sw	a3,-2036(gp) # 14e4 <xStart>
+ 258:	80d1a623          	sw	a3,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:88
     if(yStart + 479 * dx > QP_Y_MAX) yStart = QP_Y_MAX - 479 * dx;
  25c:	00479713          	slli	a4,a5,0x4
@@ -356,21 +346,21 @@ moveFrame():
  27c:	e2100713          	li	a4,-479
  280:	02e787b3          	mul	a5,a5,a4
  284:	00c78833          	add	a6,a5,a2
- 288:	4f05a023          	sw	a6,1248(a1)
+ 288:	c905a823          	sw	a6,-880(a1)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:90
     if(xStart < QP_X_MIN) xStart = QP_X_MIN;
  28c:	fa03a737          	lui	a4,0xfa03a
  290:	99a70713          	addi	a4,a4,-1638 # fa03999a <__stack_top+0xfa02999a>
  294:	00e6d463          	bge	a3,a4,29c <moveFrame+0xbc>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:90 (discriminator 1)
- 298:	80e1a623          	sw	a4,-2036(gp) # 14e4 <xStart>
+ 298:	80e1a623          	sw	a4,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:91
     if(yStart < QP_Y_MIN) yStart = QP_Y_MIN;
  29c:	fca3a737          	lui	a4,0xfca3a
  2a0:	99a70713          	addi	a4,a4,-1638 # fca3999a <__stack_top+0xfca2999a>
  2a4:	00e85463          	bge	a6,a4,2ac <moveFrame+0xcc>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:91 (discriminator 1)
- 2a8:	4ee5a023          	sw	a4,1248(a1)
+ 2a8:	c8e5a823          	sw	a4,-880(a1)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:92
 }
  2ac:	00008067          	ret
@@ -382,7 +372,7 @@ moveFrame():
         xStart -= dx << MOVEPOWER;
  2b8:	00679713          	slli	a4,a5,0x6
  2bc:	40e686b3          	sub	a3,a3,a4
- 2c0:	80d1a623          	sw	a3,-2036(gp) # 14e4 <xStart>
+ 2c0:	80d1a623          	sw	a3,-2036(gp) # 2c94 <xStart>
  2c4:	f69ff06f          	j	22c <moveFrame+0x4c>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:78
     }else if(dirs & DOWN){
@@ -392,7 +382,7 @@ moveFrame():
         yStart -= dx << MOVEPOWER;
  2d0:	00679713          	slli	a4,a5,0x6
  2d4:	40e80833          	sub	a6,a6,a4
- 2d8:	4f05a023          	sw	a6,1248(a1)
+ 2d8:	c905a823          	sw	a6,-880(a1)
  2dc:	f39ff06f          	j	214 <moveFrame+0x34>
 
 000002e0 <getIters>:
@@ -492,7 +482,7 @@ getIters():
 drawMandel():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:112
     int32_t dx = DX_SCALE[scale];
- 398:	8141c783          	lbu	a5,-2028(gp) # 14ec <scale>
+ 398:	8141c783          	lbu	a5,-2028(gp) # 2c9c <scale>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:111
 void drawMandel(void){
  39c:	ff010113          	addi	sp,sp,-16
@@ -501,20 +491,20 @@ void drawMandel(void){
     int32_t dx = DX_SCALE[scale];
  3a4:	00279713          	slli	a4,a5,0x2
  3a8:	000017b7          	lui	a5,0x1
- 3ac:	c6078793          	addi	a5,a5,-928 # c60 <DX_SCALE>
+ 3ac:	bf078793          	addi	a5,a5,-1040 # bf0 <DX_SCALE>
  3b0:	00e787b3          	add	a5,a5,a4
  3b4:	0007af83          	lw	t6,0(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:113
     int32_t y0 = yStart;
- 3b8:	000017b7          	lui	a5,0x1
- 3bc:	4e07a303          	lw	t1,1248(a5) # 14e0 <yStart>
+ 3b8:	000037b7          	lui	a5,0x3
+ 3bc:	c907a303          	lw	t1,-880(a5) # 2c90 <yStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:115
         int32_t x0 = xStart;
- 3c0:	80c1a403          	lw	s0,-2036(gp) # 14e4 <xStart>
+ 3c0:	80c1a403          	lw	s0,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:118
             vgaHandle->pxlData = iters;
- 3c4:	000017b7          	lui	a5,0x1
- 3c8:	4dc7a283          	lw	t0,1244(a5) # 14dc <vgaHandle>
+ 3c4:	000037b7          	lui	a5,0x3
+ 3c8:	c8c7a283          	lw	t0,-884(a5) # 2c8c <vgaHandle>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:111
 void drawMandel(void){
  3cc:	00912423          	sw	s1,8(sp)
@@ -656,8 +646,8 @@ paintBigPixel():
  4cc:	02d05e63          	blez	a3,508 <paintBigPixel+0x44>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:127
         vgaHandle->yAddr = y + j;
- 4d0:	000017b7          	lui	a5,0x1
- 4d4:	4dc7a703          	lw	a4,1244(a5) # 14dc <vgaHandle>
+ 4d0:	000037b7          	lui	a5,0x3
+ 4d4:	c8c7a703          	lw	a4,-884(a5) # 2c8c <vgaHandle>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:126
     for(uint8_t j = 0; j < 1<<pow; j++){
  4d8:	00000813          	li	a6,0
@@ -689,989 +679,885 @@ paintBigPixel():
 }
  508:	00008067          	ret
 
-0000050c <setPalette0>:
-setPalette0():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:200
-    vgaHandle->pAddr = 0;
- 50c:	000017b7          	lui	a5,0x1
- 510:	4dc7a603          	lw	a2,1244(a5) # 14dc <vgaHandle>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:201
-    for(int i = 255; i >= 0; i--){
- 514:	fff00593          	li	a1,-1
- 518:	0ff00793          	li	a5,255
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:200
-    vgaHandle->pAddr = 0;
- 51c:	00062823          	sw	zero,16(a2)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:202 (discriminator 3)
-        vgaHandle->pltData = i << 16 | i << 8 | i;
- 520:	01079713          	slli	a4,a5,0x10
- 524:	00879693          	slli	a3,a5,0x8
- 528:	00d76733          	or	a4,a4,a3
- 52c:	00f76733          	or	a4,a4,a5
- 530:	00e62a23          	sw	a4,20(a2)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:201 (discriminator 3)
-    for(int i = 255; i >= 0; i--){
- 534:	fff78793          	addi	a5,a5,-1
- 538:	feb794e3          	bne	a5,a1,520 <setPalette0+0x14>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:204
-}
- 53c:	00008067          	ret
-
-00000540 <setPalette1>:
-setPalette1():
+0000050c <setPalette>:
+setPalette():
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:209
+    uint32_t const * const palette = palettes[sw>>1];
+ 50c:	00155793          	srli	a5,a0,0x1
+ 510:	00279713          	slli	a4,a5,0x2
+ 514:	000017b7          	lui	a5,0x1
+ 518:	bf078793          	addi	a5,a5,-1040 # bf0 <DX_SCALE>
+ 51c:	00e787b3          	add	a5,a5,a4
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:210
-    vgaHandle->pAddr = 0;
- 540:	000017b7          	lui	a5,0x1
- 544:	4dc7a603          	lw	a2,1244(a5) # 14dc <vgaHandle>
- 548:	000016b7          	lui	a3,0x1
- 54c:	c6068693          	addi	a3,a3,-928 # c60 <DX_SCALE>
- 550:	04c68793          	addi	a5,a3,76
- 554:	00062823          	sw	zero,16(a2)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:211
-    for(size_t i = 0; i < 256; i++){
- 558:	44c68693          	addi	a3,a3,1100
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:212 (discriminator 3)
-        vgaHandle->pltData = palette[i];
- 55c:	0007a703          	lw	a4,0(a5)
+    if(dir) for(int i = 0; i < 256; i++) vgaHandle->pltData = palette[i];
+ 520:	00157513          	andi	a0,a0,1
+ 524:	00003737          	lui	a4,0x3
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:209
+    uint32_t const * const palette = palettes[sw>>1];
+ 528:	04c7a783          	lw	a5,76(a5)
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:210
+    if(dir) for(int i = 0; i < 256; i++) vgaHandle->pltData = palette[i];
+ 52c:	c8c72683          	lw	a3,-884(a4) # 2c8c <vgaHandle>
+ 530:	00050e63          	beqz	a0,54c <setPalette+0x40>
+ 534:	40078613          	addi	a2,a5,1024
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:210 (discriminator 4)
+ 538:	0007a703          	lw	a4,0(a5)
+ 53c:	00478793          	addi	a5,a5,4
+ 540:	00e6aa23          	sw	a4,20(a3)
+ 544:	fef61ae3          	bne	a2,a5,538 <setPalette+0x2c>
+ 548:	00008067          	ret
+ 54c:	3fc78713          	addi	a4,a5,1020
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:211 (discriminator 3)
-    for(size_t i = 0; i < 256; i++){
- 560:	00478793          	addi	a5,a5,4
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:212 (discriminator 3)
-        vgaHandle->pltData = palette[i];
- 564:	00e62a23          	sw	a4,20(a2)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:211 (discriminator 3)
-    for(size_t i = 0; i < 256; i++){
- 568:	fed79ae3          	bne	a5,a3,55c <setPalette1+0x1c>
+    else for(int i = 255; i >= 0; i--) vgaHandle->pltData = palette[i];
+ 550:	00072583          	lw	a1,0(a4)
+ 554:	00070613          	mv	a2,a4
+ 558:	ffc70713          	addi	a4,a4,-4
+ 55c:	00b6aa23          	sw	a1,20(a3)
+ 560:	fec798e3          	bne	a5,a2,550 <setPalette+0x44>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:212
+}
+ 564:	00008067          	ret
+
+00000568 <processSw>:
+processSw():
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:215
+    uint32_t newSw = *sw;
+ 568:	000037b7          	lui	a5,0x3
+ 56c:	c887a703          	lw	a4,-888(a5) # 2c88 <sw>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:214
-}
- 56c:	00008067          	ret
-
-00000570 <setPalette2>:
-setPalette2():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:219
-    vgaHandle->pAddr = 0;
- 570:	000017b7          	lui	a5,0x1
- 574:	4dc7a683          	lw	a3,1244(a5) # 14dc <vgaHandle>
- 578:	000017b7          	lui	a5,0x1
- 57c:	0ac78793          	addi	a5,a5,172 # 10ac <palette.0>
- 580:	0006a823          	sw	zero,16(a3)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:220
-    for(size_t i = 0; i < 256; i++){
- 584:	40078613          	addi	a2,a5,1024
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:221 (discriminator 3)
-        vgaHandle->pltData = palette[i];
- 588:	0007a703          	lw	a4,0(a5)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:220 (discriminator 3)
-    for(size_t i = 0; i < 256; i++){
- 58c:	00478793          	addi	a5,a5,4
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:221 (discriminator 3)
-        vgaHandle->pltData = palette[i];
- 590:	00e6aa23          	sw	a4,20(a3)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:220 (discriminator 3)
-    for(size_t i = 0; i < 256; i++){
- 594:	fec79ae3          	bne	a5,a2,588 <setPalette2+0x18>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:223
-}
- 598:	00008067          	ret
-
-0000059c <processSw>:
-processSw():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:226
-    uint32_t newSw = *sw;
- 59c:	000017b7          	lui	a5,0x1
- 5a0:	4d87a703          	lw	a4,1240(a5) # 14d8 <sw>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:225
 int processSw(){
- 5a4:	ff010113          	addi	sp,sp,-16
- 5a8:	00912223          	sw	s1,4(sp)
- 5ac:	00812423          	sw	s0,8(sp)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:228
+ 570:	ff010113          	addi	sp,sp,-16
+ 574:	01212023          	sw	s2,0(sp)
+ 578:	00912223          	sw	s1,4(sp)
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:217
     if(newSw != lastSw){
- 5b0:	8101a783          	lw	a5,-2032(gp) # 14e8 <lastSw>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:226
+ 57c:	8101a783          	lw	a5,-2032(gp) # 2c98 <lastSw>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:215
     uint32_t newSw = *sw;
- 5b4:	00072403          	lw	s0,0(a4)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:225
+ 580:	00072483          	lw	s1,0(a4)
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:214
 int processSw(){
- 5b8:	00112623          	sw	ra,12(sp)
- 5bc:	01212023          	sw	s2,0(sp)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:228
-    if(newSw != lastSw){
- 5c0:	0e878463          	beq	a5,s0,6a8 <processSw+0x10c>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:229
-        uint32_t changes = newSw & ~lastSw;
- 5c4:	fff7c793          	not	a5,a5
- 5c8:	0087f933          	and	s2,a5,s0
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:230
-        if(changes&0xf){
- 5cc:	00f97793          	andi	a5,s2,15
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:227
+ 584:	00112623          	sw	ra,12(sp)
+ 588:	00812423          	sw	s0,8(sp)
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:216
     int ret = 0;
- 5d0:	00000513          	li	a0,0
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:230
+ 58c:	00000513          	li	a0,0
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:217
+    if(newSw != lastSw){
+ 590:	08978c63          	beq	a5,s1,628 <processSw+0xc0>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:218
+        uint32_t changes = newSw & ~lastSw;
+ 594:	fff7c793          	not	a5,a5
+ 598:	0097f433          	and	s0,a5,s1
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:219
         if(changes&0xf){
- 5d4:	10079a63          	bnez	a5,6e8 <processSw+0x14c>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:234
+ 59c:	00f47793          	andi	a5,s0,15
+ 5a0:	0a079263          	bnez	a5,644 <processSw+0xdc>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:223
         if(changes&0x10){
- 5d8:	01097793          	andi	a5,s2,16
- 5dc:	06078263          	beqz	a5,640 <processSw+0xa4>
+ 5a4:	01047793          	andi	a5,s0,16
+ 5a8:	06078263          	beqz	a5,60c <processSw+0xa4>
 zoomIn():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:48
     if(scale == MAX_SCALING - 1) return;
- 5e0:	8141c683          	lbu	a3,-2028(gp) # 14ec <scale>
- 5e4:	01200793          	li	a5,18
+ 5ac:	8141c683          	lbu	a3,-2028(gp) # 2c9c <scale>
+ 5b0:	01200793          	li	a5,18
 processSw():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:235
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:224
             ret = 1;
- 5e8:	00100513          	li	a0,1
+ 5b4:	00100513          	li	a0,1
 zoomIn():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:48
     if(scale == MAX_SCALING - 1) return;
- 5ec:	04f68a63          	beq	a3,a5,640 <processSw+0xa4>
+ 5b8:	04f68a63          	beq	a3,a5,60c <processSw+0xa4>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:49
     int32_t dx = DX_SCALE[scale];
- 5f0:	000017b7          	lui	a5,0x1
- 5f4:	00269713          	slli	a4,a3,0x2
- 5f8:	c6078793          	addi	a5,a5,-928 # c60 <DX_SCALE>
- 5fc:	00e787b3          	add	a5,a5,a4
- 600:	0007a603          	lw	a2,0(a5)
+ 5bc:	000017b7          	lui	a5,0x1
+ 5c0:	00269713          	slli	a4,a3,0x2
+ 5c4:	bf078793          	addi	a5,a5,-1040 # bf0 <DX_SCALE>
+ 5c8:	00e787b3          	add	a5,a5,a4
+ 5cc:	0007a603          	lw	a2,0(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:51
     yStart = yStart + 120 * dx;
- 604:	00001837          	lui	a6,0x1
+ 5d0:	00003837          	lui	a6,0x3
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:50
     xStart = xStart + 160 * dx;
- 608:	80c1ae03          	lw	t3,-2036(gp) # 14e4 <xStart>
+ 5d4:	80c1ae03          	lw	t3,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:51
     yStart = yStart + 120 * dx;
- 60c:	4e082303          	lw	t1,1248(a6) # 14e0 <yStart>
+ 5d8:	c9082303          	lw	t1,-880(a6) # 2c90 <yStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:50
     xStart = xStart + 160 * dx;
- 610:	00261713          	slli	a4,a2,0x2
+ 5dc:	00261713          	slli	a4,a2,0x2
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:51
     yStart = yStart + 120 * dx;
- 614:	00461793          	slli	a5,a2,0x4
+ 5e0:	00461793          	slli	a5,a2,0x4
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:50
     xStart = xStart + 160 * dx;
- 618:	00c70733          	add	a4,a4,a2
+ 5e4:	00c70733          	add	a4,a4,a2
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:51
     yStart = yStart + 120 * dx;
- 61c:	40c787b3          	sub	a5,a5,a2
+ 5e8:	40c787b3          	sub	a5,a5,a2
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:50
     xStart = xStart + 160 * dx;
- 620:	00571713          	slli	a4,a4,0x5
+ 5ec:	00571713          	slli	a4,a4,0x5
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:51
     yStart = yStart + 120 * dx;
- 624:	00379793          	slli	a5,a5,0x3
+ 5f0:	00379793          	slli	a5,a5,0x3
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:50
     xStart = xStart + 160 * dx;
- 628:	01c70733          	add	a4,a4,t3
+ 5f4:	01c70733          	add	a4,a4,t3
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:51
     yStart = yStart + 120 * dx;
- 62c:	006787b3          	add	a5,a5,t1
+ 5f8:	006787b3          	add	a5,a5,t1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:52
     scale++;
- 630:	00168693          	addi	a3,a3,1
+ 5fc:	00168693          	addi	a3,a3,1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:50
     xStart = xStart + 160 * dx;
- 634:	80e1a623          	sw	a4,-2036(gp) # 14e4 <xStart>
+ 600:	80e1a623          	sw	a4,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:51
     yStart = yStart + 120 * dx;
- 638:	4ef82023          	sw	a5,1248(a6)
+ 604:	c8f82823          	sw	a5,-880(a6)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:52
     scale++;
- 63c:	80d18a23          	sb	a3,-2028(gp) # 14ec <scale>
+ 608:	80d18a23          	sb	a3,-2028(gp) # 2c9c <scale>
 processSw():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:238
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:227
         if(changes & 0x20){
- 640:	02097913          	andi	s2,s2,32
- 644:	08091263          	bnez	s2,6c8 <processSw+0x12c>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:242
-        uint32_t flips = newSw ^ lastSw;
- 648:	8101a783          	lw	a5,-2032(gp) # 14e8 <lastSw>
- 64c:	00f447b3          	xor	a5,s0,a5
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:243
-        if((flips >> 6) & 0xf){
- 650:	0067d793          	srli	a5,a5,0x6
- 654:	00f7f793          	andi	a5,a5,15
- 658:	04078a63          	beqz	a5,6ac <processSw+0x110>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:245
-            switch((newSw >> 6) & 0xf){
- 65c:	00645793          	srli	a5,s0,0x6
-setPalette0():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:200
-    vgaHandle->pAddr = 0;
- 660:	000016b7          	lui	a3,0x1
-processSw():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:245
-            switch((newSw >> 6) & 0xf){
- 664:	00f7f793          	andi	a5,a5,15
- 668:	00100713          	li	a4,1
-setPalette0():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:200
-    vgaHandle->pAddr = 0;
- 66c:	4dc6a683          	lw	a3,1244(a3) # 14dc <vgaHandle>
-processSw():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:245
-            switch((newSw >> 6) & 0xf){
- 670:	08e78863          	beq	a5,a4,700 <processSw+0x164>
- 674:	00200713          	li	a4,2
- 678:	0ee78063          	beq	a5,a4,758 <processSw+0x1bc>
-setPalette0():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:200
-    vgaHandle->pAddr = 0;
- 67c:	0006a823          	sw	zero,16(a3)
-processSw():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:245
-            switch((newSw >> 6) & 0xf){
- 680:	0a078663          	beqz	a5,72c <processSw+0x190>
-setPalette0():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:201
-    for(int i = 255; i >= 0; i--){
- 684:	0ff00793          	li	a5,255
- 688:	fff00593          	li	a1,-1
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:202
-        vgaHandle->pltData = i << 16 | i << 8 | i;
- 68c:	01079713          	slli	a4,a5,0x10
- 690:	00879613          	slli	a2,a5,0x8
- 694:	00c76733          	or	a4,a4,a2
- 698:	00f76733          	or	a4,a4,a5
- 69c:	00e6aa23          	sw	a4,20(a3)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:201
-    for(int i = 255; i >= 0; i--){
- 6a0:	fff78793          	addi	a5,a5,-1
- 6a4:	feb794e3          	bne	a5,a1,68c <processSw+0xf0>
-processSw():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:252
-    }else ret = 0;
- 6a8:	00000513          	li	a0,0
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:253
-    lastSw = newSw;
- 6ac:	8081a823          	sw	s0,-2032(gp) # 14e8 <lastSw>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:255
-}
- 6b0:	00c12083          	lw	ra,12(sp)
- 6b4:	00812403          	lw	s0,8(sp)
- 6b8:	00412483          	lw	s1,4(sp)
- 6bc:	00012903          	lw	s2,0(sp)
- 6c0:	01010113          	addi	sp,sp,16
- 6c4:	00008067          	ret
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:240
-            zoomOut();
- 6c8:	a21ff0ef          	jal	ra,e8 <zoomOut>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:242
-        uint32_t flips = newSw ^ lastSw;
- 6cc:	8101a783          	lw	a5,-2032(gp) # 14e8 <lastSw>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:239
-            ret = 1;
- 6d0:	00100513          	li	a0,1
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:242
-        uint32_t flips = newSw ^ lastSw;
- 6d4:	00f447b3          	xor	a5,s0,a5
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:243
-        if((flips >> 6) & 0xf){
- 6d8:	0067d793          	srli	a5,a5,0x6
- 6dc:	00f7f793          	andi	a5,a5,15
- 6e0:	fc0786e3          	beqz	a5,6ac <processSw+0x110>
- 6e4:	f79ff06f          	j	65c <processSw+0xc0>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:232
-            moveFrame(changes&0xf);
- 6e8:	00078513          	mv	a0,a5
- 6ec:	af5ff0ef          	jal	ra,1e0 <moveFrame>
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:234
-        if(changes&0x10){
- 6f0:	01097793          	andi	a5,s2,16
+ 60c:	02047413          	andi	s0,s0,32
+ 610:	0a041663          	bnez	s0,6bc <processSw+0x154>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:231
-            ret = 1;
- 6f4:	00100513          	li	a0,1
+        uint32_t flips = newSw ^ lastSw;
+ 614:	8101a783          	lw	a5,-2032(gp) # 2c98 <lastSw>
+ 618:	00f4c7b3          	xor	a5,s1,a5
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:232
+        if((flips >> 6) & 0xf) setPalette((newSw >> 6) & 0xf);
+ 61c:	0067d793          	srli	a5,a5,0x6
+ 620:	00f7f793          	andi	a5,a5,15
+ 624:	02079c63          	bnez	a5,65c <processSw+0xf4>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:236
+}
+ 628:	00c12083          	lw	ra,12(sp)
+ 62c:	00812403          	lw	s0,8(sp)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:234
+    lastSw = newSw;
+ 630:	8091a823          	sw	s1,-2032(gp) # 2c98 <lastSw>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:236
+}
+ 634:	00412483          	lw	s1,4(sp)
+ 638:	00012903          	lw	s2,0(sp)
+ 63c:	01010113          	addi	sp,sp,16
+ 640:	00008067          	ret
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:221
+            moveFrame(changes&0xf);
+ 644:	00078513          	mv	a0,a5
+ 648:	b99ff0ef          	jal	ra,1e0 <moveFrame>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:223
         if(changes&0x10){
- 6f8:	f40784e3          	beqz	a5,640 <processSw+0xa4>
- 6fc:	ee5ff06f          	j	5e0 <processSw+0x44>
-setPalette1():
+ 64c:	01047793          	andi	a5,s0,16
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:220
+            ret = 1;
+ 650:	00100513          	li	a0,1
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:223
+        if(changes&0x10){
+ 654:	fa078ce3          	beqz	a5,60c <processSw+0xa4>
+ 658:	f55ff06f          	j	5ac <processSw+0x44>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:232 (discriminator 1)
+        if((flips >> 6) & 0xf) setPalette((newSw >> 6) & 0xf);
+ 65c:	0064d793          	srli	a5,s1,0x6
+ 660:	0ff7f793          	andi	a5,a5,255
+setPalette():
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:209 (discriminator 1)
+    uint32_t const * const palette = palettes[sw>>1];
+ 664:	00179693          	slli	a3,a5,0x1
+ 668:	01c6f713          	andi	a4,a3,28
+ 66c:	000016b7          	lui	a3,0x1
+ 670:	bf068693          	addi	a3,a3,-1040 # bf0 <DX_SCALE>
+ 674:	00e686b3          	add	a3,a3,a4
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:210 (discriminator 1)
+    if(dir) for(int i = 0; i < 256; i++) vgaHandle->pltData = palette[i];
+ 678:	0017f713          	andi	a4,a5,1
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:209 (discriminator 1)
+    uint32_t const * const palette = palettes[sw>>1];
+ 67c:	04c6a783          	lw	a5,76(a3)
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:210 (discriminator 1)
+    if(dir) for(int i = 0; i < 256; i++) vgaHandle->pltData = palette[i];
+ 680:	000036b7          	lui	a3,0x3
+ 684:	c8c6a683          	lw	a3,-884(a3) # 2c8c <vgaHandle>
+ 688:	04070a63          	beqz	a4,6dc <processSw+0x174>
+ 68c:	40078613          	addi	a2,a5,1024
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:210
-    vgaHandle->pAddr = 0;
- 700:	00001637          	lui	a2,0x1
- 704:	c6060613          	addi	a2,a2,-928 # c60 <DX_SCALE>
- 708:	04c60793          	addi	a5,a2,76
- 70c:	0006a823          	sw	zero,16(a3)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:211
-    for(size_t i = 0; i < 256; i++){
- 710:	44c60613          	addi	a2,a2,1100
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:212
-        vgaHandle->pltData = palette[i];
- 714:	0007a703          	lw	a4,0(a5)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:211
-    for(size_t i = 0; i < 256; i++){
- 718:	00478793          	addi	a5,a5,4
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:212
-        vgaHandle->pltData = palette[i];
- 71c:	00e6aa23          	sw	a4,20(a3)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:211
-    for(size_t i = 0; i < 256; i++){
- 720:	fef61ae3          	bne	a2,a5,714 <processSw+0x178>
+ 690:	0007a703          	lw	a4,0(a5)
+ 694:	00478793          	addi	a5,a5,4
+ 698:	00e6aa23          	sw	a4,20(a3)
+ 69c:	fef61ae3          	bne	a2,a5,690 <processSw+0x128>
 processSw():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:252
-    }else ret = 0;
- 724:	00000513          	li	a0,0
- 728:	f85ff06f          	j	6ac <processSw+0x110>
-setPalette0():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:201
-    for(int i = 255; i >= 0; i--){
- 72c:	0ff00793          	li	a5,255
- 730:	fff00593          	li	a1,-1
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:202
-        vgaHandle->pltData = i << 16 | i << 8 | i;
- 734:	01079713          	slli	a4,a5,0x10
- 738:	00879613          	slli	a2,a5,0x8
- 73c:	00c76733          	or	a4,a4,a2
- 740:	00f76733          	or	a4,a4,a5
- 744:	00e6aa23          	sw	a4,20(a3)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:201
-    for(int i = 255; i >= 0; i--){
- 748:	fff78793          	addi	a5,a5,-1
- 74c:	feb794e3          	bne	a5,a1,734 <processSw+0x198>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:236
+}
+ 6a0:	00c12083          	lw	ra,12(sp)
+ 6a4:	00812403          	lw	s0,8(sp)
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:234
+    lastSw = newSw;
+ 6a8:	8091a823          	sw	s1,-2032(gp) # 2c98 <lastSw>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:236
+}
+ 6ac:	00412483          	lw	s1,4(sp)
+ 6b0:	00012903          	lw	s2,0(sp)
+ 6b4:	01010113          	addi	sp,sp,16
+ 6b8:	00008067          	ret
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:229
+            zoomOut();
+ 6bc:	a2dff0ef          	jal	ra,e8 <zoomOut>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:231
+        uint32_t flips = newSw ^ lastSw;
+ 6c0:	8101a783          	lw	a5,-2032(gp) # 2c98 <lastSw>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:228
+            ret = 1;
+ 6c4:	00100513          	li	a0,1
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:231
+        uint32_t flips = newSw ^ lastSw;
+ 6c8:	00f4c7b3          	xor	a5,s1,a5
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:232
+        if((flips >> 6) & 0xf) setPalette((newSw >> 6) & 0xf);
+ 6cc:	0067d793          	srli	a5,a5,0x6
+ 6d0:	00f7f793          	andi	a5,a5,15
+ 6d4:	f4078ae3          	beqz	a5,628 <processSw+0xc0>
+ 6d8:	f85ff06f          	j	65c <processSw+0xf4>
+ 6dc:	3fc78713          	addi	a4,a5,1020
+setPalette():
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:211
+    else for(int i = 255; i >= 0; i--) vgaHandle->pltData = palette[i];
+ 6e0:	00072583          	lw	a1,0(a4)
+ 6e4:	00070613          	mv	a2,a4
+ 6e8:	ffc70713          	addi	a4,a4,-4
+ 6ec:	00b6aa23          	sw	a1,20(a3)
+ 6f0:	fec798e3          	bne	a5,a2,6e0 <processSw+0x178>
 processSw():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:252
-    }else ret = 0;
- 750:	00000513          	li	a0,0
- 754:	f59ff06f          	j	6ac <processSw+0x110>
-setPalette2():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:219
-    vgaHandle->pAddr = 0;
- 758:	000017b7          	lui	a5,0x1
- 75c:	0ac78793          	addi	a5,a5,172 # 10ac <palette.0>
- 760:	0006a823          	sw	zero,16(a3)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:220
-    for(size_t i = 0; i < 256; i++){
- 764:	40078613          	addi	a2,a5,1024
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:221
-        vgaHandle->pltData = palette[i];
- 768:	0007a703          	lw	a4,0(a5)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:220
-    for(size_t i = 0; i < 256; i++){
- 76c:	00478793          	addi	a5,a5,4
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:221
-        vgaHandle->pltData = palette[i];
- 770:	00e6aa23          	sw	a4,20(a3)
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:220
-    for(size_t i = 0; i < 256; i++){
- 774:	fef61ae3          	bne	a2,a5,768 <processSw+0x1cc>
-processSw():
-/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:252
-    }else ret = 0;
- 778:	00000513          	li	a0,0
- 77c:	f31ff06f          	j	6ac <processSw+0x110>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:236
+}
+ 6f4:	00c12083          	lw	ra,12(sp)
+ 6f8:	00812403          	lw	s0,8(sp)
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:234
+    lastSw = newSw;
+ 6fc:	8091a823          	sw	s1,-2032(gp) # 2c98 <lastSw>
+/Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:236
+}
+ 700:	00412483          	lw	s1,4(sp)
+ 704:	00012903          	lw	s2,0(sp)
+ 708:	01010113          	addi	sp,sp,16
+ 70c:	00008067          	ret
 
-00000780 <drawMandelInterlaced>:
+00000710 <drawMandelInterlaced>:
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:136
     int32_t dx = DX_SCALE[scale];
- 780:	8141c783          	lbu	a5,-2028(gp) # 14ec <scale>
+ 710:	8141c783          	lbu	a5,-2028(gp) # 2c9c <scale>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:135
 int drawMandelInterlaced(void){
- 784:	fb010113          	addi	sp,sp,-80
- 788:	05212023          	sw	s2,64(sp)
+ 714:	fb010113          	addi	sp,sp,-80
+ 718:	05212023          	sw	s2,64(sp)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:136
     int32_t dx = DX_SCALE[scale];
- 78c:	00279713          	slli	a4,a5,0x2
- 790:	000017b7          	lui	a5,0x1
- 794:	c6078793          	addi	a5,a5,-928 # c60 <DX_SCALE>
- 798:	00e787b3          	add	a5,a5,a4
- 79c:	0007a783          	lw	a5,0(a5)
+ 71c:	00279713          	slli	a4,a5,0x2
+ 720:	000017b7          	lui	a5,0x1
+ 724:	bf078793          	addi	a5,a5,-1040 # bf0 <DX_SCALE>
+ 728:	00e787b3          	add	a5,a5,a4
+ 72c:	0007a783          	lw	a5,0(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:139
     int32_t y0 = yStart;
- 7a0:	00001737          	lui	a4,0x1
- 7a4:	4e072903          	lw	s2,1248(a4) # 14e0 <yStart>
+ 730:	00003737          	lui	a4,0x3
+ 734:	c9072903          	lw	s2,-880(a4) # 2c90 <yStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:135
 int drawMandelInterlaced(void){
- 7a8:	03412c23          	sw	s4,56(sp)
- 7ac:	03612823          	sw	s6,48(sp)
- 7b0:	03712623          	sw	s7,44(sp)
- 7b4:	03812423          	sw	s8,40(sp)
- 7b8:	04112623          	sw	ra,76(sp)
- 7bc:	04812423          	sw	s0,72(sp)
- 7c0:	04912223          	sw	s1,68(sp)
- 7c4:	03312e23          	sw	s3,60(sp)
- 7c8:	03512a23          	sw	s5,52(sp)
- 7cc:	03912223          	sw	s9,36(sp)
- 7d0:	03a12023          	sw	s10,32(sp)
- 7d4:	01b12e23          	sw	s11,28(sp)
+ 738:	03412c23          	sw	s4,56(sp)
+ 73c:	03612823          	sw	s6,48(sp)
+ 740:	03712623          	sw	s7,44(sp)
+ 744:	03812423          	sw	s8,40(sp)
+ 748:	04112623          	sw	ra,76(sp)
+ 74c:	04812423          	sw	s0,72(sp)
+ 750:	04912223          	sw	s1,68(sp)
+ 754:	03312e23          	sw	s3,60(sp)
+ 758:	03512a23          	sw	s5,52(sp)
+ 75c:	03912223          	sw	s9,36(sp)
+ 760:	03a12023          	sw	s10,32(sp)
+ 764:	01b12e23          	sw	s11,28(sp)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:136
     int32_t dx = DX_SCALE[scale];
- 7d8:	00f12023          	sw	a5,0(sp)
+ 768:	00f12023          	sw	a5,0(sp)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:150
             x0 += dx<<5;
- 7dc:	00579c13          	slli	s8,a5,0x5
- 7e0:	02000b13          	li	s6,32
+ 76c:	00579c13          	slli	s8,a5,0x5
+ 770:	02000b13          	li	s6,32
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:137
     int32_t itersAccum = 0;
- 7e4:	00000513          	li	a0,0
+ 774:	00000513          	li	a0,0
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:102
         if(xx + yy > QP_4) break;
- 7e8:	10000a37          	lui	s4,0x10000
+ 778:	10000a37          	lui	s4,0x10000
 paintBigPixel():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:127
         vgaHandle->yAddr = y + j;
- 7ec:	00001bb7          	lui	s7,0x1
+ 77c:	00003bb7          	lui	s7,0x3
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:141
         int32_t x0 = xStart;
- 7f0:	80c1a483          	lw	s1,-2036(gp) # 14e4 <xStart>
+ 780:	80c1a483          	lw	s1,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:149
             paintBigPixel(i<<5, j<<5, iters, 5);
- 7f4:	fe0b0d13          	addi	s10,s6,-32
- 7f8:	00000a93          	li	s5,0
+ 784:	fe0b0d13          	addi	s10,s6,-32
+ 788:	00000a93          	li	s5,0
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:99
     for(; iters < maxIters; iters++){
- 7fc:	0ff00993          	li	s3,255
+ 78c:	0ff00993          	li	s3,255
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:145
             if(itersAccum > 4096){
- 800:	00001cb7          	lui	s9,0x1
+ 790:	00001cb7          	lui	s9,0x1
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:98
     uint16_t iters = 0;
- 804:	00000413          	li	s0,0
+ 794:	00000413          	li	s0,0
 qmul():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:44
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
- 808:	00000613          	li	a2,0
- 80c:	00000793          	li	a5,0
- 810:	00000813          	li	a6,0
- 814:	00000713          	li	a4,0
- 818:	00000693          	li	a3,0
- 81c:	00000593          	li	a1,0
- 820:	02f585b3          	mul	a1,a1,a5
+ 798:	00000613          	li	a2,0
+ 79c:	00000793          	li	a5,0
+ 7a0:	00000813          	li	a6,0
+ 7a4:	00000713          	li	a4,0
+ 7a8:	00000693          	li	a3,0
+ 7ac:	00000593          	li	a1,0
+ 7b0:	02f585b3          	mul	a1,a1,a5
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:103
         int32_t newX = xx - yy + x0;
- 824:	40c70733          	sub	a4,a4,a2
- 828:	00970733          	add	a4,a4,s1
+ 7b4:	40c70733          	sub	a4,a4,a2
+ 7b8:	00970733          	add	a4,a4,s1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:99
     for(; iters < maxIters; iters++){
- 82c:	00140413          	addi	s0,s0,1
- 830:	01041413          	slli	s0,s0,0x10
- 834:	01045413          	srli	s0,s0,0x10
+ 7bc:	00140413          	addi	s0,s0,1
+ 7c0:	01041413          	slli	s0,s0,0x10
+ 7c4:	01045413          	srli	s0,s0,0x10
 qmul():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:44
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
- 838:	02d80833          	mul	a6,a6,a3
- 83c:	02f6b633          	mulhu	a2,a3,a5
- 840:	010585b3          	add	a1,a1,a6
- 844:	02f687b3          	mul	a5,a3,a5
- 848:	00070693          	mv	a3,a4
- 84c:	00c58733          	add	a4,a1,a2
- 850:	00671713          	slli	a4,a4,0x6
- 854:	41f6d593          	srai	a1,a3,0x1f
- 858:	01a7d793          	srli	a5,a5,0x1a
- 85c:	00f767b3          	or	a5,a4,a5
+ 7c8:	02d80833          	mul	a6,a6,a3
+ 7cc:	02f6b633          	mulhu	a2,a3,a5
+ 7d0:	010585b3          	add	a1,a1,a6
+ 7d4:	02f687b3          	mul	a5,a3,a5
+ 7d8:	00070693          	mv	a3,a4
+ 7dc:	00c58733          	add	a4,a1,a2
+ 7e0:	00671713          	slli	a4,a4,0x6
+ 7e4:	41f6d593          	srai	a1,a3,0x1f
+ 7e8:	01a7d793          	srli	a5,a5,0x1a
+ 7ec:	00f767b3          	or	a5,a4,a5
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:104
         int32_t newY = (qmul(x, y) << 1) + y0;
- 860:	00179793          	slli	a5,a5,0x1
- 864:	012787b3          	add	a5,a5,s2
+ 7f0:	00179793          	slli	a5,a5,0x1
+ 7f4:	012787b3          	add	a5,a5,s2
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:99
     for(; iters < maxIters; iters++){
- 868:	37340e63          	beq	s0,s3,be4 <drawMandelInterlaced+0x464>
+ 7f8:	37340e63          	beq	s0,s3,b74 <drawMandelInterlaced+0x464>
 qmul():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:44
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
- 86c:	02d68633          	mul	a2,a3,a3
- 870:	41f7d813          	srai	a6,a5,0x1f
- 874:	02d69733          	mulh	a4,a3,a3
- 878:	01a65613          	srli	a2,a2,0x1a
- 87c:	00671713          	slli	a4,a4,0x6
- 880:	00c76733          	or	a4,a4,a2
- 884:	02f788b3          	mul	a7,a5,a5
- 888:	02f79633          	mulh	a2,a5,a5
- 88c:	01a8d893          	srli	a7,a7,0x1a
- 890:	00661613          	slli	a2,a2,0x6
- 894:	01166633          	or	a2,a2,a7
+ 7fc:	02d68633          	mul	a2,a3,a3
+ 800:	41f7d813          	srai	a6,a5,0x1f
+ 804:	02d69733          	mulh	a4,a3,a3
+ 808:	01a65613          	srli	a2,a2,0x1a
+ 80c:	00671713          	slli	a4,a4,0x6
+ 810:	00c76733          	or	a4,a4,a2
+ 814:	02f788b3          	mul	a7,a5,a5
+ 818:	02f79633          	mulh	a2,a5,a5
+ 81c:	01a8d893          	srli	a7,a7,0x1a
+ 820:	00661613          	slli	a2,a2,0x6
+ 824:	01166633          	or	a2,a2,a7
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:102
         if(xx + yy > QP_4) break;
- 898:	00c708b3          	add	a7,a4,a2
- 89c:	f91a52e3          	bge	s4,a7,820 <drawMandelInterlaced+0xa0>
+ 828:	00c708b3          	add	a7,a4,a2
+ 82c:	f91a52e3          	bge	s4,a7,7b0 <drawMandelInterlaced+0xa0>
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:144
             itersAccum += iters;
- 8a0:	00040793          	mv	a5,s0
- 8a4:	00f50533          	add	a0,a0,a5
+ 830:	00040793          	mv	a5,s0
+ 834:	00f50533          	add	a0,a0,a5
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:145
             if(itersAccum > 4096){
- 8a8:	2eacc863          	blt	s9,a0,b98 <drawMandelInterlaced+0x418>
+ 838:	2eacc863          	blt	s9,a0,b28 <drawMandelInterlaced+0x418>
 paintBigPixel():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:127 (discriminator 2)
         vgaHandle->yAddr = y + j;
- 8ac:	4dcba783          	lw	a5,1244(s7) # 14dc <vgaHandle>
+ 83c:	c8cba783          	lw	a5,-884(s7) # 2c8c <vgaHandle>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:130 (discriminator 2)
             vgaHandle->pxlData = p;
- 8b0:	000d0693          	mv	a3,s10
+ 840:	000d0693          	mv	a3,s10
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:127
         vgaHandle->yAddr = y + j;
- 8b4:	00d7a423          	sw	a3,8(a5)
+ 844:	00d7a423          	sw	a3,8(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:128
         vgaHandle->xAddr = x;
- 8b8:	0157a223          	sw	s5,4(a5)
- 8bc:	02000713          	li	a4,32
+ 848:	0157a223          	sw	s5,4(a5)
+ 84c:	02000713          	li	a4,32
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:129
         for(uint8_t i =0; i < 1<<pow; i++){
- 8c0:	fff70713          	addi	a4,a4,-1
+ 850:	fff70713          	addi	a4,a4,-1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:130
             vgaHandle->pxlData = p;
- 8c4:	0087a623          	sw	s0,12(a5)
+ 854:	0087a623          	sw	s0,12(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:129
         for(uint8_t i =0; i < 1<<pow; i++){
- 8c8:	0ff77713          	andi	a4,a4,255
- 8cc:	fe071ae3          	bnez	a4,8c0 <drawMandelInterlaced+0x140>
+ 858:	0ff77713          	andi	a4,a4,255
+ 85c:	fe071ae3          	bnez	a4,850 <drawMandelInterlaced+0x140>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:126
     for(uint8_t j = 0; j < 1<<pow; j++){
- 8d0:	00168693          	addi	a3,a3,1
- 8d4:	fedb10e3          	bne	s6,a3,8b4 <drawMandelInterlaced+0x134>
+ 860:	00168693          	addi	a3,a3,1
+ 864:	fedb10e3          	bne	s6,a3,844 <drawMandelInterlaced+0x134>
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:142 (discriminator 2)
         for(size_t i = 0; i < 640>>5; i++){
- 8d8:	020a8a93          	addi	s5,s5,32
- 8dc:	28000713          	li	a4,640
+ 868:	020a8a93          	addi	s5,s5,32
+ 86c:	28000713          	li	a4,640
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:150 (discriminator 2)
             x0 += dx<<5;
- 8e0:	018484b3          	add	s1,s1,s8
+ 870:	018484b3          	add	s1,s1,s8
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:142 (discriminator 2)
         for(size_t i = 0; i < 640>>5; i++){
- 8e4:	f2ea90e3          	bne	s5,a4,804 <drawMandelInterlaced+0x84>
+ 874:	f2ea90e3          	bne	s5,a4,794 <drawMandelInterlaced+0x84>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:140 (discriminator 2)
     for(size_t j = 0; j < 480>>5; j++){
- 8e8:	020b0b13          	addi	s6,s6,32
- 8ec:	20000713          	li	a4,512
+ 878:	020b0b13          	addi	s6,s6,32
+ 87c:	20000713          	li	a4,512
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:152 (discriminator 2)
         y0 += dx<<5;
- 8f0:	01890933          	add	s2,s2,s8
+ 880:	01890933          	add	s2,s2,s8
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:140 (discriminator 2)
     for(size_t j = 0; j < 480>>5; j++){
- 8f4:	eeeb1ee3          	bne	s6,a4,7f0 <drawMandelInterlaced+0x70>
+ 884:	eeeb1ee3          	bne	s6,a4,780 <drawMandelInterlaced+0x70>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:155
     for(int l = 4; l; l--){
- 8f8:	00400c13          	li	s8,4
+ 888:	00400c13          	li	s8,4
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:99
     for(; iters < maxIters; iters++){
- 8fc:	0ff00993          	li	s3,255
+ 88c:	0ff00993          	li	s3,255
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:102
         if(xx + yy > QP_4) break;
- 900:	10000a37          	lui	s4,0x10000
+ 890:	10000a37          	lui	s4,0x10000
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:156
         int32_t y0 = yStart;
- 904:	00001737          	lui	a4,0x1
- 908:	4e072903          	lw	s2,1248(a4) # 14e0 <yStart>
+ 894:	00003737          	lui	a4,0x3
+ 898:	c9072903          	lw	s2,-880(a4) # 2c90 <yStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:169
                 x0 += dx<<l;
- 90c:	00012703          	lw	a4,0(sp)
+ 89c:	00012703          	lw	a4,0(sp)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:157
         for(size_t j = 0; j < 480>>l; j++){
- 910:	00000593          	li	a1,0
- 914:	1e000893          	li	a7,480
+ 8a0:	00000593          	li	a1,0
+ 8a4:	1e000893          	li	a7,480
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:169
                 x0 += dx<<l;
- 918:	01871cb3          	sll	s9,a4,s8
+ 8a8:	01871cb3          	sll	s9,a4,s8
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:159
             for(size_t i = 0; i < 640>>l; i++){
- 91c:	28000813          	li	a6,640
- 920:	000c0713          	mv	a4,s8
+ 8ac:	28000813          	li	a6,640
+ 8b0:	000c0713          	mv	a4,s8
 paintBigPixel():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:126
     for(uint8_t j = 0; j < 1<<pow; j++){
- 924:	00100413          	li	s0,1
+ 8b4:	00100413          	li	s0,1
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:157
         for(size_t j = 0; j < 480>>l; j++){
- 928:	4188d8b3          	sra	a7,a7,s8
+ 8b8:	4188d8b3          	sra	a7,a7,s8
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:159
             for(size_t i = 0; i < 640>>l; i++){
- 92c:	41885833          	sra	a6,a6,s8
+ 8bc:	41885833          	sra	a6,a6,s8
 paintBigPixel():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:126
     for(uint8_t j = 0; j < 1<<pow; j++){
- 930:	01841433          	sll	s0,s0,s8
- 934:	001c9d13          	slli	s10,s9,0x1
- 938:	00058c13          	mv	s8,a1
- 93c:	00070593          	mv	a1,a4
+ 8c0:	01841433          	sll	s0,s0,s8
+ 8c4:	001c9d13          	slli	s10,s9,0x1
+ 8c8:	00058c13          	mv	s8,a1
+ 8cc:	00070593          	mv	a1,a4
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:159
             for(size_t i = 0; i < 640>>l; i++){
- 940:	80c1a483          	lw	s1,-2036(gp) # 14e4 <xStart>
+ 8d0:	80c1a483          	lw	s1,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:164
                     if(itersAccum > 4096){
- 944:	00080713          	mv	a4,a6
+ 8d4:	00080713          	mv	a4,a6
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:162
                     paintBigPixel(i<<l, j<<l, iters, l);
- 948:	00bc1b33          	sll	s6,s8,a1
+ 8d8:	00bc1b33          	sll	s6,s8,a1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:160
                 if((j&1)|(i&i)){
- 94c:	001c7d93          	andi	s11,s8,1
+ 8dc:	001c7d93          	andi	s11,s8,1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:164
                     if(itersAccum > 4096){
- 950:	000c0813          	mv	a6,s8
- 954:	009c84b3          	add	s1,s9,s1
+ 8e0:	000c0813          	mv	a6,s8
+ 8e4:	009c84b3          	add	s1,s9,s1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:160
                 if((j&1)|(i&i)){
- 958:	00100a93          	li	s5,1
+ 8e8:	00100a93          	li	s5,1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:164
                     if(itersAccum > 4096){
- 95c:	00001337          	lui	t1,0x1
- 960:	00070c13          	mv	s8,a4
- 964:	00c0006f          	j	970 <drawMandelInterlaced+0x1f0>
- 968:	009d04b3          	add	s1,s10,s1
- 96c:	001a8a93          	addi	s5,s5,1
- 970:	fffa8e93          	addi	t4,s5,-1
+ 8ec:	00001337          	lui	t1,0x1
+ 8f0:	00070c13          	mv	s8,a4
+ 8f4:	00c0006f          	j	900 <drawMandelInterlaced+0x1f0>
+ 8f8:	009d04b3          	add	s1,s10,s1
+ 8fc:	001a8a93          	addi	s5,s5,1
+ 900:	fffa8e93          	addi	t4,s5,-1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:160
                 if((j&1)|(i&i)){
- 974:	01dde733          	or	a4,s11,t4
- 978:	419484b3          	sub	s1,s1,s9
- 97c:	fe0706e3          	beqz	a4,968 <drawMandelInterlaced+0x1e8>
+ 904:	01dde733          	or	a4,s11,t4
+ 908:	419484b3          	sub	s1,s1,s9
+ 90c:	fe0706e3          	beqz	a4,8f8 <drawMandelInterlaced+0x1e8>
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:98
     uint16_t iters = 0;
- 980:	00000e13          	li	t3,0
+ 910:	00000e13          	li	t3,0
 qmul():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:44
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
- 984:	00000693          	li	a3,0
- 988:	00000713          	li	a4,0
- 98c:	00000f93          	li	t6,0
- 990:	00000293          	li	t0,0
- 994:	00000613          	li	a2,0
- 998:	00000f13          	li	t5,0
- 99c:	02ef0f33          	mul	t5,t5,a4
+ 914:	00000693          	li	a3,0
+ 918:	00000713          	li	a4,0
+ 91c:	00000f93          	li	t6,0
+ 920:	00000293          	li	t0,0
+ 924:	00000613          	li	a2,0
+ 928:	00000f13          	li	t5,0
+ 92c:	02ef0f33          	mul	t5,t5,a4
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:103
         int32_t newX = xx - yy + x0;
- 9a0:	40d286b3          	sub	a3,t0,a3
- 9a4:	009686b3          	add	a3,a3,s1
+ 930:	40d286b3          	sub	a3,t0,a3
+ 934:	009686b3          	add	a3,a3,s1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:99
     for(; iters < maxIters; iters++){
- 9a8:	001e0e13          	addi	t3,t3,1
- 9ac:	010e1e13          	slli	t3,t3,0x10
- 9b0:	010e5e13          	srli	t3,t3,0x10
+ 938:	001e0e13          	addi	t3,t3,1
+ 93c:	010e1e13          	slli	t3,t3,0x10
+ 940:	010e5e13          	srli	t3,t3,0x10
 qmul():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:44
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
- 9b4:	02cf8fb3          	mul	t6,t6,a2
- 9b8:	02e632b3          	mulhu	t0,a2,a4
- 9bc:	01ff0f33          	add	t5,t5,t6
- 9c0:	02e60733          	mul	a4,a2,a4
- 9c4:	00068613          	mv	a2,a3
- 9c8:	005f06b3          	add	a3,t5,t0
- 9cc:	00669693          	slli	a3,a3,0x6
- 9d0:	41f65f13          	srai	t5,a2,0x1f
- 9d4:	01a75713          	srli	a4,a4,0x1a
- 9d8:	00e6e733          	or	a4,a3,a4
+ 944:	02cf8fb3          	mul	t6,t6,a2
+ 948:	02e632b3          	mulhu	t0,a2,a4
+ 94c:	01ff0f33          	add	t5,t5,t6
+ 950:	02e60733          	mul	a4,a2,a4
+ 954:	00068613          	mv	a2,a3
+ 958:	005f06b3          	add	a3,t5,t0
+ 95c:	00669693          	slli	a3,a3,0x6
+ 960:	41f65f13          	srai	t5,a2,0x1f
+ 964:	01a75713          	srli	a4,a4,0x1a
+ 968:	00e6e733          	or	a4,a3,a4
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:104
         int32_t newY = (qmul(x, y) << 1) + y0;
- 9dc:	00171713          	slli	a4,a4,0x1
- 9e0:	01270733          	add	a4,a4,s2
+ 96c:	00171713          	slli	a4,a4,0x1
+ 970:	01270733          	add	a4,a4,s2
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:99
     for(; iters < maxIters; iters++){
- 9e4:	233e0a63          	beq	t3,s3,c18 <drawMandelInterlaced+0x498>
+ 974:	233e0a63          	beq	t3,s3,ba8 <drawMandelInterlaced+0x498>
 qmul():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:44
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
- 9e8:	02c606b3          	mul	a3,a2,a2
- 9ec:	41f75f93          	srai	t6,a4,0x1f
- 9f0:	02c612b3          	mulh	t0,a2,a2
- 9f4:	01a6d693          	srli	a3,a3,0x1a
- 9f8:	00629293          	slli	t0,t0,0x6
- 9fc:	00d2e2b3          	or	t0,t0,a3
- a00:	02e703b3          	mul	t2,a4,a4
- a04:	02e716b3          	mulh	a3,a4,a4
- a08:	01a3d393          	srli	t2,t2,0x1a
- a0c:	00669693          	slli	a3,a3,0x6
- a10:	0076e6b3          	or	a3,a3,t2
+ 978:	02c606b3          	mul	a3,a2,a2
+ 97c:	41f75f93          	srai	t6,a4,0x1f
+ 980:	02c612b3          	mulh	t0,a2,a2
+ 984:	01a6d693          	srli	a3,a3,0x1a
+ 988:	00629293          	slli	t0,t0,0x6
+ 98c:	00d2e2b3          	or	t0,t0,a3
+ 990:	02e703b3          	mul	t2,a4,a4
+ 994:	02e716b3          	mulh	a3,a4,a4
+ 998:	01a3d393          	srli	t2,t2,0x1a
+ 99c:	00669693          	slli	a3,a3,0x6
+ 9a0:	0076e6b3          	or	a3,a3,t2
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:102
         if(xx + yy > QP_4) break;
- a14:	00d283b3          	add	t2,t0,a3
- a18:	f87a52e3          	bge	s4,t2,99c <drawMandelInterlaced+0x21c>
+ 9a4:	00d283b3          	add	t2,t0,a3
+ 9a8:	f87a52e3          	bge	s4,t2,92c <drawMandelInterlaced+0x21c>
 paintBigPixel():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:130
             vgaHandle->pxlData = p;
- a1c:	000e0693          	mv	a3,t3
+ 9ac:	000e0693          	mv	a3,t3
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:162
                     paintBigPixel(i<<l, j<<l, iters, l);
- a20:	00be9eb3          	sll	t4,t4,a1
+ 9b0:	00be9eb3          	sll	t4,t4,a1
 paintBigPixel():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:126
     for(uint8_t j = 0; j < 1<<pow; j++){
- a24:	00000613          	li	a2,0
+ 9b4:	00000613          	li	a2,0
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:127
         vgaHandle->yAddr = y + j;
- a28:	01660733          	add	a4,a2,s6
- a2c:	00e7a423          	sw	a4,8(a5)
+ 9b8:	01660733          	add	a4,a2,s6
+ 9bc:	00e7a423          	sw	a4,8(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:128
         vgaHandle->xAddr = x;
- a30:	01d7a223          	sw	t4,4(a5)
+ 9c0:	01d7a223          	sw	t4,4(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:129
         for(uint8_t i =0; i < 1<<pow; i++){
- a34:	00000713          	li	a4,0
- a38:	00170713          	addi	a4,a4,1
+ 9c4:	00000713          	li	a4,0
+ 9c8:	00170713          	addi	a4,a4,1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:130
             vgaHandle->pxlData = p;
- a3c:	00d7a623          	sw	a3,12(a5)
+ 9cc:	00d7a623          	sw	a3,12(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:129
         for(uint8_t i =0; i < 1<<pow; i++){
- a40:	0ff77713          	andi	a4,a4,255
- a44:	fe874ae3          	blt	a4,s0,a38 <drawMandelInterlaced+0x2b8>
+ 9d0:	0ff77713          	andi	a4,a4,255
+ 9d4:	fe874ae3          	blt	a4,s0,9c8 <drawMandelInterlaced+0x2b8>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:126
     for(uint8_t j = 0; j < 1<<pow; j++){
- a48:	00160613          	addi	a2,a2,1
- a4c:	0ff67613          	andi	a2,a2,255
- a50:	fc864ce3          	blt	a2,s0,a28 <drawMandelInterlaced+0x2a8>
+ 9d8:	00160613          	addi	a2,a2,1
+ 9dc:	0ff67613          	andi	a2,a2,255
+ 9e0:	fc864ce3          	blt	a2,s0,9b8 <drawMandelInterlaced+0x2a8>
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:163
                     itersAccum += iters;
- a54:	01c50533          	add	a0,a0,t3
+ 9e4:	01c50533          	add	a0,a0,t3
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:164
                     if(itersAccum > 4096){
- a58:	18a34a63          	blt	t1,a0,bec <drawMandelInterlaced+0x46c>
+ 9e8:	18a34a63          	blt	t1,a0,b7c <drawMandelInterlaced+0x46c>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:159 (discriminator 2)
             for(size_t i = 0; i < 640>>l; i++){
- a5c:	f18ae6e3          	bltu	s5,s8,968 <drawMandelInterlaced+0x1e8>
+ 9ec:	f18ae6e3          	bltu	s5,s8,8f8 <drawMandelInterlaced+0x1e8>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:157 (discriminator 2)
         for(size_t j = 0; j < 480>>l; j++){
- a60:	000c0713          	mv	a4,s8
- a64:	00080c13          	mv	s8,a6
- a68:	001c0c13          	addi	s8,s8,1
- a6c:	00070813          	mv	a6,a4
+ 9f0:	000c0713          	mv	a4,s8
+ 9f4:	00080c13          	mv	s8,a6
+ 9f8:	001c0c13          	addi	s8,s8,1
+ 9fc:	00070813          	mv	a6,a4
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:171 (discriminator 2)
             y0 += dx<<l;
- a70:	01990933          	add	s2,s2,s9
+ a00:	01990933          	add	s2,s2,s9
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:157 (discriminator 2)
         for(size_t j = 0; j < 480>>l; j++){
- a74:	ed1c16e3          	bne	s8,a7,940 <drawMandelInterlaced+0x1c0>
+ a04:	ed1c16e3          	bne	s8,a7,8d0 <drawMandelInterlaced+0x1c0>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:155 (discriminator 2)
     for(int l = 4; l; l--){
- a78:	fff58c13          	addi	s8,a1,-1
- a7c:	e80c14e3          	bnez	s8,904 <drawMandelInterlaced+0x184>
+ a08:	fff58c13          	addi	s8,a1,-1
+ a0c:	e80c14e3          	bnez	s8,894 <drawMandelInterlaced+0x184>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:175
     y0 = yStart;
- a80:	00012c83          	lw	s9,0(sp)
- a84:	00001737          	lui	a4,0x1
- a88:	4e072483          	lw	s1,1248(a4) # 14e0 <yStart>
+ a10:	00012c83          	lw	s9,0(sp)
+ a14:	00003737          	lui	a4,0x3
+ a18:	c9072483          	lw	s1,-880(a4) # 2c90 <yStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:176
     for(size_t j = 0; j < 480; j++){
- a8c:	00000a93          	li	s5,0
+ a1c:	00000a93          	li	s5,0
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:189
                 vgaHandle->xAddr = i+1;
- a90:	00100d13          	li	s10,1
+ a20:	00100d13          	li	s10,1
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:102
         if(xx + yy > QP_4) break;
- a94:	10000937          	lui	s2,0x10000
- a98:	001c9b13          	slli	s6,s9,0x1
- a9c:	01812023          	sw	s8,0(sp)
+ a24:	10000937          	lui	s2,0x10000
+ a28:	001c9b13          	slli	s6,s9,0x1
+ a2c:	01812023          	sw	s8,0(sp)
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:177
         int32_t x0 = xStart;
- aa0:	80c1a403          	lw	s0,-2036(gp) # 14e4 <xStart>
+ a30:	80c1a403          	lw	s0,-2036(gp) # 2c94 <xStart>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:178
         vgaHandle->yAddr = j;
- aa4:	0157a423          	sw	s5,8(a5)
+ a34:	0157a423          	sw	s5,8(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:180
             if((j&1)|(i&i)){
- aa8:	001afd93          	andi	s11,s5,1
- aac:	01940433          	add	s0,s0,s9
- ab0:	00100a13          	li	s4,1
+ a38:	001afd93          	andi	s11,s5,1
+ a3c:	01940433          	add	s0,s0,s9
+ a40:	00100a13          	li	s4,1
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:99
     for(; iters < maxIters; iters++){
- ab4:	0ff00993          	li	s3,255
+ a44:	0ff00993          	li	s3,255
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:184
                 if(itersAccum > 4096){
- ab8:	00001837          	lui	a6,0x1
+ a48:	00001837          	lui	a6,0x1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:179
         for(size_t i = 0; i < 640; i++){
- abc:	28000c13          	li	s8,640
- ac0:	0100006f          	j	ad0 <drawMandelInterlaced+0x350>
+ a4c:	28000c13          	li	s8,640
+ a50:	0100006f          	j	a60 <drawMandelInterlaced+0x350>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:189
                 vgaHandle->xAddr = i+1;
- ac4:	01a7a223          	sw	s10,4(a5)
+ a54:	01a7a223          	sw	s10,4(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:179
         for(size_t i = 0; i < 640; i++){
- ac8:	008b0433          	add	s0,s6,s0
- acc:	001a0a13          	addi	s4,s4,1 # 10000001 <__stack_top+0xfff0001>
+ a58:	008b0433          	add	s0,s6,s0
+ a5c:	001a0a13          	addi	s4,s4,1 # 10000001 <__stack_top+0xfff0001>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:180
             if((j&1)|(i&i)){
- ad0:	fffa0713          	addi	a4,s4,-1
- ad4:	01b76733          	or	a4,a4,s11
- ad8:	41940433          	sub	s0,s0,s9
- adc:	fe0704e3          	beqz	a4,ac4 <drawMandelInterlaced+0x344>
+ a60:	fffa0713          	addi	a4,s4,-1
+ a64:	01b76733          	or	a4,a4,s11
+ a68:	41940433          	sub	s0,s0,s9
+ a6c:	fe0704e3          	beqz	a4,a54 <drawMandelInterlaced+0x344>
 qmul():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:44
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
- ae0:	00000693          	li	a3,0
- ae4:	00000e93          	li	t4,0
+ a70:	00000693          	li	a3,0
+ a74:	00000e93          	li	t4,0
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:98
     uint16_t iters = 0;
- ae8:	00000593          	li	a1,0
+ a78:	00000593          	li	a1,0
 qmul():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:44
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
- aec:	00000713          	li	a4,0
- af0:	00000e13          	li	t3,0
- af4:	00000613          	li	a2,0
- af8:	00000313          	li	t1,0
- afc:	02e30333          	mul	t1,t1,a4
+ a7c:	00000713          	li	a4,0
+ a80:	00000e13          	li	t3,0
+ a84:	00000613          	li	a2,0
+ a88:	00000313          	li	t1,0
+ a8c:	02e30333          	mul	t1,t1,a4
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:103
         int32_t newX = xx - yy + x0;
- b00:	40de86b3          	sub	a3,t4,a3
- b04:	008686b3          	add	a3,a3,s0
+ a90:	40de86b3          	sub	a3,t4,a3
+ a94:	008686b3          	add	a3,a3,s0
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:99
     for(; iters < maxIters; iters++){
- b08:	00158593          	addi	a1,a1,1
- b0c:	01059593          	slli	a1,a1,0x10
- b10:	0105d593          	srli	a1,a1,0x10
+ a98:	00158593          	addi	a1,a1,1
+ a9c:	01059593          	slli	a1,a1,0x10
+ aa0:	0105d593          	srli	a1,a1,0x10
 qmul():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:44
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
- b14:	02ce0e33          	mul	t3,t3,a2
- b18:	02e63eb3          	mulhu	t4,a2,a4
- b1c:	01c30333          	add	t1,t1,t3
- b20:	02e60733          	mul	a4,a2,a4
- b24:	00068613          	mv	a2,a3
- b28:	01d306b3          	add	a3,t1,t4
- b2c:	00669693          	slli	a3,a3,0x6
- b30:	41f65313          	srai	t1,a2,0x1f
- b34:	01a75713          	srli	a4,a4,0x1a
- b38:	00e6e733          	or	a4,a3,a4
+ aa4:	02ce0e33          	mul	t3,t3,a2
+ aa8:	02e63eb3          	mulhu	t4,a2,a4
+ aac:	01c30333          	add	t1,t1,t3
+ ab0:	02e60733          	mul	a4,a2,a4
+ ab4:	00068613          	mv	a2,a3
+ ab8:	01d306b3          	add	a3,t1,t4
+ abc:	00669693          	slli	a3,a3,0x6
+ ac0:	41f65313          	srai	t1,a2,0x1f
+ ac4:	01a75713          	srli	a4,a4,0x1a
+ ac8:	00e6e733          	or	a4,a3,a4
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:104
         int32_t newY = (qmul(x, y) << 1) + y0;
- b3c:	00171713          	slli	a4,a4,0x1
- b40:	00970733          	add	a4,a4,s1
+ acc:	00171713          	slli	a4,a4,0x1
+ ad0:	00970733          	add	a4,a4,s1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:99
     for(; iters < maxIters; iters++){
- b44:	11358463          	beq	a1,s3,c4c <drawMandelInterlaced+0x4cc>
+ ad4:	11358463          	beq	a1,s3,bdc <drawMandelInterlaced+0x4cc>
 qmul():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:44
     return (int32_t)(((int64_t)a * (int64_t)b) >> 26);
- b48:	02c606b3          	mul	a3,a2,a2
- b4c:	41f75e13          	srai	t3,a4,0x1f
- b50:	02c61eb3          	mulh	t4,a2,a2
- b54:	01a6d693          	srli	a3,a3,0x1a
- b58:	006e9e93          	slli	t4,t4,0x6
- b5c:	00deeeb3          	or	t4,t4,a3
- b60:	02e70f33          	mul	t5,a4,a4
- b64:	02e716b3          	mulh	a3,a4,a4
- b68:	01af5f13          	srli	t5,t5,0x1a
- b6c:	00669693          	slli	a3,a3,0x6
- b70:	01e6e6b3          	or	a3,a3,t5
+ ad8:	02c606b3          	mul	a3,a2,a2
+ adc:	41f75e13          	srai	t3,a4,0x1f
+ ae0:	02c61eb3          	mulh	t4,a2,a2
+ ae4:	01a6d693          	srli	a3,a3,0x1a
+ ae8:	006e9e93          	slli	t4,t4,0x6
+ aec:	00deeeb3          	or	t4,t4,a3
+ af0:	02e70f33          	mul	t5,a4,a4
+ af4:	02e716b3          	mulh	a3,a4,a4
+ af8:	01af5f13          	srli	t5,t5,0x1a
+ afc:	00669693          	slli	a3,a3,0x6
+ b00:	01e6e6b3          	or	a3,a3,t5
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:102
         if(xx + yy > QP_4) break;
- b74:	00de8f33          	add	t5,t4,a3
- b78:	f9e952e3          	bge	s2,t5,afc <drawMandelInterlaced+0x37c>
+ b04:	00de8f33          	add	t5,t4,a3
+ b08:	f9e952e3          	bge	s2,t5,a8c <drawMandelInterlaced+0x37c>
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:183
                 vgaHandle->pxlData = iters;
- b7c:	00058713          	mv	a4,a1
+ b0c:	00058713          	mv	a4,a1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:182
                 itersAccum += iters;
- b80:	00b50533          	add	a0,a0,a1
+ b10:	00b50533          	add	a0,a0,a1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:183
                 vgaHandle->pxlData = iters;
- b84:	00e7a623          	sw	a4,12(a5)
+ b14:	00e7a623          	sw	a4,12(a5)
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:184
                 if(itersAccum > 4096){
- b88:	08a84e63          	blt	a6,a0,c24 <drawMandelInterlaced+0x4a4>
+ b18:	08a84e63          	blt	a6,a0,bb4 <drawMandelInterlaced+0x4a4>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:179 (discriminator 2)
         for(size_t i = 0; i < 640; i++){
- b8c:	0b8a0463          	beq	s4,s8,c34 <drawMandelInterlaced+0x4b4>
+ b1c:	0b8a0463          	beq	s4,s8,bc4 <drawMandelInterlaced+0x4b4>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:189
                 vgaHandle->xAddr = i+1;
- b90:	4dcba783          	lw	a5,1244(s7)
- b94:	f35ff06f          	j	ac8 <drawMandelInterlaced+0x348>
+ b20:	c8cba783          	lw	a5,-884(s7)
+ b24:	f35ff06f          	j	a58 <drawMandelInterlaced+0x348>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:146
                 if(processSw()) return 1;
- b98:	a05ff0ef          	jal	ra,59c <processSw>
- b9c:	d00508e3          	beqz	a0,8ac <drawMandelInterlaced+0x12c>
- ba0:	00100c13          	li	s8,1
+ b28:	a41ff0ef          	jal	ra,568 <processSw>
+ b2c:	d00508e3          	beqz	a0,83c <drawMandelInterlaced+0x12c>
+ b30:	00100c13          	li	s8,1
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:196
 }
- ba4:	04c12083          	lw	ra,76(sp)
- ba8:	04812403          	lw	s0,72(sp)
- bac:	04412483          	lw	s1,68(sp)
- bb0:	04012903          	lw	s2,64(sp)
- bb4:	03c12983          	lw	s3,60(sp)
- bb8:	03812a03          	lw	s4,56(sp)
- bbc:	03412a83          	lw	s5,52(sp)
- bc0:	03012b03          	lw	s6,48(sp)
- bc4:	02c12b83          	lw	s7,44(sp)
- bc8:	02412c83          	lw	s9,36(sp)
- bcc:	02012d03          	lw	s10,32(sp)
- bd0:	01c12d83          	lw	s11,28(sp)
- bd4:	000c0513          	mv	a0,s8
- bd8:	02812c03          	lw	s8,40(sp)
- bdc:	05010113          	addi	sp,sp,80
- be0:	00008067          	ret
+ b34:	04c12083          	lw	ra,76(sp)
+ b38:	04812403          	lw	s0,72(sp)
+ b3c:	04412483          	lw	s1,68(sp)
+ b40:	04012903          	lw	s2,64(sp)
+ b44:	03c12983          	lw	s3,60(sp)
+ b48:	03812a03          	lw	s4,56(sp)
+ b4c:	03412a83          	lw	s5,52(sp)
+ b50:	03012b03          	lw	s6,48(sp)
+ b54:	02c12b83          	lw	s7,44(sp)
+ b58:	02412c83          	lw	s9,36(sp)
+ b5c:	02012d03          	lw	s10,32(sp)
+ b60:	01c12d83          	lw	s11,28(sp)
+ b64:	000c0513          	mv	a0,s8
+ b68:	02812c03          	lw	s8,40(sp)
+ b6c:	05010113          	addi	sp,sp,80
+ b70:	00008067          	ret
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:196
- be4:	0ff00793          	li	a5,255
- be8:	cbdff06f          	j	8a4 <drawMandelInterlaced+0x124>
+ b74:	0ff00793          	li	a5,255
+ b78:	cbdff06f          	j	834 <drawMandelInterlaced+0x124>
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:165
                         if(processSw()) return 1;
- bec:	00b12623          	sw	a1,12(sp)
- bf0:	01112423          	sw	a7,8(sp)
- bf4:	01012223          	sw	a6,4(sp)
- bf8:	9a5ff0ef          	jal	ra,59c <processSw>
- bfc:	fa0512e3          	bnez	a0,ba0 <drawMandelInterlaced+0x420>
+ b7c:	00b12623          	sw	a1,12(sp)
+ b80:	01112423          	sw	a7,8(sp)
+ b84:	01012223          	sw	a6,4(sp)
+ b88:	9e1ff0ef          	jal	ra,568 <processSw>
+ b8c:	fa0512e3          	bnez	a0,b30 <drawMandelInterlaced+0x420>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:178
         vgaHandle->yAddr = j;
- c00:	4dcba783          	lw	a5,1244(s7)
- c04:	00c12583          	lw	a1,12(sp)
- c08:	00812883          	lw	a7,8(sp)
- c0c:	00412803          	lw	a6,4(sp)
- c10:	00001337          	lui	t1,0x1
- c14:	e49ff06f          	j	a5c <drawMandelInterlaced+0x2dc>
+ b90:	c8cba783          	lw	a5,-884(s7)
+ b94:	00c12583          	lw	a1,12(sp)
+ b98:	00812883          	lw	a7,8(sp)
+ b9c:	00412803          	lw	a6,4(sp)
+ ba0:	00001337          	lui	t1,0x1
+ ba4:	e49ff06f          	j	9ec <drawMandelInterlaced+0x2dc>
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:178
- c18:	0ff00693          	li	a3,255
- c1c:	0ff00e13          	li	t3,255
- c20:	e01ff06f          	j	a20 <drawMandelInterlaced+0x2a0>
+ ba8:	0ff00693          	li	a3,255
+ bac:	0ff00e13          	li	t3,255
+ bb0:	e01ff06f          	j	9b0 <drawMandelInterlaced+0x2a0>
 drawMandelInterlaced():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:185
                     if(processSw()) return 1;
- c24:	979ff0ef          	jal	ra,59c <processSw>
- c28:	00001837          	lui	a6,0x1
- c2c:	f6051ae3          	bnez	a0,ba0 <drawMandelInterlaced+0x420>
+ bb4:	9b5ff0ef          	jal	ra,568 <processSw>
+ bb8:	00001837          	lui	a6,0x1
+ bbc:	f6051ae3          	bnez	a0,b30 <drawMandelInterlaced+0x420>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:179
         for(size_t i = 0; i < 640; i++){
- c30:	f78a10e3          	bne	s4,s8,b90 <drawMandelInterlaced+0x410>
+ bc0:	f78a10e3          	bne	s4,s8,b20 <drawMandelInterlaced+0x410>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:176 (discriminator 2)
     for(size_t j = 0; j < 480; j++){
- c34:	001a8a93          	addi	s5,s5,1
- c38:	1e000793          	li	a5,480
+ bc4:	001a8a93          	addi	s5,s5,1
+ bc8:	1e000793          	li	a5,480
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:193 (discriminator 2)
         y0 += dx;
- c3c:	019484b3          	add	s1,s1,s9
+ bcc:	019484b3          	add	s1,s1,s9
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:176 (discriminator 2)
     for(size_t j = 0; j < 480; j++){
- c40:	00fa8c63          	beq	s5,a5,c58 <drawMandelInterlaced+0x4d8>
+ bd0:	00fa8c63          	beq	s5,a5,be8 <drawMandelInterlaced+0x4d8>
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:178
         vgaHandle->yAddr = j;
- c44:	4dcba783          	lw	a5,1244(s7)
- c48:	e59ff06f          	j	aa0 <drawMandelInterlaced+0x320>
+ bd4:	c8cba783          	lw	a5,-884(s7)
+ bd8:	e59ff06f          	j	a30 <drawMandelInterlaced+0x320>
 getIters():
 /Users/jamesliu/Development/ECE496/ECE496/my-electron-app/resources/compiler/demo/mandel.c:178
- c4c:	0ff00713          	li	a4,255
- c50:	0ff00593          	li	a1,255
- c54:	f2dff06f          	j	b80 <drawMandelInterlaced+0x400>
- c58:	00012c03          	lw	s8,0(sp)
- c5c:	f49ff06f          	j	ba4 <drawMandelInterlaced+0x424>
+ bdc:	0ff00713          	li	a4,255
+ be0:	0ff00593          	li	a1,255
+ be4:	f2dff06f          	j	b10 <drawMandelInterlaced+0x400>
+ be8:	00012c03          	lw	s8,0(sp)
+ bec:	f49ff06f          	j	b34 <drawMandelInterlaced+0x424>
