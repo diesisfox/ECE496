@@ -27,7 +27,7 @@ function process_backend_validate_output(ipcMain, event, process, exit_value){
 
 function process_backend_generation_output(ipcMain, event, process, exit_value){
     if (exit_value[0] == '0'){
-        event.reply('console-message', "\nGeneration successful\n")
+        event.reply('system-message', "Generation successful\n")
     } else {
         event.reply('system-message', process.stderr_data.toString())
     }
@@ -53,7 +53,7 @@ function call_backend(ipcMain, str_data, event){
         target_folder = file_manager.openFolderDialog(undefined)
         console.log("chose: " + target_folder)
         if (target_folder == undefined) {
-            event.reply('system-message', "\nGeneration cancelled\n")
+            event.reply('system-message', "Generation cancelled\n")
             return
         } else {
             arg_arr.push(path.join(target_folder[0],"\\"))

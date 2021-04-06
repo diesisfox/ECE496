@@ -99,7 +99,7 @@ function addMenuListeners(ipcMain){
     if (file_manager.saveSave()){
       event.reply('system-message', "attempted to save: successful")
     } else {
-      event.reply('system-message', "attempted to save: failed")
+      event.reply('system-message', "attempted to save: failed. Current save could be an example or no save is loaded.")
     }
   })
   ipcMain.on('save as file', function(event, arg) {
@@ -110,7 +110,7 @@ function addMenuListeners(ipcMain){
         file_manager.changeSavePath(filepath)
         event.reply('system-message', "attempted to save as: successful")
       } else {
-        event.reply('system-message', "attempted to save as: failed")
+        event.reply('system-message', "attempted to save as: . Current save could be an example or no save is loaded.")
       }
     }
   })

@@ -7,12 +7,12 @@ function init(){
   
   file_manager.setBasePath(app.getAppPath())
 
-  // TODO: to be removed at release 
-  if (file_manager.loadDummy() == false){
-    ipcMain.once('console-input-reading', (event, arg) => {
-      event.reply('system-message', 'Error: dummy could not be loaded\n')
-    })
-  }
+  // // TODO: to be removed at release 
+  // if (file_manager.loadDummy() == false){
+  //   ipcMain.once('console-input-reading', (event, arg) => {
+  //     event.reply('system-message', 'Error: dummy could not be loaded\n')
+  //   })
+  // }
 
   file_manager.initMain(ipcMain)
   main_windows.createMainWindow(ipcMain)
