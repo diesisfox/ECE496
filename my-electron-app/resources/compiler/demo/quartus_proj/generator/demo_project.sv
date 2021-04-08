@@ -27,7 +27,6 @@ Simple_Worker_Mem_IF IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if0();
 
 IP_VGA_IF IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if1();
 
-//custom
 AXI5_Lite_IF IP_GPIO_Main_lol_AXI_if0();
 Simple_Worker_Mem_IF IP_GPIO_Main_lol_if0();
 IP_GPIO_IF IP_GPIO_Main_lol_if1();
@@ -44,7 +43,6 @@ assign VGA_BLANK_N = IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if1.VGA_BLANK_
 assign VGA_HS = IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if1.VGA_HS;
 assign VGA_VS = IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if1.VGA_VS;
 
-//custom
 assign IP_GPIO_Main_lol_if1.in = SW;
 
 
@@ -87,7 +85,6 @@ IP_VGA_Main #(
     .VGA_IF(IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if1)
 );
 
-//custom
 IP_GPIO_Main #(
     .ADDR(32'h8001_0000),
     .PINS(10)
@@ -109,7 +106,7 @@ IP_GPIO_Main #(
         .USER_IF(IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_if0)
     );
 
-    //custom
+    
     AXI_Controller_Worker IP_GPIO_Main_lol_controller (
         .AXI_IF(IP_GPIO_Main_lol_AXI_if0),
         .USER_IF(IP_GPIO_Main_lol_if0)
@@ -120,13 +117,13 @@ IP_GPIO_Main #(
         .mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_num_bits(16),
         .IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_base_addr(32'h8000_0000),
         .IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_num_bits(5),
-        //custom
+        
         .IP_GPIO_Main_lol_base_addr(32'h8001_0000),
         .IP_GPIO_Main_lol_num_bits(4)
     ) xbar (
         .mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_IF(mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_AXI_if0),
         .IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF(IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_AXI_if0),
-        //custom
+        
         .IP_GPIO_Main_lol_IF(IP_GPIO_Main_lol_AXI_if0),
         .M_IF(M_IF)
     );
@@ -145,14 +142,14 @@ module AXI_Interconnect #(
     parameter int mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_num_bits = 16,
     parameter [31:0] IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_base_addr = 32'h8000_0000,
     parameter int IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_num_bits = 5,
-    //custom
+    
     parameter [31:0] IP_GPIO_Main_lol_base_addr = 32'h8001_0000,
     parameter int IP_GPIO_Main_lol_num_bits = 4
 )(
     AXI5_Lite_IF.WORKER M_IF,
     AXI5_Lite_IF.MANAGER mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_IF,
     AXI5_Lite_IF.MANAGER IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF,
-    //custom
+    
     AXI5_Lite_IF.MANAGER IP_GPIO_Main_lol_IF
 );
 
@@ -161,7 +158,7 @@ module AXI_Interconnect #(
     assign mem_m10k_931897D0B4814B10A0108CB4D8FD8FD7_IF.ARESETn = M_IF.ARESETn;
     assign IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.ACLK = M_IF.ACLK;
     assign IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.ARESETn = M_IF.ARESETn;
-    //custom
+    
     assign IP_GPIO_Main_lol_IF.ACLK = M_IF.ACLK;
     assign IP_GPIO_Main_lol_IF.ARESETn = M_IF.ARESETn;
 
@@ -263,7 +260,7 @@ module AXI_Interconnect #(
         IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.ARID = 'b0;
         IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.RREADY = 'b0;
 
-        //custom
+        
         IP_GPIO_Main_lol_IF.ARADDR = 'b0;
         IP_GPIO_Main_lol_IF.ARPROT = 'b0;
         IP_GPIO_Main_lol_IF.ARVALID = 'b0;
@@ -296,7 +293,7 @@ module AXI_Interconnect #(
             IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.RREADY = M_IF.RREADY;
             M_IF.RID = IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.RID;
         end else if (araddr_sel[31:IP_GPIO_Main_lol_num_bits] == IP_GPIO_Main_lol_base_addr[31:IP_GPIO_Main_lol_num_bits]) begin
-            //custom
+            
             IP_GPIO_Main_lol_IF.ARADDR = M_IF.ARADDR;
             IP_GPIO_Main_lol_IF.ARPROT = M_IF.ARPROT;
             IP_GPIO_Main_lol_IF.ARVALID = M_IF.ARVALID;
@@ -403,7 +400,7 @@ module AXI_Interconnect #(
         IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.WVALID = 'b0;
         IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.BREADY = 'b0;
 
-        //custom
+        
         IP_GPIO_Main_lol_IF.AWADDR = 'b0;
         IP_GPIO_Main_lol_IF.AWPROT = 'b0;
         IP_GPIO_Main_lol_IF.AWVALID = 'b0;
@@ -445,7 +442,7 @@ module AXI_Interconnect #(
             IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.BREADY = M_IF.BREADY;
             M_IF.BID = IP_VGA_Main_6367E892C4E74E548BDF4DBD747EC45F_IF.BID;
         end else if (awaddr_sel[31:IP_GPIO_Main_lol_num_bits] == IP_GPIO_Main_lol_base_addr[31:IP_GPIO_Main_lol_num_bits]) begin
-            //custom
+            
             IP_GPIO_Main_lol_IF.AWADDR = M_IF.AWADDR;
             IP_GPIO_Main_lol_IF.AWPROT = M_IF.AWPROT;
             IP_GPIO_Main_lol_IF.AWVALID = M_IF.AWVALID;
