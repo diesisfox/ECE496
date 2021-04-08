@@ -158,7 +158,7 @@ function tryPythonSpawn(ipcMain, args, options){
             python_instance.stderr.once('data', function (data) {
                 let datastr = data.toString()
                 event.reply('console-message', datastr.slice(0, datastr.length - 4))
-                setTimeout(() => {event.returnValue = "done"},50); // times out and allows further input
+                setTimeout(() => {event.returnValue = "done"},100); // times out and allows further input
             })
 
             python_instance.stdin.write(arg+"\n")
