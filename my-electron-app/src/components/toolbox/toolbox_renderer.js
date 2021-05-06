@@ -21,7 +21,7 @@ const tb_rect_width = 170
 const tb_rect_height = 40
 
 // animation vars
-const anim_speed = 400 // in ms TODO: calculate this per toolbox, so that one doesn't look faster than the other
+const anim_speed = 400 // in ms 
 const offscreen_offset = 10 
 const tb_offscreen_offset = ((toolbox_div.offsetHeight + offscreen_offset) * -1) + "px"
 var bar_offscreen_offset = 0 // changes
@@ -36,7 +36,6 @@ let editing_module_UUID = false
 
 // --------- Backend Communication ----------
 
-// TODO: complete these three functions
 function sendNewToBack(ipcRenderer, module_type){
     ipcRenderer.sendSync('console-input-reading', 'add_module("' + module_type + '")')
 }

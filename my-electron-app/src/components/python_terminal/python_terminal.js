@@ -154,10 +154,8 @@ function tryPythonSpawn(ipcMain, args, options){
                     // process what comes back
                     // format: [MGK] [filename] [MGK] [parameters]
                     var split_data = str_data.split("\n")
-                    console.log("test10491:" + split_data)
                     let i = 0
                     for (i = 0; i < split_data.length; i++){
-                        console.log("test3949419: " + split_data[i])
                         if (split_data[i] == undefined)
                             continue
                         call_backend(ipcMain, split_data[i], event)

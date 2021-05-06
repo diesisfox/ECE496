@@ -32,7 +32,6 @@ function initMain(ipcMain){
 
 // -------------- MAIN METHODS ----------------
 
-// TODO: simplify these two so that it doesn't use a nested function
 function openFileDialog (win){
     return function(e){
 
@@ -179,7 +178,6 @@ function getModuleDict(id) {
 
 // --------------- HELPER FUNCTIONS ----------------
 
-// TODO: probably unneeded
 function setBasePath (path){
     if (base_path != false){
         console.log('Error: base path set a second time')

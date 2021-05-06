@@ -42,7 +42,6 @@ const IP_database = data
 
 // --------- OTHER ----------
 // magic word
-// TODO: get this from file
 const MGK = "&^\"%$"
 
 module.exports = {
