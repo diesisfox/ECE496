@@ -108,8 +108,10 @@ function call_backend(ipcMain, str_data, event){
 
 // called in order to synchronic stdout and stderr results
 function stdout_stderr_react(stdout_result, stderr_result, event){
-    if (stdout_result == undefined || stderr_result == undefined || stdout_result == "waiting"){
+    if (stderr_result == undefined || stdout_result == "waiting"){
         return
+    } else if (stdout_result == undefined && stderr_result.slice(stderr_result.length - 4, stderr_result.length) == ">>> ") {
+        setTimeout(() => {event.returnValue = "done"},300);
     } else {
         event.returnValue = "done"
     }
