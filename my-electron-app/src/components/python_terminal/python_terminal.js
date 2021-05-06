@@ -106,6 +106,15 @@ function call_backend(ipcMain, str_data, event){
     })
 }
 
+// called in order to synchronic stdout and stderr results
+function stdout_stderr_react(stdout_result, stderr_result, event){
+    if (stdout_result == undefined || stderr_result == undefined || stdout_result == "waiting"){
+        return
+    } else {
+        event.returnValue = "done"
+    }
+}
+
 function tryPythonSpawn(ipcMain, args, options){
     var test_python_instance = child_process.spawn(path.join('.','python','python.exe'), args, options)
 
@@ -126,6 +135,9 @@ function tryPythonSpawn(ipcMain, args, options){
 
         ipcMain.on('console-input-reading', (event,arg) => {
             python_instance.stdout.removeAllListeners('data')
+
+            let stdout_result = undefined;
+            let stderr_result = undefined;
             
             // deal with data that comes back
             python_instance.stdout.once('data', function (data) {
@@ -136,6 +148,7 @@ function tryPythonSpawn(ipcMain, args, options){
                 // not a special message
                 if (str_data.slice(0, CONSTANTS.MGK.length) != (CONSTANTS.MGK)){
                     event.reply('console-message', str_data)
+                    stdout_result = "finished"
                     event.returnValue = "done"
                 } else {
                     // process what comes back
@@ -149,16 +162,21 @@ function tryPythonSpawn(ipcMain, args, options){
                             continue
                         call_backend(ipcMain, split_data[i], event)
                     }
-                    // call_backend(ipcMain, str_data, event)
+                    stdout_result = "waiting"
                 }
+                stdout_stderr_react(stdout_result,stderr_result,event)
             })
 
             python_instance.stderr.removeAllListeners('data')  
 
             python_instance.stderr.once('data', function (data) {
                 let datastr = data.toString()
+                
                 event.reply('console-message', datastr.slice(0, datastr.length - 4))
-                setTimeout(() => {event.returnValue = "done"},100); // times out and allows further input
+
+                stderr_result = datastr
+
+                stdout_stderr_react(stdout_result,stderr_result,event)
             })
 
             python_instance.stdin.write(arg+"\n")
